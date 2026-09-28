@@ -1,0 +1,125 @@
+ M .gitignore
+ M LICENSE
+ M README.md
+ M analyze.py
+ M benchmark_cuda.py
+ M blog.md
+ M configs.py
+ M paper/00README.json
+ M paper/main_1.tex
+ M profile_training.py
+ M pyproject.toml
+ M src/__init__.py
+ M src/cuda/__init__.py
+ M src/cuda/grassmann_fused.py
+ M src/cuda/grassmann_kernels.cu
+ M src/cuda/setup.py
+ M src/models/__init__.py
+ M src/models/gpt2.py
+ M src/models/grassmann.py
+ M src/models/grassmann_v2.py
+ M src/models/grassmann_v3.py
+ M src/models/grassmann_v4.py
+ M technical.md
+ M test_cuda_kernels.py
+ M train.py
+ M train_wikitext2.py
+?? .agents/
+?? AGENTS.md
+?? AI_RESEARCH_HANDOFF.md
+?? analyze_branch_diagnostic_statistics.py
+?? analyze_branch_disagreement.py
+?? benchmark_ptb_efficiency_v4.py
+?? best_run_dirs_from_csv.json
+?? claude.md
+?? collect_results.py
+?? docs/
+?? enable_grassmann_cuda_and_microbench.sh
+?? eval_fusion.py
+?? eval_fusion2.py
+?? eval_fusion3.py
+?? eval_fusion3_v5.py
+?? eval_fusion3_v6.py
+?? findings.md
+?? fusion_result.json
+?? gpt2_local/
+?? inventory/
+?? launch_exp34_ddp.sh
+?? paper/.texlive-cache/
+?? paper/main_1.pdf
+?? research-log.md
+?? research-state.yaml
+?? research/
+?? run_ablation_wred.py
+?? run_code_a.sh
+?? run_code_b.sh
+?? run_code_distill.sh
+?? run_code_distill_full.sh
+?? run_code_full.sh
+?? run_code_remain.sh
+?? run_code_verify.sh
+?? run_h0_kd_gradient_diagnostic.sh
+?? run_h0_kd_normalization_smoke.sh
+?? run_layers_cross_dataset.py
+?? run_ptb_distill_suite_v2.sh
+?? run_ptb_efficiency_suite_v4.sh
+?? run_ptb_final_batch_latency_suite.sh
+?? run_ptb_final_cuda_supplement_suite.sh
+?? run_ptb_hybrid_lite_baseline_suite_v2.sh
+?? run_ptb_hybrid_lite_distill_suite.sh
+?? run_ptb_hybrid_lite_warmstart_distill_suite.sh
+?? run_ptb_lambda_2_3_4.sh
+?? run_ptb_lambda_scan.sh
+?? run_ptb_latefusion_suite.sh
+?? run_ptb_next_stage_warmstart_suite.sh
+?? run_ptb_student_sanity_suite.sh
+?? run_ptb_student_sanity_suite_v2.sh
+?? run_r32_test.sh
+?? run_stage_c_ptb_smoke.sh
+?? run_stage_c_tinystories_prototype.sh
+?? run_stage_c_ts_gpu3_retry.sh
+?? run_subspace_analysis.py
+?? run_subspace_cross_dataset.py
+?? run_subspace_exp.sh
+?? run_subspace_verify.py
+?? run_tinystories_4exp.sh
+?? run_tinystories_followup.sh
+?? run_tinystories_smoke.sh
+?? run_ts_baseline.sh
+?? run_ts_distill_part1.sh
+?? run_ts_distill_suite.sh
+?? run_ts_distill_warmstart.sh
+?? run_ts_teacher.sh
+?? run_wt2_distill_suite.sh
+?? run_wt2_final.sh
+?? run_wt2_lambda_scan.sh
+?? run_wt2_phase2_retry.sh
+?? run_wt2_phase2b.sh
+?? src/branch_diagnostics.py
+?? src/crbd_losses.py
+?? src/kd_losses.py
+?? tests/
+?? tools/
+?? train_distill.py
+?? train_distill2.py
+?? train_distill3.py
+?? train_distill3_ddp.py
+?? train_distill3_ddp_v5.py
+?? train_distill_from_latefusion_teacher_v2.py
+?? train_distill_hybrid_lite_from_latefusion_teacher_v1.py
+?? train_distill_hybrid_lite_from_latefusion_teacher_v2.py
+?? train_exp.py
+?? train_exp2.py
+?? train_exp3.py
+?? train_exp4.py
+?? train_exp4_ddp.py
+?? train_exp4_ddp_v5.py
+?? train_exp4_ddp_v6.py
+?? train_final.py
+?? train_hybrid_alpha_ddp.py
+?? train_hybrid_alpha_ddp_v5.py
+?? train_hybrid_latefusion_alpha_ddp_v1.py
+?? train_hybrid_layerwise_alpha_ddp_v1.py
+?? train_hybrid_layerwise_alpha_ddp_v2.py
+?? train_hybrid_lite_latefusion_baseline_v2.py
+?? "\350\256\272\346\226\207\346\212\225\347\250\277/"

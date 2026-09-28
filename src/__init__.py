@@ -1,4 +1,3 @@
-from . import models
-from . import data
+"""Core model, loss, and diagnostic utilities."""
 
-__all__ = ["models", "data"]
+__all__ = ["models"]

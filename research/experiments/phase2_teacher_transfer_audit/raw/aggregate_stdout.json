@@ -1,0 +1,174 @@
+{
+  "predictor_rows": [
+    {
+      "domain": "ptb",
+      "delta_kd_test_nll": 0.14493746721474285,
+      "P1_teacher_residual_advantage_test_nll": 0.16808203185535486,
+      "P2_teacher_student_kl_s0_t1": 0.3413364632521059,
+      "P3_mean_gradient_cosine_s0": 0.040090550526151805,
+      "P4_negative_gradient_fraction_s0": 0.3691316526610644,
+      "P5_teacher_entropy": 4.006268266009764,
+      "P6_branch_jsd": 0.13092372716355422,
+      "P7_branch_top1_disagreement": 0.41202240896358544,
+      "evidence_note": "matched token-normalized KD; three seeds"
+    },
+    {
+      "domain": "wikitext2",
+      "delta_kd_test_nll": 0.16257893376295662,
+      "P1_teacher_residual_advantage_test_nll": 0.06804661696081293,
+      "P2_teacher_student_kl_s0_t1": 0.5350348837477685,
+      "P3_mean_gradient_cosine_s0": -0.07410420097805306,
+      "P4_negative_gradient_fraction_s0": 0.40212928921568625,
+      "P5_teacher_entropy": 4.405060190280867,
+      "P6_branch_jsd": 0.18128879044267293,
+      "P7_branch_top1_disagreement": 0.49153645833333337,
+      "evidence_note": "legacy batch-normalized KD sweep winner; single seed"
+    },
+    {
+      "domain": "tinystories",
+      "delta_kd_test_nll": -0.10747890478559552,
+      "P1_teacher_residual_advantage_test_nll": -0.021960429997724962,
+      "P2_teacher_student_kl_s0_t1": 0.1819902500395157,
+      "P3_mean_gradient_cosine_s0": 0.04375284671269731,
+      "P4_negative_gradient_fraction_s0": 0.4529181985294118,
+      "P5_teacher_entropy": 1.503278298397544,
+      "P6_branch_jsd": 0.17705906713223424,
+      "P7_branch_top1_disagreement": 0.4135493259803922,
+      "evidence_note": "matched token-normalized KD; single seed"
+    },
+    {
+      "domain": "codeparrot_common5k",
+      "delta_kd_test_nll": 0.18830894251949326,
+      "P1_teacher_residual_advantage_test_nll": 0.2430508141301293,
+      "P2_teacher_student_kl_s0_t1": 0.5584246975277871,
+      "P3_mean_gradient_cosine_s0": 0.08129939295336613,
+      "P4_negative_gradient_fraction_s0": 0.4073835784313726,
+      "P5_teacher_entropy": 1.5492179576394631,
+      "P6_branch_jsd": 0.23925728154672218,
+      "P7_branch_top1_disagreement": 0.43156403186274506,
+      "evidence_note": "legacy batch-normalized KD sweep winner; common 5k; single seed"
+    }
+  ],
+  "descriptive_correlations": {
+    "P1_teacher_residual_advantage_test_nll": {
+      "pearson_r": 0.8202119856413886,
+      "spearman_rho": 0.8,
+      "n": 4,
+      "interpretation": "descriptive only; domains are not independent replicates"
+    },
+    "P2_teacher_student_kl_s0_t1": {
+      "pearson_r": 0.890048237598326,
+      "spearman_rho": 1.0,
+      "n": 4,
+      "interpretation": "descriptive only; domains are not independent replicates"
+    },
+    "P3_mean_gradient_cosine_s0": {
+      "pearson_r": -0.16115638572137678,
+      "spearman_rho": 0.2,
+      "n": 4,
+      "interpretation": "descriptive only; domains are not independent replicates"
+    },
+    "P4_negative_gradient_fraction_s0": {
+      "pearson_r": -0.8079811810677658,
+      "spearman_rho": -0.2,
+      "n": 4,
+      "interpretation": "descriptive only; domains are not independent replicates"
+    },
+    "P5_teacher_entropy": {
+      "pearson_r": 0.48921531826315356,
+      "spearman_rho": 0.4,
+      "n": 4,
+      "interpretation": "descriptive only; domains are not independent replicates"
+    },
+    "P6_branch_jsd": {
+      "pearson_r": 0.20436608478911877,
+      "spearman_rho": 0.8,
+      "n": 4,
+      "interpretation": "descriptive only; domains are not independent replicates"
+    },
+    "P7_branch_top1_disagreement": {
+      "pearson_r": 0.43371600982333947,
+      "spearman_rho": 0.6,
+      "n": 4,
+      "interpretation": "descriptive only; domains are not independent replicates"
+    }
+  },
+  "grassmann_specific": [
+    {
+      "domain": "ptb",
+      "best_quality_branch": "grassmann",
+      "best_branch_nll": 4.200023194774509,
+      "fused_nll": 4.0537525153164395,
+      "fusion_nll_improvement": 0.1462706794580697,
+      "best_branch_kl_s0": 0.4401070835869101,
+      "fused_kl_s0": 0.3413364632521059,
+      "fusion_minus_best_branch_kl_s0": -0.09877062033480416,
+      "best_branch_cosine_s0": 0.027249414616180672,
+      "fused_cosine_s0": 0.040090550526151805,
+      "fusion_minus_best_branch_cosine_s0": 0.012841135909971133,
+      "transformer_errors": 60801,
+      "fused_corrections_with_higher_grassmann_gold": 3760,
+      "correction_fraction_of_transformer_errors": 0.061841088139997696,
+      "transformer_correct": 28449,
+      "fused_harms_with_lower_grassmann_gold": 1667,
+      "harm_fraction_of_transformer_correct": 0.058596084220886496
+    },
+    {
+      "domain": "wikitext2",
+      "best_quality_branch": "transformer",
+      "best_branch_nll": 4.445655657516255,
+      "fused_nll": 4.299172334636454,
+      "fusion_nll_improvement": 0.14648332287980104,
+      "best_branch_kl_s0": 0.9097692670890737,
+      "fused_kl_s0": 0.5350348837477685,
+      "fusion_minus_best_branch_kl_s0": -0.37473438334130516,
+      "best_branch_cosine_s0": -0.08592668285004045,
+      "fused_cosine_s0": -0.07410420097805306,
+      "fusion_minus_best_branch_cosine_s0": 0.011822481871987381,
+      "transformer_errors": 88641,
+      "fused_corrections_with_higher_grassmann_gold": 4621,
+      "correction_fraction_of_transformer_errors": 0.05213163208898817,
+      "transformer_correct": 41919,
+      "fused_harms_with_lower_grassmann_gold": 3196,
+      "harm_fraction_of_transformer_correct": 0.07624227677186955
+    },
+    {
+      "domain": "tinystories",
+      "best_quality_branch": "transformer",
+      "best_branch_nll": 1.7850477766258843,
+      "fused_nll": 1.6008800663715272,
+      "fusion_nll_improvement": 0.18416771025435708,
+      "best_branch_kl_s0": 0.38141342643418497,
+      "fused_kl_s0": 0.1819902500395157,
+      "fusion_minus_best_branch_kl_s0": -0.19942317639466928,
+      "best_branch_cosine_s0": 0.02087757358822151,
+      "fused_cosine_s0": 0.04375284671269731,
+      "fusion_minus_best_branch_cosine_s0": 0.0228752731244758,
+      "transformer_errors": 56477,
+      "fused_corrections_with_higher_grassmann_gold": 7080,
+      "correction_fraction_of_transformer_errors": 0.12536076632965631,
+      "transformer_correct": 74083,
+      "fused_harms_with_lower_grassmann_gold": 4260,
+      "harm_fraction_of_transformer_correct": 0.05750307087995896
+    },
+    {
+      "domain": "codeparrot_common5k",
+      "best_quality_branch": "transformer",
+      "best_branch_nll": 2.0892483030927003,
+      "fused_nll": 1.7843184880275622,
+      "fusion_nll_improvement": 0.30492981506513805,
+      "best_branch_kl_s0": 1.2117483566603284,
+      "fused_kl_s0": 0.5584246975277871,
+      "fusion_minus_best_branch_kl_s0": -0.6533236591325413,
+      "best_branch_cosine_s0": 0.1048346645596193,
+      "fused_cosine_s0": 0.08129939295336613,
+      "fusion_minus_best_branch_cosine_s0": -0.02353527160625317,
+      "transformer_errors": 45562,
+      "fused_corrections_with_higher_grassmann_gold": 7033,
+      "correction_fraction_of_transformer_errors": 0.15436109038233617,
+      "transformer_correct": 84998,
+      "fused_harms_with_lower_grassmann_gold": 3670,
+      "harm_fraction_of_transformer_correct": 0.043177486529094804
+    }
+  ]
+}

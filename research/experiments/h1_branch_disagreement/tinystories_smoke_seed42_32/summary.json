@@ -1,0 +1,97 @@
+{
+  "dataset": "tinystories",
+  "chunks": 32,
+  "valid_tokens": 8160,
+  "metrics": {
+    "branch_jsd": {
+      "mean": 0.1813942606532589,
+      "std": 0.18248142856704677,
+      "min": 0.0,
+      "max": 0.6921398639678955
+    },
+    "branch_jsd_normalized": {
+      "mean": 0.26169660029017666,
+      "std": 0.263265052048012,
+      "min": 0.0,
+      "max": 0.9985467493480447
+    },
+    "teacher_entropy": {
+      "mean": 1.510453330246673,
+      "std": 1.1385176096946823,
+      "min": 1.422431887476705e-05,
+      "max": 6.244658470153809
+    },
+    "teacher_nll": {
+      "mean": 1.6240672333589583,
+      "std": 2.056264975796973,
+      "min": 7.152555099310121e-07,
+      "max": 14.581360816955566
+    },
+    "transformer_nll": {
+      "mean": 1.802818959771198,
+      "std": 2.2800140936871274,
+      "min": 2.3841855067985307e-07,
+      "max": 16.29867935180664
+    },
+    "grassmann_nll": {
+      "mean": 2.1863411557145005,
+      "std": 2.5302169515583177,
+      "min": 7.152555099310121e-07,
+      "max": 18.925668716430664
+    },
+    "teacher_correct": {
+      "mean": 0.591421568627451,
+      "std": 0.49157104958459075,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "transformer_correct": {
+      "mean": 0.5647058823529412,
+      "std": 0.49579547072248187,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "grassmann_correct": {
+      "mean": 0.5013480392156863,
+      "std": 0.4999981827869707,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "grad_dot": {
+      "mean": 0.009090349385373916,
+      "std": 0.048805885674973966,
+      "min": -0.3527788519859314,
+      "max": 0.9328994154930115
+    },
+    "grad_cosine": {
+      "mean": 0.04198993615667298,
+      "std": 0.5475855752062034,
+      "min": -0.9887445569038391,
+      "max": 0.9952797889709473
+    },
+    "ce_endpoint_nll": {
+      "mean": 1.6063208571781766,
+      "std": 2.0484953986982335,
+      "min": 3.576278118089249e-07,
+      "max": 16.929248809814453
+    },
+    "kd_endpoint_nll": {
+      "mean": 1.7107841527494911,
+      "std": 2.1405263180895604,
+      "min": 5.960462772236497e-07,
+      "max": 15.843404769897461
+    },
+    "delta_nll": {
+      "mean": 0.10446329572964547,
+      "std": 0.5626684849461128,
+      "min": -5.632319927215576,
+      "max": 4.866726875305176
+    }
+  },
+  "negative_gradient_cosine_fraction": 0.45674019607843136,
+  "positive_delta_nll_fraction": 0.5560049019607843,
+  "outputs": {
+    "token_diagnostics": "/workspace/grassmannflows/grassmann-flows/research/experiments/h1_branch_disagreement/tinystories_smoke_seed42_32/token_diagnostics.csv",
+    "manifest": "/workspace/grassmannflows/grassmann-flows/research/experiments/h1_branch_disagreement/tinystories_smoke_seed42_32/manifest.json"
+  }
+}

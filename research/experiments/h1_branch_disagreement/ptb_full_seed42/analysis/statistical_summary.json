@@ -1,0 +1,41 @@
+{
+  "created_at": "2026-09-16T16:10:16.182196",
+  "source": "/workspace/grassmannflows/grassmann-flows/research/experiments/h1_branch_disagreement/ptb_full_seed42/token_diagnostics.csv",
+  "dataset_values": [
+    "ptb"
+  ],
+  "token_count": 89250,
+  "chunk_count": 350,
+  "grouped_cross_validation": {
+    "folds": 5,
+    "mean_baseline_conflict_auc": 0.6309247364244455,
+    "mean_extended_conflict_auc": 0.6306014965985172,
+    "mean_auc_delta": -0.0003232398259282121,
+    "mean_baseline_delta_nll_r2": 0.010208950954664254,
+    "mean_extended_delta_nll_r2": 0.01074220235338479,
+    "mean_r2_delta": 0.0005332513987205356
+  },
+  "chunk_bootstrap": {
+    "resamples": 2000,
+    "seed": 20260916,
+    "chunk_count": 350,
+    "grad_cosine_jsd_coefficient": {
+      "point": -0.021220249904954108,
+      "mean": -0.02099309797621584,
+      "ci95_low": -0.027409871445386494,
+      "ci95_high": -0.01467755564039851,
+      "predicted_direction": "negative"
+    },
+    "delta_nll_jsd_coefficient": {
+      "point": 0.006731350398715985,
+      "mean": 0.006449762418638442,
+      "ci95_low": -4.8676687026506465e-05,
+      "ci95_high": 0.012716836291352642,
+      "predicted_direction": "positive"
+    }
+  },
+  "outputs": {
+    "folds": "/workspace/grassmannflows/grassmann-flows/research/experiments/h1_branch_disagreement/ptb_full_seed42/analysis/grouped_cv_folds.csv",
+    "bins": "/workspace/grassmannflows/grassmann-flows/research/experiments/h1_branch_disagreement/ptb_full_seed42/analysis/jsd_bins.csv"
+  }
+}

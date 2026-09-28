@@ -1,0 +1,439 @@
+{
+  "thresholds": {
+    "good_min": 0.05,
+    "near_abs_max": 0.025,
+    "bad_max": -0.05
+  },
+  "state_manifests": {
+    "ptb": {
+      "path": "research/experiments/phase2_teacher_transfer_audit/raw/ptb_states/results.json",
+      "selection_mode": "full_validation",
+      "selection_seed": 20260920,
+      "selected_indices_sha256": "55df2806027bca93a294656687a8485963fec9984eeea9b9fc5b7da9c43b4f88",
+      "chunks": 350,
+      "valid_tokens": 89250,
+      "s1_nll": 4.237279022146569
+    },
+    "wikitext2": {
+      "path": "research/experiments/phase2b_controlled_teacher/raw/preflight/wikitext2_states/results.json",
+      "selection_mode": "fixed_random_subset",
+      "selection_seed": 20260920,
+      "selected_indices_sha256": "236633612db1e3144b8f3187a5bfb1795f558a50f26368252a8adf3f0b49413f",
+      "chunks": 512,
+      "valid_tokens": 130560,
+      "s1_nll": 4.385544566638442
+    },
+    "tinystories": {
+      "path": "research/experiments/phase2_teacher_transfer_audit/raw/tinystories_states/results.json",
+      "selection_mode": "fixed_random_subset",
+      "selection_seed": 20260920,
+      "selected_indices_sha256": "7387a37822086eb703a6b6c5216a176bde5dfa7407167f878f9e3f4cf97d429f",
+      "chunks": 512,
+      "valid_tokens": 130560,
+      "s1_nll": 1.5801777349143757
+    },
+    "codeparrot_common5k": {
+      "path": "research/experiments/phase2b_controlled_teacher/raw/preflight/codeparrot_common5k_states/results.json",
+      "selection_mode": "fixed_random_subset",
+      "selection_seed": 20260920,
+      "selected_indices_sha256": "74f4cfbd8881adb7f21490dc768cfe70a64e2f6c9a6ebb3a99a836609ffde8bf",
+      "chunks": 512,
+      "valid_tokens": 130560,
+      "s1_nll": 2.0577498679036372
+    }
+  },
+  "s0_checkpoint_sha256": {
+    "ptb": "92e332c972f56d227c576f63ca8840e262830ec0addcc245ab906ae251d7b676",
+    "wikitext2": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+    "tinystories": "e4d0959603bb39f0ad7b7a98025024975e2b87d117d36037e9f9aa9da966f9c2",
+    "codeparrot_common5k": "177390c0c5bf56412def81aa404c6985c2c162ad1b1e7e3c00b4b41153e4cb0f"
+  },
+  "complete_triplet_on_existing_grid": {
+    "ptb": false,
+    "wikitext2": true,
+    "tinystories": false,
+    "codeparrot_common5k": false
+  },
+  "selected_experiment": {
+    "route": "A",
+    "dataset": "wikitext2",
+    "conditions": {
+      "C0": {
+        "teacher_condition": "WS+CE",
+        "alpha": 0.5,
+        "kd_lambda": 0.0
+      },
+      "C1": {
+        "teacher_condition": "T_good",
+        "alpha": 0.5,
+        "kd_lambda": 5.0
+      },
+      "C2": {
+        "teacher_condition": "T_near",
+        "alpha": 0.3,
+        "kd_lambda": 5.0
+      },
+      "C3": {
+        "teacher_condition": "T_bad",
+        "alpha": 0.0,
+        "kd_lambda": 5.0
+      }
+    },
+    "student_s0_sha256": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+    "selection_reason": "WikiText-2 contains a complete triplet on the existing grid, has exact S0/S1 checkpoints and reproducible data provenance, and is substantially cheaper than CodeParrot."
+  },
+  "rows": [
+    {
+      "dataset": "ptb",
+      "alpha": 0.0,
+      "teacher_val_nll": 4.200023194774509,
+      "ws_ce_val_nll": 4.237279022146569,
+      "delta_teacher": 0.03725582737205979,
+      "classification": "transition_unclassified"
+    },
+    {
+      "dataset": "ptb",
+      "alpha": 0.1,
+      "teacher_val_nll": 4.1464149318501455,
+      "ws_ce_val_nll": 4.237279022146569,
+      "delta_teacher": 0.0908640902964235,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "ptb",
+      "alpha": 0.2,
+      "teacher_val_nll": 4.104830942427653,
+      "ws_ce_val_nll": 4.237279022146569,
+      "delta_teacher": 0.13244807971891603,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "ptb",
+      "alpha": 0.3,
+      "teacher_val_nll": 4.075358532225811,
+      "ws_ce_val_nll": 4.237279022146569,
+      "delta_teacher": 0.16192048992075847,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "ptb",
+      "alpha": 0.4,
+      "teacher_val_nll": 4.058225335484078,
+      "ws_ce_val_nll": 4.237279022146569,
+      "delta_teacher": 0.179053686662491,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "ptb",
+      "alpha": 0.5,
+      "teacher_val_nll": 4.0537836473067435,
+      "ws_ce_val_nll": 4.237279022146569,
+      "delta_teacher": 0.1834953748398256,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "ptb",
+      "alpha": 0.6,
+      "teacher_val_nll": 4.062497727778371,
+      "ws_ce_val_nll": 4.237279022146569,
+      "delta_teacher": 0.17478129436819767,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "ptb",
+      "alpha": 0.7,
+      "teacher_val_nll": 4.084927431235078,
+      "ws_ce_val_nll": 4.237279022146569,
+      "delta_teacher": 0.15235159091149075,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "ptb",
+      "alpha": 0.8,
+      "teacher_val_nll": 4.121705986793359,
+      "ws_ce_val_nll": 4.237279022146569,
+      "delta_teacher": 0.11557303535320962,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "ptb",
+      "alpha": 0.9,
+      "teacher_val_nll": 4.173514560187449,
+      "ws_ce_val_nll": 4.237279022146569,
+      "delta_teacher": 0.06376446195911978,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "ptb",
+      "alpha": 1.0,
+      "teacher_val_nll": 4.2410507387340415,
+      "ws_ce_val_nll": 4.237279022146569,
+      "delta_teacher": -0.00377171658747244,
+      "classification": "T_near"
+    },
+    {
+      "dataset": "wikitext2",
+      "alpha": 0.0,
+      "teacher_val_nll": 4.652054625081046,
+      "ws_ce_val_nll": 4.385544566638442,
+      "delta_teacher": -0.2665100584426039,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "wikitext2",
+      "alpha": 0.1,
+      "teacher_val_nll": 4.5438998404110205,
+      "ws_ce_val_nll": 4.385544566638442,
+      "delta_teacher": -0.1583552737725782,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "wikitext2",
+      "alpha": 0.2,
+      "teacher_val_nll": 4.45531032404133,
+      "ws_ce_val_nll": 4.385544566638442,
+      "delta_teacher": -0.06976575740288737,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "wikitext2",
+      "alpha": 0.3,
+      "teacher_val_nll": 4.385215046994585,
+      "ws_ce_val_nll": 4.385544566638442,
+      "delta_teacher": 0.0003295196438575232,
+      "classification": "T_near"
+    },
+    {
+      "dataset": "wikitext2",
+      "alpha": 0.4,
+      "teacher_val_nll": 4.333547662660547,
+      "ws_ce_val_nll": 4.385544566638442,
+      "delta_teacher": 0.05199690397789514,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "wikitext2",
+      "alpha": 0.5,
+      "teacher_val_nll": 4.300644804253428,
+      "ws_ce_val_nll": 4.385544566638442,
+      "delta_teacher": 0.08489976238501384,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "wikitext2",
+      "alpha": 0.6,
+      "teacher_val_nll": 4.287094160021616,
+      "ws_ce_val_nll": 4.385544566638442,
+      "delta_teacher": 0.09845040661682614,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "wikitext2",
+      "alpha": 0.7,
+      "teacher_val_nll": 4.293700150530794,
+      "ws_ce_val_nll": 4.385544566638442,
+      "delta_teacher": 0.09184441610764793,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "wikitext2",
+      "alpha": 0.8,
+      "teacher_val_nll": 4.321477274507164,
+      "ws_ce_val_nll": 4.385544566638442,
+      "delta_teacher": 0.06406729213127793,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "wikitext2",
+      "alpha": 0.9,
+      "teacher_val_nll": 4.371653230967648,
+      "ws_ce_val_nll": 4.385544566638442,
+      "delta_teacher": 0.01389133567079437,
+      "classification": "T_near"
+    },
+    {
+      "dataset": "wikitext2",
+      "alpha": 1.0,
+      "teacher_val_nll": 4.445655657516255,
+      "ws_ce_val_nll": 4.385544566638442,
+      "delta_teacher": -0.060111090877812856,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "tinystories",
+      "alpha": 0.0,
+      "teacher_val_nll": 2.1120585984480877,
+      "ws_ce_val_nll": 1.5801777349143757,
+      "delta_teacher": -0.531880863533712,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "tinystories",
+      "alpha": 0.1,
+      "teacher_val_nll": 1.9605664847819688,
+      "ws_ce_val_nll": 1.5801777349143757,
+      "delta_teacher": -0.3803887498675931,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "tinystories",
+      "alpha": 0.2,
+      "teacher_val_nll": 1.8353147161195502,
+      "ws_ce_val_nll": 1.5801777349143757,
+      "delta_teacher": -0.2551369812051745,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "tinystories",
+      "alpha": 0.3,
+      "teacher_val_nll": 1.7361680810048443,
+      "ws_ce_val_nll": 1.5801777349143757,
+      "delta_teacher": -0.15599034609046858,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "tinystories",
+      "alpha": 0.4,
+      "teacher_val_nll": 1.6637558557626875,
+      "ws_ce_val_nll": 1.5801777349143757,
+      "delta_teacher": -0.08357812084831173,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "tinystories",
+      "alpha": 0.5,
+      "teacher_val_nll": 1.6187005289409377,
+      "ws_ce_val_nll": 1.5801777349143757,
+      "delta_teacher": -0.038522794026562,
+      "classification": "transition_unclassified"
+    },
+    {
+      "dataset": "tinystories",
+      "alpha": 0.6,
+      "teacher_val_nll": 1.6008530177212577,
+      "ws_ce_val_nll": 1.5801777349143757,
+      "delta_teacher": -0.02067528280688191,
+      "classification": "T_near"
+    },
+    {
+      "dataset": "tinystories",
+      "alpha": 0.7,
+      "teacher_val_nll": 1.6094562932669845,
+      "ws_ce_val_nll": 1.5801777349143757,
+      "delta_teacher": -0.02927855835260873,
+      "classification": "transition_unclassified"
+    },
+    {
+      "dataset": "tinystories",
+      "alpha": 0.8,
+      "teacher_val_nll": 1.6436130357585093,
+      "ws_ce_val_nll": 1.5801777349143757,
+      "delta_teacher": -0.06343530084413351,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "tinystories",
+      "alpha": 0.9,
+      "teacher_val_nll": 1.702407673056064,
+      "ws_ce_val_nll": 1.5801777349143757,
+      "delta_teacher": -0.12222993814168825,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "tinystories",
+      "alpha": 1.0,
+      "teacher_val_nll": 1.7850477766258843,
+      "ws_ce_val_nll": 1.5801777349143757,
+      "delta_teacher": -0.20487004171150858,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "codeparrot_common5k",
+      "alpha": 0.0,
+      "teacher_val_nll": 2.680898476728469,
+      "ws_ce_val_nll": 2.0577498679036372,
+      "delta_teacher": -0.6231486088248319,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "codeparrot_common5k",
+      "alpha": 0.1,
+      "teacher_val_nll": 2.4108572868741343,
+      "ws_ce_val_nll": 2.0577498679036372,
+      "delta_teacher": -0.353107418970497,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "codeparrot_common5k",
+      "alpha": 0.2,
+      "teacher_val_nll": 2.189363471666373,
+      "ws_ce_val_nll": 2.0577498679036372,
+      "delta_teacher": -0.13161360376273556,
+      "classification": "T_bad"
+    },
+    {
+      "dataset": "codeparrot_common5k",
+      "alpha": 0.3,
+      "teacher_val_nll": 2.01565822287361,
+      "ws_ce_val_nll": 2.0577498679036372,
+      "delta_teacher": 0.04209164503002727,
+      "classification": "transition_unclassified"
+    },
+    {
+      "dataset": "codeparrot_common5k",
+      "alpha": 0.4,
+      "teacher_val_nll": 1.8896127971332528,
+      "ws_ce_val_nll": 2.0577498679036372,
+      "delta_teacher": 0.16813707077038442,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "codeparrot_common5k",
+      "alpha": 0.5,
+      "teacher_val_nll": 1.8115334935966334,
+      "ws_ce_val_nll": 2.0577498679036372,
+      "delta_teacher": 0.24621637430700383,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "codeparrot_common5k",
+      "alpha": 0.6,
+      "teacher_val_nll": 1.780086038638924,
+      "ws_ce_val_nll": 2.0577498679036372,
+      "delta_teacher": 0.27766382926471334,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "codeparrot_common5k",
+      "alpha": 0.7,
+      "teacher_val_nll": 1.791482640771872,
+      "ws_ce_val_nll": 2.0577498679036372,
+      "delta_teacher": 0.2662672271317652,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "codeparrot_common5k",
+      "alpha": 0.8,
+      "teacher_val_nll": 1.8437272796629127,
+      "ws_ce_val_nll": 2.0577498679036372,
+      "delta_teacher": 0.2140225882407245,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "codeparrot_common5k",
+      "alpha": 0.9,
+      "teacher_val_nll": 1.9416391747715038,
+      "ws_ce_val_nll": 2.0577498679036372,
+      "delta_teacher": 0.1161106931321334,
+      "classification": "T_good"
+    },
+    {
+      "dataset": "codeparrot_common5k",
+      "alpha": 1.0,
+      "teacher_val_nll": 2.0892483030927003,
+      "ws_ce_val_nll": 2.0577498679036372,
+      "delta_teacher": -0.031498435189063034,
+      "classification": "transition_unclassified"
+    }
+  ]
+}

@@ -2,11 +2,19 @@
 
 An independent reproduction study of "Attention Is Not What You Need" (arXiv 2512.19428).
 
+For the current Grassmann--Transformer distillation project, start with [PROJECT_OVERVIEW_FOR_GPT.md](PROJECT_OVERVIEW_FOR_GPT.md). It provides the active code paths, newest controlled results, evidence boundaries, and a reading order that does not require local checkpoints or chat history.
+
 ## Summary
 
 This repository contains a reproduction of Grassmann flow layers for sequence modeling. The original paper claims performance "within 10-15% of size-matched Transformers" on Wikitext-2. Our reproduction shows a **22.6% gap** - significantly larger than claimed.
 
-## Key Results
+## Current Research Status
+
+The repository now also studies knowledge distillation from a heterogeneous Grassmann--Transformer late-fusion teacher into smaller students. After the CAC submission was rejected, the project returned to empirical validation. Token-normalized matched controls are complete on PTB, and a three-seed WikiText-2 intervention confirms that teacher condition changes KD gain. The bounded branch-aware prototype did not pass its gate and is retained as a negative result.
+
+Start with [the project map](docs/project_map.md), [the evidence handoff](AI_RESEARCH_HANDOFF.md), and [the Phase 2C report](research/experiments/phase2c_multiseed_teacher_utility/REPORT.md). The generated registry at `docs/generated/experiment_registry.csv` indexes historical run directories without moving or deleting their local artifacts.
+
+## Historical Reproduction Result
 
 | Model | Parameters | Test PPL |
 |-------|------------|----------|
@@ -14,6 +22,10 @@ This repository contains a reproduction of Grassmann flow layers for sequence mo
 | Transformer | 17.67M | 198.17 |
 
 **Gap: 22.6%** (vs claimed 10-15%)
+
+## Current Controlled KD Result
+
+On WikiText-2, the paired test-NLL advantage of the alpha-0.5 teacher over the alpha-0.0 teacher is positive for all three independent student seeds: 0.115731, 0.113739, and 0.114553. The mean is 0.114674 with sample standard deviation 0.001001. The globally weaker alpha-0.0 teacher still provides a smaller positive KD gain for all seeds, so global teacher NLL does not determine transfer sign.
 
 ## CUDA Optimization
 

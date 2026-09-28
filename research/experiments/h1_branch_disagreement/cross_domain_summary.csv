@@ -1,0 +1,3 @@
+dataset,chunks,tokens,mean_delta_nll,harmful_endpoint_fraction,negative_gradient_cosine_fraction,baseline_conflict_auc,extended_conflict_auc,auc_delta,baseline_delta_nll_r2,extended_delta_nll_r2,r2_delta,grad_cosine_jsd_coef,grad_cosine_ci95_low,grad_cosine_ci95_high,delta_nll_jsd_coef,delta_nll_ci95_low,delta_nll_ci95_high
+ptb,350,89250,-0.155480,0.403384,0.369098,0.630925,0.630601,-0.000323,0.010209,0.010742,0.000533,-0.021220,-0.027410,-0.014678,0.006731,-0.000049,0.012717
+tinystories,2048,522240,0.106928,0.550509,0.453479,0.547067,0.557976,0.010910,0.042183,0.045244,0.003061,-0.014805,-0.016965,-0.012689,0.006148,0.003862,0.008360

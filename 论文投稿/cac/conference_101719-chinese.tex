@@ -1,0 +1,420 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage[scheme=plain]{ctex}
+
+\newcommand{\orcidID}[1]{\textsuperscript{\small\textregistered}}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{弥合差距：面向格拉斯曼流序列模型的热启动混合精简知识蒸馏}
+
+\author{\IEEEauthorblockN{宋鑫\orcidID{0009-0009-2497-9106}}
+\IEEEauthorblockA{\textit{国防科技大学智能科学学院}\\
+湖南\ 长沙，中国\\
+songxin25@nudt.edu.cn}
+\and
+\IEEEauthorblockN{吴涛\orcidID{0000-0001-5245-3800}}
+\IEEEauthorblockA{\textit{国防科技大学智能科学学院}\\
+湖南\ 长沙，中国\\
+wt.cs@163.com}
+}
+
+\maketitle
+
+\begin{abstract}
+从融合教师模型向紧凑学生模型进行知识蒸馏，在热启动初始化下可以提升性能，但在随机初始化下却始终失败。本文在四个序列建模数据集——Penn Treebank、WikiText-2、TinyStories 和 Python 代码——上研究了这一现象，采用融合格拉斯曼流分支与 Transformer 分支的双分支架构。实验结果揭示了三种蒸馏模式。在结构丰富的数据集上（PTB、WikiText-2），热启动蒸馏带来了最高达 9.3 测试困惑度点的提升，且在 WikiText-2 上学生模型超越了教师模型。在简单数据上（TinyStories），仅使用交叉熵的热启动训练即优于所有蒸馏变体及教师模型。在 Python 代码上，适度蒸馏提供了有限的收益。随机初始化蒸馏在多数情况下失败，仅 Python 代码例外。架构消融实验证实，热启动的必要性并非格拉斯曼分支特有，而是从异构教师模型向紧凑模型蒸馏的普遍属性。
+\end{abstract}
+
+\begin{IEEEkeywords}
+知识蒸馏，格拉斯曼流，热启动初始化，多数据集验证，序列建模
+\end{IEEEkeywords}
+
+\section{引言}
+
+知识蒸馏将预测性知识从教师模型迁移到较小的学生模型\cite{hinton2015distilling,gou2021knowledge}。当教师模型由架构上截然不同的两个分支——格拉斯曼流分支和 Transformer 分支——融合构建时，蒸馏的有效性不仅取决于模型容量，还取决于学生模型的初始化策略。我们一致地观察到：当学生模型从已训练的混合精简基线热启动时，蒸馏能够成功；而从随机权重初始化时，蒸馏则失败。本文通过对四个文本数据集的系统评估，探究决定蒸馏是否有益的关键因素。
+
+格拉斯曼分支的运作原理与 Transformer 根本不同\cite{vaswani2017attention,gu2023mamba,gu2022s4}：它将隐藏状态投影到低维空间，在多个时间窗口上构建因果标记对，并使用普吕克坐标表示\cite{zhang2025attentionnot}，从而形成捕捉局部标记对关系的结构化几何表示。数据集在多大程度上能够诱导出这种几何结构，是决定教师模型能否提供超越交叉熵监督的关键因素。
+
+本文对格拉斯曼-Transformer 架构中的热启动蒸馏动力学进行了系统的跨数据集分析。主要贡献如下：
+\begin{itemize}
+\item 我们证明了蒸馏结果可被归类为三种截然不同的模式：蒸馏带来显著收益（PTB 和 WikiText-2）、蒸馏无效果（TinyStories）、以及蒸馏带来有限但正向的收益（Python 代码）。
+
+\item 我们表明，随机初始化的蒸馏在多数数据集上失败，而热启动初始化是实现有效知识迁移的必要条件。唯一的例外——Python 代码上 RI+KD 相比从零基线有适度提升——与如下假设一致：在代码类数据上，格拉斯曼分支贡献的几何结构较少，使得早期教师信号的破坏性较低。
+
+\item 我们发现最优蒸馏权重（$\lambda$）随数据集复杂度系统地变化。结构更丰富的数据集可以容纳更大的$\lambda$值（WikiText-2，$\lambda=0.02$），而较简单的数据集需要较小的值（Python 代码，$\lambda=0.01$），或完全无法从蒸馏中受益。
+
+\item 我们证明学生模型在表现出强几何结构的数据集上可以接近或超越教师模型，在 PTB 上达到 51.27（教师 50.11），在 WikiText-2 上达到 60.83（教师 66.87）。这些结果表明蒸馏有助于发现超越基线或教师单独捕获的额外结构。
+
+\end{itemize}
+
+\section{方法}
+
+\subsection{格拉斯曼分支}
+在每一层，格拉斯曼分支将 $h_t \in \mathbb{R}^d$ 通过
+$W_{\mathrm{red}} \in \mathbb{R}^{r \times d}$ 投影为
+$z_t \in \mathbb{R}^r$。对于时间窗口
+$\Delta \in \{1, 2, 4\}$，该分支构建因果标记对
+$(z_t, z_{t-\Delta})$，每一对在 $\mathbb{R}^r$ 中定义一个二维子空间——即格拉斯曼流形
+$\mathrm{Gr}(2,r)$ 上的一个点\cite{edelman1998grassmann,absil2008opt,jiang2025grassmann,valperga2023riemannian}——并通过普吕克坐标表示：
+
+\begin{equation}
+p_{ij}^{(t,\Delta)} = z_{t,i} z_{t-\Delta,j} - z_{t,j} z_{t-\Delta,i},
+\quad 1 \le i < j \le r.
+\label{eq:plucker}
+\end{equation}
+
+L2 归一化后的 $p \in \mathbb{R}^{r(r-1)/2}$ 被投影回维度 $d$，在窗口间取平均后，通过可学习的门控机制与 $h$ 融合：
+
+\begin{equation}
+h_{\mathrm{mix}} = \alpha h + (1-\alpha) g,\quad \alpha = \sigma(\theta),
+\label{eq:gate}
+\end{equation}
+
+随后经过层归一化和 dropout。因此，格拉斯曼分支是一种结构化的因果局部混合算子，用于捕捉局部几何关系\cite{bronstein2021geometric}，而非替代全局自注意力。
+
+\subsection{教师与学生架构}
+
+教师模型通过对数级别的后期融合，将预训练的格拉斯曼分支和 Transformer 分支进行整合：
+
+\begin{equation}
+\hat{z} = \alpha \cdot z^{(T)} + (1-\alpha) \cdot z^{(G)},
+\qquad \alpha = \sigma(\theta),
+\label{eq:fusion}
+\end{equation}
+
+其中 $z^{(T)}$ 和 $z^{(G)}$ 分别为 Transformer 和格拉斯曼分支生成的对数，$\alpha$ 为可学习的标量门控参数。教师模型以联合优化方式训练，两个分支和融合门控同时更新。
+
+\subsection{逐层隐藏状态融合}
+为区分互补性与单纯的参数堆叠，我们将后期融合与逐层隐藏状态融合进行对比。后者在每一层混合两个分支的隐藏表示：
+\begin{equation}
+h_{\ell} = \alpha_{\ell} h_{\ell}^{(T)} + (1-\alpha_{\ell}) h_{\ell}^{(G)},
+\end{equation}
+混合后的状态反馈回两个分支。两种配置共享相同的参数总量，因此如果教师的优势仅来自规模，两者性能应当相当。若后期融合显著优于隐藏融合，则表明存在真正的互补性。
+
+\subsection{学生架构与知识蒸馏}
+学生模型采用相同的后期融合结构，但容量缩减：模型维度 224，$r=56$，每分支六层。蒸馏目标函数为：
+\begin{equation}
+\mathcal{L} = (1-\lambda) \mathcal{L}_{\mathrm{CE}} + \lambda T^2 \mathrm{KL}\!\left(
+\mathrm{softmax}(z_s / T), \mathrm{softmax}(z_t / T) \right),
+\label{eq:kd}
+\end{equation}
+其中 $T = 2.0$。热启动从已用交叉熵预训练的混合精简基线初始化；随机初始化则直接从零开始训练\cite{gou2021knowledge}。关键区别在于，热启动使得格拉斯曼分支在教师监督引入之前先行建立几何表示\cite{mobahi2020self,passalis2020information}。
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\linewidth]{../CICAI2026 AuthorKit/LaTex Template/figure/image1.png}
+\caption{后期融合教师模型与混合精简学生模型的架构。格拉斯曼分支通过普吕克坐标表示处理因果局部标记对，Transformer 分支采用标准多头自注意力。两个分支的输出通过对数级别的可学习标量门控机制进行融合。}
+\label{fig:arch}
+\end{figure}
+
+\section{实验}
+
+\subsection{实验设置}
+
+所有模型使用 GPT-2 分词器（词表 50,257，序列长度 256），在 NVIDIA 3090 GPU 上训练。基线训练 20 个 epoch（batch 32）；教师模型联合训练 10 个 epoch；蒸馏实验运行 10 个 epoch，batch 32，学习率 $1{\times}10^{-4}$。评估四个数据集：\textbf{PTB}（100 万词，新闻）\cite{marcus1993penn}、\textbf{WikiText-2}（250 万词，维基百科）\cite{merity2016pointer}、\textbf{TinyStories}（2000 万词，儿童故事）和 \textbf{Python Code}（5 万份文件，取自 The Stack）。
+
+\subsection{教师模型构建}
+
+表~\ref{tab:teachers} 展示了教师模型性能。融合教师始终优于两个单分支基线，证实了互补预测信息的存在\cite{poli2023hyena,sun2023retentive,peng2023rwkv}。最大提升在 WikiText-2 上（66.87 对比 Transformer 197.65）；最小提升在 Python 代码上（5.68 对比 5.92），表明几何成对建模的贡献在不同数据域之间差异显著。
+
+关键的是，这一优势并非仅仅来自参数量的增加。隐藏状态融合（见表~\ref{tab:teachers} caption）与后期融合共享相同的 36.3M 参数，但性能差超过 22 个困惑度点，表明强制的表示对齐破坏了互补结构。这直接证明了两个分支确实捕捉到了独立的预测信息。
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\caption{后期融合教师模型在各数据集上的性能。融合教师始终优于单分支基线。隐藏融合（仅 PTB，36.3M 参数，与后期融合相同）达到 72.34 PPL，差 22 点以上，表明教师的优势并非仅来自参数量的增加。}
+\label{tab:teachers}
+\begin{tabular}{l r r r}
+\toprule
+数据集 & Transformer & Grassmann & Teacher（后期） \\
+\midrule
+Penn Treebank & 57.17 & 63.61 & \textbf{50.11} \\
+WikiText-2 & 197.65 & 216.45 & \textbf{66.87} \\
+TinyStories & 5.15 & 7.51 & \textbf{4.97} \\
+Python Code & 5.92 & 10.83 & \textbf{5.68} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{蒸馏实验}
+
+表~\ref{tab:distill} 报告了完整的蒸馏研究。两个规律浮现出来。
+
+\textbf{随机初始化蒸馏在多数情况下失败。}在 PTB、WT2 和 TinyStories 上，RI+KD 显著降低了性能（例如，PTB 和 WT2 上分别为 105.86 和 123.17，而基线为 58.53 和 70.16）。例外是 Python 代码，RI+KD 达到 7.10 对比基线 7.67——适度提升。这一例外支持如下假设：当教师的表示与数据的结构差异较小时（如代码），早期教师引导的破坏性较低。
+
+\textbf{热启动仅交叉熵对简单数据已足够。}在 TinyStories 上，仅 CE 微调达到 4.86，优于教师（4.97）和所有蒸馏变体。学生无需蒸馏即超越教师，表明格拉斯曼分支的几何表示对于该任务复杂度已足够。
+
+\textbf{热启动蒸馏在复杂数据上表现出色。}在 PTB 上，最佳配置（$\lambda{=}0.02$）达到 51.27，接近教师（50.11）。在 WikiText-2 上，相同权重达到 60.83，显著超越教师（66.87）。学生性能超越教师表明蒸馏可以引导发现教师自身未能充分利用的结构。最优 $\lambda$ 系统地变化：代码为 0.01，PTB/WT2 为 0.02，TinyStories 实际为零。更大的权重（$\lambda{\ge}0.05$）始终降低性能，表明教师信号作为轻度正则化最为有效，而非主导优化目标。
+
+\begin{table}[t]
+\centering
+\caption{蒸馏结果。RI = 随机初始化；WS = 热启动。每个数据集的最佳结果以\textbf{粗体}标出。结果按数据集组织，以展示每个数据集的完整$\lambda$扫描。}
+\label{tab:distill}
+\resizebox{\columnwidth}{!}{
+\begin{tabular}{l c c c c c}
+\toprule
+条件 & $\lambda$ & PTB & WikiText-2 & TinyStories & Code \\
+\midrule
+Baseline (CE scratch) & -- & 58.53 & 70.16 & 5.07 & 7.67 \\
+RI + KD & 0.05 & 105.86 & 123.17 & 5.84 & 7.10 \\
+WS + CE-only & 0.0  & 59.08 & 71.57 & \textbf{4.86} & 7.25 \\
+WS + KD & 0.01 & 51.91 & 61.21 & 5.31 & \textbf{6.00} \\
+WS + KD & \textbf{0.02} & \textbf{51.27} & \textbf{60.83} & 5.42 & 6.10 \\
+WS + KD & 0.03 & 51.40 & 61.43 & 5.46 & 6.15 \\
+WS + KD & 0.04 & 51.62 & 62.21 & 5.49 & 6.18 \\
+WS + KD & 0.05 & 51.84 & 63.00 & 5.50 & 7.10 \\
+\hline
+Teacher & -- & 50.11 & 66.87 & 4.97 & 5.68 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\linewidth]{../CICAI2026 AuthorKit/LaTex Template/figure/image2.pdf}
+\caption{测试困惑度随蒸馏权重$\lambda$在四个数据集上的变化曲线。PTB 和 WikiText-2 的困惑度曲线形成一个浅谷，在 $\lambda=0.02$ 处达到最小值。Python 代码数据集初始急剧下降，在 $\lambda=0.01$ 处达到最低困惑度后逐渐上升。TinyStories 在整个范围内单调递增，表明蒸馏在该数据集上会降低性能。}
+\label{fig:distill_sweep}
+\end{figure}
+
+图~\ref{fig:distill_sweep} 比较了学生与教师模型在跨数据集上的性能。在 WikiText-2 上，热启动蒸馏学生优于教师；在 PTB 上，学生接近教师水平。这些结果表明蒸馏可以促进提取超越教师已捕获的结构，但收益程度取决于数据集特性。在 TinyStories 上，仅 CE 学生达到最佳性能，确认蒸馏在此场景下是不必要的。在 Python 代码上，学生性能接近但未超越教师。
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.82\linewidth]{../CICAI2026 AuthorKit/LaTex Template/figure/image3.pdf}
+\caption{测试困惑度对比。最佳学生模型始终优于从零训练的基线。学生在 WikiText-2 上超越教师，在 PTB 上接近教师水平，在 Python 代码上达到接近教师的性能。在 TinyStories 上，不使用蒸馏（仅交叉熵微调）获得最低困惑度。}
+\label{fig:perplexity_comparison}
+\end{figure}
+
+\subsection{架构消融：热启动必要性是否与格拉斯曼分支相关？}
+\label{sec:arch_ablation}
+
+热启动的必要性是格拉斯曼分支特有的需求，还是通用属性？我们在 PTB 上测试了三种学生架构——纯格拉斯曼、纯 Transformer 和混合精简——全部从同一个后期融合教师进行蒸馏。
+
+\begin{table}[t]
+\centering
+\footnotesize
+\caption{三种学生架构在 PTB 上的从零蒸馏结果。全部失败；无一接近教师（50.11）。}
+\label{tab:arch_ablation}
+\begin{tabular}{l c c}
+\toprule
+架构 & 基线 (CE) & RI + KD \\
+\midrule
+Grassmann-only（小） & 63.82 & 71.15 \\
+Transformer-only（小） & 68.41 & 74.30 \\
+Hybrid-lite & 59.08 & 66.92 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+表~\ref{tab:arch_ablation} 显示三种架构在 RI+KD 下全部失败，无一接近教师。纯 Transformer 的失败表明热启动的必要性是与架构族无关的：教师的分布编码了随机初始化学生无法解释的表示关系，无论其架构如何。热启动提供了稳定的优化轨迹，之后教师信号充当方向性精炼而非结构重建。这解释了为何很小的 $\lambda$（0.01--0.02）即足够。这也澄清了 Python 代码的例外：在分支贡献较少互补结构的数据上，教师的输出空间与随机模型可能产生的输出更为接近，早期引导的破坏性因此较小。
+
+\subsection{跨域迁移}
+
+表~\ref{tab:cross} 展示了 PTB$\to$Python 的迁移结果。PTB 预训练基线在代码上微调后达到 4.17 PPL——该数据集的最佳结果——显著超越代码基线（7.67）和代码教师（5.68）。然而，直接将 PTB 训练的分支通过后期融合应用于代码仅得到 18.30，远差于从零训练。这表明 PTB 上学到的几何表示专门针对英语文本模式，难以迁移到代码语法\cite{bick2024transformers}，或者 PTB 上优化的融合门控在分布偏移下失效。随机初始化融合基线将有助于区分这些解释。
+
+\begin{table}[t]
+\centering
+\caption{从 PTB 到 Python 代码的跨域迁移结果。}
+\label{tab:cross}
+\begin{tabular}{l c}
+\toprule
+方法 & 测试 PPL \\
+\midrule
+\textbf{PTB 基线 + CE 微调} & \textbf{4.17} \\
+Code 基线（从零训练） & 7.67 \\
+Code 教师（代码训练分支） & 5.68 \\
+PTB 基线 + KD（PTB 教师） & 9.10 \\
+PTB 分支 + 在代码上融合 & 18.30 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{讨论}
+
+\subsection{蒸馏有效性的三种模式}
+
+实验结果揭示了三种模式，由教师融合信号与 CE 单独发现之间的表示距离界定：
+
+\textbf{模式一（PTB、WikiText-2）：收益显著。}热启动 KD 相比仅 CE 基线带来了大幅改善（PTB $-7.8$，WT2 $-10.7$）。在 WikiText-2 上学生超越教师（60.83 对比 66.87）；在 PTB 上接近教师水平（51.27 对比 50.11）。格拉斯曼分支形成了与 Transformer 注意力互补的表示，后期融合保持了这种独立性（隐藏融合：72.34）。最优 $\lambda{=}0.02$。
+
+\textbf{模式二（TinyStories）：蒸馏无益。}仅 CE（4.86）优于所有 KD 变体（5.31--5.50）和教师（4.97）。简单的叙事结构意味着格拉斯曼分支的几何表示通过 CE 训练已足够；教师信号反而引入噪声。
+
+\textbf{模式三（Python 代码）：收益有限。}$\lambda{=}0.01$ 的 KD 提供适度改善（6.00 对比 7.67 基线），但更大权重迅速降低性能。学生未能超越教师。值得注意的是，这是唯一 RI+KD 有帮助的数据集（7.10 对比 7.67 基线），与教师表示与数据结构差异较小时早期引导破坏性较低的假设一致。
+
+这些模式并非仅仅是“基线远离教师时蒸馏有效”的同义反复。架构消融（表~\ref{tab:arch_ablation}）揭示了更深层的机制：热启动的必要性是从异构教师蒸馏的普遍属性，反映了教师融合信号与随机初始化学生能够解释的内容之间的表示距离。一个实践诊断方法是：比较仅 CE 基线相对于教师的表现。若仅 CE 已击败教师，跳过蒸馏。若存在差距且隐藏融合远差于后期融合（确认互补性），使用轻度 KD（$\lambda{=}0.01{-}0.02$）。
+
+\subsection{局限性}
+几项约束限定了当前的研究发现。（1）实验使用相对较小的模型（19--36M 参数）；模式边界可能在大规模下偏移\cite{hu2022lora,dettmers2023qlora,zhang2023adalora}。（2）架构消融（表~\ref{tab:arch_ablation}）仅在 PTB 上进行。（3）仅测试了一个格拉斯曼秩（$r{=}56$）。（4）三种模式的表征基于四个数据集。（5）跨域迁移（表~\ref{tab:cross}）可能反映的是融合门控失效而非表示失效。（6）参数规模匹配的单分支 Transformer 教师基线将加强隐藏融合对比后期融合的互补性论证。
+
+\section{结论}
+
+本文研究了格拉斯曼-Transformer 混合模型在四个文本数据集上的热启动蒸馏，并辅以 PTB 架构消融实验。四项发现如下：（1）两个分支真正互补——在相同参数下，后期融合优于隐藏融合超过 22 PPL，证实了独立的预测信息。（2）热启动的必要性与架构族无关；纯 Transformer、纯格拉斯曼和混合精简学生在 RI+KD 下均失败（表~\ref{tab:arch_ablation}）。（3）蒸馏结果形成三种模式，由教师信号与 CE 单独发现之间的表示距离决定，学生在 WikiText-2 上超越教师（60.83 对比 66.87），在 PTB 上接近教师（51.27 对比 50.11）。（4）在 TinyStories 上，仅 CE 微调优于教师及所有 KD 变体，表明当数据通过 CE 已能诱导足够几何结构时，蒸馏是不必要的。
+
+实践建议：将热启动仅 CE 基线与教师进行比较。若仅 CE 已匹配或超越教师，跳过蒸馏。若存在差距且隐藏融合远差于后期融合，使用轻度 KD（$\lambda{=}0.01{-}0.02$）。
+
+% ---- 参考文献 ----
+\small
+\begin{thebibliography}{30}
+
+\bibitem{hinton2015distilling}
+Hinton, G., Vinyals, O., Dean, J.: Distilling the knowledge in a neural
+network. arXiv preprint arXiv:1503.02531 (2015)
+
+\bibitem{gou2021knowledge}
+Gou, J., Yu, B., Maybank, S.J., Tao, D.: Knowledge distillation: A survey.
+International Journal of Computer Vision 129(6), 1789--1819 (2021)
+
+\bibitem{mobahi2020self}
+Mobahi, H., Farajtabar, M., Bartlett, P.L.: Self-distillation amplifies
+regularization in Hilbert space. In: Advances in Neural Information Processing
+Systems (2020)
+
+\bibitem{vaswani2017attention}
+Vaswani, A., Shazeer, N., Parmar, N., et al.: Attention is all you need.
+In: Advances in Neural Information Processing Systems (2017)
+
+\bibitem{gu2023mamba}
+Gu, A., Dao, T.: Mamba: Linear-time sequence modeling with selective
+state spaces. arXiv preprint arXiv:2312.00752 (2023)
+
+\bibitem{dao2023flashattention2}
+Dao, T.: FlashAttention-2: Faster attention with better parallelism and
+work partitioning. arXiv preprint arXiv:2307.08691 (2023)
+
+\bibitem{poli2023hyena}
+Poli, M., Massaroli, S., Nguyen, E., et al.: Hyena hierarchy: Towards
+larger convolutional language models. In: International Conference on
+Machine Learning (2023)
+
+\bibitem{sun2023retentive}
+Sun, Y., Dong, L., Shaohan, H., et al.: Retentive network: A successor to
+transformer for large language models. arXiv preprint arXiv:2307.08621 (2023)
+
+\bibitem{peng2023rwkv}
+Peng, B., Alcaide, E., Anthony, Q., et al.: RWKV: Reinventing RNNs for
+the transformer era. arXiv preprint arXiv:2305.13048 (2023)
+
+\bibitem{zhang2025attentionnot}
+Zhang, Y., et al.: Attention is not what you need.
+arXiv preprint arXiv:2512.19428 (2025)
+
+\bibitem{edelman1998grassmann}
+Edelman, A., Arias, T.A., Smith, S.T.: The geometry of algorithms with
+orthogonality constraints. SIAM Journal on Matrix Analysis and Applications
+20(2), 303--353 (1998)
+
+\bibitem{absil2008opt}
+Absil, P.-A., Mahony, R., Sepulchre, R.: Optimization Algorithms on
+Matrix Manifolds. Princeton University Press (2008)
+
+\bibitem{marcus1993penn}
+Marcus, M.P., Santorini, B., Marcinkiewicz, M.A.: Building a large
+annotated corpus of English: The Penn Treebank.
+Computational Linguistics 19(2), 313--330 (1993)
+
+\bibitem{merity2016pointer}
+Merity, S., Xiong, C., Bradbury, J., Socher, R.: Pointer sentinel
+mixture models. In: International Conference on Learning Representations (2016)
+
+\bibitem{passalis2020information}
+Passalis, N., Tefas, A.: Learning deep representations with probabilistic
+knowledge transfer. In: Proceedings of the European Conference on Computer
+Vision, pp. 118--134 (2018)
+
+\bibitem{lea2016temporal}
+Lea, C., Flynn, M.D., Vidal, R., Reiter, A., Hager, G.D.: Temporal
+convolutional networks for action segmentation and detection.
+In: Conference on Computer Vision and Pattern Recognition (2016)
+
+\bibitem{gu2024minillm}
+Gu, Y., Dong, L., Wei, F., Huang, M.: MiniLLM: Knowledge distillation of
+large language models. In: International Conference on Learning
+Representations (2024)
+
+\bibitem{ko2024distillm}
+Ko, J., Kim, S., Chen, T., Yun, S.-Y.: DistiLLM: Towards streamlined
+distillation for large language models. In: International Conference on
+Machine Learning (2024)
+
+\bibitem{agarwal2024gkd}
+Agarwal, R., Vieillard, N., Stanber, P., et al.: On-policy distillation of
+language models: Learning from self-generated mistakes.
+In: International Conference on Learning Representations (2024)
+
+\bibitem{hsieh2023distilling}
+Hsieh, C.-Y., Li, C.-L., Yeh, C.-K., et al.: Distilling step-by-step!
+Outperforming larger language models with less training data and smaller
+model sizes. In: Findings of the Association for Computational
+Linguistics (2023)
+
+\bibitem{ho2023llm}
+Ho, N., Schmid, L., Yun, S.-Y.: Large language models are reasoning
+teachers. In: Proceedings of the Association for Computational
+Linguistics (2023)
+
+\bibitem{gu2022s4}
+Gu, A., Goel, K., Re, C.: Efficiently modeling long sequences with
+structured state spaces. In: International Conference on Learning
+Representations (2022)
+
+\bibitem{dao2024mamba2}
+Dao, T., Gu, A.: Transformers are SSMs: Generalized models and efficient
+algorithms through structured state space duality.
+In: International Conference on Machine Learning (2024)
+
+\bibitem{de2024griffin}
+De, S., Smith, S.L., Fernando, A., et al.: Griffin: Mixing gated linear
+recurrences with local attention for efficient language models.
+arXiv preprint arXiv:2402.19427 (2024)
+
+\bibitem{lieber2024jamba}
+Lieber, O., Lenz, B., Bata, H., et al.: Jamba: A hybrid
+transformer-mamba language model. arXiv preprint arXiv:2403.19887 (2024)
+
+\bibitem{hu2022lora}
+Hu, E.J., Shen, Y., Wallis, P., et al.: LoRA: Low-rank adaptation of
+large language models. In: International Conference on Learning
+Representations (2022)
+
+\bibitem{dettmers2023qlora}
+Dettmers, T., Pagnoni, A., Holtzman, A., Zettlemoyer, L.: QLoRA:
+Efficient finetuning of quantized large language models.
+In: Advances in Neural Information Processing Systems (2023)
+
+\bibitem{zhang2023adalora}
+Zhang, Q., Chen, M., Bukharin, A., et al.: AdaLoRA: Adaptive budget
+allocation for parameter-efficient fine-tuning.
+In: International Conference on Learning Representations (2023)
+
+\bibitem{bick2024transformers}
+Bick, A., Li, K.Y., Xing, E.P., Kolter, J.Z., Gu, A.: Transformers to
+SSMs: Distilling quadratic knowledge to subquadratic models.
+arXiv preprint arXiv:2408.10189 (2024)
+
+\bibitem{bronstein2021geometric}
+Bronstein, M.M., Bruna, J., Cohen, T., Velickovic, P.: Geometric deep
+learning: Grids, groups, graphs, geodesics, and gauges.
+arXiv preprint arXiv:2104.13478 (2021)
+
+\bibitem{jiang2025grassmann}
+Jiang, L., Li, Z., Zhang, H., Bi, K., Hu, Z., Xu, H.: Generative
+Grassmann flow matching. arXiv preprint arXiv:2502.11602 (2025)
+
+\bibitem{valperga2023riemannian}
+Valperga, R., Webster, K., Onuchin, A., et al.: Riemannian flow matching
+on general geometries. arXiv preprint arXiv:2302.03660 (2023)
+
+\end{thebibliography}
+
+\end{document}

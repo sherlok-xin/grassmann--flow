@@ -1,0 +1,9 @@
+arm,strategy,status,seed,max_lines,epochs,kd_lambda,branch_lambda,tau,best_epoch,best_val_ppl,test_ppl,notes
+C0,fixed_fused,complete,42,20000,2,0,0,0.25,2,5.0182719231,5.0195131302,CE-only
+C1,fixed_fused,complete,42,20000,2,5,0,0.25,2,5.3040709496,5.3017802238,fixed fused KD
+C2,entropy_gated,complete,42,20000,2,5,0,0.25,2,5.3026576042,5.3007974625,entropy-gated fused KD
+C3,disagreement_suppressed,incomplete,42,20000,2,5,0,0.25,,,,GPU3 clock-limited attempts terminated before epoch completion
+C4,branch_only,complete,42,20000,2,0,2.5,0.25,2,5.6135115623,5.6099848747,architecture-aligned branch KD
+C5,crbd,complete,42,20000,2,5,2.5,0.25,2,5.5104160309,5.5066862106,proposed routing
+C6,crbd_shuffled,complete,42,20000,2,5,2.5,0.25,2,5.5045261383,5.5009531975,shuffled routing control
+C7,crbd_swapped,complete,42,20000,2,5,2.5,0.25,2,6.3667588234,6.3615713119,swapped branch-pairing control

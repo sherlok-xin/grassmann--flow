@@ -1,0 +1,82 @@
+{
+  "global_best_grassmann": {
+    "run_id": "20260323_041127",
+    "experiment_name": "tinystories_ws1248_rd64_md240_300k_e20_bs16_split3",
+    "dataset": "tinystories",
+    "test_ppl": 7.077847003936768,
+    "best_val_ppl": 7.0570149421691895,
+    "run_dir": "outputs/experiments/20260323_041127_tinystories_ws1248_rd64_md240_300k_e20_bs16_split3"
+  },
+  "global_best_transformer": {
+    "run_id": "20260322_095111",
+    "experiment_name": "tinystories_transformer_300k_e20_split3",
+    "dataset": "tinystories",
+    "test_ppl": 5.148688793182373,
+    "best_val_ppl": 5.130181312561035,
+    "run_dir": "outputs/experiments/20260322_095111_tinystories_transformer_300k_e20_split3"
+  },
+  "best_by_dataset": {
+    "ptb": {
+      "grassmann": {
+        "run_id": "20260318_102137",
+        "experiment_name": "ptb_ws124_rd64_md240",
+        "test_ppl": 55.67412567138672,
+        "best_val_ppl": 64.45420837402344,
+        "run_dir": "outputs/experiments/20260318_102137_ptb_ws124_rd64_md240"
+      },
+      "transformer": {
+        "run_id": "20260318_094720",
+        "experiment_name": "ptb_baseline_both",
+        "test_ppl": 57.1652717590332,
+        "best_val_ppl": 66.28954315185547,
+        "run_dir": "outputs/experiments/20260318_094720_ptb_baseline_both"
+      }
+    },
+    "tinystories": {
+      "grassmann": {
+        "run_id": "20260323_041127",
+        "experiment_name": "tinystories_ws1248_rd64_md240_300k_e20_bs16_split3",
+        "test_ppl": 7.077847003936768,
+        "best_val_ppl": 7.0570149421691895,
+        "run_dir": "outputs/experiments/20260323_041127_tinystories_ws1248_rd64_md240_300k_e20_bs16_split3"
+      },
+      "transformer": {
+        "run_id": "20260322_095111",
+        "experiment_name": "tinystories_transformer_300k_e20_split3",
+        "test_ppl": 5.148688793182373,
+        "best_val_ppl": 5.130181312561035,
+        "run_dir": "outputs/experiments/20260322_095111_tinystories_transformer_300k_e20_split3"
+      }
+    },
+    "wikitext2": {
+      "grassmann": {
+        "run_id": "20260317_165317",
+        "experiment_name": "wt2_ws124_rd64",
+        "test_ppl": 216.4541931152344,
+        "best_val_ppl": 210.1820068359375,
+        "run_dir": "outputs/experiments/20260317_165317_wt2_ws124_rd64"
+      },
+      "transformer": {
+        "run_id": "20260317_114514",
+        "experiment_name": "wt2_baseline_both",
+        "test_ppl": 197.6451568603516,
+        "best_val_ppl": 188.393798828125,
+        "run_dir": "outputs/experiments/20260317_114514_wt2_baseline_both"
+      }
+    }
+  },
+  "recommended_hybrid_pairs": {
+    "ptb": {
+      "grassmann_run_dir": "outputs/experiments/20260318_102137_ptb_ws124_rd64_md240",
+      "transformer_run_dir": "outputs/experiments/20260318_094720_ptb_baseline_both"
+    },
+    "tinystories": {
+      "grassmann_run_dir": "outputs/experiments/20260323_041127_tinystories_ws1248_rd64_md240_300k_e20_bs16_split3",
+      "transformer_run_dir": "outputs/experiments/20260322_095111_tinystories_transformer_300k_e20_split3"
+    },
+    "wikitext2": {
+      "grassmann_run_dir": "outputs/experiments/20260317_165317_wt2_ws124_rd64",
+      "transformer_run_dir": "outputs/experiments/20260317_114514_wt2_baseline_both"
+    }
+  }
+}

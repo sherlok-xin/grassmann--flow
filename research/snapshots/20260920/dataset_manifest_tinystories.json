@@ -1,0 +1,90 @@
+{
+  "name": "tinystories",
+  "source_path": "/workspace/grassmannflows/datasets/tinystories_saved",
+  "source_description": "roneneldan/TinyStories saved with Hugging Face Datasets",
+  "text_field": "text",
+  "split_scheme": "train split is deterministically split 98/2 with seed 42; original validation is test",
+  "tokenizer": {
+    "implementation": "transformers.GPT2Tokenizer",
+    "resolved_path": "/workspace/grassmannflows/grassmann-flows/gpt2_local",
+    "vocab_size": 50257,
+    "add_special_tokens": false
+  },
+  "dataset_splits": {
+    "train": {
+      "rows": 2119719,
+      "fingerprint": "3f36a754e8e5818f",
+      "columns": [
+        "text"
+      ],
+      "features": "{'text': Value(dtype='string', id=None)}"
+    },
+    "validation": {
+      "rows": 21990,
+      "fingerprint": "d650d0e59aea99a5",
+      "columns": [
+        "text"
+      ],
+      "features": "{'text': Value(dtype='string', id=None)}"
+    }
+  },
+  "preprocessing": {
+    "train": {
+      "split": "train",
+      "dataset_name": "tinystories",
+      "dataset_path": "/workspace/grassmannflows/datasets/tinystories_saved",
+      "text_field": "text",
+      "source": "disk",
+      "non_empty_lines": 300000,
+      "char_count": 268845044,
+      "token_count_before_trim": 67081279,
+      "num_chunks": 262036,
+      "max_seq_len": 256,
+      "max_lines": 300000,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    },
+    "validation": {
+      "split": "validation",
+      "dataset_name": "tinystories",
+      "dataset_path": "/workspace/grassmannflows/datasets/tinystories_saved",
+      "text_field": "text",
+      "source": "disk",
+      "non_empty_lines": 42391,
+      "char_count": 37838618,
+      "token_count_before_trim": 9440302,
+      "num_chunks": 36876,
+      "max_seq_len": 256,
+      "max_lines": 300000,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    },
+    "test": {
+      "split": "test",
+      "dataset_name": "tinystories",
+      "dataset_path": "/workspace/grassmannflows/datasets/tinystories_saved",
+      "text_field": "text",
+      "source": "disk",
+      "non_empty_lines": 21990,
+      "char_count": 19190318,
+      "token_count_before_trim": 4765822,
+      "num_chunks": 18616,
+      "max_seq_len": 256,
+      "max_lines": 300000,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    }
+  },
+  "metadata_file_sha256": {
+    "dataset_dict.json": "88b5b05fc757e76e7edc779db90e96cb6d76538b93165d6ce962a818801babf4",
+    "train/dataset_info.json": "fb20eb36999c184652b35946d32d03c72300e23fdee43e50588152a076e2ca75",
+    "train/state.json": "0cf36f45e3597f889495c48c213aff78b665ae3d124491867e4b92ed2f34c9e4",
+    "validation/dataset_info.json": "fb20eb36999c184652b35946d32d03c72300e23fdee43e50588152a076e2ca75",
+    "validation/state.json": "48880e567997df0b3fa1cc288f0ac53baaabf5e393416b7778c97064962086fe"
+  },
+  "metadata_digest": "186ce97ea92f072b04324437a8d86572b05258d34d5fb5b753e2732dd398d4c8",
+  "note": "Arrow payloads were not copied or hashed; Hugging Face fingerprints and metadata hashes identify the mounted snapshot."
+}

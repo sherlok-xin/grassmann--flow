@@ -1,0 +1,100 @@
+{
+  "name": "ptb",
+  "source_path": "/workspace/grassmannflows/datasets/ptb_text_only_saved",
+  "source_description": "ptb_text_only/penn_treebank saved with Hugging Face Datasets",
+  "text_field": "sentence",
+  "split_scheme": "native train/validation/test",
+  "tokenizer": {
+    "implementation": "transformers.GPT2Tokenizer",
+    "resolved_path": "/workspace/grassmannflows/grassmann-flows/gpt2_local",
+    "vocab_size": 50257,
+    "add_special_tokens": false
+  },
+  "dataset_splits": {
+    "train": {
+      "rows": 42068,
+      "fingerprint": "34c38bc2c292be01",
+      "columns": [
+        "sentence"
+      ],
+      "features": "{'sentence': Value(dtype='string', id=None)}"
+    },
+    "test": {
+      "rows": 3761,
+      "fingerprint": "cc49a58807557e08",
+      "columns": [
+        "sentence"
+      ],
+      "features": "{'sentence': Value(dtype='string', id=None)}"
+    },
+    "validation": {
+      "rows": 3370,
+      "fingerprint": "824faa0d884540e5",
+      "columns": [
+        "sentence"
+      ],
+      "features": "{'sentence': Value(dtype='string', id=None)}"
+    }
+  },
+  "preprocessing": {
+    "train": {
+      "split": "train",
+      "dataset_name": "ptb",
+      "dataset_path": "/workspace/grassmannflows/datasets/ptb_text_only_saved",
+      "text_field": "sentence",
+      "source": "disk",
+      "non_empty_lines": 42068,
+      "char_count": 4975414,
+      "token_count_before_trim": 1136446,
+      "num_chunks": 4439,
+      "max_seq_len": 256,
+      "max_lines": 0,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    },
+    "validation": {
+      "split": "validation",
+      "dataset_name": "ptb",
+      "dataset_path": "/workspace/grassmannflows/datasets/ptb_text_only_saved",
+      "text_field": "sentence",
+      "source": "disk",
+      "non_empty_lines": 3370,
+      "char_count": 389672,
+      "token_count_before_trim": 89842,
+      "num_chunks": 350,
+      "max_seq_len": 256,
+      "max_lines": 0,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    },
+    "test": {
+      "split": "test",
+      "dataset_name": "ptb",
+      "dataset_path": "/workspace/grassmannflows/datasets/ptb_text_only_saved",
+      "text_field": "sentence",
+      "source": "disk",
+      "non_empty_lines": 3761,
+      "char_count": 438662,
+      "token_count_before_trim": 101870,
+      "num_chunks": 397,
+      "max_seq_len": 256,
+      "max_lines": 0,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    }
+  },
+  "metadata_file_sha256": {
+    "dataset_dict.json": "2bf46fe547f16d795abe0d4c8a591bf031d98882d638931d27660455ee986273",
+    "test/dataset_info.json": "3605fcfff28c875d3cb575e7fe6e729a33b23399b4a6a9d42aca78d6fc4dc03c",
+    "test/state.json": "3a15270c6630971b6e8cf458d442924ac937cdae750fc465abdb66d846961943",
+    "train/dataset_info.json": "3605fcfff28c875d3cb575e7fe6e729a33b23399b4a6a9d42aca78d6fc4dc03c",
+    "train/state.json": "41578205b01d0a4ce2a78e26046de036a1dece43affb763773b49d0a54f7dca0",
+    "validation/dataset_info.json": "3605fcfff28c875d3cb575e7fe6e729a33b23399b4a6a9d42aca78d6fc4dc03c",
+    "validation/state.json": "b2942b9193e6ed17b592b3e31352e65348a29503f206b30ffa179e8e74425188"
+  },
+  "metadata_digest": "743dbcada0534cd67f3f850cddb6ba21ae570d3284a2af8b02d228b9a085854a",
+  "note": "Arrow payloads were not copied or hashed; Hugging Face fingerprints and metadata hashes identify the mounted snapshot."
+}

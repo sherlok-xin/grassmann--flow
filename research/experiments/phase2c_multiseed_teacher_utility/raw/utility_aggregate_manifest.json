@@ -1,0 +1,10 @@
+{
+  "selection_indices_sha256": "236633612db1e3144b8f3187a5bfb1795f558a50f26368252a8adf3f0b49413f",
+  "student_checkpoint_sha256": {
+    "42": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+    "123": "a44b64ba5a84d3bd2708a96aad4eae829ff7ab0f00476f0e31146fc314da1f13",
+    "456": "3fbe985d6474c84d1c61fd7937ea906102cf460846829eb3af4c709593b01757"
+  },
+  "overall_rows": 9,
+  "group_rows": 63
+}

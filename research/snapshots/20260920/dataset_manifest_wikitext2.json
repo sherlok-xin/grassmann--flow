@@ -1,0 +1,100 @@
+{
+  "name": "wikitext2",
+  "source_path": "/workspace/grassmannflows/datasets/wikitext2_v1_saved",
+  "source_description": "wikitext/wikitext-2-raw-v1 saved with Hugging Face Datasets",
+  "text_field": "text",
+  "split_scheme": "native train/validation/test",
+  "tokenizer": {
+    "implementation": "transformers.GPT2Tokenizer",
+    "resolved_path": "/workspace/grassmannflows/grassmann-flows/gpt2_local",
+    "vocab_size": 50257,
+    "add_special_tokens": false
+  },
+  "dataset_splits": {
+    "train": {
+      "rows": 36718,
+      "fingerprint": "51136de708c0a2bf",
+      "columns": [
+        "text"
+      ],
+      "features": "{'text': Value(dtype='string', id=None)}"
+    },
+    "validation": {
+      "rows": 3760,
+      "fingerprint": "b77530894bcc7101",
+      "columns": [
+        "text"
+      ],
+      "features": "{'text': Value(dtype='string', id=None)}"
+    },
+    "test": {
+      "rows": 4358,
+      "fingerprint": "e4ce62771c3fed1a",
+      "columns": [
+        "text"
+      ],
+      "features": "{'text': Value(dtype='string', id=None)}"
+    }
+  },
+  "preprocessing": {
+    "train": {
+      "split": "train",
+      "dataset_name": "wikitext2",
+      "dataset_path": "/workspace/grassmannflows/datasets/wikitext2_v1_saved",
+      "text_field": "text",
+      "source": "disk",
+      "non_empty_lines": 23767,
+      "char_count": 10683234,
+      "token_count_before_trim": 2401115,
+      "num_chunks": 9379,
+      "max_seq_len": 256,
+      "max_lines": 0,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    },
+    "validation": {
+      "split": "validation",
+      "dataset_name": "wikitext2",
+      "dataset_path": "/workspace/grassmannflows/datasets/wikitext2_v1_saved",
+      "text_field": "text",
+      "source": "disk",
+      "non_empty_lines": 2461,
+      "char_count": 1110211,
+      "token_count_before_trim": 253809,
+      "num_chunks": 991,
+      "max_seq_len": 256,
+      "max_lines": 0,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    },
+    "test": {
+      "split": "test",
+      "dataset_name": "wikitext2",
+      "dataset_path": "/workspace/grassmannflows/datasets/wikitext2_v1_saved",
+      "text_field": "text",
+      "source": "disk",
+      "non_empty_lines": 2891,
+      "char_count": 1243411,
+      "token_count_before_trim": 290257,
+      "num_chunks": 1133,
+      "max_seq_len": 256,
+      "max_lines": 0,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    }
+  },
+  "metadata_file_sha256": {
+    "dataset_dict.json": "1239dbd4ca38311b03319b672c05a6fdaacc884b0034eed047659406c62eedd4",
+    "test/dataset_info.json": "6f88709c27798c6e5ac7002e08dba0e2c64b779dbe6ad2ea32124c0d7a1fc6bb",
+    "test/state.json": "1b98470847cff80a63bcbbc2d0a5421aab0c6c19ab0063bd394d56f154050dd5",
+    "train/dataset_info.json": "6f88709c27798c6e5ac7002e08dba0e2c64b779dbe6ad2ea32124c0d7a1fc6bb",
+    "train/state.json": "6ee52df44a6384873b4957cad0d03d70152e84ae8433f7aaf7bf12315b331997",
+    "validation/dataset_info.json": "6f88709c27798c6e5ac7002e08dba0e2c64b779dbe6ad2ea32124c0d7a1fc6bb",
+    "validation/state.json": "24481c3e83b50c48b2d7abcdabe52658d5f736cde2575b89e3cf143e277163ab"
+  },
+  "metadata_digest": "88f04fd8322deba12218158bfdc69ffbbfe7ead15cf262346bf1107d1a09291c",
+  "note": "Arrow payloads were not copied or hashed; Hugging Face fingerprints and metadata hashes identify the mounted snapshot."
+}

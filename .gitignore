@@ -43,6 +43,7 @@ outputs/
 # Logs
 *.log
 wandb/
+logs/
 
 # OS
 .DS_Store
@@ -51,6 +52,7 @@ Thumbs.db
 # Data cache
 data/
 .cache/
+gpt2_local/
 
 # CUDA build artifacts
 src/cuda/build/
@@ -59,3 +61,35 @@ src/cuda/*.so
 # Local config
 CLAUDE.md
 uv.lock
+
+# Local agent packages and runtime state
+.agents/
+.codex/
+
+# Detailed token-level exports and smoke artifacts are reproducible but too
+# large/noisy for the source repository. Compact summaries remain versioned.
+research/experiments/**/token_diagnostics.csv
+research/experiments/**/raw/smoke_runs/
+
+# LaTeX build caches and intermediate files
+**/.texlive-cache/
+*.aux
+*.blg
+*.bbl
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+*.out
+paper/main_1.pdf
+
+# Historical submission kits and duplicated manuscript snapshots. The curated
+# current CAC source remains under 论文投稿/cac/.
+论文投稿/1768881908662564/
+论文投稿/CICAI2026 AuthorKit/
+论文投稿/cicia/
+论文投稿/paper_cac_draft/
+论文投稿/cac第一版.tex
+论文投稿/cac/IEEEtran_HOWTO.pdf
+论文投稿/cac/Bridging the Gap Warm-start Hybrid-lite Distillation for Grassmann Flow Sequence Models.pdf
+论文投稿/cac/conference_101719-chinese.pdf

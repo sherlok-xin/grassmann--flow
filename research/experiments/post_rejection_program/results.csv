@@ -1,0 +1,9 @@
+dataset,seed,arm,kd_loss_mode,kd_lambda,best_epoch,best_val_ppl,test_ppl,teacher_test_ppl,delta_test_ppl_vs_ce,relative_test_change_pct,run_dir,status
+ptb,42,ce,token_mean,0,1,69.218750,59.117523,50.112495,0.000000,0.000000,outputs/distill_experiments/20260916_150712_h0_ptb_confirm_token_l0_seed42_retry50m_v2,complete
+ptb,42,kd,token_mean,5,10,59.251602,51.277058,50.112495,-7.840466,-13.262507,outputs/distill_experiments/20260916_150712_h0_ptb_confirm_token_l5_seed42_retry50m,complete
+ptb,123,ce,token_mean,0,1,69.623497,59.656609,50.112495,0.000000,0.000000,outputs/distill_experiments/20260916_152242_h0_ptb_confirm_token_l0_seed123,complete
+ptb,123,kd,token_mean,5,10,59.275623,51.374538,50.112495,-8.282070,-13.882905,outputs/distill_experiments/20260916_155134_h0_ptb_confirm_token_l5_seed123,complete
+ptb,456,ce,token_mean,0,1,69.710693,59.081902,50.112495,0.000000,0.000000,outputs/distill_experiments/20260916_153710_h0_ptb_confirm_token_l0_seed456,complete
+ptb,456,kd,token_mean,5,9,59.263893,51.206104,50.112495,-7.875797,-13.330304,outputs/distill_experiments/20260916_155348_h0_ptb_confirm_token_l5_seed456,complete
+tinystories,42,ce,token_mean,0,10,4.841408,4.861118,4.969051,0.000000,0.000000,outputs/distill_experiments/20260916_073243_h0_ts_confirm_token_l0_seed42,complete
+tinystories,42,kd,token_mean,5,10,5.395685,5.412696,4.969051,0.551578,11.346732,outputs/distill_experiments/20260916_073219_h0_ts_confirm_token_l5_seed42,complete

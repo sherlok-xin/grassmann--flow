@@ -1,0 +1,104 @@
+diff --git a/.gitignore b/.gitignore
+old mode 100644
+new mode 100755
+diff --git a/LICENSE b/LICENSE
+old mode 100644
+new mode 100755
+diff --git a/README.md b/README.md
+old mode 100644
+new mode 100755
+index 8269a3e..56f3d1d
+--- a/README.md
++++ b/README.md
+@@ -6,6 +6,12 @@ An independent reproduction study of "Attention Is Not What You Need" (arXiv 251
+ 
+ This repository contains a reproduction of Grassmann flow layers for sequence modeling. The original paper claims performance "within 10-15% of size-matched Transformers" on Wikitext-2. Our reproduction shows a **22.6% gap** - significantly larger than claimed.
+ 
++## Current Research Status
++
++The repository now also studies knowledge distillation from a heterogeneous Grassmann--Transformer late-fusion teacher into smaller students. After the CAC submission was rejected, the project returned to empirical validation. The immediate priorities are token-normalized KD, matched multi-seed controls, and branch-aware methods that address the observed negative transfer on TinyStories.
++
++Start with [the project map](docs/project_map.md), [the experiment catalog](docs/experiment_catalog.md), and [the post-rejection roadmap](docs/research_roadmap.md). The generated registry at `docs/generated/experiment_registry.csv` indexes all current run directories without moving or deleting historical artifacts.
++
+ ## Key Results
+ 
+ | Model | Parameters | Test PPL |
+diff --git a/analyze.py b/analyze.py
+old mode 100644
+new mode 100755
+diff --git a/benchmark_cuda.py b/benchmark_cuda.py
+old mode 100644
+new mode 100755
+diff --git a/blog.md b/blog.md
+old mode 100644
+new mode 100755
+diff --git a/configs.py b/configs.py
+old mode 100644
+new mode 100755
+diff --git a/paper/00README.json b/paper/00README.json
+old mode 100644
+new mode 100755
+diff --git a/paper/main_1.tex b/paper/main_1.tex
+old mode 100644
+new mode 100755
+diff --git a/profile_training.py b/profile_training.py
+old mode 100644
+new mode 100755
+diff --git a/pyproject.toml b/pyproject.toml
+old mode 100644
+new mode 100755
+diff --git a/src/__init__.py b/src/__init__.py
+old mode 100644
+new mode 100755
+index 4f2cf1d..ad3351e
+--- a/src/__init__.py
++++ b/src/__init__.py
+@@ -1,4 +1,3 @@
+-from . import models
+-from . import data
++"""Core model, loss, and diagnostic utilities."""
+ 
+-__all__ = ["models", "data"]
++__all__ = ["models"]
+diff --git a/src/cuda/__init__.py b/src/cuda/__init__.py
+old mode 100644
+new mode 100755
+diff --git a/src/cuda/grassmann_fused.py b/src/cuda/grassmann_fused.py
+old mode 100644
+new mode 100755
+diff --git a/src/cuda/grassmann_kernels.cu b/src/cuda/grassmann_kernels.cu
+old mode 100644
+new mode 100755
+diff --git a/src/cuda/setup.py b/src/cuda/setup.py
+old mode 100644
+new mode 100755
+diff --git a/src/models/__init__.py b/src/models/__init__.py
+old mode 100644
+new mode 100755
+diff --git a/src/models/gpt2.py b/src/models/gpt2.py
+old mode 100644
+new mode 100755
+diff --git a/src/models/grassmann.py b/src/models/grassmann.py
+old mode 100644
+new mode 100755
+diff --git a/src/models/grassmann_v2.py b/src/models/grassmann_v2.py
+old mode 100644
+new mode 100755
+diff --git a/src/models/grassmann_v3.py b/src/models/grassmann_v3.py
+old mode 100644
+new mode 100755
+diff --git a/src/models/grassmann_v4.py b/src/models/grassmann_v4.py
+old mode 100644
+new mode 100755
+diff --git a/technical.md b/technical.md
+old mode 100644
+new mode 100755
+diff --git a/test_cuda_kernels.py b/test_cuda_kernels.py
+old mode 100644
+new mode 100755
+diff --git a/train.py b/train.py
+old mode 100644
+new mode 100755
+diff --git a/train_wikitext2.py b/train_wikitext2.py
+old mode 100644
+new mode 100755

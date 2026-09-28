@@ -1,0 +1,100 @@
+{
+  "name": "codeparrot_common5k",
+  "source_path": "/workspace/grassmannflows/datasets/codeparrot_saved",
+  "source_description": "locally saved CodeParrot corpus",
+  "text_field": "text",
+  "split_scheme": "native train/validation/test; first 5,000 non-empty records per split",
+  "tokenizer": {
+    "implementation": "transformers.GPT2Tokenizer",
+    "resolved_path": "/workspace/grassmannflows/grassmann-flows/gpt2_local",
+    "vocab_size": 50257,
+    "add_special_tokens": false
+  },
+  "dataset_splits": {
+    "train": {
+      "rows": 40000,
+      "fingerprint": "dd1e3290ad80fbd4",
+      "columns": [
+        "text"
+      ],
+      "features": "{'text': Value(dtype='string', id=None)}"
+    },
+    "validation": {
+      "rows": 5000,
+      "fingerprint": "0e1c6d65a213be72",
+      "columns": [
+        "text"
+      ],
+      "features": "{'text': Value(dtype='string', id=None)}"
+    },
+    "test": {
+      "rows": 5000,
+      "fingerprint": "100ec7579715147d",
+      "columns": [
+        "text"
+      ],
+      "features": "{'text': Value(dtype='string', id=None)}"
+    }
+  },
+  "preprocessing": {
+    "train": {
+      "split": "train",
+      "dataset_name": "ptb",
+      "dataset_path": "/workspace/grassmannflows/datasets/codeparrot_saved",
+      "text_field": "text",
+      "source": "disk",
+      "non_empty_lines": 5000,
+      "char_count": 49698665,
+      "token_count_before_trim": 22293130,
+      "num_chunks": 87082,
+      "max_seq_len": 256,
+      "max_lines": 5000,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    },
+    "validation": {
+      "split": "validation",
+      "dataset_name": "ptb",
+      "dataset_path": "/workspace/grassmannflows/datasets/codeparrot_saved",
+      "text_field": "text",
+      "source": "disk",
+      "non_empty_lines": 5000,
+      "char_count": 50378397,
+      "token_count_before_trim": 22587703,
+      "num_chunks": 88233,
+      "max_seq_len": 256,
+      "max_lines": 5000,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    },
+    "test": {
+      "split": "test",
+      "dataset_name": "ptb",
+      "dataset_path": "/workspace/grassmannflows/datasets/codeparrot_saved",
+      "text_field": "text",
+      "source": "disk",
+      "non_empty_lines": 5000,
+      "char_count": 49020272,
+      "token_count_before_trim": 22123845,
+      "num_chunks": 86421,
+      "max_seq_len": 256,
+      "max_lines": 5000,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    }
+  },
+  "metadata_file_sha256": {
+    "dataset_dict.json": "1239dbd4ca38311b03319b672c05a6fdaacc884b0034eed047659406c62eedd4",
+    "test/dataset_info.json": "6f88709c27798c6e5ac7002e08dba0e2c64b779dbe6ad2ea32124c0d7a1fc6bb",
+    "test/state.json": "c9027216f71d3832801f1f6bcb6405c429d57c58fabb6ae47a7ee7255e456ae0",
+    "train/dataset_info.json": "6f88709c27798c6e5ac7002e08dba0e2c64b779dbe6ad2ea32124c0d7a1fc6bb",
+    "train/state.json": "5d8bef2fe6d13ea483645c16262d99f0a13cec2c42cc8a2f2fc61125541e3446",
+    "validation/dataset_info.json": "6f88709c27798c6e5ac7002e08dba0e2c64b779dbe6ad2ea32124c0d7a1fc6bb",
+    "validation/state.json": "eef5984f0d0931e79de450c4d3b2295425cd44b21e56731b6ec9ef81f87281c3"
+  },
+  "metadata_digest": "c9140776d59b76138e13c0c4a8dba643fcdbe3ea8d6b5a3548d2f146b1ef0967",
+  "note": "Arrow payloads were not copied or hashed; Hugging Face fingerprints and metadata hashes identify the mounted snapshot."
+}

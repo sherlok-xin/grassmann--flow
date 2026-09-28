@@ -1,0 +1,766 @@
+import os
+import sys
+import json
+import time
+import argparse
+import platform
+import random
+from datetime import datetime
+from pathlib import Path
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from torch.utils.data import DataLoader, Dataset
+from datasets import load_dataset
+from transformers import GPT2Tokenizer
+from tqdm import tqdm
+
+sys.path.insert(0, "src")
+from models import GrassmannGPTv4
+from datasets import load_dataset, load_from_disk
+
+# -----------------------------------------------------------------------------
+# Utils
+# -----------------------------------------------------------------------------
+
+def set_seed(seed: int):
+    random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+
+def now_str():
+    return datetime.now().strftime("%Y%m%d_%H%M%S")
+
+
+def save_json(obj, path: Path):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(obj, f, indent=2, ensure_ascii=False)
+
+
+def append_jsonl(obj, path: Path):
+    with open(path, "a", encoding="utf-8") as f:
+        f.write(json.dumps(obj, ensure_ascii=False) + "\n")
+
+
+def get_env_info():
+    return {
+        "python_version": platform.python_version(),
+        "pytorch_version": torch.__version__,
+        "cuda_available": torch.cuda.is_available(),
+        "cuda_device_count": torch.cuda.device_count(),
+        "cuda_device_name": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
+        "platform": platform.platform(),
+    }
+
+def get_tinystories_split(ds_all, split, val_frac=0.02, split_seed=42):
+    """
+    TinyStories 三划分:
+    - train: 原始 train 的大部分
+    - validation: 从原始 train 中切出来的一小部分
+    - test: 原始 validation
+    """
+    if "train" not in ds_all:
+        raise ValueError(f"TinyStories dataset has no 'train' split. Available: {list(ds_all.keys())}")
+    if "validation" not in ds_all:
+        raise ValueError(f"TinyStories dataset has no 'validation' split. Available: {list(ds_all.keys())}")
+
+    train_full = ds_all["train"]
+
+    # 从 train 中切出 validation
+    split_dict = train_full.train_test_split(
+        test_size=val_frac,
+        seed=split_seed,
+        shuffle=True,
+    )
+
+    if split == "train":
+        return split_dict["train"]
+    elif split == "validation":
+        return split_dict["test"]
+    elif split == "test":
+        return ds_all["validation"]
+    else:
+        raise ValueError(f"Unknown split: {split}")
+
+# -----------------------------------------------------------------------------
+# Small Transformer Baseline
+# -----------------------------------------------------------------------------
+
+class SmallTransformerBlock(nn.Module):
+    def __init__(self, model_dim: int, num_heads: int, ff_dim: int, dropout: float = 0.1):
+        super().__init__()
+        self.ln1 = nn.LayerNorm(model_dim)
+        self.attn = nn.MultiheadAttention(model_dim, num_heads, dropout=dropout, batch_first=True)
+        self.ln2 = nn.LayerNorm(model_dim)
+        self.ffn = nn.Sequential(
+            nn.Linear(model_dim, ff_dim),
+            nn.GELU(),
+            nn.Dropout(dropout),
+            nn.Linear(ff_dim, model_dim),
+            nn.Dropout(dropout),
+        )
+        self.dropout = nn.Dropout(dropout)
+
+    def forward(self, x: torch.Tensor, attn_mask: torch.Tensor = None) -> torch.Tensor:
+        normed = self.ln1(x)
+        if attn_mask is None:
+            seq_len = x.size(1)
+            attn_mask = torch.nn.Transformer.generate_square_subsequent_mask(
+                seq_len, device=x.device, dtype=x.dtype
+            )
+        attn_out, _ = self.attn(normed, normed, normed, attn_mask=attn_mask, is_causal=True)
+        x = x + self.dropout(attn_out)
+
+        normed = self.ln2(x)
+        x = x + self.ffn(normed)
+        return x
+
+
+class SmallTransformer(nn.Module):
+    def __init__(
+        self,
+        vocab_size: int = 50257,
+        max_seq_len: int = 256,
+        model_dim: int = 256,
+        num_layers: int = 6,
+        num_heads: int = 8,
+        ff_dim: int = None,
+        dropout: float = 0.1,
+        tie_weights: bool = True,
+    ):
+        super().__init__()
+        self.vocab_size = vocab_size
+        self.max_seq_len = max_seq_len
+        self.model_dim = model_dim
+
+        ff_dim = ff_dim or 4 * model_dim
+
+        self.token_embedding = nn.Embedding(vocab_size, model_dim)
+        self.position_embedding = nn.Embedding(max_seq_len, model_dim)
+        self.embedding_dropout = nn.Dropout(dropout)
+
+        self.blocks = nn.ModuleList([
+            SmallTransformerBlock(model_dim, num_heads, ff_dim, dropout)
+            for _ in range(num_layers)
+        ])
+
+        self.ln_f = nn.LayerNorm(model_dim)
+        self.lm_head = nn.Linear(model_dim, vocab_size, bias=False)
+
+        if tie_weights:
+            self.lm_head.weight = self.token_embedding.weight
+
+        self.apply(self._init_weights)
+
+    def _init_weights(self, module):
+        if isinstance(module, nn.Linear):
+            torch.nn.init.normal_(module.weight, mean=0.0, std=0.02)
+            if module.bias is not None:
+                torch.nn.init.zeros_(module.bias)
+        elif isinstance(module, nn.Embedding):
+            torch.nn.init.normal_(module.weight, mean=0.0, std=0.02)
+        elif isinstance(module, nn.LayerNorm):
+            torch.nn.init.ones_(module.weight)
+            torch.nn.init.zeros_(module.bias)
+
+    def forward(self, input_ids, labels=None):
+        batch_size, seq_len = input_ids.shape
+        device = input_ids.device
+
+        tok_emb = self.token_embedding(input_ids)
+        pos_emb = self.position_embedding(torch.arange(seq_len, device=device))
+        hidden_states = self.embedding_dropout(tok_emb + pos_emb)
+
+        for block in self.blocks:
+            hidden_states = block(hidden_states)
+
+        hidden_states = self.ln_f(hidden_states)
+        logits = self.lm_head(hidden_states)
+
+        loss = None
+        if labels is not None:
+            shift_logits = logits[:, :-1, :].contiguous()
+            shift_labels = labels[:, 1:].contiguous()
+            loss = F.cross_entropy(
+                shift_logits.view(-1, self.vocab_size),
+                shift_labels.view(-1),
+                ignore_index=-100,
+            )
+
+        return logits, loss
+
+    def get_num_params(self) -> int:
+        return sum(p.numel() for p in self.parameters())
+
+
+# -----------------------------------------------------------------------------
+# Dataset
+# -----------------------------------------------------------------------------
+
+class TextDataset(Dataset):
+    def __init__(
+        self,
+        split: str,
+        tokenizer,
+        max_seq_len: int = 256,
+        dataset_name: str = "wikitext2",
+        dataset_path: str = "",
+        text_field: str = "",
+        max_lines: int = 0,
+        encode_chars_per_batch: int = 200000,
+        tinystories_val_frac: float = 0.02,
+        split_seed: int = 42,
+    ):
+        self.max_seq_len = max_seq_len
+        self.tokenizer = tokenizer
+        self.split = split
+
+        dataset = None
+        used_source = None
+
+        try:
+            if dataset_name == "wikitext2":
+                dataset = load_dataset("wikitext", "wikitext-2-raw-v1", split=split)
+                if not text_field:
+                    text_field = "text"
+
+            elif dataset_name == "wikitext103":
+                dataset = load_dataset("Salesforce/wikitext", "wikitext-103-raw-v1", split=split)
+                if not text_field:
+                    text_field = "text"
+
+            elif dataset_name == "ptb":
+                dataset = load_dataset("ptb_text_only", "penn_treebank", split=split)
+                if not text_field:
+                    text_field = "sentence"
+
+            elif dataset_name == "tinystories":
+                if dataset_path:
+                    ds_all = load_from_disk(dataset_path)
+                else:
+                    ds_all = load_dataset("roneneldan/TinyStories")
+                dataset = get_tinystories_split(
+                    ds_all,
+                    split,
+                    val_frac=tinystories_val_frac,
+                    split_seed=split_seed,
+                )
+                if not text_field:
+                    text_field = "text"
+
+            else:
+                raise ValueError(f"Unknown dataset_name: {dataset_name}")
+
+            used_source = "online"
+            print(f"[{split}] loaded from online dataset hub")
+
+        except Exception as e:
+            print(f"[{split}] online load failed: {repr(e)}")
+
+            if dataset_path:
+                ds_all = load_from_disk(dataset_path)
+
+                if dataset_name == "tinystories":
+                    dataset = get_tinystories_split(
+                        ds_all,
+                        split,
+                        val_frac=tinystories_val_frac,
+                        split_seed=split_seed,
+                    )
+                    if not text_field:
+                        text_field = "text"
+                else:
+                    if split not in ds_all:
+                        raise ValueError(
+                            f"Cannot find split '{split}' in local dataset. Available: {list(ds_all.keys())}"
+                        )
+                    dataset = ds_all[split]
+
+                    if not text_field:
+                        if dataset_name in ["wikitext2", "wikitext103"]:
+                            text_field = "text"
+                        elif dataset_name == "ptb":
+                            text_field = "sentence"
+
+                used_source = "disk"
+                print(f"[{split}] loaded from local disk: {dataset_path}")
+
+            else:
+                raise RuntimeError(
+                    f"Failed to load dataset '{dataset_name}' online, and no --dataset-path provided."
+                )
+
+        if not text_field:
+            raise ValueError("text_field is empty; please set --text-field explicitly")
+
+        if text_field not in dataset.column_names:
+            raise ValueError(
+                f"text_field '{text_field}' not in dataset columns: {dataset.column_names}"
+            )
+
+        line_limit = None if max_lines == 0 else max_lines
+
+        kept_lines = 0
+        char_count = 0
+        tokens = []
+
+        batch_texts = []
+        batch_chars = 0
+
+        for item in dataset[text_field]:
+            if item is None:
+                continue
+
+            s = str(item).strip()
+            if not s:
+                continue
+
+            batch_texts.append(s)
+            batch_chars += len(s) + 1
+            char_count += len(s)
+            kept_lines += 1
+
+            if batch_chars >= encode_chars_per_batch:
+                batch_text = "\n".join(batch_texts)
+                batch_tokens = tokenizer.encode(batch_text, add_special_tokens=False)
+                tokens.extend(batch_tokens)
+                batch_texts = []
+                batch_chars = 0
+
+            if line_limit is not None and kept_lines >= line_limit:
+                break
+
+        if batch_texts:
+            batch_text = "\n".join(batch_texts)
+            batch_tokens = tokenizer.encode(batch_text, add_special_tokens=False)
+            tokens.extend(batch_tokens)
+
+        print(f"[{split}] source = {used_source}")
+        print(f"[{split}] non-empty lines = {kept_lines}")
+        print(f"[{split}] chars = {char_count}")
+        print(f"[{split}] token count = {len(tokens)}")
+        print(f"[{split}] first 20 tokens = {tokens[:20]}")
+
+        self.tokens = tokens
+        self.num_chunks = len(self.tokens) // max_seq_len
+        self.tokens = self.tokens[: self.num_chunks * max_seq_len]
+
+        self.stats = {
+            "split": split,
+            "dataset_name": dataset_name,
+            "dataset_path": dataset_path,
+            "text_field": text_field,
+            "source": used_source,
+            "non_empty_lines": kept_lines,
+            "char_count": char_count,
+            "token_count_before_trim": len(tokens),
+            "num_chunks": self.num_chunks,
+            "max_seq_len": max_seq_len,
+            "max_lines": max_lines,
+            "encode_chars_per_batch": encode_chars_per_batch,
+            "tinystories_val_frac": tinystories_val_frac,
+            "split_seed": split_seed,
+        }
+
+    def __len__(self):
+        return self.num_chunks
+
+    def __getitem__(self, idx):
+        start = idx * self.max_seq_len
+        chunk = self.tokens[start:start + self.max_seq_len]
+        x = torch.tensor(chunk, dtype=torch.long)
+        return x, x.clone()
+
+
+# -----------------------------------------------------------------------------
+# Training / Eval
+# -----------------------------------------------------------------------------
+
+def train_epoch(model, dataloader, optimizer, scheduler, device, epoch, log_interval=50):
+    model.train()
+    total_loss = 0.0
+    total_tokens = 0
+    start_time = time.time()
+
+    pbar = tqdm(dataloader, desc=f"Epoch {epoch}")
+    for step, (x, y) in enumerate(pbar):
+        x, y = x.to(device), y.to(device)
+
+        optimizer.zero_grad()
+        _, loss = model(x, labels=y)
+        loss.backward()
+        grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+        optimizer.step()
+        scheduler.step()
+
+        total_loss += loss.item() * x.size(0)
+        total_tokens += x.numel()
+
+        if step % log_interval == 0:
+            elapsed = time.time() - start_time
+            tok_per_sec = total_tokens / elapsed if elapsed > 0 else 0
+            pbar.set_postfix({
+                "loss": f"{loss.item():.4f}",
+                "ppl": f"{loss.exp().item():.2f}",
+                "tok/s": f"{tok_per_sec:.0f}",
+                "gnorm": f"{float(grad_norm):.2f}",
+            })
+
+    avg_loss = total_loss / len(dataloader.dataset)
+    return avg_loss
+
+
+@torch.no_grad()
+def evaluate(model, dataloader, device):
+    model.eval()
+    total_loss = 0.0
+    total_count = 0
+
+    for x, y in dataloader:
+        x, y = x.to(device), y.to(device)
+        _, loss = model(x, labels=y)
+        total_loss += loss.item() * x.size(0)
+        total_count += x.size(0)
+
+    avg_loss = total_loss / total_count
+    return avg_loss, torch.exp(torch.tensor(avg_loss)).item()
+
+
+# -----------------------------------------------------------------------------
+# Reporting
+# -----------------------------------------------------------------------------
+
+def make_run_dir(output_root: Path, experiment_name: str):
+    run_id = now_str()
+    safe_name = experiment_name.replace(" ", "_")
+    run_dir = output_root / f"{run_id}_{safe_name}"
+    run_dir.mkdir(parents=True, exist_ok=True)
+    return run_id, run_dir
+
+
+def write_markdown_report(run_dir: Path, run_meta: dict, results: dict):
+    lines = []
+    lines.append(f"# Experiment Report: {run_meta['experiment_name']}")
+    lines.append("")
+    lines.append(f"- Run ID: `{run_meta['run_id']}`")
+    lines.append(f"- Time: `{run_meta['start_time']}`")
+    lines.append(f"- Notes: {run_meta.get('notes', '')}")
+    lines.append(f"- Tags: {', '.join(run_meta.get('tags', []))}")
+    lines.append("")
+    lines.append("## Config")
+    lines.append("")
+    lines.append("```json")
+    lines.append(json.dumps(run_meta["config"], indent=2, ensure_ascii=False))
+    lines.append("```")
+    lines.append("")
+    lines.append("## Environment")
+    lines.append("")
+    lines.append("```json")
+    lines.append(json.dumps(run_meta["env"], indent=2, ensure_ascii=False))
+    lines.append("```")
+    lines.append("")
+    lines.append("## Dataset Stats")
+    lines.append("")
+    lines.append("```json")
+    lines.append(json.dumps(run_meta["dataset_stats"], indent=2, ensure_ascii=False))
+    lines.append("```")
+    lines.append("")
+    lines.append("## Final Results")
+    lines.append("")
+    lines.append("| Model | Params | Best Val PPL | Test PPL |")
+    lines.append("|---|---:|---:|---:|")
+    for model_name, item in results.items():
+        lines.append(
+            f"| {model_name} | {item['num_params']} | {item['best_val_ppl']:.2f} | {item['test_ppl']:.2f} |"
+        )
+
+    if "grassmann" in results and "transformer" in results:
+        g = results["grassmann"]
+        t = results["transformer"]
+        ppl_ratio = g["test_ppl"] / t["test_ppl"]
+        gap_percent = (ppl_ratio - 1) * 100
+        lines.append("")
+        lines.append("## Comparison")
+        lines.append("")
+        lines.append(f"- Grassmann / Transformer Test PPL ratio: **{ppl_ratio:.3f}**")
+        lines.append(f"- Gap: **{gap_percent:.2f}%**")
+
+    with open(run_dir / "report.md", "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+
+
+# -----------------------------------------------------------------------------
+# Main
+# -----------------------------------------------------------------------------
+
+def main():
+    parser = argparse.ArgumentParser(description="Wikitext-2 Paper Reproduction with Experiment Tracking")
+    parser.add_argument("--model", type=str, default="both", choices=["grassmann", "transformer", "both"])
+    parser.add_argument("--model-dim", type=int, default=256)
+    parser.add_argument("--num-layers", type=int, default=6)
+    parser.add_argument("--max-seq-len", type=int, default=256)
+    parser.add_argument("--batch-size", type=int, default=32)
+    parser.add_argument("--epochs", type=int, default=20)
+    parser.add_argument("--lr", type=float, default=3e-4)
+    parser.add_argument("--output-dir", type=str, default="outputs/experiments")
+    parser.add_argument("--seed", type=int, default=42)
+
+    parser.add_argument("--experiment-name", type=str, default="wikitext2_reproduction")
+    parser.add_argument("--notes", type=str, default="")
+    parser.add_argument("--tags", type=str, default="baseline,wikitext2")
+
+    parser.add_argument("--reduced-dim", type=int, default=32)
+    parser.add_argument("--window-sizes", type=str, default="1,2,4,8,12,16")
+    parser.add_argument("--dropout", type=float, default=0.1)
+    parser.add_argument("--dataset-name", type=str, default="wikitext2",
+                    choices=["wikitext2", "wikitext103", "ptb", "tinystories"])
+    parser.add_argument("--dataset-path", type=str, default="")
+    parser.add_argument("--text-field", type=str, default="")
+    parser.add_argument("--offline", action="store_true")
+    parser.add_argument("--max-lines", type=int, default=0,
+                    help="Use only first N non-empty lines; 0 means all")
+    parser.add_argument("--encode-chars-per-batch", type=int, default=200000,
+                    help="Batch tokenization by total characters to avoid OOM")
+    parser.add_argument("--tinystories-val-frac", type=float, default=0.02,
+                    help="Fraction of TinyStories train split used as validation")
+    parser.add_argument("--split-seed", type=int, default=42,
+                    help="Random seed for deterministic dataset splitting")
+
+    args = parser.parse_args()
+    set_seed(args.seed)
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    print(f"Using device: {device}")
+
+    if args.offline:
+        os.environ["HF_DATASETS_OFFLINE"] = "1"
+        os.environ["TRANSFORMERS_OFFLINE"] = "1"
+        os.environ["HF_HUB_OFFLINE"] = "1"
+    else:
+        os.environ.pop("HF_DATASETS_OFFLINE", None)
+        os.environ.pop("TRANSFORMERS_OFFLINE", None)
+        os.environ.pop("HF_HUB_OFFLINE", None)
+
+    output_root = Path(args.output_dir)
+    output_root.mkdir(parents=True, exist_ok=True)
+
+    run_id, run_dir = make_run_dir(output_root, args.experiment_name)
+    ckpt_dir = run_dir / "checkpoints"
+    ckpt_dir.mkdir(parents=True, exist_ok=True)
+
+    tags = [t.strip() for t in args.tags.split(",") if t.strip()]
+    window_sizes = [int(x) for x in args.window_sizes.split(",") if x.strip()]
+
+    # force offline if needed
+    #os.environ.setdefault("HF_DATASETS_OFFLINE", "1")
+    #os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+
+    tokenizer = GPT2Tokenizer.from_pretrained("./gpt2_local", local_files_only=True)
+    vocab_size = len(tokenizer)
+
+    print(f"Loading dataset: {args.dataset_name}...")
+    train_dataset = TextDataset(
+        "train", tokenizer, args.max_seq_len,
+        dataset_name=args.dataset_name,
+        dataset_path=args.dataset_path,
+        text_field=args.text_field,
+        max_lines=args.max_lines,
+        encode_chars_per_batch=args.encode_chars_per_batch,
+        tinystories_val_frac=args.tinystories_val_frac,
+        split_seed=args.split_seed,
+    )
+
+    val_dataset = TextDataset(
+        "validation", tokenizer, args.max_seq_len,
+        dataset_name=args.dataset_name,
+        dataset_path=args.dataset_path,
+        text_field=args.text_field,
+        max_lines=args.max_lines,
+        encode_chars_per_batch=args.encode_chars_per_batch,
+        tinystories_val_frac=args.tinystories_val_frac,
+        split_seed=args.split_seed,
+    )
+
+    test_dataset = TextDataset(
+        "test", tokenizer, args.max_seq_len,
+        dataset_name=args.dataset_name,
+        dataset_path=args.dataset_path,
+        text_field=args.text_field,
+        max_lines=args.max_lines,
+        encode_chars_per_batch=args.encode_chars_per_batch,
+        tinystories_val_frac=args.tinystories_val_frac,
+        split_seed=args.split_seed,
+    )
+
+    print(f"Train: {len(train_dataset)} chunks, Val: {len(val_dataset)}, Test: {len(test_dataset)}")
+
+    train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=4)
+    val_loader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
+    test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
+
+    run_meta = {
+        "run_id": run_id,
+        "experiment_name": args.experiment_name,
+        "start_time": datetime.now().isoformat(),
+        "notes": args.notes,
+        "tags": tags,
+        "config": vars(args),
+        "env": get_env_info(),
+        "dataset_stats": {
+            "train": train_dataset.stats,
+            "validation": val_dataset.stats,
+            "test": test_dataset.stats,
+        },
+    }
+    save_json(run_meta, run_dir / "config.json")
+
+    results = {}
+
+    models_to_train = []
+    if args.model in ["grassmann", "both"]:
+        models_to_train.append("grassmann")
+    if args.model in ["transformer", "both"]:
+        models_to_train.append("transformer")
+
+    for model_type in models_to_train:
+        print(f"\n{'='*60}")
+        print(f"Training: {model_type.upper()}")
+        print(f"{'='*60}")
+
+        if model_type == "grassmann":
+            model = GrassmannGPTv4(
+                vocab_size=vocab_size,
+                max_seq_len=args.max_seq_len,
+                model_dim=args.model_dim,
+                num_layers=args.num_layers,
+                reduced_dim=args.reduced_dim,
+                ff_dim=4 * args.model_dim,
+                window_sizes=window_sizes,
+                dropout=args.dropout,
+            )
+        else:
+            model = SmallTransformer(
+                vocab_size=vocab_size,
+                max_seq_len=args.max_seq_len,
+                model_dim=args.model_dim,
+                num_layers=args.num_layers,
+                num_heads=8,
+                ff_dim=4 * args.model_dim,
+                dropout=args.dropout,
+            )
+
+        model = model.to(device)
+        num_params = model.get_num_params()
+        print(f"Model parameters: {num_params:,} ({num_params/1e6:.2f}M)")
+
+        optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=0.01)
+        total_steps = len(train_loader) * args.epochs
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, total_steps)
+
+        best_val_loss = float("inf")
+        best_val_ppl = float("inf")
+        best_epoch = -1
+        train_losses = []
+        val_losses = []
+        metrics_path = run_dir / f"{model_type}_metrics.jsonl"
+
+        for epoch in range(1, args.epochs + 1):
+            epoch_start = time.time()
+
+            train_loss = train_epoch(model, train_loader, optimizer, scheduler, device, epoch)
+            val_loss, val_ppl = evaluate(model, val_loader, device)
+            epoch_time = time.time() - epoch_start
+
+            train_losses.append(train_loss)
+            val_losses.append(val_loss)
+
+            epoch_record = {
+                "model": model_type,
+                "epoch": epoch,
+                "train_loss": float(train_loss),
+                "train_ppl": float(torch.exp(torch.tensor(train_loss)).item()),
+                "val_loss": float(val_loss),
+                "val_ppl": float(val_ppl),
+                "epoch_time_sec": float(epoch_time),
+                "lr": float(optimizer.param_groups[0]["lr"]),
+            }
+            append_jsonl(epoch_record, metrics_path)
+
+            print(
+                f"Epoch {epoch}: "
+                f"Train Loss: {train_loss:.4f}, "
+                f"Val Loss: {val_loss:.4f}, "
+                f"Val PPL: {val_ppl:.2f}, "
+                f"Time: {epoch_time:.1f}s"
+            )
+
+            if val_loss < best_val_loss:
+                best_val_loss = val_loss
+                best_val_ppl = val_ppl
+                best_epoch = epoch
+                torch.save(model.state_dict(), ckpt_dir / f"{model_type}_best.pt")
+
+        model.load_state_dict(torch.load(ckpt_dir / f"{model_type}_best.pt", map_location=device))
+        test_loss, test_ppl = evaluate(model, test_loader, device)
+
+        print(f"\nFinal Results for {model_type.upper()}:")
+        print(f"  Best Epoch: {best_epoch}")
+        print(f"  Best Val Loss: {best_val_loss:.4f}, Best Val PPL: {best_val_ppl:.2f}")
+        print(f"  Test Loss: {test_loss:.4f}, Test PPL: {test_ppl:.2f}")
+
+        results[model_type] = {
+            "num_params": int(num_params),
+            "best_epoch": int(best_epoch),
+            "best_val_loss": float(best_val_loss),
+            "best_val_ppl": float(best_val_ppl),
+            "test_loss": float(test_loss),
+            "test_ppl": float(test_ppl),
+            "train_losses": [float(x) for x in train_losses],
+            "val_losses": [float(x) for x in val_losses],
+            "checkpoint_path": f"checkpoints/{model_type}_best.pt",
+            "metrics_path": f"{model_type}_metrics.jsonl",
+        }
+
+    save_json(results, run_dir / "summary.json")
+    write_markdown_report(run_dir, run_meta, results)
+
+    if len(results) == 2:
+        print(f"\n{'='*60}")
+        print(f"COMPARISON: {args.dataset_name.upper()} Experiment")
+        print(f"{'='*60}")
+
+        g = results["grassmann"]
+        t = results["transformer"]
+
+        print(f"{'Model':<20} {'Params':<12} {'Val PPL':<12} {'Test PPL':<12}")
+        print("-" * 56)
+        print(f"{'Grassmann':<20} {g['num_params']/1e6:.2f}M{'':<6} {g['best_val_ppl']:<12.2f} {g['test_ppl']:<12.2f}")
+        print(f"{'Transformer':<20} {t['num_params']/1e6:.2f}M{'':<6} {t['best_val_ppl']:<12.2f} {t['test_ppl']:<12.2f}")
+        print("-" * 56)
+
+        ppl_ratio = g["test_ppl"] / t["test_ppl"]
+        gap_percent = (ppl_ratio - 1) * 100
+
+        comparison = {
+            "grassmann_test_ppl": g["test_ppl"],
+            "transformer_test_ppl": t["test_ppl"],
+            "ppl_ratio": float(ppl_ratio),
+            "gap_percent": float(gap_percent),
+        }
+        save_json(comparison, run_dir / "comparison.json")
+
+        print(f"\nGrassmann/Transformer PPL ratio: {ppl_ratio:.3f}")
+        print(f"Gap: {gap_percent:.1f}% (Paper claims 10-15%)")
+
+        if gap_percent <= 15:
+            print("RESULT: Paper claim VERIFIED - within 15% gap")
+        else:
+            print(f"RESULT: Paper claim NOT verified - gap is {gap_percent:.1f}%")
+
+    print(f"\nSaved experiment artifacts to: {run_dir}")
+
+
+if __name__ == "__main__":
+    main()
