@@ -20,4 +20,4 @@ On the same 512 validation chunks, J/A fused NLL is 4.300644/6.376220, Transform
 
 Final decisions are: Decision 1 YES; Decision 2 NO; Decision 3 YES; Decision 4 NO; Decision 5 broad improvement of both branches with mixed complementarity indicators and no fusion-gain increase; Decision 6 NO because Phase 2C still shows positive transfer from another globally weak teacher; Decision 7 option A, Transformer-only vs Grassmann-only vs fused-teacher KD. Option A is selected but not launched.
 
-The Phase 2D artifact commit is `PENDING_PHASE2D_ARTIFACT_COMMIT` and will be replaced after the compact artifact commit is created. Full evidence is in `REPORT.md`, `results_multiseed.csv`, `raw/results_summary.json`, and `provenance.md`.
+The Phase 2D artifact commit is `dc9033583df861c00b71135426d8b8fd52c46d05`. Full evidence is in `REPORT.md`, `results_multiseed.csv`, `raw/results_summary.json`, and `provenance.md`.
