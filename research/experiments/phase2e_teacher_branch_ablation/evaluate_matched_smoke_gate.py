@@ -87,6 +87,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run-f", required=True)
     parser.add_argument("--run-t", required=True)
+    parser.add_argument(
+        "--authorize-clip-saturation",
+        action="store_true",
+        help="Apply the explicitly authorized 2026-09-29 Phase 2E clipping amendment.",
+    )
     args = parser.parse_args()
     teacher_checkpoint = ROOT / TEACHER_SUFFIX / "checkpoints/hybrid_best.pt"
     arms = {"F": load_arm("F", 0.5, args.run_f), "T": load_arm("T", 1.0, args.run_t)}
@@ -97,6 +102,41 @@ def main() -> None:
         "both_arms_passed": arms["F"]["arm_passed"] and arms["T"]["arm_passed"],
     }
     gate_passed = all(matched_checks.values())
+    preflight = json.loads((HERE / "raw/preflight_summary.json").read_text(encoding="utf-8"))
+    gradient_payloads = [
+        json.loads((HERE / f"raw/gradient/seed{seed}_T.json").read_text(encoding="utf-8"))
+        for seed in [42, 123, 456]
+    ]
+    ratios = preflight["gradient_parameter_norm_ratio_T_over_F"]["values"]
+    t_checks_except_clip = {
+        key: value for key, value in arms["T"]["checks"].items()
+        if key != "clipping_fraction_below_0_95"
+    }
+    amendment_checks = {
+        "explicit_authorization_flag": args.authorize_clip_saturation,
+        "original_gate_failed_only_for_t_clip": (
+            arms["F"]["arm_passed"]
+            and all(t_checks_except_clip.values())
+            and not arms["T"]["checks"]["clipping_fraction_below_0_95"]
+        ),
+        "t_clip_fraction_exactly_1": math.isclose(
+            arms["T"]["clipping_fraction"], 1.0, rel_tol=0.0, abs_tol=1e-12
+        ),
+        "t_gradients_finite": all(
+            math.isfinite(float(payload["metrics"]["full_parameter_kd_gradient_norm"]))
+            for payload in gradient_payloads
+        ),
+        "t_over_f_parameter_gradient_ratios_in_range": all(0.5 <= float(value) <= 2.0 for value in ratios),
+        "t_overflow_and_nonfinite_remain_low": (
+            arms["T"]["overflow_fraction"] <= 0.02
+            and arms["T"]["nonfinite_fraction"] <= 0.02
+        ),
+        "same_frozen_protocol": (
+            arms["F"]["train_valid_tokens"] == arms["T"]["train_valid_tokens"]
+            and arms["F"]["student_s0_sha256"] == arms["T"]["student_s0_sha256"]
+        ),
+    }
+    authorized_under_amendment = all(amendment_checks.values())
     payload = {
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
         "protocol_amendment_authorized_in_phase2e_plan": True,
@@ -104,12 +144,19 @@ def main() -> None:
         "arms": arms,
         "matched_checks": matched_checks,
         "gate_passed": gate_passed,
-        "formal_training_authorized": gate_passed,
+        "protocol_amendment": {
+            "authorized_at": "2026-09-29",
+            "scope": "Allow Transformer-only full-data gate clip_fraction=1.0 without changing any training setting.",
+            "warning_label": "CLIP_SATURATION_WARNING",
+            "checks": amendment_checks,
+            "authorized_under_amendment": authorized_under_amendment,
+        },
+        "formal_training_authorized": gate_passed or authorized_under_amendment,
     }
     output = HERE / "raw/smoke/matched_full_epoch_smoke_summary.json"
     output.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps(payload, indent=2, ensure_ascii=False))
-    raise SystemExit(0 if gate_passed else 2)
+    raise SystemExit(0 if payload["formal_training_authorized"] else 2)
 
 
 if __name__ == "__main__":

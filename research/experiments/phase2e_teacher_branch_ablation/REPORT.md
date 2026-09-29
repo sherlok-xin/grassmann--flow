@@ -1,6 +1,6 @@
 # Phase 2E Teacher Branch Ablation
 
-Status: blocked at the preregistered full-data stability gate. No Transformer-only formal endpoint has been launched or observed.
+Status: formal Transformer-only training authorized under a documented protocol amendment. No formal endpoint had been launched or observed when the amendment was recorded.
 
 ## Scope and intervention
 
@@ -32,6 +32,8 @@ The preregistered reduced-data Transformer-only smoke reproduced the known short
 
 The preauthorized fallback used matched full-data one-epoch fused and Transformer-only arms from the same seed-42 S0. Fused passed with clipping `0.2347`, overflow `0.0136`, and non-finite fraction `0.0136`. Transformer-only had finite losses, a reloadable checkpoint, the exact frozen teacher and S0, overflow `0.0136`, and non-finite fraction `0.0136`, but its clipping fraction was `1.00`. It therefore failed the frozen requirement that clipping remain below `0.95`.
 
-## Blocking decision
+## Authorized amendment before formal endpoints
 
-The execution specification permits formal runs only if the reduced or matched full-data stability gate passes and explicitly prohibits inventing a new rule after observing the gate. Consequently, the three formal Transformer-only runs were not launched. `results_multiseed.csv`, endpoint figures, and the seven final Phase 2E decisions cannot be produced without either terminating Phase 2E as gate-blocked or explicitly authorizing a documented prospective protocol amendment. Existing Phase 2C endpoint evidence remains unchanged.
+On 2026-09-29, the research lead explicitly authorized formal Transformer-only training despite gate-stage `clip_fraction=1.0`. The authorization was recorded before any formal endpoint was launched. It is conditional on finite parameter gradients, T/F parameter-gradient ratios within `[0.5, 2.0]`, and overflow/non-finite fractions remaining approximately `0.0136`. No alpha, lambda, temperature, AMP setting, gradient clip value, training budget, data, student S0, or evaluation rule may change.
+
+`CLIP_SATURATION_WARNING`: Transformer-only gradients continuously triggered clipping during the full-data gate. Formal endpoints may therefore reflect an optimization constraint in addition to teacher-source differences. The warning remains permanent even if formal training completes normally.

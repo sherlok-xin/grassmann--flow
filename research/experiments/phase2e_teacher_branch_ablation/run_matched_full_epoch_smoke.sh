@@ -41,4 +41,5 @@ fi
 
 run_f="$(find outputs/distill_experiments -maxdepth 1 -type d -name '*_phase2e_full_epoch_smoke_F_seed42' -print | sort | tail -n 1)"
 run_t="$(find outputs/distill_experiments -maxdepth 1 -type d -name '*_phase2e_full_epoch_smoke_T_seed42' -print | sort | tail -n 1)"
-python "$EXP/evaluate_matched_smoke_gate.py" --run-f "$run_f" --run-t "$run_t"
+python "$EXP/evaluate_matched_smoke_gate.py" \
+  --run-f "$run_f" --run-t "$run_t" --authorize-clip-saturation

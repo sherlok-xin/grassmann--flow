@@ -20,8 +20,18 @@ import sys
 authorized = False
 for name in sys.argv[1:]:
     path = pathlib.Path(name)
-    if path.is_file() and json.loads(path.read_text(encoding="utf-8")).get("formal_training_authorized") is True:
-        authorized = True
+    if not path.is_file():
+        continue
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("formal_training_authorized") is not True:
+        continue
+    if payload.get("gate_passed") is False:
+        amendment = payload.get("protocol_amendment", {})
+        if amendment.get("warning_label") != "CLIP_SATURATION_WARNING":
+            raise SystemExit("Amended gate is missing CLIP_SATURATION_WARNING")
+        if amendment.get("authorized_under_amendment") is not True:
+            raise SystemExit("Amended gate checks are incomplete")
+    authorized = True
 if not authorized:
     raise SystemExit("Neither the reduced nor matched full-epoch stability gate authorized formal training")
 PY

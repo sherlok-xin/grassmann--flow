@@ -55,3 +55,9 @@ Before endpoints are observed, a practically nontrivial paired effect is frozen 
 ## Execution and stopping
 
 Heavy computation runs only on server `10.42.0.197`. Datasets and historical checkpoints are not modified. Failed or retried runs are retained. Phase 2E stops after completing the required report and choosing one next experiment; that experiment is not launched automatically.
+
+## Authorized protocol amendment after the stability gate
+
+On 2026-09-29, after the full-data one-epoch gate and before any formal Transformer-only endpoint existed, the research lead explicitly authorized continuation despite Transformer-only `clip_fraction=1.0`. Authorization applies only because parameter gradients were finite, the three T/F parameter-gradient ratios remained inside `[0.5, 2.0]`, and overflow/non-finite fractions were both `0.013605`. No value of alpha, lambda, temperature, AMP, gradient clipping, training budget, data, S0, or evaluation protocol may change.
+
+All endpoint reports must carry `CLIP_SATURATION_WARNING` and state that continuous gate-stage clipping can constrain Transformer-only optimization. NaN, training failure, materially increased overflow/non-finite fractions, or an anomalous endpoint stops execution without hyperparameter repair.

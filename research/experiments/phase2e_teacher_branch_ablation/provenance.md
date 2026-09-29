@@ -30,3 +30,9 @@ The reduced T smoke is retained at `outputs/distill_experiments/20260929_093434_
 The fallback full-data arms are retained at `outputs/distill_experiments/20260929_093526_phase2e_full_epoch_smoke_F_seed42` and `outputs/distill_experiments/20260929_093527_phase2e_full_epoch_smoke_T_seed42`. F passed all checks. T had finite losses, correct hashes and alpha, a reloadable checkpoint, overflow `0.0136054422`, and non-finite fraction `0.0136054422`, but clipping remained `1.0`; hence the matched gate failed. Its compact record is `raw/smoke/matched_full_epoch_smoke_summary.json`.
 
 No formal T endpoint was launched, inspected, or inferred. The frozen launcher will refuse to run while both gate records have `formal_training_authorized=false`.
+
+## Authorized clipping amendment
+
+On 2026-09-29, before any formal Transformer-only endpoint existed, the research lead explicitly authorized continuation with the observed full-data gate `clip_fraction=1.0`. The authorization requires finite parameter gradients, T/F parameter-gradient ratios within `[0.5, 2.0]`, and overflow/non-finite fractions remaining approximately `0.0136`. It forbids changes to alpha, lambda, temperature, AMP, the gradient clip value, training budget, data, student S0, or evaluation protocol.
+
+The gate is re-evaluated with `--authorize-clip-saturation`; the original `gate_passed=false` is preserved while `formal_training_authorized` may become true only if every amendment check passes. All subsequent artifacts carry `CLIP_SATURATION_WARNING`. Formal runs must stop without hyperparameter repair on NaN, failure, materially increased overflow/non-finite fractions, or anomalous endpoints.

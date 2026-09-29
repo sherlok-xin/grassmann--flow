@@ -2,7 +2,7 @@
 
 ## Current status
 
-Phase 2E is blocked before formal endpoints. Do not infer Transformer-only KD endpoint results and do not create `results_multiseed.csv` from smoke values.
+Phase 2E formal training is authorized under the explicit 2026-09-29 clipping amendment. At amendment time, no Transformer-only formal endpoint existed. Do not create `results_multiseed.csv` from smoke values.
 
 The source-state base is Git commit `a9642cf9393defa2f335811ea77a069becb1747a`. The fixed joint teacher checkpoint SHA256 is `a5ad284f6895c0b4ed516c855c1b149e6636b945173aa2e842b8132299582694`. The S0 checkpoint hashes are `9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef` for seed 42, `a44b64ba5a84d3bd2708a96aad4eae829ff7ab0f00476f0e31146fc314da1f13` for seed 123, and `3fbe985d6474c84d1c61fd7937ea906102cf460846829eb3af4c709593b01757` for seed 456.
 
@@ -21,6 +21,8 @@ The reduced Transformer-only smoke failed because clipping was `1.00` and overfl
 
 The formal launcher requires either smoke summary to contain `formal_training_authorized=true`; both currently contain `false`. This safeguard must not be bypassed silently.
 
-## Required user decision
+## Authorized execution state
 
-Either preserve the preregistration and terminate Phase 2E as gate-blocked, or explicitly authorize a prospective amendment before any test endpoint is observed. A defensible amendment would need to state why 100% finite-gradient clipping is acceptable despite the frozen `<0.95` condition, while retaining the same alpha, lambda, AMP, clipping value, seeds, and endpoint definitions. No formal run or alternate alpha has been launched.
+The research lead explicitly authorized continuation with `clip_fraction=1.0` because gradients were finite, T/F parameter-gradient ratios remained preregistered-scale compatible, and overflow/non-finite fractions were `0.0136`. Alpha, lambda, temperature, AMP, clip value, budget, data, S0, and endpoint definitions remain frozen.
+
+`CLIP_SATURATION_WARNING`: Transformer-only gradients continuously triggered clipping in the gate. Any endpoint interpretation must acknowledge that optimization constraint. Stop without retuning if formal runs develop NaN, training failure, materially higher overflow/non-finite fractions, or anomalous endpoints.
