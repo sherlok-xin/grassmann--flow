@@ -314,3 +314,11 @@
 - joint training 同时显著改善 Transformer 与 Grassmann branch NLL；JSD 和 agreement 暗示分歧略增，但 fusion gain 从 0.164420 降到 0.145003，故主要变化是 branch quality，而不是 fusion-gain margin 增强。
 - 决策：fixed-composition teacher-state effect 为 YES，Teacher-A positive transfer 为 NO，cross-seed robustness 为 YES，material scale confound 为 NO，global NLL sufficiency 为 NO。下一项仅选择 option A（Transformer-only vs Grassmann-only vs fused-teacher KD），未启动。
 - 生成严格 collector、三组 compact raw formal artifacts、`results_multiseed.csv`、三张 PDF/300-dpi PNG 配对图、完整报告与 GPT handoff；未修改论文、datasets 或历史 checkpoints。
+
+## [2026-09-29] Phase 2E teacher-branch preflight and stability-gate stop
+
+- 固定 joint teacher checkpoint，通过 effective alpha 0.5/1.0/0.0 构造 F/T/G。相同 512-chunk validation 子集上的 teacher NLL 为 4.300646/4.445647/4.652064；三个 S0 上的平均 residual advantage 为 +0.074515/-0.070486/-0.276903。
+- T/F full-parameter KD-gradient ratio 为 1.3164/1.2788/1.2324，均在预注册 `[0.5, 2.0]` 范围内，不触发 `KD_SCALE_MISMATCH`。
+- token 条件分析显示 T/G 分别在 51.56%/48.44% token 上给 gold token 更高概率；最难 student-loss quintile 的 T/G/F utility 为 0.6356/0.2133/0.7396。这是观测性互补信号，不构成几何因果证据。
+- reduced T smoke 复现短窗口伪影：clip=1.00、overflow/non-finite=0.16。预授权的 full-data one-epoch F/T 门控中，F 为 0.2347/0.0136/0.0136 并通过；T 的 overflow/non-finite 降至 0.0136，但 clip 仍为 1.00，违反冻结的 `<0.95` 条件。
+- 按“门控通过后才运行 formal”与“不得事后另造规则”的要求，未启动三个正式 T endpoint。Phase 2E 当前为 gate-blocked，等待负责人决定严格终止或显式批准新的前瞻性 protocol amendment；smoke NLL 不得作为正式结果。

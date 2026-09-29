@@ -1,0 +1,83 @@
+{
+  "manifest": {
+    "created_at_utc": "2026-09-29T09:31:17.274699+00:00",
+    "evaluation_only": true,
+    "uses_test_data": false,
+    "data_order": "first non-shuffled training batches",
+    "teacher_run_dir": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260328_080104_wt2_hybrid_alpha_joint",
+    "teacher_checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260328_080104_wt2_hybrid_alpha_joint/checkpoints/hybrid_best.pt",
+    "teacher_checkpoint_sha256": "a5ad284f6895c0b4ed516c855c1b149e6636b945173aa2e842b8132299582694",
+    "checkpoint_alpha": [
+      0.5064820647239685
+    ],
+    "effective_alpha": [
+      0.0
+    ],
+    "student_run_dir": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260922_071449_phase2c_wt2_s0_seed456",
+    "student_checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260922_071449_phase2c_wt2_s0_seed456/checkpoints/hybrid_best.pt",
+    "student_checkpoint_sha256": "3fbe985d6474c84d1c61fd7937ea906102cf460846829eb3af4c709593b01757",
+    "dataset_stats": {
+      "split": "train",
+      "dataset_name": "wikitext2",
+      "dataset_path": "/workspace/grassmannflows/datasets/wikitext2_v1_saved",
+      "text_field": "text",
+      "source": "disk",
+      "non_empty_lines": 23767,
+      "char_count": 10683234,
+      "token_count_before_trim": 2401115,
+      "num_chunks": 9379,
+      "max_seq_len": 256,
+      "max_lines": 0,
+      "encode_chars_per_batch": 200000,
+      "tinystories_val_frac": 0.02,
+      "split_seed": 42
+    }
+  },
+  "metrics": {
+    "condition": "G",
+    "student_seed": 456,
+    "effective_alpha": 0.0,
+    "calibration_batches": 8,
+    "batch_size": 2,
+    "valid_tokens": 4080,
+    "unweighted_token_mean_kl": 1.316435620188713,
+    "weighted_kl_contribution_lambda5": 6.582178115844727,
+    "kd_logit_gradient_norm": 0.07475333745299163,
+    "ce_logit_gradient_norm": 0.789101518889391,
+    "ce_kd_cosine": -0.06326636337474281,
+    "full_parameter_kd_gradient_norm": 1.9862377644171871,
+    "negative_cosine_fraction": 0.48504901960784313
+  },
+  "per_batch": {
+    "unweighted_token_mean_kl": [
+      1.3624497652053833,
+      1.3175166845321655,
+      1.3374940156936646,
+      1.2107794284820557,
+      1.3238885402679443,
+      1.3479056358337402,
+      1.2364232540130615,
+      1.3950276374816895
+    ],
+    "weighted_kl_contribution": [
+      6.812248706817627,
+      6.587583541870117,
+      6.687469959259033,
+      6.053896903991699,
+      6.619442939758301,
+      6.739528179168701,
+      6.182116508483887,
+      6.975138187408447
+    ],
+    "full_parameter_kd_gradient_norm": [
+      1.9764480806364082,
+      2.022901275186337,
+      1.9940555332450636,
+      1.6379553267151865,
+      2.123180961996534,
+      2.081611817746639,
+      1.9000657333769182,
+      2.1536833864344107
+    ]
+  }
+}

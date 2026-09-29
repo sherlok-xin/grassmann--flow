@@ -1,0 +1,33 @@
+{
+  "created_at_utc": "2026-09-29T09:34:56.912347+00:00",
+  "run_dir": "outputs/distill_experiments/20260929_093434_phase2e_smoke_wt2_t_seed42",
+  "checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/distill_experiments/20260929_093434_phase2e_smoke_wt2_t_seed42/checkpoints/student_best.pt",
+  "checkpoint_sha256": "a1df88e6e3a02ebbf8b304b4b95637f7dbbd0fd11b6a535ccd7fec45f0c978d0",
+  "condition": "T",
+  "student_seed": 42,
+  "ce": 3.811273166024761,
+  "raw_kl": 1.0394157988250636,
+  "weighted_kd": 5.197078994125318,
+  "total_gradient_norm": 2.5936854566846574,
+  "clipping_fraction": 1.0,
+  "overflow_fraction": 0.16,
+  "nonfinite_fraction": 0.16,
+  "best_validation_nll": 4.347654990208002,
+  "test_nll_smoke_only": 4.258471280118845,
+  "checks": {
+    "all_losses_finite": true,
+    "checkpoint_serialization_and_load": true,
+    "teacher_identity_exact": true,
+    "teacher_hash_exact": true,
+    "effective_alpha_exact": true,
+    "student_s0_hash_exact": true,
+    "formal_objective_exact": true,
+    "reduced_data_one_epoch": true,
+    "amp_overflow_fraction_below_0_05": false,
+    "nonfinite_fraction_below_0_05": false,
+    "clipping_fraction_below_0_95": false
+  },
+  "gate_passed": false,
+  "formal_training_authorized": false,
+  "interpretation": "Optimization-integrity result only; reduced-data endpoint NLL is not a formal comparison."
+}

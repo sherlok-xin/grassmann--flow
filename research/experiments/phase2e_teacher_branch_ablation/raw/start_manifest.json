@@ -1,0 +1,41 @@
+{
+  "created_at_utc": "2026-09-29T09:29:32.735424+00:00",
+  "git_head": "a9642cf9393defa2f335811ea77a069becb1747a",
+  "git_status_short": "?? research/experiments/phase2e_teacher_branch_ablation/",
+  "artifacts": {
+    "teacher": {
+      "path": "outputs/hybrid_experiments/20260328_080104_wt2_hybrid_alpha_joint/checkpoints/hybrid_best.pt",
+      "sha256": "a5ad284f6895c0b4ed516c855c1b149e6636b945173aa2e842b8132299582694",
+      "expected_sha256": "a5ad284f6895c0b4ed516c855c1b149e6636b945173aa2e842b8132299582694",
+      "hash_matches": true
+    },
+    "s0_seed42": {
+      "path": "outputs/hybrid_experiments/20260515_004119_wt2_hybrid_lite_baseline_224x56_l6_e20/checkpoints/hybrid_best.pt",
+      "sha256": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+      "expected_sha256": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+      "hash_matches": true
+    },
+    "s0_seed123": {
+      "path": "outputs/hybrid_experiments/20260922_071001_phase2c_wt2_s0_seed123/checkpoints/hybrid_best.pt",
+      "sha256": "a44b64ba5a84d3bd2708a96aad4eae829ff7ab0f00476f0e31146fc314da1f13",
+      "expected_sha256": "a44b64ba5a84d3bd2708a96aad4eae829ff7ab0f00476f0e31146fc314da1f13",
+      "hash_matches": true
+    },
+    "s0_seed456": {
+      "path": "outputs/hybrid_experiments/20260922_071449_phase2c_wt2_s0_seed456/checkpoints/hybrid_best.pt",
+      "sha256": "3fbe985d6474c84d1c61fd7937ea906102cf460846829eb3af4c709593b01757",
+      "expected_sha256": "3fbe985d6474c84d1c61fd7937ea906102cf460846829eb3af4c709593b01757",
+      "hash_matches": true
+    }
+  },
+  "source_sha256": {
+    "train_distill_hybrid_lite_from_latefusion_teacher_v2.py": "5217f3d4a8b5e35ee4852194346f67c03d00d0a4ae829f0ed11770c865359c41",
+    "src/kd_losses.py": "4a7d002db4f068d299d69e97832ca98c0d03644912c4e1d898ceb4a81592374d",
+    "research/experiments/phase2e_teacher_branch_ablation/experiment_plan.md": "e44c6fbf8f8323aba2eb2c6b89c2f8a6338e00f1de262e3c8d28e14c5bf2e150",
+    "research/experiments/phase2e_teacher_branch_ablation/preregistered_interpretation.md": "e495196765e1154cf67149f3c72a1c21b6834e8a02e15c9a500b531b022ad4ad",
+    "research/experiments/phase2e_teacher_branch_ablation/run_branch_utility.py": "cca0643a591229ccbfddfb4d878d0f1948f5a2fbef575d3ef7155f32bde6028f",
+    "research/experiments/phase2e_teacher_branch_ablation/run_gradient_preflight.py": "2b72a3097590fb8b68715cac4e4390d51bfae123d9bf00db0fd1f9bdffeb5774"
+  },
+  "gpu_inventory": "0, NVIDIA GeForce RTX 3090, 24576, 10\n1, NVIDIA GeForce RTX 3090, 24576, 10\n2, NVIDIA GeForce RTX 3090, 24576, 10\n3, NVIDIA GeForce RTX 3090, 24576, 10",
+  "gate_passed": true
+}

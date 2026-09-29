@@ -227,3 +227,10 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - preflight `R_param` 在 1.093--1.149，formal epoch-1 clipping 在 0.503--0.667，overflow/non-finite 均 0.013605；不是 material optimization-scale confound。
 - joint training 改善两个 branch NLL 约 2.0，但 fusion gain 略降；branch complementarity 指标混合。Teacher A hardest-quintile utility 仍为正但 full endpoint transfer 为负。
 - global teacher NLL 不是跨条件充分解释，因为 Phase 2C 的全球较弱 alpha-0.0 teacher 仍三 seed 正迁移。下一项仅选择 Transformer-only vs Grassmann-only vs fused-teacher KD，尚未启动。
+
+## 25. 2026-09-29 Phase 2E teacher-branch gate outcome
+
+- frozen joint teacher 的 F/T/G validation NLL 为 4.300646/4.445647/4.652064；S0-matched residual advantage 均值为 +0.074515/-0.070486/-0.276903。
+- T/F 参数 KD 梯度比 1.232--1.316，预检不属于 scale mismatch。最难 student-loss quintile 上 F utility 高于 T 与 G，但仅是 validation observation。
+- reduced T smoke 因 clip=1.00、overflow/non-finite=0.16 失败。matched full-data F/T gate 中 F 通过；T 的 overflow/non-finite 为 0.0136，但 clip=1.00，仍不满足预注册 clip<0.95。
+- 三个 formal T arm 未启动，Phase 2E 不得视为完成，不能生成 `Gain_T`、`C_FT` 或七项最终决策。下一步需要负责人明确选择：保持冻结协议并终止，或在任何正式 test endpoint 产生前授权并记录新的 protocol amendment。
