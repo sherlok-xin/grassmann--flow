@@ -1,0 +1,37 @@
+{
+  "created_at_utc": "2026-09-29T04:40:49.704673+00:00",
+  "run_dir": "outputs/distill_experiments/20260929_043856_phase2d_smoke_wt2_d2_a_seed42",
+  "checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/distill_experiments/20260929_043856_phase2d_smoke_wt2_d2_a_seed42/checkpoints/student_best.pt",
+  "checkpoint_sha256": "b772d59d44cc16ec487143a5ae24256dd0d211ce14d63e283ea7da7c0ba00555",
+  "teacher": "A",
+  "student_seed": 42,
+  "effective_alpha": [
+    0.5
+  ],
+  "student_s0_sha256": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+  "epochs": 1,
+  "max_lines": 2000,
+  "ce": 3.835579553531234,
+  "raw_kl": 1.1145515472266325,
+  "weighted_kd": 5.572757736133163,
+  "total_gradient_norm": 2.7220585573287237,
+  "clipping_fraction": 1.0,
+  "overflow_fraction": 0.16,
+  "nonfinite_fraction": 0.16,
+  "kd_logit_gradient_norm_preflight": 0.08129521853966164,
+  "kd_parameter_gradient_norm_preflight": 2.2133123319716743,
+  "best_validation_nll": 4.419361952793451,
+  "test_nll_smoke_only": 4.334940913819919,
+  "checks": {
+    "all_losses_finite": true,
+    "checkpoint_serialization_and_load": true,
+    "effective_alpha_exact": true,
+    "student_s0_hash_exact": true,
+    "amp_overflow_fraction_below_0_05": false,
+    "nonfinite_fraction_below_0_05": false,
+    "clipping_fraction_below_0_95": false
+  },
+  "gate_passed": false,
+  "formal_training_authorized": false,
+  "interpretation": "Smoke-only optimization integrity result. Reduced-data validation/test values are not comparable to the formal Phase 2C endpoints."
+}

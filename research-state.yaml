@@ -1,7 +1,7 @@
 schema_version: 1
-updated: "2026-09-28"
+updated: "2026-09-29"
 status: active
-phase: phase2c_multiseed_teacher_utility_complete
+phase: phase2d_fixed_composition_teacher_quality_complete
 objective: >-
   Establish when heterogeneous Grassmann--Transformer knowledge distillation
   helps or hurts, then develop a branch-aware method that reduces negative
@@ -36,10 +36,13 @@ hypotheses:
   H2:
     title: Branch-aligned dual distillation transfers heterogeneous expertise better than fused logits alone
     status: branch_only_control_failed_at_lambda_2_5
-next_action: review_the_fixed_composition_teacher_quality_intervention_before_any_phase2d_launch
+next_action: research_lead_review_of_transformer_vs_grassmann_vs_fused_teacher_kd
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
+resolved_protocol:
+  - date: "2026-09-29"
+    issue: The original Phase 2D 2000-line smoke failed. After explicit authorization, a matched full-data one-epoch J/A stability gate passed and the unchanged three-seed formal D2 matrix completed.
 resolved_infrastructure:
   - date: "2026-09-16"
     issue: Remote /songxin NFS mount was restored; grassmann_lab sees the shared project and four RTX 3090 GPUs.
@@ -67,4 +70,11 @@ artifacts:
   stage_c_analysis: research/experiments/h2_crbd/analysis.md
   phase2c_report: research/experiments/phase2c_multiseed_teacher_utility/REPORT.md
   phase2c_results: research/experiments/phase2c_multiseed_teacher_utility/results_multiseed.csv
+  phase2d_report: research/experiments/phase2d_fixed_composition_teacher_quality/REPORT.md
+  phase2d_preflight: research/experiments/phase2d_fixed_composition_teacher_quality/raw/preflight_summary.json
+  phase2d_smoke: research/experiments/phase2d_fixed_composition_teacher_quality/raw/smoke/smoke_summary.json
+  phase2d_amended_smoke: research/experiments/phase2d_fixed_composition_teacher_quality/raw/smoke/matched_full_epoch_smoke_summary.json
+  phase2d_results: research/experiments/phase2d_fixed_composition_teacher_quality/results_multiseed.csv
+  phase2d_figures: research/experiments/phase2d_fixed_composition_teacher_quality/figures
+  phase2d_gpt_handoff: research/experiments/phase2d_fixed_composition_teacher_quality/GPT_HANDOFF.md
   gpt_entrypoint: PROJECT_OVERVIEW_FOR_GPT.md

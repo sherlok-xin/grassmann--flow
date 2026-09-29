@@ -293,3 +293,24 @@
 - 离线 utility audit 使用固定 512 validation chunks。T_a00 全局 utility 与 student-error partition 均为负，但最高 student-loss quintile 在三 seed 上的 mean utility 均为正，positive fraction 均超过 0.54。top-1 rescue 很低，因此判为 PARTIAL conditional-utility evidence。
 - fixed-composition audit 找到 alpha-only 与 joint-trained 两个自然 checkpoint，二者可在固定 alpha 0.5、相同架构与 source branches 下形成未来质量干预。未启动 Phase 2D。
 - collector 验证九个 arm 的配置、S0 哈希、有效 alpha 与固定 selection hash 后生成 `results_multiseed.csv`、两张 utility CSV、raw summaries 与图。总报告为 `research/experiments/phase2c_multiseed_teacher_utility/REPORT.md`。
+
+## [2026-09-29] Phase 2D fixed-composition preflight and smoke stop
+
+- 按冻结方案比较 joint Teacher J 与 alpha-only Teacher A，二者均强制 effective alpha 0.5。完整性门槛确认 teacher/source 哈希、架构 schema、state keys/shapes 与融合语义匹配，并复现 179/191 个张量不同。
+- 同一 512-chunk WikiText-2 validation 子集上，J/A fused NLL 为 4.300644/6.376220。joint training 同时改善 Transformer 与 Grassmann branch NLL；J 的 branch JSD 略高、top-1 agreement 略低，但 fusion gain margin 略小。
+- 三个 S0 的 full-parameter KD-gradient ratio `G_A/G_J` 为 1.102792/1.148522/1.093056，未触发 `KD_SCALE_MISMATCH`，因此未创建 D2-scale。
+- Teacher A 全局 utility 在三个 seed 上均约为 -2，但最高 student-loss quintile utility 均为正，positive fraction 为 0.597--0.622；该结果仅为 validation observation。
+- seed-42、2,000-line、1-epoch Teacher-A smoke 的 CE/raw KL/weighted KD 为 3.835580/1.114552/5.572758。checkpoint 可重载且 alpha/S0 hash 正确，但 clip fraction=1.00，overflow/non-finite=0.16，未通过预注册 `<0.95` 与 `<0.05` 门槛。
+- Phase 2B 的同类 2,000-line Teacher-J smoke 也曾得到 clip=1.00、overflow/non-finite=0.16，而后续 full-data formal epoch 1 为 0.5476/0.0136；因此当前失败可能是 25-step AMP calibration window 的系统性现象，但不能据此绕过新冻结门槛。
+- 遵循停止规则，未启动 seeds 42/123/456 正式 D2，未生成 endpoint 图，未修改论文、datasets、历史 checkpoints、lambda 或 AMP 设置。下一步需要研究负责人决定是否显式修订 smoke 协议。
+
+## [2026-09-29] Phase 2D authorized amendment and formal completion
+
+- 研究负责人显式批准将稳定性观察窗修订为同一 seed-42 S0、同一正式配置的 full-data one-epoch J/A 配对门控；原 2,000-line smoke 失败记录保留，不被覆盖。
+- 修订门控中 J/A clipping fraction 为 0.234694/0.275510，AMP overflow 与 non-finite fraction 均为 0.013605；teacher、alpha=0.5、S0 hash、目标函数和 checkpoint 重载检查全部通过。
+- 不重跑 Phase 2C C0/C1，仅新增 Teacher-A D2。seeds 42/123/456 的 Teacher-A test NLL 为 4.293136/4.312882/4.306036；相对 C0 的 `Gain_A` 为 -0.022394/-0.035362/-0.025206，三 seed 均为负迁移。
+- 对应 Teacher-J `Gain_J` 为 +0.162501/+0.147337/+0.157157；主对比 `Q=NLL_A-NLL_J` 为 +0.184895/+0.182699/+0.182364，均值 0.183319、样本标准差 0.001375，三 seed 方向一致。
+- formal Teacher-A epoch-1 clipping 为 0.666667/0.503401/0.513605，overflow/non-finite 均为 0.013605；结合 preflight `R_param=1.103/1.149/1.093`，结论不受明显 KD gradient-scale mismatch 混杂。
+- joint training 同时显著改善 Transformer 与 Grassmann branch NLL；JSD 和 agreement 暗示分歧略增，但 fusion gain 从 0.164420 降到 0.145003，故主要变化是 branch quality，而不是 fusion-gain margin 增强。
+- 决策：fixed-composition teacher-state effect 为 YES，Teacher-A positive transfer 为 NO，cross-seed robustness 为 YES，material scale confound 为 NO，global NLL sufficiency 为 NO。下一项仅选择 option A（Transformer-only vs Grassmann-only vs fused-teacher KD），未启动。
+- 生成严格 collector、三组 compact raw formal artifacts、`results_multiseed.csv`、三张 PDF/300-dpi PNG 配对图、完整报告与 GPT handoff；未修改论文、datasets 或历史 checkpoints。

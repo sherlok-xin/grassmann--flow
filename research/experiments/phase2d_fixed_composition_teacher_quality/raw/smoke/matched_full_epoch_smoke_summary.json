@@ -1,0 +1,80 @@
+{
+  "created_at_utc": "2026-09-29T07:57:11.307973+00:00",
+  "protocol_amendment_authorized": true,
+  "purpose": "Matched optimization-integrity gate only; endpoint NLL is not used for selection.",
+  "arms": {
+    "J": {
+      "teacher": "J",
+      "run_dir": "outputs/distill_experiments/20260929_075425_phase2d_full_epoch_smoke_J_seed42",
+      "checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/distill_experiments/20260929_075425_phase2d_full_epoch_smoke_J_seed42/checkpoints/student_best.pt",
+      "checkpoint_sha256": "4c03980d8bde813d7d60c27bbb30dac25602f415b47cf5235131189e56b5c337",
+      "train_valid_tokens": 2391645,
+      "ce": 3.9129243746585765,
+      "raw_kl": 0.4419405971722176,
+      "weighted_kd": 2.209702985861088,
+      "total_gradient_norm": 1.043864205993455,
+      "clipping_fraction": 0.23469387755102042,
+      "overflow_fraction": 0.013605442176870748,
+      "nonfinite_fraction": 0.013605442176870748,
+      "best_validation_nll": 4.278501061209516,
+      "test_nll_smoke_only": 4.165492466457734,
+      "effective_alpha": [
+        0.5
+      ],
+      "student_s0_sha256": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+      "checks": {
+        "all_losses_finite": true,
+        "checkpoint_serialization_and_load": true,
+        "teacher_identity_exact": true,
+        "effective_alpha_exact": true,
+        "student_s0_hash_exact": true,
+        "formal_objective_exact": true,
+        "full_data_one_epoch": true,
+        "amp_overflow_fraction_below_0_05": true,
+        "nonfinite_fraction_below_0_05": true,
+        "clipping_fraction_below_0_95": true
+      },
+      "arm_passed": true
+    },
+    "A": {
+      "teacher": "A",
+      "run_dir": "outputs/distill_experiments/20260929_075428_phase2d_full_epoch_smoke_A_seed42",
+      "checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/distill_experiments/20260929_075428_phase2d_full_epoch_smoke_A_seed42/checkpoints/student_best.pt",
+      "checkpoint_sha256": "4a0588075f5f8154d3dc25c6928d5271ef4da053d350f11e1e1a363599752e03",
+      "train_valid_tokens": 2391645,
+      "ce": 4.035231096910533,
+      "raw_kl": 0.5277742423257767,
+      "weighted_kd": 2.6388712116288837,
+      "total_gradient_norm": 1.1120687735491785,
+      "clipping_fraction": 0.2755102040816326,
+      "overflow_fraction": 0.013605442176870748,
+      "nonfinite_fraction": 0.013605442176870748,
+      "best_validation_nll": 4.447801529338694,
+      "test_nll_smoke_only": 4.343984437641168,
+      "effective_alpha": [
+        0.5
+      ],
+      "student_s0_sha256": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+      "checks": {
+        "all_losses_finite": true,
+        "checkpoint_serialization_and_load": true,
+        "teacher_identity_exact": true,
+        "effective_alpha_exact": true,
+        "student_s0_hash_exact": true,
+        "formal_objective_exact": true,
+        "full_data_one_epoch": true,
+        "amp_overflow_fraction_below_0_05": true,
+        "nonfinite_fraction_below_0_05": true,
+        "clipping_fraction_below_0_95": true
+      },
+      "arm_passed": true
+    }
+  },
+  "matched_checks": {
+    "same_student_s0": true,
+    "same_effective_alpha": true,
+    "both_arms_passed": true
+  },
+  "gate_passed": true,
+  "formal_training_authorized": true
+}

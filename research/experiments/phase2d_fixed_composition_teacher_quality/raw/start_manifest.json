@@ -1,0 +1,36 @@
+{
+  "experiment_start_date": "2026-09-29",
+  "git_commit_sha": "9fec0ac48d6011d8f40ba52aabea7734353dbaa2",
+  "git_status": "clean main tracking personal/main",
+  "execution_host": "10.42.0.197",
+  "execution_path": "/workspace/grassmannflows/grassmann-flows",
+  "dataset_manifest": "research/snapshots/20260920/dataset_manifest_wikitext2.json",
+  "dataset_manifest_sha256": "2534df9ffce9a64cd8dc49ad267a1cb549c42fd8fd219b836bf15499de7ab0a5",
+  "teacher_checkpoints": {
+    "J": {
+      "path": "outputs/hybrid_experiments/20260328_080104_wt2_hybrid_alpha_joint/checkpoints/hybrid_best.pt",
+      "sha256": "a5ad284f6895c0b4ed516c855c1b149e6636b945173aa2e842b8132299582694"
+    },
+    "A": {
+      "path": "outputs/hybrid_experiments/20260328_084319_wt2_v1_hybrid_alpha_only/checkpoints/hybrid_best.pt",
+      "sha256": "43d288db1dba826d8ad1bb3fcbd09b9720bdde24c198e858e00ce4c4658df012"
+    }
+  },
+  "student_s0_checkpoints": {
+    "42": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+    "123": "a44b64ba5a84d3bd2708a96aad4eae829ff7ab0f00476f0e31146fc314da1f13",
+    "456": "3fbe985d6474c84d1c61fd7937ea906102cf460846829eb3af4c709593b01757"
+  },
+  "source_file_sha256": {
+    "train_distill_hybrid_lite_from_latefusion_teacher_v2.py": "5217f3d4a8b5e35ee4852194346f67c03d00d0a4ae829f0ed11770c865359c41",
+    "src/kd_losses.py": "4a7d002db4f068d299d69e97832ca98c0d03644912c4e1d898ceb4a81592374d",
+    "audit_teacher_integrity.py": "0be07da0513fa526e0005aa56158793c6809247fb4c674eb600ac8c020050ac2",
+    "run_teacher_preflight.py": "387d941ee9788752889854c6314ff3ea98d9e8648110db628ee05de460a4d765",
+    "run_gradient_scale_preflight.py": "900bf80697ac35448de4c11686f905341300156a224e3ecdbc49daa90a8b1b4b"
+  },
+  "exact_command_sources": {
+    "offline_preflight": "research/experiments/phase2d_fixed_composition_teacher_quality/run_preflight.sh",
+    "training_smoke": "research/experiments/phase2d_fixed_composition_teacher_quality/run_smoke.sh"
+  },
+  "formal_command_status": "not_created_or_executed_because_smoke_gate_failed"
+}

@@ -210,3 +210,20 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - T_a00 的全局 token utility 为负，但在每个 seed 的最高 student-loss quintile 上均为正，positive-utility fraction 均超过 0.54；全体 student-error token 的均值仍为负且 top-1 rescue 很低，因此只记为 conditional utility/complementarity signal，不声称机制。
 - repository 中存在 fixed-composition 候选：alpha-only 与 joint-trained teacher 在固定 alpha 0.5、相同架构与相同 source branches 下形成明显质量差。最有信息量的下一项是该固定组成干预；Phase 2D 未启动。
 - 完整报告与结果位于 `research/experiments/phase2c_multiseed_teacher_utility/`。本阶段未修改论文、datasets 或 checkpoints。
+
+## 23. 2026-09-29 Phase 2D fixed-composition gate outcome
+
+- 固定组成干预使用 joint Teacher J 与 alpha-only Teacher A，二者均在 effective alpha 0.5 下评估。完整性检查全部通过，179/191 个状态张量不同，差异来自 joint continuation 更新 branch parameters。
+- 固定 validation 子集上 J/A fused NLL 为 4.300644/6.376220；joint training 改善两个 branch。Teacher A 虽全局 utility 显著为负，但三 seed 的 hardest-quintile utility 仍为正。
+- 梯度预检的 `R_param` 为 1.103/1.149/1.093，无相对 KD-scale mismatch，不创建 scale-control。
+- 2,000-line Teacher-A smoke 的 clip fraction 1.00、AMP overflow/non-finite 0.16，违反冻结门槛；正式 D2 未启动，不能报告 `Gain_A` 或 `Q`。
+- 当前唯一允许的下一动作是负责人审查是否修订 smoke protocol。不得把 smoke test NLL 当正式 endpoint，不得据此回答 Teacher A 的迁移正负或 Phase 2D 七项最终决策。
+
+## 24. 2026-09-29 Phase 2D fixed-composition completion
+
+- 用户显式批准匹配的 full-data one-epoch J/A stability amendment。J/A clipping 为 0.234694/0.275510，overflow/non-finite 均为 0.013605；门控通过后才启动正式 D2。
+- Teacher-A seeds 42/123/456 test NLL 为 4.293136/4.312882/4.306036，`Gain_A` 为 -0.022394/-0.035362/-0.025206；Teacher J 的复用 `Gain_J` 为 +0.162501/+0.147337/+0.157157。
+- `Q=NLL_A-NLL_J` 为 +0.184895/+0.182699/+0.182364，均值 0.183319、样本标准差 0.001375，三 seed 完全一致支持 fixed-composition teacher training-state/quality modulation。
+- preflight `R_param` 在 1.093--1.149，formal epoch-1 clipping 在 0.503--0.667，overflow/non-finite 均 0.013605；不是 material optimization-scale confound。
+- joint training 改善两个 branch NLL 约 2.0，但 fusion gain 略降；branch complementarity 指标混合。Teacher A hardest-quintile utility 仍为正但 full endpoint transfer 为负。
+- global teacher NLL 不是跨条件充分解释，因为 Phase 2C 的全球较弱 alpha-0.0 teacher 仍三 seed 正迁移。下一项仅选择 Transformer-only vs Grassmann-only vs fused-teacher KD，尚未启动。

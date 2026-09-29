@@ -37,6 +37,12 @@ Offline token-level analysis shows a limited complementarity signal. For T_a00, 
 
 Earlier matched evidence also shows that token-normalized warm-start KD improves PTB across three seeds, while the same fixed-strength protocol harms TinyStories for the tested seed. The bounded CRBD prototype did not repair that negative transfer and should not be presented as a successful method.
 
+## Current Phase 2D status
+
+Phase 2D is complete. Teacher J and Teacher A preserve architecture, source branches, fusion semantics, and effective alpha 0.5; 179 of 191 state tensors differ because joint training updated branch parameters. Their validation NLL values on the same 512 chunks are 4.300644 and 6.376220. Full-parameter KD-gradient ratios `G_A/G_J` are 1.102792, 1.148522, and 1.093056, so no relative scale mismatch was detected. An explicitly authorized matched full-data J/A stability gate passed before formal training.
+
+For seeds 42/123/456, reused Teacher-J gain is +0.162501/+0.147337/+0.157157, whereas new Teacher-A gain is -0.022394/-0.035362/-0.025206. The primary paired contrast `Q=NLL_A-NLL_J` is +0.184895/+0.182699/+0.182364, with mean 0.183319 and sample SD 0.001375. Teacher training state and resulting quality therefore strongly modulate KD under fixed composition, but global NLL is still not a sufficient general rule because Phase 2C observed positive transfer from another globally weak teacher condition.
+
 ## Evidence boundaries
 
 - Do not claim that a teacher worse than the student necessarily causes negative transfer.
@@ -51,10 +57,11 @@ Earlier matched evidence also shows that token-normalized warm-start KD improves
 1. `AI_RESEARCH_HANDOFF.md` for the evidence audit and limitations.
 2. `docs/project_map.md` for code and data flow.
 3. `research/experiments/phase2c_multiseed_teacher_utility/REPORT.md` for the newest controlled result.
-4. `research/experiments/phase2b_controlled_teacher/REPORT.md` for the seed-42 intervention that motivated Phase 2C.
-5. `research/experiments/phase2_teacher_transfer_audit/REPORT.md` for the cross-domain teacher landscape.
-6. `research/experiments/post_rejection_program/analysis.md` and `research/experiments/h2_crbd/analysis.md` for matched PTB/TinyStories evidence and the failed method prototype.
-7. `论文投稿/cac/conference_101719.tex` for the archived CAC manuscript source.
+4. `research/experiments/phase2d_fixed_composition_teacher_quality/REPORT.md` for the completed fixed-composition intervention.
+5. `research/experiments/phase2b_controlled_teacher/REPORT.md` for the seed-42 intervention that motivated Phase 2C.
+6. `research/experiments/phase2_teacher_transfer_audit/REPORT.md` for the cross-domain teacher landscape.
+7. `research/experiments/post_rejection_program/analysis.md` and `research/experiments/h2_crbd/analysis.md` for matched PTB/TinyStories evidence and the failed method prototype.
+8. `论文投稿/cac/conference_101719.tex` for the archived CAC manuscript source.
 
 ## Repository policy
 
