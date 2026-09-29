@@ -1,5 +1,5 @@
 {
-  "created_at_utc": "2026-09-29T09:38:14.965808+00:00",
+  "created_at_utc": "2026-09-29T10:26:53.321292+00:00",
   "protocol_amendment_authorized_in_phase2e_plan": true,
   "purpose": "Matched optimization-integrity gate only; endpoint NLL is not used for selection.",
   "arms": {
@@ -73,5 +73,20 @@
     "both_arms_passed": false
   },
   "gate_passed": false,
-  "formal_training_authorized": false
+  "protocol_amendment": {
+    "authorized_at": "2026-09-29",
+    "scope": "Allow Transformer-only full-data gate clip_fraction=1.0 without changing any training setting.",
+    "warning_label": "CLIP_SATURATION_WARNING",
+    "checks": {
+      "explicit_authorization_flag": true,
+      "original_gate_failed_only_for_t_clip": true,
+      "t_clip_fraction_exactly_1": true,
+      "t_gradients_finite": true,
+      "t_over_f_parameter_gradient_ratios_in_range": true,
+      "t_overflow_and_nonfinite_remain_low": true,
+      "same_frozen_protocol": true
+    },
+    "authorized_under_amendment": true
+  },
+  "formal_training_authorized": true
 }
