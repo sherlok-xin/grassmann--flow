@@ -1,7 +1,7 @@
 schema_version: 1
 updated: "2026-09-30"
-status: stopped_after_phase2f
-phase: phase2f_homogeneous_ensemble_control_complete
+status: active
+phase: phase2g_tinystories_negative_transfer_preregistered
 objective: >-
   Establish when heterogeneous Grassmann--Transformer knowledge distillation
   helps or hurts, then develop a branch-aware method that reduces negative
@@ -40,9 +40,9 @@ hypotheses:
     title: A Transformer+Grassmann teacher transfers better than a homogeneous Transformer+Transformer ensemble
     status: contradicted_tt_better_three_of_three_seeds
 next_action: >-
-  stop_after_phase2f; do not launch Phase 2G. The Grassmann-specific KD
-  mechanism claim must be removed. Any further work requires a newly scoped
-  question, preregistration, and explicit authorization.
+  Run only the preregistered Phase 2G TinyStories seeds 123 and 456 S0,
+  WS+CE, and WS+KD matrix; then freeze experiments, prepare manuscript
+  rewrite handoff, and do not launch Phase 2H.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
@@ -98,4 +98,5 @@ artifacts:
   phase2f_teacher_diagnostics: research/experiments/phase2f_homogeneous_ensemble_control/raw/teacher_diagnostics.json
   phase2f_figures: research/experiments/phase2f_homogeneous_ensemble_control/figures
   phase2f_gpt_handoff: research/experiments/phase2f_homogeneous_ensemble_control/GPT_HANDOFF.md
+  phase2g_plan: research/experiments/phase2g_tinystories_negative_transfer/experiment_plan.md
   gpt_entrypoint: PROJECT_OVERVIEW_FOR_GPT.md

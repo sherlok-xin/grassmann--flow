@@ -1,0 +1,32 @@
+# Phase 2G Provenance
+
+Status: preregistered; no new formal endpoint generated.
+
+## Repository and execution
+
+- Preregistration base HEAD: `f1ea69561f03f83b154b9f303c110744366989ff`
+- Local project path: `/home/xin/fuwuqi/grassmann-flows`
+- Remote execution host: `10.42.0.197`
+- Remote project path: `/workspace/grassmannflows/grassmann-flows`
+- Heavy training is remote-only through `~/fuwuqi/agent-tools/exec_grassmann.sh`.
+
+## Frozen source identities
+
+- Teacher checkpoint SHA256: `db9ffda81d1f95ebc3f3d5967e3121b1c6dd859104c9c47cc80b0bab1fcaedfb`
+- Seed-42 S0 checkpoint SHA256: `e4d0959603bb39f0ad7b7a98025024975e2b87d117d36037e9f9aa9da966f9c2`
+- Seed-42 WS+CE checkpoint SHA256: `36f31a2995283edec06f65276ebe2834d1c6bb0351908bb158bb6f82e83be378`
+- Seed-42 WS+KD checkpoint SHA256: `d466d8ff9d5697bca338c2b444d11ba21e3de94e25b1db35b5324495f4eafc5d`
+
+The protected `datasets/` and `checkpoints/` directories are read-only for this phase. Historical runs and checkpoints are not overwritten.
+
+## Frozen data statistics from seed 42
+
+- Train: 300,000 non-empty lines, 67,081,279 pre-trim tokens, 262,036 chunks
+- Validation: 42,391 non-empty lines, 9,440,302 pre-trim tokens, 36,876 chunks
+- Test: 21,990 non-empty lines, 4,765,822 pre-trim tokens, 18,616 chunks
+- Sequence length: 256
+- TinyStories split seed: 42
+
+## Endpoint discipline
+
+Only seeds 123 and 456 are new. For each seed, S0 is independently trained and then reused byte-identically for its CE and KD arms. Validation NLL selects checkpoints. Test NLL is read only after selection. The seed-42 matched result is reused without rerunning. No coefficient or protocol field may be changed in response to an endpoint.
