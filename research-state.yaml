@@ -1,7 +1,7 @@
 schema_version: 1
 updated: "2026-09-30"
-status: active
-phase: phase2e_teacher_branch_ablation_complete
+status: stopped_after_phase2f
+phase: phase2f_homogeneous_ensemble_control_complete
 objective: >-
   Establish when heterogeneous Grassmann--Transformer knowledge distillation
   helps or hurts, then develop a branch-aware method that reduces negative
@@ -36,14 +36,19 @@ hypotheses:
   H2:
     title: Branch-aligned dual distillation transfers heterogeneous expertise better than fused logits alone
     status: branch_only_control_failed_at_lambda_2_5
+  H3:
+    title: A Transformer+Grassmann teacher transfers better than a homogeneous Transformer+Transformer ensemble
+    status: contradicted_tt_better_three_of_three_seeds
 next_action: >-
-  stop_after_phase2e; selected but not launched: homogeneous
-  Transformer+Transformer ensemble teacher control versus
-  Transformer+Grassmann teacher
+  stop_after_phase2f; do not launch Phase 2G. The Grassmann-specific KD
+  mechanism claim must be removed. Any further work requires a newly scoped
+  question, preregistration, and explicit authorization.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
 resolved_protocol:
+  - date: "2026-09-30"
+    issue: Phase 2F completed the homogeneous ensemble control. TT beat TG for all three students (mean H=-0.012460 NLL); teacher quality and alpha-learning-rate differences remain disclosed confounds, and no Grassmann-specific KD advantage is supported.
   - date: "2026-09-30"
     issue: Phase 2E Transformer-only full-data gate had clip saturation at 1.0. The research lead explicitly authorized unchanged formal training with a permanent CLIP_SATURATION_WARNING; all three runs completed without elevated overflow or non-finite gradients.
   - date: "2026-09-29"
@@ -88,4 +93,9 @@ artifacts:
   phase2e_amended_smoke: research/experiments/phase2e_teacher_branch_ablation/raw/smoke/matched_full_epoch_smoke_summary.json
   phase2e_figures: research/experiments/phase2e_teacher_branch_ablation/figures
   phase2e_gpt_handoff: research/experiments/phase2e_teacher_branch_ablation/GPT_HANDOFF.md
+  phase2f_report: research/experiments/phase2f_homogeneous_ensemble_control/REPORT.md
+  phase2f_results: research/experiments/phase2f_homogeneous_ensemble_control/results_multiseed.csv
+  phase2f_teacher_diagnostics: research/experiments/phase2f_homogeneous_ensemble_control/raw/teacher_diagnostics.json
+  phase2f_figures: research/experiments/phase2f_homogeneous_ensemble_control/figures
+  phase2f_gpt_handoff: research/experiments/phase2f_homogeneous_ensemble_control/GPT_HANDOFF.md
   gpt_entrypoint: PROJECT_OVERVIEW_FOR_GPT.md

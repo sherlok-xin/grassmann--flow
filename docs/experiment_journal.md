@@ -331,3 +331,12 @@
 - 主对比 `C_FT` 为 0.019716/0.022110/0.020564，均值 0.020797、sample SD 0.001214、3/3 positive，刚超过预注册 0.02 阈值。`C_FG` 均值 0.114674，`C_TG` 均值 0.093877，均为 3/3 positive。
 - T 在 gate 与 formal epoch 1 均 clip=1.00，随后降至最低 0.0034；mean epoch clipping 为 0.4990/0.4605/0.4398。终点数值有效，但早期优化约束可能影响较小的 `C_FT`，因此 warning 不得删除。
 - 结论：fused 相对 T 与 G 均稳定更优，T/G 均提供正迁移；加入 Grassmann branch 在该协议下带来小而稳定的额外 gain，但不能归因于 Grassmann geometry。唯一选择且未启动的下一实验是 homogeneous Transformer+Transformer ensemble teacher control。
+
+## [2026-09-30] Phase 2F homogeneous ensemble control completion
+
+- 从历史缓存恢复与 T1 完全一致的 WikiText-2 raw 数据，token/chunk 统计逐项复现；未修改项目 `datasets/` 或 `checkpoints/`。独立 seed-123 T2 在相同 20-epoch 协议下选中 epoch 12，validation/test NLL 为 5.230674/5.288460。
+- 以最小兼容改动增加显式 `teacher_type=tg|tt`；旧 TG 默认行为与 state keys 保持不变。Phase 2F 加既有 Phase 2B 共 7 项远端测试通过，随后 teacher smoke、KD reduced smoke 与 full-data gate 均完成。
+- TT teacher 在强制 alpha=0.5 的 full validation NLL 为 4.293589，优于 TG 的 4.303697。TT/TG 参数量为 35,340,801/37,749,633，非 parameter-matched；TT 少 6.38% 参数。TG 的 JSD 与 fusion gain 更高，但没有转化为下游优势。
+- TT KD seeds 42/123/456 test NLL 为 4.094289/4.118854/4.111574，均优于复用 TG 的 4.108241/4.130183/4.123673。`H=NLL_TT-NLL_TG` 为 -0.013952/-0.011329/-0.012099，mean -0.012460、sample SD 0.001348、3/3 negative。
+- 三个 TT endpoint 均无 NaN，max overflow/non-finite 为 0.013605。TT 早期 clipping 高于 TG，但未饱和且最低降至 0.0034；更强 clipping 下仍获胜，不构成其优势的明显解释。
+- teacher quality 差异与 endpoint 方向一致，且 TT/TG teacher alpha LR 为 `1e-2`/`5e-3`，必须作为混杂保留。结论按预注册规则执行：删除 Grassmann-specific KD mechanism claim；Phase 2E 仅支持 generic ensemble supervision。Phase 2G 不启动。

@@ -1,0 +1,62 @@
+{
+  "run_id": "20260930_033237",
+  "experiment_name": "phase2f_t2_seed123_e20",
+  "start_time": "2026-09-30T03:33:07.310595",
+  "notes": "Phase2F independent T2; exact T1 protocol except seed=123",
+  "tags": [
+    "phase2f",
+    "formal",
+    "t2"
+  ],
+  "config": {
+    "model": "transformer",
+    "model_dim": 256,
+    "num_layers": 6,
+    "max_seq_len": 256,
+    "batch_size": 32,
+    "epochs": 20,
+    "lr": 0.0003,
+    "output_dir": "outputs/experiments",
+    "seed": 123,
+    "experiment_name": "phase2f_t2_seed123_e20",
+    "notes": "Phase2F independent T2; exact T1 protocol except seed=123",
+    "tags": "phase2f,formal,t2",
+    "reduced_dim": 32,
+    "window_sizes": "1,2,4,8,12,16",
+    "dropout": 0.1
+  },
+  "env": {
+    "python_version": "3.12.3",
+    "pytorch_version": "2.6.0a0+df5bbc09d1.nv24.11",
+    "cuda_available": true,
+    "cuda_device_count": 1,
+    "cuda_device_name": "NVIDIA GeForce RTX 3090",
+    "platform": "Linux-5.4.0-216-generic-x86_64-with-glibc2.39"
+  },
+  "dataset_stats": {
+    "train": {
+      "split": "train",
+      "non_empty_lines": 23767,
+      "char_count": 10916756,
+      "token_count_before_trim": 2391884,
+      "num_chunks": 9343,
+      "max_seq_len": 256
+    },
+    "validation": {
+      "split": "validation",
+      "non_empty_lines": 2461,
+      "char_count": 1144610,
+      "token_count_before_trim": 247289,
+      "num_chunks": 965,
+      "max_seq_len": 256
+    },
+    "test": {
+      "split": "test",
+      "non_empty_lines": 2891,
+      "char_count": 1288512,
+      "token_count_before_trim": 283287,
+      "num_chunks": 1106,
+      "max_seq_len": 256
+    }
+  }
+}

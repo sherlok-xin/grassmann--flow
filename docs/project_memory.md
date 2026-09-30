@@ -242,3 +242,12 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - `C_FT` 为 0.019716/0.022110/0.020564，mean 0.020797、sample SD 0.001214、3/3 positive，勉强越过 0.02 实质阈值；`C_FG` mean 0.114674，`C_TG` mean 0.093877。
 - T epoch-1 clipping 三 seed 均为 1.0，但后续最低降至 0.0034；max overflow/non-finite 始终 0.013605，无 NaN/失败。结果不判 optimization-confounded，但 `C_FT` 解释必须保留早期 clipping 约束。
 - 可支持 bounded claim：固定 joint teacher 下，加入 Grassmann branch 相对 Transformer-only 带来小而稳定的额外 KD gain。不能声称 Grassmann geometry 因果成立。下一项仅选择 homogeneous T+T ensemble teacher vs T+G teacher control，未启动。
+
+## 27. 2026-09-30 Phase 2F homogeneous ensemble control
+
+- T1 沿用历史 WT2 Transformer；T2 以 seed 123、相同 architecture/data/tokenizer/optimizer/batch/20 epochs 独立训练并按 validation NLL 选 epoch 12。T2 validation/test NLL 为 5.230674/5.288460。
+- TT joint teacher 按授权协议训练，在统一强制 alpha=0.5 的 full validation 上得到 NLL 4.293589，TG 为 4.303697。TT 参数量 35,340,801，TG 为 37,749,633；二者不严格 parameter-matched，且 TT 少 6.38% 参数。
+- TG 的 branch JSD/fusion gain 为 0.182087/0.147983，高于 TT 的 0.099793/0.112570，但下游结果相反，说明这些互补性指标不足以推出更好的 transferable KD signal。
+- 新 TT KD seeds 42/123/456 test NLL 为 4.094289/4.118854/4.111574；复用 TG 为 4.108241/4.130183/4.123673。`Gain_TT` mean 0.168125，`Gain_TG` mean 0.155665；`H=Gain_TG-Gain_TT` mean -0.012460、sample SD 0.001348、3/3 negative。
+- TT 早期 clipping 较高但不饱和，overflow/non-finite 与 TG 同量级且无 NaN。teacher validation NLL 差异方向一致，TT/TG alpha LR 又为 `1e-2`/`5e-3`，teacher quality/training 是主要混杂；参数量与 clipping 不提供 TT 获胜的明显正向解释。
+- 决策：Phase 2F 否定 TG 优于 homogeneous TT 的假设。Grassmann-specific KD mechanism claim 必须删除，Phase 2E 的 fused gain 降为 generic ensemble supervision/teacher-quality 证据。Phase 2G 对保留该主张没有必要，未启动。

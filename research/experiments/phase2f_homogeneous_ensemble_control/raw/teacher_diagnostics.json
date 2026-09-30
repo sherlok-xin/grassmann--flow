@@ -1,0 +1,94 @@
+{
+  "protocol": {
+    "selection_split": "validation",
+    "effective_alpha": 0.5,
+    "amp": false,
+    "test_selection": false
+  },
+  "dataset_stats": {
+    "split": "validation",
+    "dataset_name": "wikitext2",
+    "dataset_path": "/workspace/grassmannflows/datasets/wikitext2_v1_saved",
+    "text_field": "text",
+    "source": "disk",
+    "non_empty_lines": 2461,
+    "char_count": 1110211,
+    "token_count_before_trim": 253809,
+    "num_chunks": 991,
+    "max_seq_len": 256,
+    "max_lines": 0,
+    "encode_chars_per_batch": 200000,
+    "tinystories_val_frac": 0.02,
+    "split_seed": 42
+  },
+  "teachers": {
+    "TG": {
+      "teacher_type": "tg",
+      "run_dir": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260328_080104_wt2_hybrid_alpha_joint",
+      "checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260328_080104_wt2_hybrid_alpha_joint/checkpoints/hybrid_best.pt",
+      "checkpoint_sha256": "a5ad284f6895c0b4ed516c855c1b149e6636b945173aa2e842b8132299582694",
+      "checkpoint_alpha": [
+        0.5064820647239685
+      ],
+      "effective_alpha": [
+        0.5
+      ],
+      "late_k": 1,
+      "total_params": 37749633,
+      "branch_params": {
+        "transformer": 17670400,
+        "grassmann": 20079232
+      },
+      "validation_tokens": 252705,
+      "validation_nll": 4.30369720184247,
+      "validation_ppl": 73.9727810463502,
+      "branch_nll": {
+        "transformer": 4.451680130799206,
+        "grassmann": 4.65501983842442
+      },
+      "branch_ppl": {
+        "transformer": 85.77092939133337,
+        "grassmann": 105.1113052209001
+      },
+      "branch_jsd": 0.1820866133555776,
+      "branch_top1_agreement": 0.507033893274767,
+      "fusion_gain_over_better_branch": 0.14798292895673537
+    },
+    "TT": {
+      "teacher_type": "tt",
+      "run_dir": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260930_034520_phase2f_tt_teacher_joint_e10",
+      "checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260930_034520_phase2f_tt_teacher_joint_e10/checkpoints/hybrid_best.pt",
+      "checkpoint_sha256": "870d2667f0c5169fb42498a7195551fdc92f5bdf3fd41869d2167998c964e6f9",
+      "checkpoint_alpha": [
+        0.5117690563201904
+      ],
+      "effective_alpha": [
+        0.5
+      ],
+      "late_k": 1,
+      "total_params": 35340801,
+      "branch_params": {
+        "transformer1": 17670400,
+        "transformer2": 17670400
+      },
+      "validation_tokens": 252705,
+      "validation_nll": 4.293589157793147,
+      "validation_ppl": 73.22882721044927,
+      "branch_nll": {
+        "transformer1": 4.406159590776625,
+        "transformer2": 4.422151015224258
+      },
+      "branch_ppl": {
+        "transformer1": 81.95412100744988,
+        "transformer2": 83.2752191088477
+      },
+      "branch_jsd": 0.09979313053192919,
+      "branch_top1_agreement": 0.6301695653034171,
+      "fusion_gain_over_better_branch": 0.11257043298347735
+    }
+  },
+  "comparison": {
+    "tt_minus_tg_params": -2408832,
+    "tt_minus_tg_validation_nll": -0.010108044049323084
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "rows": [
+    {
+      "Seed": 42,
+      "C0 test NLL": 4.270742368824378,
+      "TG test NLL": 4.108241164147696,
+      "TT test NLL": 4.09428908187314,
+      "TT test PPL": 59.99668502807617,
+      "Gain_TG": 0.1625012046766825,
+      "Gain_TT": 0.1764532869512383,
+      "H": -0.0139520822745558,
+      "TT best epoch": 10,
+      "TT best validation NLL": 4.200568918984545,
+      "TT epoch1 clip fraction": 0.9285714285714286,
+      "TT min clip fraction": 0.003401360544217687,
+      "TT max clip fraction": 0.9285714285714286,
+      "TT mean clip fraction": 0.17006802721088435,
+      "TT max AMP overflow fraction": 0.013605442176870748,
+      "TT max nonfinite fraction": 0.013605442176870748,
+      "C0 run directory": "outputs/distill_experiments/20260921_134300_phase2b_wt2_c0_ws_ce_a05",
+      "TG run directory": "outputs/distill_experiments/20260921_134302_phase2b_wt2_c1_good_a05",
+      "TT run directory": "outputs/distill_experiments/20260930_035736_phase2f_wt2_tt_seed42",
+      "Student S0 hash": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+      "TT checkpoint SHA256": "5299fab6563588d32fe39f669c3d635c314a8b3488510f5cc529dc3a8f874fa7",
+      "Status": "COMPLETE"
+    },
+    {
+      "Seed": 123,
+      "C0 test NLL": 4.277519859472209,
+      "TG test NLL": 4.130183202233445,
+      "TT test NLL": 4.118854099317451,
+      "TT test PPL": 61.488739013671875,
+      "Gain_TG": 0.147336657238764,
+      "Gain_TT": 0.15866576015475786,
+      "H": -0.011329102915993872,
+      "TT best epoch": 10,
+      "TT best validation NLL": 4.2299648308008155,
+      "TT epoch1 clip fraction": 0.8435374149659864,
+      "TT min clip fraction": 0.003401360544217687,
+      "TT max clip fraction": 0.8435374149659864,
+      "TT mean clip fraction": 0.13775510204081634,
+      "TT max AMP overflow fraction": 0.013605442176870748,
+      "TT max nonfinite fraction": 0.013605442176870748,
+      "C0 run directory": "outputs/distill_experiments/20260922_075358_phase2c_wt2_c0_seed123",
+      "TG run directory": "outputs/distill_experiments/20260922_075357_phase2c_wt2_c1_a05_seed123",
+      "TT run directory": "outputs/distill_experiments/20260930_035736_phase2f_wt2_tt_seed123",
+      "Student S0 hash": "a44b64ba5a84d3bd2708a96aad4eae829ff7ab0f00476f0e31146fc314da1f13",
+      "TT checkpoint SHA256": "ef9e5394d276485decab9aa9ba80d707d1a7610e5186657e057bcc01612637f9",
+      "Status": "COMPLETE"
+    },
+    {
+      "Seed": 456,
+      "C0 test NLL": 4.280830109319325,
+      "TG test NLL": 4.123672851501896,
+      "TT test NLL": 4.11157354420513,
+      "TT test PPL": 61.04270553588867,
+      "Gain_TG": 0.1571572578174294,
+      "Gain_TT": 0.1692565651141953,
+      "H": -0.012099307296765893,
+      "TT best epoch": 10,
+      "TT best validation NLL": 4.221358465739384,
+      "TT epoch1 clip fraction": 0.8741496598639455,
+      "TT min clip fraction": 0.003401360544217687,
+      "TT max clip fraction": 0.8741496598639455,
+      "TT mean clip fraction": 0.12755102040816327,
+      "TT max AMP overflow fraction": 0.013605442176870748,
+      "TT max nonfinite fraction": 0.013605442176870748,
+      "C0 run directory": "outputs/distill_experiments/20260922_082240_phase2c_wt2_c0_seed456",
+      "TG run directory": "outputs/distill_experiments/20260922_082241_phase2c_wt2_c1_a05_seed456",
+      "TT run directory": "outputs/distill_experiments/20260930_035736_phase2f_wt2_tt_seed456",
+      "Student S0 hash": "3fbe985d6474c84d1c61fd7937ea906102cf460846829eb3af4c709593b01757",
+      "TT checkpoint SHA256": "b37392ee399bdd2944ee4aeac97cc6d6c363216ff1993a81dfae36491b494590",
+      "Status": "COMPLETE"
+    }
+  ],
+  "aggregate": {
+    "Gain_TG": {
+      "values": {
+        "42": 0.1625012046766825,
+        "123": 0.147336657238764,
+        "456": 0.1571572578174294
+      },
+      "mean": 0.15566503991095862,
+      "sample_sd": 0.007691612994652955,
+      "positive_signs": 3,
+      "sign_consistency": "3/3 positive"
+    },
+    "Gain_TT": {
+      "values": {
+        "42": 0.1764532869512383,
+        "123": 0.15866576015475786,
+        "456": 0.1692565651141953
+      },
+      "mean": 0.16812520407339715,
+      "sample_sd": 0.008947570102399549,
+      "positive_signs": 3,
+      "sign_consistency": "3/3 positive"
+    },
+    "H": {
+      "values": {
+        "42": -0.0139520822745558,
+        "123": -0.011329102915993872,
+        "456": -0.012099307296765893
+      },
+      "mean": -0.012460164162438522,
+      "sample_sd": 0.001348209344644885,
+      "positive_signs": 0,
+      "sign_consistency": "0/3 positive"
+    }
+  }
+}

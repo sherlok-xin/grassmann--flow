@@ -1,0 +1,48 @@
+{
+  "hybrid": {
+    "num_params": 35340801,
+    "num_trainable_params": 35340801,
+    "best_epoch": 2,
+    "best_val_loss": 6.179828733279381,
+    "best_val_ppl": 482.9092102050781,
+    "test_loss": 6.253800717003444,
+    "test_ppl": 519.9854736328125,
+    "late_k": 1,
+    "initial_alpha": 0.5,
+    "initial_alpha_vector": [
+      0.5
+    ],
+    "best_alpha": 0.5514073967933655,
+    "best_alpha_vector": [
+      0.5514073967933655
+    ],
+    "final_alpha": 0.5514073967933655,
+    "final_alpha_vector": [
+      0.5514073967933655
+    ],
+    "train_mode": "joint",
+    "freeze_branch_epochs": 1,
+    "train_losses": [
+      5.365424893008676,
+      5.290422719603131
+    ],
+    "val_losses": [
+      6.384112590036274,
+      6.179828733279381
+    ],
+    "alpha_history": [
+      0.5451749563217163,
+      0.5514073967933655
+    ],
+    "alpha_vector_history": [
+      [
+        0.5451749563217163
+      ],
+      [
+        0.5514073967933655
+      ]
+    ],
+    "checkpoint_path": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260930_034443_phase2f_tt_teacher_smoke/checkpoints/hybrid_best.pt",
+    "metrics_path": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260930_034443_phase2f_tt_teacher_smoke/hybrid_metrics.jsonl"
+  }
+}

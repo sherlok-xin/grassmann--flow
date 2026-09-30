@@ -1,0 +1,80 @@
+{
+  "student": {
+    "student_type": "hybrid_lite",
+    "num_params": 31434257,
+    "best_epoch": 1,
+    "best_val_loss": 4.268778576259055,
+    "best_val_ppl": 71.4343490600586,
+    "test_loss": 4.156967195071484,
+    "test_ppl": 63.877498626708984,
+    "teacher_test_ppl": 66.31303405761719,
+    "grassmann_baseline_test_ppl": null,
+    "transformer_baseline_test_ppl": 197.64515686035156,
+    "beats_grassmann_baseline": false,
+    "beats_transformer_baseline": true,
+    "beats_both_baselines": false,
+    "train_losses": [
+      6.380801338950687
+    ],
+    "train_ce": [
+      3.911512566090698
+    ],
+    "train_kl": [
+      0.49385775476837096
+    ],
+    "train_kl_batchmean": [
+      125.93372741692711
+    ],
+    "train_kl_token_mean": [
+      0.49385775476837096
+    ],
+    "train_branch_kl_token_mean": [
+      0.0
+    ],
+    "train_teacher_jsd_mean": [
+      0.0
+    ],
+    "train_teacher_entropy_mean": [
+      0.0
+    ],
+    "train_fused_route_mean": [
+      0.0
+    ],
+    "train_branch_route_mean": [
+      0.0
+    ],
+    "train_grad_norm_mean": [
+      1.1682948167981773
+    ],
+    "train_grad_clip_fraction": [
+      0.5408163265306123
+    ],
+    "train_grad_nonfinite_fraction": [
+      0.013605442176870748
+    ],
+    "train_amp_overflow_fraction": [
+      0.013605442176870748
+    ],
+    "kd_loss_mode": "token_mean",
+    "distill_alpha": 0.7,
+    "kd_lambda": 5.0,
+    "distill_strategy": "fixed_fused",
+    "branch_kd_lambda": 2.5,
+    "routing_tau": 0.25,
+    "routing_seed": 1729,
+    "temperature": 2.0,
+    "teacher_checkpoint_alpha": [
+      0.5117690563201904
+    ],
+    "teacher_effective_alpha": [
+      0.5
+    ],
+    "teacher_alpha_override": 0.5,
+    "student_init_checkpoint_sha256": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+    "val_losses": [
+      4.268778576259055
+    ],
+    "checkpoint_path": "/workspace/grassmannflows/grassmann-flows/outputs/distill_experiments/20260930_035418_phase2f_tt_kd_full_gate_seed42/checkpoints/student_best.pt",
+    "metrics_path": "/workspace/grassmannflows/grassmann-flows/outputs/distill_experiments/20260930_035418_phase2f_tt_kd_full_gate_seed42/distill_metrics.jsonl"
+  }
+}
