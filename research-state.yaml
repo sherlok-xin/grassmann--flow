@@ -1,7 +1,7 @@
 schema_version: 1
-updated: "2026-09-29"
+updated: "2026-09-30"
 status: active
-phase: phase2d_fixed_composition_teacher_quality_complete
+phase: phase2e_teacher_branch_ablation_complete
 objective: >-
   Establish when heterogeneous Grassmann--Transformer knowledge distillation
   helps or hurts, then develop a branch-aware method that reduces negative
@@ -36,11 +36,16 @@ hypotheses:
   H2:
     title: Branch-aligned dual distillation transfers heterogeneous expertise better than fused logits alone
     status: branch_only_control_failed_at_lambda_2_5
-next_action: research_lead_review_of_transformer_vs_grassmann_vs_fused_teacher_kd
+next_action: >-
+  stop_after_phase2e; selected but not launched: homogeneous
+  Transformer+Transformer ensemble teacher control versus
+  Transformer+Grassmann teacher
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
 resolved_protocol:
+  - date: "2026-09-30"
+    issue: Phase 2E Transformer-only full-data gate had clip saturation at 1.0. The research lead explicitly authorized unchanged formal training with a permanent CLIP_SATURATION_WARNING; all three runs completed without elevated overflow or non-finite gradients.
   - date: "2026-09-29"
     issue: The original Phase 2D 2000-line smoke failed. After explicit authorization, a matched full-data one-epoch J/A stability gate passed and the unchanged three-seed formal D2 matrix completed.
 resolved_infrastructure:
@@ -77,4 +82,10 @@ artifacts:
   phase2d_results: research/experiments/phase2d_fixed_composition_teacher_quality/results_multiseed.csv
   phase2d_figures: research/experiments/phase2d_fixed_composition_teacher_quality/figures
   phase2d_gpt_handoff: research/experiments/phase2d_fixed_composition_teacher_quality/GPT_HANDOFF.md
+  phase2e_report: research/experiments/phase2e_teacher_branch_ablation/REPORT.md
+  phase2e_results: research/experiments/phase2e_teacher_branch_ablation/results_multiseed.csv
+  phase2e_preflight: research/experiments/phase2e_teacher_branch_ablation/raw/preflight_summary.json
+  phase2e_amended_smoke: research/experiments/phase2e_teacher_branch_ablation/raw/smoke/matched_full_epoch_smoke_summary.json
+  phase2e_figures: research/experiments/phase2e_teacher_branch_ablation/figures
+  phase2e_gpt_handoff: research/experiments/phase2e_teacher_branch_ablation/GPT_HANDOFF.md
   gpt_entrypoint: PROJECT_OVERVIEW_FOR_GPT.md

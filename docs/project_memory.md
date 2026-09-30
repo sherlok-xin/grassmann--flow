@@ -234,3 +234,11 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - T/F 参数 KD 梯度比 1.232--1.316，预检不属于 scale mismatch。最难 student-loss quintile 上 F utility 高于 T 与 G，但仅是 validation observation。
 - reduced T smoke 因 clip=1.00、overflow/non-finite=0.16 失败。matched full-data F/T gate 中 F 通过；T 的 overflow/non-finite 为 0.0136，但 clip=1.00，仍不满足预注册 clip<0.95。
 - 三个 formal T arm 未启动，Phase 2E 不得视为完成，不能生成 `Gain_T`、`C_FT` 或七项最终决策。下一步需要负责人明确选择：保持冻结协议并终止，或在任何正式 test endpoint 产生前授权并记录新的 protocol amendment。
+
+## 26. 2026-09-30 Phase 2E teacher-branch completion
+
+- 用户在 formal endpoint 前显式授权 unchanged clipping amendment；必须永久保留 `CLIP_SATURATION_WARNING`。formal source state 为 `a94132b8...`，只运行 seed 42/123/456 的 alpha-1.0 T arms，未重跑 C0/F/G。
+- T test NLL 为 4.127957/4.152294/4.144237。`Gain_F/Gain_T/Gain_G` 均值为 0.155665/0.134868/0.040991，三 seed 排序完全一致。
+- `C_FT` 为 0.019716/0.022110/0.020564，mean 0.020797、sample SD 0.001214、3/3 positive，勉强越过 0.02 实质阈值；`C_FG` mean 0.114674，`C_TG` mean 0.093877。
+- T epoch-1 clipping 三 seed 均为 1.0，但后续最低降至 0.0034；max overflow/non-finite 始终 0.013605，无 NaN/失败。结果不判 optimization-confounded，但 `C_FT` 解释必须保留早期 clipping 约束。
+- 可支持 bounded claim：固定 joint teacher 下，加入 Grassmann branch 相对 Transformer-only 带来小而稳定的额外 KD gain。不能声称 Grassmann geometry 因果成立。下一项仅选择 homogeneous T+T ensemble teacher vs T+G teacher control，未启动。

@@ -4,7 +4,7 @@ This file is the shortest reliable entry point for reviewing the repository with
 
 ## Current research question
 
-The strongest current question is not whether Grassmann mixing replaces attention. It is whether output-level KD from a frozen Grassmann--Transformer teacher transfers reliably to a smaller hybrid student, how teacher quality changes that transfer, and where negative transfer occurs. The current evidence supports a teacher-quality effect on WikiText-2 and a domain-dependent KD boundary, but it does not establish a new distillation method or a Grassmann-specific causal advantage.
+The strongest current question is not whether Grassmann mixing replaces attention. It is whether output-level KD from a frozen Grassmann--Transformer teacher transfers reliably to a smaller hybrid student, how teacher quality and branch source change that transfer, and where negative transfer occurs. Current evidence supports a teacher-quality effect and a small fused-versus-Transformer transfer advantage on WikiText-2, plus a domain-dependent KD boundary. It does not establish a new distillation method or a Grassmann-specific causal advantage.
 
 ## Active architecture and objective
 
@@ -23,7 +23,7 @@ The main implementation files are:
 
 ## Most reliable experimental results
 
-The WikiText-2 Phase 2C experiment is the newest controlled result. It uses three independently trained student initializations, the same frozen teacher branches, token-normalized KD, temperature 2, lambda 5, and validation-selected checkpoints. T_a05 denotes fusion alpha 0.5, and T_a00 denotes alpha 0.0.
+The WikiText-2 Phase 2C experiment supplies the reusable three-seed C0, fused, and Grassmann-only baselines used by the newer Phase 2E result below. It uses three independently trained student initializations, the same frozen teacher branches, token-normalized KD, temperature 2, lambda 5, and validation-selected checkpoints. T_a05 denotes fusion alpha 0.5, and T_a00 denotes alpha 0.0.
 
 | Quantity | Seed 42 | Seed 123 | Seed 456 | Mean +/- sample SD |
 |---|---:|---:|---:|---:|
@@ -43,11 +43,23 @@ Phase 2D is complete. Teacher J and Teacher A preserve architecture, source bran
 
 For seeds 42/123/456, reused Teacher-J gain is +0.162501/+0.147337/+0.157157, whereas new Teacher-A gain is -0.022394/-0.035362/-0.025206. The primary paired contrast `Q=NLL_A-NLL_J` is +0.184895/+0.182699/+0.182364, with mean 0.183319 and sample SD 0.001375. Teacher training state and resulting quality therefore strongly modulate KD under fixed composition, but global NLL is still not a sufficient general rule because Phase 2C observed positive transfer from another globally weak teacher condition.
 
+## Current Phase 2E status
+
+Phase 2E is complete. It uses the same joint teacher checkpoint and compares fused alpha 0.5, Transformer-only alpha 1.0, and Grassmann-only alpha 0.0 under the matched three-seed continuation protocol. Only the three missing Transformer-only arms were trained; all other endpoints were reused from Phase 2C.
+
+For seeds 42/123/456, `Gain_F` is 0.162501/0.147337/0.157157, `Gain_T` is 0.142785/0.125226/0.136593, and `Gain_G` is 0.046771/0.033598/0.042604. Fused > Transformer-only > Grassmann-only > C0 for every seed. The primary paired contrast `C_FT=NLL_T-NLL_F` is 0.019716/0.022110/0.020564, mean 0.020797 and sample SD 0.001214. This is 3/3 positive and narrowly exceeds the preregistered 0.02 practical threshold.
+
+`CLIP_SATURATION_WARNING` is mandatory: Transformer-only clipping was 1.0 in the full-data gate and epoch 1 of every formal run. The research lead authorized continuation before endpoints because gradients were finite, T/F preflight ratios remained in range, and overflow/non-finite fractions stayed at 0.013605. Clipping declined strongly later, but early optimization constraints may partly affect the small `C_FT` gap.
+
+The evidence supports only the bounded claim that adding the Grassmann branch yields a small, stable extra KD gain over Transformer-only supervision under this tested protocol. It does not isolate Grassmann geometry from generic ensemble diversity. The selected next experiment is a homogeneous Transformer+Transformer ensemble teacher control versus the Transformer+Grassmann teacher; it has not been launched.
+
 ## Evidence boundaries
 
 - Do not claim that a teacher worse than the student necessarily causes negative transfer.
 - Do not claim that CRBD is validated; its current bounded prototype failed.
 - Do not claim a Grassmann-specific KD advantage without parameter-matched Transformer-only and Grassmann-only student controls.
+- Do not attribute the Phase 2E fused-versus-Transformer gap specifically to Grassmann geometry; no homogeneous ensemble teacher control exists.
+- Preserve `CLIP_SATURATION_WARNING` whenever reporting Phase 2E Transformer-only endpoints.
 - Do not treat historical random-init, hidden-fusion, or cross-domain runs as fully matched causal comparisons.
 - Do not compare legacy KD coefficients across datasets without accounting for token normalization.
 - The active manuscript predates the newest controlled evidence and is an archival revision, not the definitive description of the latest experiments.
@@ -56,12 +68,13 @@ For seeds 42/123/456, reused Teacher-J gain is +0.162501/+0.147337/+0.157157, wh
 
 1. `AI_RESEARCH_HANDOFF.md` for the evidence audit and limitations.
 2. `docs/project_map.md` for code and data flow.
-3. `research/experiments/phase2c_multiseed_teacher_utility/REPORT.md` for the newest controlled result.
-4. `research/experiments/phase2d_fixed_composition_teacher_quality/REPORT.md` for the completed fixed-composition intervention.
-5. `research/experiments/phase2b_controlled_teacher/REPORT.md` for the seed-42 intervention that motivated Phase 2C.
-6. `research/experiments/phase2_teacher_transfer_audit/REPORT.md` for the cross-domain teacher landscape.
-7. `research/experiments/post_rejection_program/analysis.md` and `research/experiments/h2_crbd/analysis.md` for matched PTB/TinyStories evidence and the failed method prototype.
-8. `论文投稿/cac/conference_101719.tex` for the archived CAC manuscript source.
+3. `research/experiments/phase2e_teacher_branch_ablation/REPORT.md` for the newest controlled teacher-source result.
+4. `research/experiments/phase2d_fixed_composition_teacher_quality/REPORT.md` for the fixed-composition teacher-state intervention.
+5. `research/experiments/phase2c_multiseed_teacher_utility/REPORT.md` for the reused C0/fused/Grassmann-only endpoints.
+6. `research/experiments/phase2b_controlled_teacher/REPORT.md` for the seed-42 intervention that motivated Phase 2C.
+7. `research/experiments/phase2_teacher_transfer_audit/REPORT.md` for the cross-domain teacher landscape.
+8. `research/experiments/post_rejection_program/analysis.md` and `research/experiments/h2_crbd/analysis.md` for matched PTB/TinyStories evidence and the failed method prototype.
+9. `论文投稿/cac/conference_101719.tex` for the archived CAC manuscript source.
 
 ## Repository policy
 

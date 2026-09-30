@@ -36,3 +36,19 @@ No formal T endpoint was launched, inspected, or inferred. The frozen launcher w
 On 2026-09-29, before any formal Transformer-only endpoint existed, the research lead explicitly authorized continuation with the observed full-data gate `clip_fraction=1.0`. The authorization requires finite parameter gradients, T/F parameter-gradient ratios within `[0.5, 2.0]`, and overflow/non-finite fractions remaining approximately `0.0136`. It forbids changes to alpha, lambda, temperature, AMP, the gradient clip value, training budget, data, student S0, or evaluation protocol.
 
 The gate is re-evaluated with `--authorize-clip-saturation`; the original `gate_passed=false` is preserved while `formal_training_authorized` may become true only if every amendment check passes. All subsequent artifacts carry `CLIP_SATURATION_WARNING`. Formal runs must stop without hyperparameter repair on NaN, failure, materially increased overflow/non-finite fractions, or anomalous endpoints.
+
+## Formal execution and endpoint provenance
+
+The amendment was committed and pushed before formal execution. Formal runs were launched from Git state `a94132b8c2cea41d034f33016d5485cebc78a997`. Exactly three new Transformer-only runs were created:
+
+| Seed | Run directory | Selected epoch | Test NLL | Student checkpoint SHA256 |
+|---:|---|---:|---:|---|
+| 42 | `outputs/distill_experiments/20260929_102752_phase2e_wt2_t_seed42` | 10 | 4.1279572060 | `234d650a6062de6b819ef89f2804406095cc3cb1df2422daba497ca55a9c4eb4` |
+| 123 | `outputs/distill_experiments/20260929_102752_phase2e_wt2_t_seed123` | 10 | 4.1522935062 | `e8044966f966dc72907e21cf77341ebc7c5445fe3cc11f966d073fe4fda99be9` |
+| 456 | `outputs/distill_experiments/20260929_102750_phase2e_wt2_t_seed456` | 10 | 4.1442370310 | `054602d0e4e0cd125c85611a62bed2aaa7a06f6b3ec7baffb9d1ba8c819ccacf` |
+
+The strict collector rechecked the teacher hash, seed-specific S0 hashes, alpha 1.0, lambda 5, temperature 2, token-mean objective, full-data status, matched configuration, 10 epoch records, finite losses, validation-best selection, and checkpoint completeness. Maximum overflow/non-finite fractions were 0.013605 in all runs. No formal rerun, alpha scan, lambda adjustment, or clip-threshold adjustment occurred.
+
+Phase 2C C0/F/G source rows were reused from `research/experiments/phase2c_multiseed_teacher_utility/results_multiseed.csv`. Their recorded S0 hashes were revalidated before paired gains and contrasts were computed. Compact copies of each new config, summary, epoch-metrics JSONL, and report are stored under `raw/formal/seed*/T/`; checkpoints and full logs are not copied into Git.
+
+`CLIP_SATURATION_WARNING` remains attached to every result row. Gate-stage and epoch-1 Transformer-only clipping was 1.0, although clipping declined later and no numerical failure occurred. The warning limits causal interpretation of the small fused-versus-Transformer contrast.

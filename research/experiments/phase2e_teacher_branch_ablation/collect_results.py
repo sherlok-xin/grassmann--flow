@@ -30,9 +30,11 @@ INVARIANTS = {
     "num_heads": 8, "reduced_dim": 56, "window_sizes": "1,2,4", "dropout": 0.1,
     "student_late_k": 1, "temperature": 2.0, "kd_loss_mode": "token_mean",
     "kd_lambda": 5.0, "kd_chunk_tokens": 1024, "distill_strategy": "fixed_fused",
-    "dataset_name": "wikitext2", "max_seq_len": 256, "max_lines": 0,
-    "split_seed": 42, "offline": True,
+    "dataset_name": "wikitext2", "text_field": "text", "max_seq_len": 256,
+    "max_lines": 0, "encode_chars_per_batch": 200000,
+    "tinystories_val_frac": 0.02, "split_seed": 42, "offline": True,
 }
+WARNING = "CLIP_SATURATION_WARNING"
 
 
 def load_json(path: Path) -> dict:
@@ -107,6 +109,9 @@ def main() -> None:
         require_equal(f"seed {seed} summary S0", summary["student_init_checkpoint_sha256"], S0_HASHES[seed])
         require_equal(f"seed {seed} effective alpha config", config_root["source_teacher"]["effective_alpha"], [1.0])
         require_equal(f"seed {seed} effective alpha summary", summary["teacher_effective_alpha"], [1.0])
+        require_equal(f"seed {seed} experiment name", config_root["experiment_name"], f"phase2e_wt2_t_seed{seed}")
+        require_equal(f"seed {seed} notes", config_root["notes"], "phase2e_preregistered_teacher_branch_ablation")
+        require_equal(f"seed {seed} tags", config_root["tags"], ["phase2e", "formal", f"seed{seed}", "T"])
         if int(config_root["dataset_stats"]["train"]["max_lines"]) != 0:
             raise RuntimeError(f"seed {seed}: formal run did not use full training data")
         finite = []
@@ -114,6 +119,21 @@ def main() -> None:
             finite.extend([epoch["train_loss"], epoch["train_ce"], epoch["train_kl_token_mean"], epoch["train_grad_norm_mean"], epoch["val_loss"]])
         if not all(math.isfinite(float(value)) for value in finite):
             raise RuntimeError(f"seed {seed}: non-finite endpoint metric")
+        if not math.isfinite(float(summary["test_loss"])):
+            raise RuntimeError(f"seed {seed}: non-finite test endpoint")
+        expected_best_epoch = min(range(len(metrics)), key=lambda index: float(metrics[index]["val_loss"])) + 1
+        require_equal(f"seed {seed} validation-best epoch", int(summary["best_epoch"]), expected_best_epoch)
+        require_equal(
+            f"seed {seed} validation-best NLL",
+            float(summary["best_val_loss"]),
+            float(metrics[expected_best_epoch - 1]["val_loss"]),
+        )
+        max_overflow = max(float(epoch["train_amp_overflow_fraction"]) for epoch in metrics)
+        max_nonfinite = max(float(epoch["train_grad_nonfinite_fraction"]) for epoch in metrics)
+        if max_overflow > 0.02 or max_nonfinite > 0.02:
+            raise RuntimeError(
+                f"seed {seed}: optimization-confounded overflow={max_overflow} nonfinite={max_nonfinite}"
+            )
         destination = HERE / f"raw/formal/seed{seed}/T"
         destination.mkdir(parents=True, exist_ok=True)
         for filename in ["config.json", "summary.json", "distill_metrics.jsonl", "report.md"]:
@@ -121,6 +141,7 @@ def main() -> None:
         t_runs[seed] = {
             "run_dir": run_dir, "summary": summary, "metrics": metrics,
             "checkpoint_sha256": sha256_file(run_dir / "checkpoints/student_best.pt"),
+            "max_overflow": max_overflow, "max_nonfinite": max_nonfinite,
         }
 
     rows = []
@@ -135,6 +156,7 @@ def main() -> None:
         nll_t = float(t_runs[seed]["summary"]["test_loss"])
         nll_g = float(g["Test NLL"])
         first = t_runs[seed]["metrics"][0]
+        clip_values = [float(epoch["train_grad_clip_fraction"]) for epoch in t_runs[seed]["metrics"]]
         rows.append({
             "Seed": seed,
             "C0 test NLL": nll_c0, "F test NLL": nll_f,
@@ -147,10 +169,17 @@ def main() -> None:
             "T epoch1 clip fraction": float(first["train_grad_clip_fraction"]),
             "T epoch1 AMP overflow fraction": float(first["train_amp_overflow_fraction"]),
             "T epoch1 nonfinite fraction": float(first["train_grad_nonfinite_fraction"]),
+            "T min clip fraction": min(clip_values),
+            "T max clip fraction": max(clip_values),
+            "T mean clip fraction": statistics.mean(clip_values),
+            "T max AMP overflow fraction": t_runs[seed]["max_overflow"],
+            "T max nonfinite fraction": t_runs[seed]["max_nonfinite"],
             "C0 run directory": c0["Run directory"], "F run directory": f["Run directory"],
             "T run directory": str(t_runs[seed]["run_dir"].relative_to(ROOT)), "G run directory": g["Run directory"],
             "Student S0 hash": S0_HASHES[seed],
-            "T checkpoint SHA256": t_runs[seed]["checkpoint_sha256"], "Status": "COMPLETE",
+            "T checkpoint SHA256": t_runs[seed]["checkpoint_sha256"],
+            "Warning": WARNING,
+            "Status": f"COMPLETE|{WARNING}",
         })
 
     with (HERE / "results_multiseed.csv").open("w", encoding="utf-8", newline="") as handle:
@@ -164,7 +193,12 @@ def main() -> None:
     payload = {
         "complete": True, "teacher_checkpoint_sha256": TEACHER_HASH,
         "formal_invariants": INVARIANTS, "practical_threshold_nll": 0.02,
-        "primary_contrast": "C_FT", "rows": rows, "statistics": statistics_payload,
+        "primary_contrast": "C_FT", "warning": WARNING,
+        "warning_interpretation": (
+            "Transformer-only gradients continuously triggered clipping in the full-data gate; "
+            "formal endpoint differences may partly reflect this optimization constraint."
+        ),
+        "rows": rows, "statistics": statistics_payload,
     }
     (HERE / "raw/results_summary.json").write_text(
         json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"

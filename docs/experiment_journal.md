@@ -322,3 +322,12 @@
 - token 条件分析显示 T/G 分别在 51.56%/48.44% token 上给 gold token 更高概率；最难 student-loss quintile 的 T/G/F utility 为 0.6356/0.2133/0.7396。这是观测性互补信号，不构成几何因果证据。
 - reduced T smoke 复现短窗口伪影：clip=1.00、overflow/non-finite=0.16。预授权的 full-data one-epoch F/T 门控中，F 为 0.2347/0.0136/0.0136 并通过；T 的 overflow/non-finite 降至 0.0136，但 clip 仍为 1.00，违反冻结的 `<0.95` 条件。
 - 按“门控通过后才运行 formal”与“不得事后另造规则”的要求，未启动三个正式 T endpoint。Phase 2E 当前为 gate-blocked，等待负责人决定严格终止或显式批准新的前瞻性 protocol amendment；smoke NLL 不得作为正式结果。
+
+## [2026-09-30] Phase 2E authorized completion
+
+- 负责人在任何 formal endpoint 产生前明确授权 clipping amendment：保留 alpha=1.0、lambda=5、T=2、AMP、clip value=1.0、预算、数据、S0 与评估不变，并永久标记 `CLIP_SATURATION_WARNING`。修订先以 Git 状态 `a94132b8...` 固化，再启动三个 formal T arm。
+- seed 42/123/456 的 T test NLL 为 4.127957/4.152294/4.144237；均在 epoch 10 得到 validation-best checkpoint。全程无 NaN 或训练失败，max overflow/non-finite 均为 0.013605。
+- `Gain_F` 均值 0.155665、`Gain_T` 0.134868、`Gain_G` 0.040991，三个 seed 均满足 F>T>G>0。
+- 主对比 `C_FT` 为 0.019716/0.022110/0.020564，均值 0.020797、sample SD 0.001214、3/3 positive，刚超过预注册 0.02 阈值。`C_FG` 均值 0.114674，`C_TG` 均值 0.093877，均为 3/3 positive。
+- T 在 gate 与 formal epoch 1 均 clip=1.00，随后降至最低 0.0034；mean epoch clipping 为 0.4990/0.4605/0.4398。终点数值有效，但早期优化约束可能影响较小的 `C_FT`，因此 warning 不得删除。
+- 结论：fused 相对 T 与 G 均稳定更优，T/G 均提供正迁移；加入 Grassmann branch 在该协议下带来小而稳定的额外 gain，但不能归因于 Grassmann geometry。唯一选择且未启动的下一实验是 homogeneous Transformer+Transformer ensemble teacher control。
