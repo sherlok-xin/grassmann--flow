@@ -1,6 +1,6 @@
 # Phase 2G Provenance
 
-Status: preregistered; no new formal endpoint generated.
+Status: formal S0 training in progress; no new formal KD endpoint generated.
 
 ## Repository and execution
 
@@ -30,3 +30,13 @@ The protected `datasets/` and `checkpoints/` directories are read-only for this 
 ## Endpoint discipline
 
 Only seeds 123 and 456 are new. For each seed, S0 is independently trained and then reused byte-identically for its CE and KD arms. Validation NLL selects checkpoints. Test NLL is read only after selection. The seed-42 matched result is reused without rerunning. No coefficient or protocol field may be changed in response to an endpoint.
+
+## Pipeline smoke
+
+The reduced-data smoke completed before formal training:
+
+- S0: `outputs/hybrid_experiments/20260930_084815_phase2g_smoke_ts_s0_seed123_e1`
+- WS+CE: `outputs/distill_experiments/20260930_084920_phase2g_smoke_ts_ce_seed123_e1`
+- WS+KD: `outputs/distill_experiments/20260930_084919_phase2g_smoke_ts_kd_seed123_e1`
+
+The smoke validated dataset loading, teacher and warm-start checkpoint loading, both objective paths, checkpoint writing, and final evaluation. Because it begins with a one-epoch S0 trained on only 2,000 stories, its 55-step CE/KD continuations have clip fraction 1.0 and AMP overflow/non-finite fractions 0.0364/0.0909. These values are retained as a short-window/random-S0 smoke artifact and are not treated as a formal stability endpoint. The formal matrix uses the frozen 300,000-story, 20-epoch S0 protocol; no hyperparameter was changed after the smoke.
