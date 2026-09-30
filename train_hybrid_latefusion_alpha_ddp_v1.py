@@ -541,6 +541,78 @@ class HybridLateFusionAlphaModel(nn.Module):
         return sum(p.numel() for p in self.parameters() if p.requires_grad)
 
 
+class TransformerEnsembleLateFusionAlphaModel(nn.Module):
+    """Late-logit fusion of two independently initialized Transformer branches."""
+
+    def __init__(self, transformer1: nn.Module, transformer2: nn.Module,
+                 init_alpha: float = 0.5, late_k: int = 1):
+        super().__init__()
+        self.transformer1 = transformer1
+        self.transformer2 = transformer2
+        self.num_layers = int(min(len(transformer1.blocks), len(transformer2.blocks)))
+        if self.num_layers <= 0:
+            raise ValueError("Could not infer a positive number of layers from branch models.")
+        self.late_k = int(max(1, min(int(late_k), self.num_layers)))
+        init_logit = sigmoid_inverse(init_alpha)
+        self.logit_alpha = nn.Parameter(torch.full((self.late_k,), float(init_logit), dtype=torch.float32))
+
+    def alpha(self) -> torch.Tensor:
+        return torch.sigmoid(self.logit_alpha)
+
+    @torch.no_grad()
+    def get_alpha_value(self) -> float:
+        return float(self.alpha().mean().item())
+
+    @torch.no_grad()
+    def get_alpha_vector(self):
+        return [float(x) for x in self.alpha().detach().cpu().view(-1).tolist()]
+
+    def set_branch_trainable(self, trainable: bool) -> None:
+        for parameter in self.transformer1.parameters():
+            parameter.requires_grad = trainable
+        for parameter in self.transformer2.parameters():
+            parameter.requires_grad = trainable
+
+    @staticmethod
+    def _hidden_per_layer(transformer: nn.Module, input_ids: torch.Tensor):
+        seq_len = input_ids.size(1)
+        device = input_ids.device
+        tok_emb = transformer.token_embedding(input_ids)
+        pos_emb = transformer.position_embedding(torch.arange(seq_len, device=device))
+        hidden = transformer.embedding_dropout(tok_emb + pos_emb)
+        per_layer = []
+        for block in transformer.blocks:
+            hidden = block(hidden)
+            per_layer.append(hidden)
+        return per_layer
+
+    def forward(self, input_ids: torch.Tensor, labels: torch.Tensor = None):
+        alpha_vec = self.alpha()
+        h1_all = self._hidden_per_layer(self.transformer1, input_ids)[-self.late_k:]
+        h2_all = self._hidden_per_layer(self.transformer2, input_ids)[-self.late_k:]
+        fused_logits_all = []
+        for alpha_i, h1, h2 in zip(alpha_vec, h1_all, h2_all):
+            logits1 = self.transformer1.lm_head(self.transformer1.ln_f(h1))
+            logits2 = self.transformer2.lm_head(self.transformer2.ln_f(h2))
+            fused_logits_all.append(alpha_i * logits1 + (1.0 - alpha_i) * logits2)
+        logits = torch.stack(fused_logits_all, dim=0).mean(dim=0)
+        loss = None
+        if labels is not None:
+            shift_logits = logits[:, :-1, :].contiguous()
+            shift_labels = labels[:, 1:].contiguous()
+            loss = F.cross_entropy(
+                shift_logits.view(-1, shift_logits.size(-1)),
+                shift_labels.view(-1), ignore_index=-100,
+            )
+        return logits, loss, alpha_vec
+
+    def get_num_params(self) -> int:
+        return sum(parameter.numel() for parameter in self.parameters())
+
+    def get_num_trainable_params(self) -> int:
+        return sum(parameter.numel() for parameter in self.parameters() if parameter.requires_grad)
+
+
 @torch.no_grad()
 def evaluate_hybrid(model: nn.Module, dataloader: DataLoader, device: torch.device, use_amp: bool = False):
     model.eval()
@@ -684,8 +756,10 @@ def write_markdown_report(run_dir: Path, run_meta: Dict[str, Any], summary: Dict
 
 def main():
     parser = argparse.ArgumentParser(description="Train a learnable-alpha hybrid of Grassmann + Transformer (DDP)")
-    parser.add_argument("--grassmann-run-dir", type=str, required=True)
+    parser.add_argument("--teacher-type", type=str, default="tg", choices=["tg", "tt"])
+    parser.add_argument("--grassmann-run-dir", type=str, default="")
     parser.add_argument("--transformer-run-dir", type=str, required=True)
+    parser.add_argument("--transformer2-run-dir", type=str, default="")
     parser.add_argument("--tokenizer-dir", type=str, default="./gpt2_local")
     parser.add_argument("--gpu-id", type=str, default="", help="Single GPU id or comma-separated visible GPU ids")
     parser.add_argument("--output-dir", type=str, default="outputs/hybrid_experiments")
@@ -729,6 +803,10 @@ def main():
                         help="Extra root to search when resolving migrated dataset/checkpoint paths")
 
     args = parser.parse_args()
+    if args.teacher_type == "tg" and not args.grassmann_run_dir:
+        parser.error("--grassmann-run-dir is required when --teacher-type=tg")
+    if args.teacher_type == "tt" and not args.transformer2_run_dir:
+        parser.error("--transformer2-run-dir is required when --teacher-type=tt")
     configure_visible_devices(args.gpu_id)
 
     distributed, local_rank, device = setup_distributed()
@@ -752,14 +830,6 @@ def main():
         os.environ.pop("TRANSFORMERS_OFFLINE", None)
         os.environ.pop("HF_HUB_OFFLINE", None)
 
-    args.grassmann_run_dir = resolve_and_log_path(
-        args.grassmann_run_dir,
-        label="grassmann_run_dir",
-        search_roots=search_roots,
-        remaps=remaps,
-        must_exist=True,
-        printer=print if is_main_process() else (lambda *a, **k: None),
-    )
     args.transformer_run_dir = resolve_and_log_path(
         args.transformer_run_dir,
         label="transformer_run_dir",
@@ -768,17 +838,38 @@ def main():
         must_exist=True,
         printer=print if is_main_process() else (lambda *a, **k: None),
     )
-    g_run_dir = Path(args.grassmann_run_dir)
     t_run_dir = Path(args.transformer_run_dir)
-    g_summary = load_summary(g_run_dir)
     t_summary = load_summary(t_run_dir)
-    g_config = load_config(g_run_dir).get("config", {})
     t_config = load_config(t_run_dir).get("config", {})
-
-    if "grassmann" not in g_summary:
-        raise ValueError(f"{g_run_dir} does not contain grassmann results in summary.json")
     if "transformer" not in t_summary:
         raise ValueError(f"{t_run_dir} does not contain transformer results in summary.json")
+
+    if args.teacher_type == "tg":
+        args.grassmann_run_dir = resolve_and_log_path(
+            args.grassmann_run_dir, label="grassmann_run_dir", search_roots=search_roots,
+            remaps=remaps, must_exist=True,
+            printer=print if is_main_process() else (lambda *a, **k: None),
+        )
+        g_run_dir = Path(args.grassmann_run_dir)
+        g_summary = load_summary(g_run_dir)
+        g_config = load_config(g_run_dir).get("config", {})
+        if "grassmann" not in g_summary:
+            raise ValueError(f"{g_run_dir} does not contain grassmann results in summary.json")
+        branch1_config, branch2_config = g_config, t_config
+        branch_labels = ("grassmann", "transformer")
+    else:
+        args.transformer2_run_dir = resolve_and_log_path(
+            args.transformer2_run_dir, label="transformer2_run_dir", search_roots=search_roots,
+            remaps=remaps, must_exist=True,
+            printer=print if is_main_process() else (lambda *a, **k: None),
+        )
+        t2_run_dir = Path(args.transformer2_run_dir)
+        t2_summary = load_summary(t2_run_dir)
+        t2_config = load_config(t2_run_dir).get("config", {})
+        if "transformer" not in t2_summary:
+            raise ValueError(f"{t2_run_dir} does not contain transformer results in summary.json")
+        branch1_config, branch2_config = t_config, t2_config
+        branch_labels = ("transformer1", "transformer2")
 
     dataset_fields = [
         "dataset_name",
@@ -789,21 +880,21 @@ def main():
         "tinystories_val_frac",
         "split_seed",
     ]
-    config_mismatches = compare_config_fields(g_config, t_config, dataset_fields)
-    max_seq_len_mismatch = g_config.get("max_seq_len") != t_config.get("max_seq_len")
+    config_mismatches = compare_config_fields(branch1_config, branch2_config, dataset_fields)
+    max_seq_len_mismatch = branch1_config.get("max_seq_len") != branch2_config.get("max_seq_len")
 
     if is_main_process() and config_mismatches:
         print("Dataset/config mismatches detected between branch run dirs:")
         print(json.dumps(config_mismatches, indent=2, ensure_ascii=False))
         if max_seq_len_mismatch:
-            print({"max_seq_len": {"grassmann": g_config.get("max_seq_len"), "transformer": t_config.get("max_seq_len")}})
+            print({"max_seq_len": {branch_labels[0]: branch1_config.get("max_seq_len"), branch_labels[1]: branch2_config.get("max_seq_len")}})
 
     if (config_mismatches or max_seq_len_mismatch) and not args.allow_config_mismatch:
         mismatch_text = json.dumps({
             "dataset_mismatches": config_mismatches,
             "max_seq_len": {
-                "grassmann": g_config.get("max_seq_len"),
-                "transformer": t_config.get("max_seq_len"),
+                branch_labels[0]: branch1_config.get("max_seq_len"),
+                branch_labels[1]: branch2_config.get("max_seq_len"),
             } if max_seq_len_mismatch else None,
         }, indent=2, ensure_ascii=False)
         raise ValueError(
@@ -823,11 +914,11 @@ def main():
     vocab_size = len(tokenizer)
 
     max_seq_len = args.max_seq_len if args.max_seq_len > 0 else min(
-        int(g_config.get("max_seq_len", 256)),
-        int(t_config.get("max_seq_len", 256)),
+        int(branch1_config.get("max_seq_len", 256)),
+        int(branch2_config.get("max_seq_len", 256)),
     )
-    dataset_name = choose_dataset_value(args.dataset_name, g_config.get("dataset_name"), t_config.get("dataset_name"), "wikitext2")
-    dataset_path = choose_dataset_value(args.dataset_path, g_config.get("dataset_path"), t_config.get("dataset_path"), "")
+    dataset_name = choose_dataset_value(args.dataset_name, branch1_config.get("dataset_name"), branch2_config.get("dataset_name"), "wikitext2")
+    dataset_path = choose_dataset_value(args.dataset_path, branch1_config.get("dataset_path"), branch2_config.get("dataset_path"), "")
     dataset_path = resolve_and_log_path(
         dataset_path,
         label="dataset_path",
@@ -836,12 +927,12 @@ def main():
         must_exist=True,
         printer=print if is_main_process() else (lambda *a, **k: None),
     ) if dataset_path else dataset_path
-    text_field = choose_dataset_value(args.text_field, g_config.get("text_field"), t_config.get("text_field"), "")
+    text_field = choose_dataset_value(args.text_field, branch1_config.get("text_field"), branch2_config.get("text_field"), "")
 
-    max_lines = args.max_lines if args.max_lines >= 0 else choose_dataset_value(None, g_config.get("max_lines"), t_config.get("max_lines"), 0)
-    encode_chars_per_batch = args.encode_chars_per_batch if args.encode_chars_per_batch >= 0 else choose_dataset_value(None, g_config.get("encode_chars_per_batch"), t_config.get("encode_chars_per_batch"), 200000)
-    tinystories_val_frac = args.tinystories_val_frac if args.tinystories_val_frac >= 0 else choose_dataset_value(None, g_config.get("tinystories_val_frac"), t_config.get("tinystories_val_frac"), 0.02)
-    split_seed = args.split_seed if args.split_seed >= 0 else choose_dataset_value(None, g_config.get("split_seed"), t_config.get("split_seed"), 42)
+    max_lines = args.max_lines if args.max_lines >= 0 else choose_dataset_value(None, branch1_config.get("max_lines"), branch2_config.get("max_lines"), 0)
+    encode_chars_per_batch = args.encode_chars_per_batch if args.encode_chars_per_batch >= 0 else choose_dataset_value(None, branch1_config.get("encode_chars_per_batch"), branch2_config.get("encode_chars_per_batch"), 200000)
+    tinystories_val_frac = args.tinystories_val_frac if args.tinystories_val_frac >= 0 else choose_dataset_value(None, branch1_config.get("tinystories_val_frac"), branch2_config.get("tinystories_val_frac"), 0.02)
+    split_seed = args.split_seed if args.split_seed >= 0 else choose_dataset_value(None, branch1_config.get("split_seed"), branch2_config.get("split_seed"), 42)
 
     max_lines = coerce_int_with_default(max_lines, 0)
     encode_chars_per_batch = coerce_int_with_default(encode_chars_per_batch, 200000)
@@ -931,25 +1022,57 @@ def main():
         persistent_workers=args.num_workers > 0,
     )
 
-    grassmann = build_grassmann(vocab_size, g_config)
-    transformer = build_transformer(vocab_size, t_config)
-
-    g_ckpt = resolve_checkpoint_path(g_run_dir, g_summary["grassmann"]["checkpoint_path"])
-    t_ckpt = resolve_checkpoint_path(t_run_dir, t_summary["transformer"]["checkpoint_path"])
-
-    if is_main_process():
-        print(f"Loading grassmann checkpoint: {g_ckpt}")
-        print(f"Loading transformer checkpoint: {t_ckpt}")
-
-    grassmann.load_state_dict(torch.load(str(g_ckpt), map_location="cpu"))
-    transformer.load_state_dict(torch.load(str(t_ckpt), map_location="cpu"))
-
-    hybrid = HybridLateFusionAlphaModel(
-        grassmann,
-        transformer,
-        init_alpha=args.init_alpha,
-        late_k=args.late_k,
-    ).to(device)
+    if args.teacher_type == "tg":
+        grassmann = build_grassmann(vocab_size, g_config)
+        transformer = build_transformer(vocab_size, t_config)
+        g_ckpt = resolve_checkpoint_path(g_run_dir, g_summary["grassmann"]["checkpoint_path"])
+        t_ckpt = resolve_checkpoint_path(t_run_dir, t_summary["transformer"]["checkpoint_path"])
+        if is_main_process():
+            print(f"Loading grassmann checkpoint: {g_ckpt}")
+            print(f"Loading transformer checkpoint: {t_ckpt}")
+        grassmann.load_state_dict(torch.load(str(g_ckpt), map_location="cpu"))
+        transformer.load_state_dict(torch.load(str(t_ckpt), map_location="cpu"))
+        hybrid = HybridLateFusionAlphaModel(
+            grassmann, transformer, init_alpha=args.init_alpha, late_k=args.late_k,
+        ).to(device)
+        source_runs = {
+            "grassmann_run_dir": str(g_run_dir.resolve()),
+            "transformer_run_dir": str(t_run_dir.resolve()),
+            "grassmann_checkpoint": str(g_ckpt.resolve()),
+            "transformer_checkpoint": str(t_ckpt.resolve()),
+        }
+        compatibility = {
+            "config_mismatches": config_mismatches,
+            "max_seq_len_grassmann": g_config.get("max_seq_len"),
+            "max_seq_len_transformer": t_config.get("max_seq_len"),
+            "effective_max_seq_len": max_seq_len,
+        }
+    else:
+        transformer1 = build_transformer(vocab_size, t_config)
+        transformer2 = build_transformer(vocab_size, t2_config)
+        t1_ckpt = resolve_checkpoint_path(t_run_dir, t_summary["transformer"]["checkpoint_path"])
+        t2_ckpt = resolve_checkpoint_path(t2_run_dir, t2_summary["transformer"]["checkpoint_path"])
+        if is_main_process():
+            print(f"Loading transformer-1 checkpoint: {t1_ckpt}")
+            print(f"Loading transformer-2 checkpoint: {t2_ckpt}")
+        transformer1.load_state_dict(torch.load(str(t1_ckpt), map_location="cpu", weights_only=True))
+        transformer2.load_state_dict(torch.load(str(t2_ckpt), map_location="cpu", weights_only=True))
+        hybrid = TransformerEnsembleLateFusionAlphaModel(
+            transformer1, transformer2, init_alpha=args.init_alpha, late_k=args.late_k,
+        ).to(device)
+        source_runs = {
+            "teacher_type": "tt",
+            "transformer1_run_dir": str(t_run_dir.resolve()),
+            "transformer2_run_dir": str(t2_run_dir.resolve()),
+            "transformer1_checkpoint": str(t1_ckpt.resolve()),
+            "transformer2_checkpoint": str(t2_ckpt.resolve()),
+        }
+        compatibility = {
+            "config_mismatches": config_mismatches,
+            "max_seq_len_transformer1": t_config.get("max_seq_len"),
+            "max_seq_len_transformer2": t2_config.get("max_seq_len"),
+            "effective_max_seq_len": max_seq_len,
+        }
 
     if args.train_mode == "alpha_only":
         hybrid.set_branch_trainable(False)
@@ -988,23 +1111,13 @@ def main():
         "tags": [t.strip() for t in args.tags.split(",") if t.strip()],
         "config": vars(args),
         "env": get_env_info(device),
-        "source_runs": {
-            "grassmann_run_dir": str(g_run_dir.resolve()),
-            "transformer_run_dir": str(t_run_dir.resolve()),
-            "grassmann_checkpoint": str(g_ckpt.resolve()),
-            "transformer_checkpoint": str(t_ckpt.resolve()),
-        },
+        "source_runs": source_runs,
         "dataset_stats": {
             "train": train_dataset.stats,
             "validation": val_dataset.stats,
             "test": test_dataset.stats,
         },
-        "compatibility": {
-            "config_mismatches": config_mismatches,
-            "max_seq_len_grassmann": g_config.get("max_seq_len"),
-            "max_seq_len_transformer": t_config.get("max_seq_len"),
-            "effective_max_seq_len": max_seq_len,
-        },
+        "compatibility": compatibility,
     }
     if is_main_process():
         save_json(run_meta, run_dir / "config.json")

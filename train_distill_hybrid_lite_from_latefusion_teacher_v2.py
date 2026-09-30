@@ -412,6 +412,69 @@ class HybridLateFusionAlphaModel(nn.Module):
         return logits, loss
 
 
+class TransformerEnsembleLateFusionAlphaModel(nn.Module):
+    """Late-logit fusion of two independently initialized Transformer branches."""
+
+    def __init__(self, transformer1: nn.Module, transformer2: nn.Module,
+                 init_alpha: float = 0.5, late_k: int = 1):
+        super().__init__()
+        self.transformer1 = transformer1
+        self.transformer2 = transformer2
+        self.num_layers = int(min(len(transformer1.blocks), len(transformer2.blocks)))
+        if self.num_layers <= 0:
+            raise ValueError("Could not infer a positive number of layers from branch models.")
+        self.late_k = int(max(1, min(int(late_k), self.num_layers)))
+        init_logit = math.log(init_alpha / max(1e-8, 1.0 - init_alpha))
+        self.logit_alpha = nn.Parameter(torch.full((self.late_k,), float(init_logit), dtype=torch.float32))
+
+    def alpha(self):
+        return torch.sigmoid(self.logit_alpha)
+
+    @staticmethod
+    def _hidden_per_layer(transformer, input_ids):
+        seq_len = input_ids.size(1)
+        device = input_ids.device
+        tok_emb = transformer.token_embedding(input_ids)
+        pos_emb = transformer.position_embedding(torch.arange(seq_len, device=device))
+        hidden = transformer.embedding_dropout(tok_emb + pos_emb)
+        per_layer = []
+        for block in transformer.blocks:
+            hidden = block(hidden)
+            per_layer.append(hidden)
+        return per_layer
+
+    def forward(self, input_ids, labels=None, return_branches=False):
+        alpha_vec = self.alpha()
+        h1_all = self._hidden_per_layer(self.transformer1, input_ids)[-self.late_k:]
+        h2_all = self._hidden_per_layer(self.transformer2, input_ids)[-self.late_k:]
+        fused_logits_all = []
+        logits1_all = []
+        logits2_all = []
+        for alpha_i, h1, h2 in zip(alpha_vec, h1_all, h2_all):
+            logits1 = self.transformer1.lm_head(self.transformer1.ln_f(h1))
+            logits2 = self.transformer2.lm_head(self.transformer2.ln_f(h2))
+            logits1_all.append(logits1)
+            logits2_all.append(logits2)
+            fused_logits_all.append(alpha_i * logits1 + (1.0 - alpha_i) * logits2)
+
+        logits = torch.stack(fused_logits_all, dim=0).mean(dim=0)
+        loss = None
+        if labels is not None:
+            shift_logits = logits[:, :-1, :].contiguous()
+            shift_labels = labels[:, 1:].contiguous()
+            loss = F.cross_entropy(
+                shift_logits.view(-1, shift_logits.size(-1)),
+                shift_labels.view(-1),
+                ignore_index=-100,
+            )
+        if return_branches:
+            return logits, loss, {
+                "transformer1": torch.stack(logits1_all, dim=0).mean(dim=0),
+                "transformer2": torch.stack(logits2_all, dim=0).mean(dim=0),
+            }
+        return logits, loss
+
+
 def create_grassmann(vocab_size: int, max_seq_len: int, model_dim: int, num_layers: int,
                      reduced_dim: int, dropout: float, window_sizes: str):
     ws = [int(x) for x in str(window_sizes).split(",") if str(x).strip()]
@@ -900,7 +963,7 @@ def normalize_legacy_alpha_state_dict(state, target_state):
     normalized["logit_alpha"] = saved_alpha.reshape_as(target_alpha)
     return normalized
 
-def load_teacher_and_context(teacher_run_dir: Path, vocab_size: int, search_roots, remaps, device):
+def _load_tg_teacher_and_context(teacher_run_dir: Path, vocab_size: int, search_roots, remaps, device):
     teacher_meta = load_json(teacher_run_dir / "config.json")
     teacher_summary = load_json(teacher_run_dir / "summary.json")
     teacher_cfg = teacher_meta.get("config", {})
@@ -975,6 +1038,7 @@ def load_teacher_and_context(teacher_run_dir: Path, vocab_size: int, search_root
         p.requires_grad = False
 
     context = {
+        "teacher_type": "tg",
         "teacher_meta": teacher_meta,
         "teacher_summary": teacher_summary,
         "teacher_cfg": teacher_cfg,
@@ -991,6 +1055,100 @@ def load_teacher_and_context(teacher_run_dir: Path, vocab_size: int, search_root
         "late_k": late_k,
     }
     return teacher, context
+
+
+def _load_tt_teacher_and_context(teacher_run_dir: Path, vocab_size: int, search_roots, remaps, device):
+    teacher_meta = load_json(teacher_run_dir / "config.json")
+    teacher_summary = load_json(teacher_run_dir / "summary.json")
+    teacher_cfg = teacher_meta.get("config", {})
+    source_runs = teacher_meta.get("source_runs", {})
+
+    recorded_type = source_runs.get("teacher_type", teacher_cfg.get("teacher_type"))
+    if recorded_type not in ["tt", None]:
+        raise ValueError(f"Requested teacher_type=tt but checkpoint metadata records {recorded_type!r}")
+
+    t1_run_dir = resolve_migrated_path(
+        source_runs.get("transformer1_run_dir", ""), search_roots=search_roots,
+        remaps=remaps, kind="transformer1_run_dir", must_exist=True,
+    )
+    t2_run_dir = resolve_migrated_path(
+        source_runs.get("transformer2_run_dir", ""), search_roots=search_roots,
+        remaps=remaps, kind="transformer2_run_dir", must_exist=True,
+    )
+    t1_cfg = load_json(Path(t1_run_dir) / "config.json").get("config", {})
+    t2_cfg = load_json(Path(t2_run_dir) / "config.json").get("config", {})
+    t1_sum = load_json(Path(t1_run_dir) / "summary.json")
+    t2_sum = load_json(Path(t2_run_dir) / "summary.json")
+
+    t1_ckpt = source_runs.get("transformer1_checkpoint") or t1_sum.get("transformer", {}).get("checkpoint_path") or str(Path(t1_run_dir) / "checkpoints" / "transformer_best.pt")
+    t2_ckpt = source_runs.get("transformer2_checkpoint") or t2_sum.get("transformer", {}).get("checkpoint_path") or str(Path(t2_run_dir) / "checkpoints" / "transformer_best.pt")
+    hybrid_ckpt = teacher_summary.get("hybrid", {}).get("checkpoint_path") or str(teacher_run_dir / "checkpoints" / "hybrid_best.pt")
+    t1_ckpt = resolve_migrated_path(t1_ckpt, run_dir=teacher_run_dir, search_roots=search_roots, remaps=remaps, kind="transformer1_checkpoint", must_exist=True)
+    t2_ckpt = resolve_migrated_path(t2_ckpt, run_dir=teacher_run_dir, search_roots=search_roots, remaps=remaps, kind="transformer2_checkpoint", must_exist=True)
+    hybrid_ckpt = resolve_migrated_path(hybrid_ckpt, run_dir=teacher_run_dir, search_roots=search_roots, remaps=remaps, kind="hybrid_checkpoint", must_exist=True)
+
+    t1_state = torch.load(t1_ckpt, map_location=device, weights_only=True)
+    t2_state = torch.load(t2_ckpt, map_location=device, weights_only=True)
+    seq_len_t1 = infer_seq_len_from_state_dict(t1_state, fallback=256)
+    seq_len_t2 = infer_seq_len_from_state_dict(t2_state, fallback=256)
+    max_seq_len = choose_positive_seq_len(
+        teacher_cfg.get("max_seq_len"), t1_cfg.get("max_seq_len"), t2_cfg.get("max_seq_len"),
+        seq_len_t1, seq_len_t2, default=max(seq_len_t1, seq_len_t2, 256),
+    )
+    late_k = int(teacher_summary.get("hybrid", {}).get("late_k", teacher_cfg.get("late_k", 1)))
+    init_alpha = float(teacher_summary.get("hybrid", {}).get("final_alpha", teacher_cfg.get("init_alpha", 0.5)))
+
+    transformer1 = instantiate_from_config("transformer", vocab_size, max_seq_len, t1_cfg)
+    transformer2 = instantiate_from_config("transformer", vocab_size, max_seq_len, t2_cfg)
+    transformer1.load_state_dict(t1_state)
+    transformer2.load_state_dict(t2_state)
+    teacher = TransformerEnsembleLateFusionAlphaModel(
+        transformer1, transformer2, init_alpha=init_alpha, late_k=late_k,
+    )
+    hybrid_state = torch.load(hybrid_ckpt, map_location=device, weights_only=True)
+    hybrid_state = normalize_legacy_alpha_state_dict(hybrid_state, teacher.state_dict())
+    teacher.load_state_dict(hybrid_state)
+    teacher.to(device)
+    teacher.eval()
+    for parameter in teacher.parameters():
+        parameter.requires_grad = False
+
+    if is_main_process():
+        print(f"Loading source transformer-1 checkpoint: {t1_ckpt}")
+        print(f"Loading source transformer-2 checkpoint: {t2_ckpt}")
+        print(f"Loading late-fusion TT teacher checkpoint: {hybrid_ckpt}")
+        print(f"Inferred teacher max_seq_len={max_seq_len} (t1={seq_len_t1}, t2={seq_len_t2})")
+
+    context = {
+        "teacher_type": "tt",
+        "teacher_meta": teacher_meta,
+        "teacher_summary": teacher_summary,
+        "teacher_cfg": teacher_cfg,
+        "t1_cfg": t1_cfg,
+        "t2_cfg": t2_cfg,
+        "t1_summary": t1_sum,
+        "t2_summary": t2_sum,
+        "t1_run_dir": str(Path(t1_run_dir).resolve()),
+        "t2_run_dir": str(Path(t2_run_dir).resolve()),
+        "t1_ckpt": str(Path(t1_ckpt).resolve()),
+        "t2_ckpt": str(Path(t2_ckpt).resolve()),
+        "hybrid_ckpt": str(Path(hybrid_ckpt).resolve()),
+        "max_seq_len": max_seq_len,
+        "late_k": late_k,
+        # Compatibility aliases for summary fields that historically reported TG baselines.
+        "g_summary": {},
+        "t_summary": t1_sum,
+    }
+    return teacher, context
+
+
+def load_teacher_and_context(teacher_run_dir: Path, vocab_size: int, search_roots, remaps,
+                             device, teacher_type: str = "tg"):
+    if teacher_type == "tg":
+        return _load_tg_teacher_and_context(teacher_run_dir, vocab_size, search_roots, remaps, device)
+    if teacher_type == "tt":
+        return _load_tt_teacher_and_context(teacher_run_dir, vocab_size, search_roots, remaps, device)
+    raise ValueError(f"Unsupported teacher_type: {teacher_type}")
 
 
 def write_markdown_report(run_dir: Path, run_meta: Dict[str, Any], summary: Dict[str, Any]) -> None:
@@ -1027,6 +1185,10 @@ def write_markdown_report(run_dir: Path, run_meta: Dict[str, Any], summary: Dict
 def main():
     parser = argparse.ArgumentParser(description="Distill a late-fusion hybrid teacher into a lightweight single-branch or hybrid-lite student")
     parser.add_argument("--teacher-run-dir", type=str, required=True)
+    parser.add_argument(
+        "--teacher-type", type=str, default="tg", choices=["tg", "tt"],
+        help="Explicit teacher topology. The default preserves historical Transformer+Grassmann loading.",
+    )
     parser.add_argument("--student-type", type=str, default="hybrid_lite", choices=["grassmann", "transformer", "hybrid_lite"])
     parser.add_argument("--tokenizer-dir", type=str, default="./gpt2_local")
     parser.add_argument("--student-init-run-dir", type=str, default="", help="Optional run dir of a pretrained student baseline to warm-start from.")
@@ -1187,7 +1349,10 @@ def main():
     tokenizer = GPT2Tokenizer.from_pretrained(args.tokenizer_dir, local_files_only=True)
     vocab_size = len(tokenizer)
 
-    teacher, ctx = load_teacher_and_context(teacher_run_dir, vocab_size, search_roots, remaps, device)
+    teacher, ctx = load_teacher_and_context(
+        teacher_run_dir, vocab_size, search_roots, remaps, device,
+        teacher_type=args.teacher_type,
+    )
     checkpoint_teacher_alpha, effective_teacher_alpha = apply_teacher_alpha_override(
         teacher, args.teacher_alpha_override
     )
@@ -1270,8 +1435,12 @@ def main():
         print(f"Teacher late_k: {ctx['late_k']}")
         print(f"Teacher checkpoint alpha: {checkpoint_teacher_alpha}")
         print(f"Teacher effective alpha: {effective_teacher_alpha}")
-        print(f"Teacher source grassmann test ppl: {ctx['g_summary'].get('grassmann', {}).get('test_ppl')}")
-        print(f"Teacher source transformer test ppl: {ctx['t_summary'].get('transformer', {}).get('test_ppl')}")
+        if ctx["teacher_type"] == "tg":
+            print(f"Teacher source grassmann test ppl: {ctx['g_summary'].get('grassmann', {}).get('test_ppl')}")
+            print(f"Teacher source transformer test ppl: {ctx['t_summary'].get('transformer', {}).get('test_ppl')}")
+        else:
+            print(f"Teacher source transformer-1 test ppl: {ctx['t1_summary'].get('transformer', {}).get('test_ppl')}")
+            print(f"Teacher source transformer-2 test ppl: {ctx['t2_summary'].get('transformer', {}).get('test_ppl')}")
         if args.student_type == "hybrid_lite":
             print(f"Student late_k: {args.student_late_k}")
         if init_info:
@@ -1286,6 +1455,25 @@ def main():
     ckpt_dir.mkdir(parents=True, exist_ok=True)
     metrics_path = run_dir / "distill_metrics.jsonl"
 
+    source_teacher = {
+        "teacher_type": ctx["teacher_type"],
+        "teacher_run_dir": str(teacher_run_dir.resolve()),
+        "teacher_checkpoint": ctx["hybrid_ckpt"],
+        "checkpoint_alpha": checkpoint_teacher_alpha,
+        "effective_alpha": effective_teacher_alpha,
+        "alpha_override": None if args.teacher_alpha_override < 0 else float(args.teacher_alpha_override),
+    }
+    if ctx["teacher_type"] == "tg":
+        source_teacher.update({
+            "grassmann_run_dir": ctx["g_run_dir"],
+            "transformer_run_dir": ctx["t_run_dir"],
+        })
+    else:
+        source_teacher.update({
+            "transformer1_run_dir": ctx["t1_run_dir"],
+            "transformer2_run_dir": ctx["t2_run_dir"],
+        })
+
     run_meta = {
         "run_id": run_dir.name.split("_", 1)[0],
         "experiment_name": args.experiment_name,
@@ -1294,15 +1482,7 @@ def main():
         "tags": [t.strip() for t in args.tags.split(",") if t.strip()],
         "config": vars(args),
         "env": get_env_info(device),
-        "source_teacher": {
-            "teacher_run_dir": str(teacher_run_dir.resolve()),
-            "teacher_checkpoint": ctx["hybrid_ckpt"],
-            "grassmann_run_dir": ctx["g_run_dir"],
-            "transformer_run_dir": ctx["t_run_dir"],
-            "checkpoint_alpha": checkpoint_teacher_alpha,
-            "effective_alpha": effective_teacher_alpha,
-            "alpha_override": None if args.teacher_alpha_override < 0 else float(args.teacher_alpha_override),
-        },
+        "source_teacher": source_teacher,
         "student_init": init_info,
         "dataset_stats": {
             "train": train_dataset.stats,
