@@ -40,3 +40,9 @@ The reduced-data smoke completed before formal training:
 - WS+KD: `outputs/distill_experiments/20260930_084919_phase2g_smoke_ts_kd_seed123_e1`
 
 The smoke validated dataset loading, teacher and warm-start checkpoint loading, both objective paths, checkpoint writing, and final evaluation. Because it begins with a one-epoch S0 trained on only 2,000 stories, its 55-step CE/KD continuations have clip fraction 1.0 and AMP overflow/non-finite fractions 0.0364/0.0909. These values are retained as a short-window/random-S0 smoke artifact and are not treated as a formal stability endpoint. The formal matrix uses the frozen 300,000-story, 20-epoch S0 protocol; no hyperparameter was changed after the smoke.
+
+## GPU-3 infrastructure retry
+
+The first formal seed-456 KD attempt was launched at `outputs/distill_experiments/20261001_044148_phase2g_ts_kd_seed456`. Its first epoch was finite, but GPU 3 was persistently restricted to approximately 210--255 MHz with `SW Power Cap` active, compared with approximately 1,470--1,695 MHz on GPUs 0--2. Throughput fell to approximately 4,200 tokens/s versus 14,600--16,500 tokens/s on the healthy cards. No competing GPU process was present; the four GPU jobs all belonged to Phase 2G.
+
+On 2026-10-01, the research lead explicitly approved the infrastructure retry. The GPU-3 process was terminated during epoch 2 after exact PID and command validation. Its logs, epoch-1 metrics, and checkpoint remain preserved and are excluded from endpoint analysis. Seed-456 KD will restart from scratch on GPU 1 after the successful seed-123 KD arm releases that card. The retry keeps the identical teacher checkpoint, seed-456 S0 hash, seed, objective, lambda, temperature, data, batch, optimizer, schedule, 10-epoch budget, AMP, clipping, and validation-selection rule. Only execution GPU and metadata identifying the infrastructure retry differ; no partial optimizer state is resumed.
