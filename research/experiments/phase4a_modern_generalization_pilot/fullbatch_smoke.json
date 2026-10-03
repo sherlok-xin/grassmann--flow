@@ -1,0 +1,33 @@
+{
+  "decision": "FULLBATCH_SMOKE_PASS",
+  "formal_results": false,
+  "test_access": false,
+  "saved_model_state": false,
+  "updates": [
+    {
+      "step": 1,
+      "tokens": 8192,
+      "ce": 2.146997958421707,
+      "scaled_kl": 1.2134952992200851,
+      "gradient_norm_preclip": 16.812685012817383
+    },
+    {
+      "step": 2,
+      "tokens": 8192,
+      "ce": 2.0733406990766525,
+      "scaled_kl": 1.1681846529245377,
+      "gradient_norm_preclip": 16.465579986572266
+    },
+    {
+      "step": 3,
+      "tokens": 8192,
+      "ce": 2.077787220478058,
+      "scaled_kl": 1.1707388013601303,
+      "gradient_norm_preclip": 11.310895919799805
+    }
+  ],
+  "global_batch": 32,
+  "microbatch": 4,
+  "peak_allocated_gib": 5.063239097595215,
+  "tokens_per_second": 6510.934893320913
+}

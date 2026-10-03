@@ -275,3 +275,10 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - curvature correction 的绝对值中位数仅 `2.73e-7`，为 first-order term 绝对值的中位数 0.52%，没有改变任何符号。仅 22/63 行存在 finite positive `lambda_safe`，范围 56.44--6429.64；41/63 为 no positive local safe interval。
 - calibration sign 仅 11/21 seed conditions 稳定。nominal-LR virtual AdamW 识别全部 6 个 harmful seed rows，但误判 9/15 positive rows；literal formal first step 因 scheduler 初始化 lr=0 为严格 no-op。
 - 最终决策为 `STOP_NEW_METHOD_DIAGNOSTIC_FAILED`，不是 `PROCEED_TO_PHASE3B` 或 `THEORY_NEEDS_REVISION`。不得启动 Phase 3B、Safe-KD、lambda tuning、Qwen 或自动 manuscript rewrite。
+
+## 31. 2026-10-03 Phase 4A modern-family pilot authorization
+
+- 用户授权独立的 external-validity pilot，限定 base SmolLM2-135M/360M、TinyStories 后 FineWeb-Edu、seed 42、lambda 1/5、T=2、每 run 10M predicted target tokens。旧实验和 final_evidence 继续冻结，论文不修改。
+- Stage 0 数值单测 4/4 通过，两个官方模型和完全一致的 49,152-entry tokenizer 已核验哈希。微批 teacher CE/KD 峰值约 7.47/4.54 GiB；真实 TinyStories accumulated global-batch smoke 通过，峰值 5.06 GiB。
+- Transformers 4.57.6 与 NVIDIA PyTorch 内部接口不兼容；仅在 outputs/phase4a_modern/python_deps 安装 4.46.3 和 tokenizers 0.20.3，原环境和框架源码均未改动。
+- 正式训练必须在 protocol commit 后启动。seed123/456 只能建议、不自动运行；完成 pilot 后 STOP。

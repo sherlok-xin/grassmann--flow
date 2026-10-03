@@ -1,5 +1,21 @@
 # Grassmann / Transformer / Distillation Research Handoff
 
+## 2026-10-03 Authorized Phase 4A modern external-validity pilot
+
+The research lead authorized a bounded new phase using official base SmolLM2
+135M/360M on TinyStories and FineWeb-Edu, seed 42 only. Stage 0 passed with
+matching 49,152-entry tokenizers, verified official weight hashes, finite CE/KL
+and gradients, four numerical tests and a fullbatch smoke. An isolated
+Transformers 4.46.3/tokenizers 0.20.3 installation resolves an existing
+4.57.6/NVIDIA-PyTorch import incompatibility without framework source edits.
+
+The budget remains 10M predicted target tokens for teacher adaptation, S0
+preparation and each CE/KD continuation (lambda 1 and 5, T=2). Entry point:
+research/experiments/phase4a_modern_generalization_pilot/experiment_plan.md.
+FineWeb-Edu starts only after clean TinyStories completion. Final evidence and
+manuscript remain immutable; Phase 3A remains terminal. No seed 123/456
+replication is authorized. Phase 4A must report its pilot gate and STOP.
+
 ## 2026-10-03 Authorized Post-Freeze Extension: Phase 3A
 
 Phase 3A, the offline Safe-Distillation diagnostic, is complete. It did not launch KD training, use test data for score construction, write checkpoints, alter endpoints, edit the manuscript, or modify `research/final_evidence/`.

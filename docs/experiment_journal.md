@@ -363,3 +363,10 @@
 - first-order 与 quadratic signs 在全部 63 行完全重合，且 seed-level Spearman/AUROC/sign accuracy 均相同。二者正确判断 family-mean PTB、TinyStories、WT2 A、WT2 T，但误判正迁移的 WT2 J、G、TT。
 - first/second order 仅 11/21 seed rows 跨 calibration subsets 同号。nominal virtual step 虽无 harmful false positive，却将 9/15 positive seed rows 判为 harm；literal scheduler step 的 lr=0 曲线全部严格平坦。
 - 完成四组 PDF/300-dpi PNG 图、condition/family summaries、predictor metrics、REPORT、GPT handoff 与 provenance。终止码 `STOP_NEW_METHOD_DIAGNOSTIC_FAILED`；未启动 Phase 3B 或任何训练。
+
+## [2026-10-03] Phase 4A feasibility and protocol freeze
+
+- 新的 bounded external-validity 授权，沿用 remote-only 197 约束。官方 base SmolLM2-135M revision 93efa2f097d58c2a74874c7e644dbc9b0cee75a2、360M revision f8027fd0eaeea54caa13c31d31b9fdc459c38b49 下载并核验官方 LFS SHA256。
+- 4 项 CE/KL 数值和梯度、token mask/budget、scheduler 测试通过；Stage 0 模型加载及 KD smoke 通过；真实 train chunks 的 global batch32 / micro4 累积 smoke 通过，无 NaN/Inf。
+- TinyStories 新 token subset 固定为 train20M / val1M / test1M，原 seed42 holdout 映射保留。新索引缓存仅写 outputs，新数据与旧 GPT2 tokenization 不做绝对 NLL 混比。
+- 采用隔离的 Transformers4.46.3/tokenizers0.20.3，无全局环境替换。正式协议为 lr5e-5、AdamW betas0.9/0.95、wd0.01、5%warmup+cosine、clip1、seq256、global32、每 run10M target tokens、validation-only selection。

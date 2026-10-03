@@ -1,0 +1,44 @@
+{
+  "source": {
+    "repo": "roneneldan/TinyStories",
+    "historical_hf_revision": "UNKNOWN_LOCAL_SAVED_SNAPSHOT",
+    "local_path": "/workspace/grassmannflows/datasets/tinystories_saved",
+    "fingerprints": {
+      "train": "3f36a754e8e5818f",
+      "validation": "d650d0e59aea99a5"
+    },
+    "source_file_sha256": {
+      "dataset_dict.json": "88b5b05fc757e76e7edc779db90e96cb6d76538b93165d6ce962a818801babf4",
+      "train/data-00000-of-00004.arrow": "ff7a041663c2746c6c39c69c5465bc7b619735eaeff663eb7017d1eadac9bc33",
+      "train/data-00001-of-00004.arrow": "e07e6eaaae60a9cb6a2f39f763d41dbd008fb3d5430716344455a4942a4ca71c",
+      "train/data-00002-of-00004.arrow": "6c5461491e03bd5c7ca240f228b16dd22cf3981c4c1beb142bd30b33d3cfc808",
+      "train/data-00003-of-00004.arrow": "3a1f79c0f1958feea91c26cfb6fabcaa96d15c6c5e476265b6c331b9013a47b3",
+      "train/dataset_info.json": "fb20eb36999c184652b35946d32d03c72300e23fdee43e50588152a076e2ca75",
+      "train/state.json": "0cf36f45e3597f889495c48c213aff78b665ae3d124491867e4b92ed2f34c9e4",
+      "validation/data-00000-of-00001.arrow": "d870dfaf32744195d8c7879f31792ce4b67343b2f1d419ece5b9775c2eda4225",
+      "validation/dataset_info.json": "fb20eb36999c184652b35946d32d03c72300e23fdee43e50588152a076e2ca75",
+      "validation/state.json": "48880e567997df0b3fa1cc288f0ac53baaabf5e393416b7778c97064962086fe"
+    },
+    "split": "original train.train_test_split(test_size=0.02, seed=42, shuffle=True); original validation is final test",
+    "indices_cache_location": "new output data namespace only",
+    "deduplicate_text": true
+  },
+  "token_counts": {
+    "train": 20000000,
+    "validation": 1000000,
+    "test": 1000000
+  },
+  "documents": {
+    "train": 89983,
+    "validation": 4479,
+    "test": 5038
+  },
+  "packing": "concatenate documents with one EOS; no BOS; no added tokens",
+  "token_dtype": "little-endian uint32",
+  "sha256": {
+    "train": "256eb02e24e78d82b5faf32afdcb6f04e7ae24b71a2adc4e0549e50d0f008de2",
+    "validation": "c1101f252526c5467b48888e7dd22460f0b8cf9c06671654e2f4da1249fa4508",
+    "test": "be66f26789c17dd8f223a7c1c4ac9f858ded0aa64b95252a5f4517eab21c187a"
+  },
+  "document_order_sha256": "51c0aa71cff39c4931de64d3e2e9daa624bb017a38560c0c740ee7bd05b01e5c"
+}

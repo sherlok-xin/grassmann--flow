@@ -1,0 +1,83 @@
+{
+  "torch": "2.6.0a0+df5bbc09d1.nv24.11",
+  "transformers": "4.46.3",
+  "bf16_supported": true,
+  "gpu": "NVIDIA GeForce RTX 3090",
+  "tokenizer_size": 49152,
+  "tokenizer_sha256": "2225e8fb36485529d3c826106f8bec359b719a6bcc3f5d6314a834c7be153905",
+  "special_tokens_map": {
+    "bos_token": "<|endoftext|>",
+    "eos_token": "<|endoftext|>",
+    "unk_token": "<|endoftext|>",
+    "additional_special_tokens": [
+      "<|endoftext|>",
+      "<|im_start|>",
+      "<|im_end|>",
+      "<repo_name>",
+      "<reponame>",
+      "<file_sep>",
+      "<filename>",
+      "<gh_stars>",
+      "<issue_start>",
+      "<issue_comment>",
+      "<issue_closed>",
+      "<jupyter_start>",
+      "<jupyter_text>",
+      "<jupyter_code>",
+      "<jupyter_output>",
+      "<jupyter_script>",
+      "<empty_output>"
+    ]
+  },
+  "cases": {
+    "teacher_ce": {
+      "microbatch": 4,
+      "seq_len": 256,
+      "updates": 4,
+      "ce": 0.14041057229042053,
+      "scaled_kl": 0.0,
+      "gradient_norms": [
+        4.272523403167725,
+        3.319187641143799,
+        2.851909637451172,
+        0.9594022035598755
+      ],
+      "peak_allocated_gib": 7.468337059020996,
+      "peak_reserved_gib": 7.783203125,
+      "tokens_per_second_after_warmup": 4903.70716285694,
+      "seconds": [
+        1.0229241969063878,
+        0.21216337010264397,
+        0.20755679812282324,
+        0.20674464665353298
+      ]
+    },
+    "student_kd_lambda5": {
+      "microbatch": 4,
+      "seq_len": 256,
+      "updates": 4,
+      "ce": 0.21824683248996735,
+      "scaled_kl": 1.2494056224822998,
+      "gradient_norms": [
+        233.72837829589844,
+        185.874267578125,
+        57.80488204956055,
+        139.8207244873047
+      ],
+      "peak_allocated_gib": 4.539840221405029,
+      "peak_reserved_gib": 4.79296875,
+      "tokens_per_second_after_warmup": 4871.7114607313215,
+      "seconds": [
+        0.24787929188460112,
+        0.21761337108910084,
+        0.20748848374933004,
+        0.20547736249864101
+      ]
+    }
+  },
+  "parameters": {
+    "student": 134515008,
+    "teacher": 361821120
+  },
+  "decision": "STAGE0_PASS"
+}
