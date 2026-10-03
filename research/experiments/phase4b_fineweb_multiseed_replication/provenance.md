@@ -28,3 +28,12 @@ before launch. Subsequent exact child PID/arm/GPU identities are appended to
 outputs/phase4b_fineweb/process_registry.txt by the launcher. Other-user tasks
 are never terminated. Analysis/collection/plot helpers may be added while
 training runs, but cannot alter the locked train/core/source behavior.
+
+All eight new training runs finished the exact10M-target budget. Before any
+new test forward, finish.py saved selection_with_s0.json using ONLY the
+original S0 and trained validation minima. All nine diagnostic choices are
+S0; these do not replace primary trained-step selections. New S0 selected
+steps are123→256 and456→1221; CE123/CE456 select1221/256 respectively,
+and all four new KD arms select1221. Both new KD5 clipping fractions are1.0,
+so CLIP_SATURATION_WARNING remains permanent. Test evaluation is pending;
+no three-seed transfer decision has been made from intermediate results.

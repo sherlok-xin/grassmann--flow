@@ -1,9 +1,9 @@
 schema_version: 1
-updated: "2026-10-03"
-status: phase4b_formal_replication_running
+updated: "2026-10-04"
+status: phase4b_training_complete_final_evaluation_running
 phase: phase4b_fineweb_multiseed_replication
 decision: PENDING_PHASE4B_ENDPOINTS
-training_authorized: true
+training_authorized: false
 objective: >-
   Replicate only FineWeb-Edu with independently prepared student seeds123/456,
   reusing frozen Phase4A teacher/data/seed42 endpoints. Eight authorized 10M
@@ -16,7 +16,7 @@ secondary_metrics:
   - tokens_per_second
   - peak_memory_gb
 constraints:
-  - legacy_and_phase4a_frozen_only_phase4b_fineweb_seeds123_456_authorized
+  - phase4b_training_complete_only_fixed_final_evaluation_and_analysis_authorized
   - do_not_launch_phase2h
   - final_evidence_ledger_is_authoritative
   - heavy_training_remote_only_10_42_0_197
@@ -62,10 +62,10 @@ hypotheses:
     title: Modern pretrained warm-start KD transfer depends on setting and strength
     status: exploratory_seed42_fineweb_lambda5_negative_clip_saturated_replication_review_only
 next_action: >-
-  Commit/push the Phase4B protocol before formal training, independently prepare
-  S0 seeds123/456, then run exact-S0 CE/KD1/KD5. Freeze validation-only diagnostic
-  best_including_S0 choices before new test evaluation. Audit all endpoints,
-  commit compact evidence and STOP. No new dataset, method or clipping control.
+  All eight authorized runs completed. Finish already-selected test evaluation,
+  collect primary and diagnostic results, audit hashes/budgets/statistics,
+  commit compact artifacts and STOP. Nine validation-only diagnostic choices
+  select S0; primary selection remains unchanged. No further training.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
