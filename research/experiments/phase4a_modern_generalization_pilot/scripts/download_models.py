@@ -9,6 +9,10 @@ import urllib.request
 ROOT = Path(__file__).resolve().parents[4]
 DEST = ROOT / 'outputs/phase4a_modern/model_cache'
 ART = Path(__file__).resolve().parents[1]
+MODEL_REVISIONS = {
+    'SmolLM2-135M': '93efa2f097d58c2a74874c7e644dbc9b0cee75a2',
+    'SmolLM2-360M': 'f8027fd0eaeea54caa13c31d31b9fdc459c38b49',
+}
 
 
 def request(url):
@@ -25,9 +29,11 @@ def sha(path):
 
 def download(model):
     repo = 'HuggingFaceTB/' + model
-    with request('https://huggingface.co/api/models/' + repo + '?blobs=true') as r:
+    pinned = MODEL_REVISIONS[model]
+    with request('https://huggingface.co/api/models/' + repo + '/revision/' + pinned + '?blobs=true') as r:
         info = json.load(r)
     revision = info['sha']
+    assert revision == pinned
     dest = DEST / model / revision
     dest.mkdir(parents=True, exist_ok=True)
     record = {'repo': repo, 'revision': revision,

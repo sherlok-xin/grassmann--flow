@@ -1,0 +1,7 @@
+{
+  "decision": "MODERN_REPLICATION_WORTHWHILE",
+  "replication_authorized": false,
+  "independent_training_seeds": [
+    42
+  ]
+}

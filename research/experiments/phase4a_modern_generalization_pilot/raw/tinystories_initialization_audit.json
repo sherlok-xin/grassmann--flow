@@ -1,0 +1,21 @@
+{
+  "dataset": "tinystories",
+  "seed": 42,
+  "s0_sha256": "d8c9fe54b3c22a4996b5e2f095a304b70901fd4d88ac61599f80ceecafe2c48a",
+  "teacher_sha256": "a9d292a2a0559ea9d102a5a3318297092ffcbdfa8363df3bbaba4989c06dab1f",
+  "s0_validation_nll": 1.5787737717844597,
+  "teacher_validation_nll": 1.404917415723857,
+  "teacher_residual_advantage_over_s0": 0.17385635606060257,
+  "probe": "first matched continuation global batch, 32 x 256 targets, full student parameter gradients",
+  "ce": 1.569490596652031,
+  "scaled_kl_T2": 0.9536026790738106,
+  "gradient_norm_ce": 0.7746411223681002,
+  "gradient_norm_kd_unweighted": 4.333652613818685,
+  "gradient_ratio_kd_over_ce": 5.594400411600386,
+  "gradient_ratio_lambda1_kd_over_ce": 5.594400411600386,
+  "gradient_ratio_lambda5_kd_over_ce": 27.97200205800193,
+  "gradient_ratio_ce_over_lambda1_kd": 0.17875016559887796,
+  "gradient_ratio_ce_over_lambda5_kd": 0.03575003311977559,
+  "no_optimizer_step": true,
+  "test_access": false
+}

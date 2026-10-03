@@ -1,6 +1,6 @@
 # Grassmann / Transformer / Distillation Research Handoff
 
-## 2026-10-03 Authorized Phase 4A modern external-validity pilot
+## 2026-10-03 Phase 4A complete — modern negative-transfer pilot / STOP
 
 The research lead authorized a bounded new phase using official base SmolLM2
 135M/360M on TinyStories and FineWeb-Edu, seed 42 only. Stage 0 passed with
@@ -9,12 +9,28 @@ and gradients, four numerical tests and a fullbatch smoke. An isolated
 Transformers 4.46.3/tokenizers 0.20.3 installation resolves an existing
 4.57.6/NVIDIA-PyTorch import incompatibility without framework source edits.
 
-The budget remains 10M predicted target tokens for teacher adaptation, S0
-preparation and each CE/KD continuation (lambda 1 and 5, T=2). Entry point:
-research/experiments/phase4a_modern_generalization_pilot/experiment_plan.md.
-FineWeb-Edu starts only after clean TinyStories completion. Final evidence and
-manuscript remain immutable; Phase 3A remains terminal. No seed 123/456
-replication is authorized. Phase 4A must report its pilot gate and STOP.
+Both domains are complete: ten formal runs of exactly 10M predicted targets,
+with validation-only selection followed by fixed-state test evaluation.
+The seed42 CE-relative test gains at lambda1/lambda5 are
++0.004948632001/-0.004797389422 on TinyStories and
+-0.015718598299/-0.046403663516 on FineWeb-Edu. Only the negative FineWeb
+lambda5 effect exceeds abs(gain)>=0.02 with matching validation direction.
+Decision: MODERN_REPLICATION_WORTHWHILE, a review-only recommendation.
+
+CLIP_SATURATION_WARNING applies to both lambda5 arms (clip fraction1.0).
+All optimization remained finite, with no observed overflow/nonfinite event.
+This is a single-student-seed, clipping-constrained negative pilot, not robust
+confirmation or modern evidence of beneficial KD. TinyStories does not clearly
+reproduce the old strong negative boundary. FineWeb pretraining overlap,
+different model pretraining budgets and early validation-selected S0 are
+additional confounds. No Grassmann-specific or new-method claim is supported.
+
+Read research/experiments/phase4a_modern_generalization_pilot/REPORT.md and
+GPT_HANDOFF.md first, then results_seed42.csv, optimization_audit.csv and
+completed_run_audit.json (PASS). The final evidence and manuscript remain
+immutable; Phase 3A remains terminal. No seed123/456 replication is authorized.
+Project status: modern_pilot_complete_replication_review_next. STOP; await
+research-lead review before any additional training or manuscript work.
 
 ## 2026-10-03 Authorized Post-Freeze Extension: Phase 3A
 

@@ -74,3 +74,43 @@ and PAR1). This preserves the same official-config prefix and frozen document
 split rule while bypassing listing infrastructure. The 20M/1M/1M subset and
 20,727 ordered document records are frozen before FineWeb endpoint training.
 No complete large corpus file is materialized or committed.
+
+FineWeb input-hash/transport lock commit was
+55ca7801f146b2ea05cf95a0664e048cff3b29a7, pushed before any FineWeb endpoint
+training. All five FineWeb runs then completed exactly 10,000,000 predicted
+targets each, with unchanged training/core code from the formal protocol.
+The selected S0 is step256; the other four states are step1221. All test
+evaluation occurred after all five validation-selected summaries existed.
+Final test CE/KD1/KD5 NLL is 2.949900313167 / 2.965618911467 /
+2.996303976684. Gains are -0.015718598299 / -0.046403663516, with matching
+validation signs. Only lambda5 exceeds the preregistered absolute 0.02 gate.
+
+FineWeb KD1/KD5 clip fractions are 0.8501228501 / 1.0. Both domains' KD5
+arms permanently carry CLIP_SATURATION_WARNING. All ten formal runs have
+zero observed overflow/nonfinite events and finite losses/gradient norms.
+No optimization hyperparameter was modified to suppress clipping. The gate
+remains valid under its preregistered clipping-warning rule, but the qualifying
+negative result cannot isolate teacher information from optimizer constraints.
+
+The final collector copied all ten summaries, compressed step telemetry,
+two initialization probes, two final results and both ordered document
+manifests into compact raw artifacts. selected_state_manifest.csv records
+all selected hashes; results_seed42.csv and optimization_audit.csv preserve
+unrounded numeric values. Generated PDF/PNG gain and validation plots were
+visually inspected. No test model forward is used by the final read-only
+audit script. completed_run_audit.json reports PASS on both datasets,
+ten runs and 100,000,000 formal predicted targets, including data-ID/text
+disjointness, exact budgets, selection, source-state/order hashes, finite
+telemetry, paired gains and the unchanged frozen-evidence aggregate hash.
+
+The model-download helper was subsequently pinned to the same already-used
+official commit hashes rather than resolving moving main. This is a future
+reproduction safeguard; it changes neither downloaded weights nor run inputs.
+No token files, model states, dependency wheels or corpus text are committed.
+
+Final decision: MODERN_REPLICATION_WORTHWHILE, based only on the negative
+FineWeb lambda5 pilot. The modern TinyStories effects do not pass the gate.
+No qualifying positive transfer was found; only one student preparation seed
+was run. Recommend unchanged FineWeb independent-student replication only
+for lead review. Phase 4A is COMPLETE and STOPPED. No seeds123/456 or new
+training is launched. The manuscript and final_evidence remain immutable.

@@ -1,11 +1,13 @@
 schema_version: 1
 updated: "2026-10-03"
-status: modern_pilot_feasibility_passed
-phase: phase4a_modern_generalization_pilot
+status: modern_pilot_complete_replication_review_next
+phase: phase4a_modern_generalization_pilot_complete
+decision: MODERN_REPLICATION_WORTHWHILE
+training_authorized: false
 objective: >-
-  Test external validity of positive/negative warm-start KD with base SmolLM2
-  135M/360M on TinyStories and FineWeb-Edu, seed 42 only, under the authorized
-  bounded Phase 4A protocol. Preserve the frozen final evidence and manuscript.
+  Phase 4A is complete. Review the single-seed modern SmolLM2 negative-transfer
+  pilot on FineWeb-Edu under sustained clipping. Preserve frozen evidence and
+  manuscript; no new training is authorized.
 primary_metric: paired_test_nll_gain
 selection_metric: validation_nll
 secondary_metrics:
@@ -14,7 +16,7 @@ secondary_metrics:
   - tokens_per_second
   - peak_memory_gb
 constraints:
-  - legacy_experiments_frozen_only_authorized_phase4a_seed42_training
+  - experiments_frozen_phase4a_complete_no_new_training
   - do_not_launch_phase2h
   - final_evidence_ledger_is_authoritative
   - heavy_training_remote_only_10_42_0_197
@@ -56,15 +58,20 @@ hypotheses:
   H5:
     title: Validation-risk-aware local curvature at S0 predicts fixed-strength KD transfer
     status: contradicted_diagnostic_failed_no_increment_over_first_order
+  H6:
+    title: Modern pretrained warm-start KD transfer depends on setting and strength
+    status: exploratory_seed42_fineweb_lambda5_negative_clip_saturated_replication_review_only
 next_action: >-
-  Lock the formal Phase 4A protocol after passing Stage 0, run TinyStories
-  seed-42 target preparation and three matched continuations, then FineWeb-Edu
-  only if Stage 1 completes cleanly. Audit selected endpoints, commit compact
-  artifacts and STOP. Never automatically replicate or edit the manuscript.
+  STOP. Research-lead review only: consider unchanged FineWeb-Edu replication
+  with independent student seeds123/456 and the same frozen seed42 teacher.
+  The negative lambda5 pilot meets the effect gate but is clipping-constrained.
+  Do not launch replication, Phase 3B/2H, new methods or manuscript edits.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
 resolved_protocol:
+  - date: "2026-10-03"
+    issue: "Phase 4A completed ten seed42 formal runs, exactly 100M predicted targets. TinyStories gains lambda1/lambda5 are +0.004948632001/-0.004797389422; FineWeb-Edu gains are -0.015718598299/-0.046403663516. Only FineWeb lambda5 meets the preregistered gate. MODERN_REPLICATION_WORTHWHILE is a recommendation only; both lambda5 arms retain CLIP_SATURATION_WARNING. All optimization is finite; final audit PASS. No new training authorized."
   - date: "2026-10-03"
     issue: Phase 3A completed 21 seed-level offline full-parameter diagnostics across seven families. First- and second-order signs were identical on all 63 calibration rows, positive WT2 J/G/TT families were missed, and calibration stability failed. Decision STOP_NEW_METHOD_DIAGNOSTIC_FAILED; no Phase 3B.
   - date: "2026-10-03"
@@ -137,4 +144,12 @@ artifacts:
   phase3a_results: research/experiments/phase3a_safe_lambda_diagnostic/diagnostics_with_endpoints.csv
   phase3a_condition_summary: research/experiments/phase3a_safe_lambda_diagnostic/condition_summary.csv
   phase3a_handoff: research/experiments/phase3a_safe_lambda_diagnostic/GPT_HANDOFF.md
+  phase4a_report: research/experiments/phase4a_modern_generalization_pilot/REPORT.md
+  phase4a_results: research/experiments/phase4a_modern_generalization_pilot/results_seed42.csv
+  phase4a_optimization: research/experiments/phase4a_modern_generalization_pilot/optimization_audit.csv
+  phase4a_selected_states: research/experiments/phase4a_modern_generalization_pilot/selected_state_manifest.csv
+  phase4a_audit: research/experiments/phase4a_modern_generalization_pilot/completed_run_audit.json
+  phase4a_decision: research/experiments/phase4a_modern_generalization_pilot/decision.json
+  phase4a_handoff: research/experiments/phase4a_modern_generalization_pilot/GPT_HANDOFF.md
+  phase4a_figures: research/experiments/phase4a_modern_generalization_pilot/figures
   gpt_entrypoint: PROJECT_OVERVIEW_FOR_GPT.md

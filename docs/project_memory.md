@@ -282,3 +282,13 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - Stage 0 数值单测 4/4 通过，两个官方模型和完全一致的 49,152-entry tokenizer 已核验哈希。微批 teacher CE/KD 峰值约 7.47/4.54 GiB；真实 TinyStories accumulated global-batch smoke 通过，峰值 5.06 GiB。
 - Transformers 4.57.6 与 NVIDIA PyTorch 内部接口不兼容；仅在 outputs/phase4a_modern/python_deps 安装 4.46.3 和 tokenizers 0.20.3，原环境和框架源码均未改动。
 - 正式训练必须在 protocol commit 后启动。seed123/456 只能建议、不自动运行；完成 pilot 后 STOP。
+
+## 32. 2026-10-03 Phase 4A complete / replication review only
+
+- TinyStories 与 FineWeb-Edu 各完成 teacher CE adaptation、独立 student S0 preparation、同一 S0 的 CE/KD1/KD5 continuation；10 个正式 run 各精确 10M predicted targets，总计 100M。验证集选 checkpoint 后才评估 test，所有完整性检查 PASS。
+- TinyStories test Gain(lambda1/lambda5) 为 +0.004948632001/-0.004797389422；FineWeb-Edu 为 -0.015718598299/-0.046403663516。全部 validation/test 同号，只有 FineWeb lambda5 超过预注册 abs(gain)>=0.02 门槛；未发现达到门槛的现代正迁移。
+- 决策 MODERN_REPLICATION_WORTHWHILE 仅由 FineWeb lambda5 的负迁移 pilot 支持，不是授权继续训练。只有一个 student preparation seed，不报 sample SD 或 3/3 robustness。现代 TinyStories 未清楚复现旧强负迁移边界。
+- 两个 lambda5 arm clip_fraction 均为 1.0，永久保留 CLIP_SATURATION_WARNING。所有 run finite、observed overflow/nonfinite=0。不能忽略 clipping，也不能把 clipping 因果认定为负迁移原因。
+- teacher validation residual advantage 为 TinyStories +0.173856356061、FineWeb +0.219626011745。FineWeb S0 选中 step256，但 preparation 仍跑满预算；CE endpoint 也略差于 S0。模型预训练包含 FineWeb-Edu，确切重叠未知，135M/360M 预训练预算不同。
+- 原 HF 镜像分页跳转失败后，以 pinned official sample-10BT 首个 Parquet shard 的 byte-range streaming 完成同样 document-order prefix；20M/1M/1M token hashes 和 doc-ID/text-hash disjointness 已核验。只提交 compact artifacts，不提交 token、模型、数据正文或 wheels。
+- 状态 modern_pilot_complete_replication_review_next。报告/交接/CSV/两组 PDF+PNG 位于 research/experiments/phase4a_modern_generalization_pilot/；final_evidence、旧论文、datasets/、checkpoints/ 未改。推荐负责人审阅固定 teacher 下独立 S0 seeds123/456 的 FineWeb replication；当前 STOP，未启动。

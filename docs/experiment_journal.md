@@ -370,3 +370,13 @@
 - 4 项 CE/KL 数值和梯度、token mask/budget、scheduler 测试通过；Stage 0 模型加载及 KD smoke 通过；真实 train chunks 的 global batch32 / micro4 累积 smoke 通过，无 NaN/Inf。
 - TinyStories 新 token subset 固定为 train20M / val1M / test1M，原 seed42 holdout 映射保留。新索引缓存仅写 outputs，新数据与旧 GPT2 tokenization 不做绝对 NLL 混比。
 - 采用隔离的 Transformers4.46.3/tokenizers0.20.3，无全局环境替换。正式协议为 lr5e-5、AdamW betas0.9/0.95、wd0.01、5%warmup+cosine、clip1、seq256、global32、每 run10M target tokens、validation-only selection。
+
+## [2026-10-03] Phase 4A modern pilot completion and STOP
+
+- 协议 commit 58f4cd7897858d84d577c3c048cc3fd83294d50c 在任何正式 endpoint 之前推送。TinyStories clean completion 后才准备 FineWeb，并在其正式训练前以 55ca7801f146b2ea05cf95a0664e048cff3b29a7 锁定输入 hashes/streaming transport。正式训练代码和优化设置保持不变。
+- 197 服务器完成两域全部 10 个 seed42 正式 run，每 run 1221 updates、精确 10M predicted targets。全部验证选中状态之后再评估 test。FineWeb S0 最优在 step256；其它最优均 step1221。
+- TinyStories CE/KD1/KD5 test NLL 为 1.579429492790/1.574480860789/1.584226882212，Gain 为 +0.004948632001/-0.004797389422。FineWeb 为 2.949900313167/2.965618911467/2.996303976684，Gain 为 -0.015718598299/-0.046403663516。
+- 两域 lambda5 均全程 clipping (1.0)，永久 CLIP_SATURATION_WARNING；KD1 clipping 分别 0.479934/0.850123。所有 loss/grad/参数有限，observed overflow/nonfinite=0；没有改 lambda 或 clip 来修复结果。
+- final read-only audit 检查预算、finite telemetry、选择步骤、source-state/order hashes、split doc-ID/text disjointness 和 Gain，状态 PASS，无 model forward。frozen final_evidence aggregate SHA256 仍为 3d172e634db611edad0d566e74ea0f826ed8cdae69922120baa94ebf9e6e2b96。
+- 生成 results_seed42.csv、optimization_audit.csv、selected_state_manifest.csv、decision.json、REPORT、GPT_HANDOFF、raw summaries/压缩 telemetry/doc manifests 与两组 PDF/300-dpi PNG 图，并进行图形检查。
+- MODERN_REPLICATION_WORTHWHILE 的唯一 qualifying effect 是 FineWeb lambda5 负迁移；TinyStories 两个小效应未达到 0.02。证据只有单 seed 且受 clipping/pretraining overlap 等限制。只推荐负责人审阅独立 student replication，不自动运行。Phase 4A COMPLETE / STOP，论文与 final_evidence 未改。

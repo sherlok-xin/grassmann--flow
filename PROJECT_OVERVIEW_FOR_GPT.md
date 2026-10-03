@@ -2,9 +2,22 @@
 
 ## Authoritative entry point
 
-Experiments are frozen after Phase 2G. The project is in manuscript reconstruction state. Do not launch Phase 2H, run new training, tune coefficients, or infer claims from historical filenames.
+The authorized Phase 4A modern external-validity pilot is complete and STOPPED.
+Read `research/experiments/phase4a_modern_generalization_pilot/GPT_HANDOFF.md`
+and `REPORT.md` for the latest result: FineWeb-Edu lambda5 has seed42 test
+gain -0.046403663516, meeting the pilot replication gate, with permanent
+CLIP_SATURATION_WARNING. TinyStories effects are below the clear-effect
+threshold. No independent-seed replication is authorized. Phase 3A remains
+terminal STOP_NEW_METHOD_DIAGNOSTIC_FAILED. Do not run new training, tune
+coefficients, start Phase 3B/2H, edit the manuscript, or infer claims from
+historical filenames.
 
-Read `research/final_evidence/GPT_MANUSCRIPT_HANDOFF.md` first. The authoritative claim ledger is `research/final_evidence/FINAL_EVIDENCE_LEDGER.md`; the conservative claim set and paper structure are in `PAPER_CLAIMS.md` and `MANUSCRIPT_BLUEPRINT.md`. The CAC source is an archival manuscript and does not describe the final evidence.
+For the frozen Phase 2A--2G manuscript evidence, read
+`research/final_evidence/GPT_MANUSCRIPT_HANDOFF.md`. That package remains
+unchanged by the post-freeze extensions. The authoritative claim ledger is
+`research/final_evidence/FINAL_EVIDENCE_LEDGER.md`; the conservative claim set
+and paper structure are in `PAPER_CLAIMS.md` and `MANUSCRIPT_BLUEPRINT.md`.
+The CAC source is an archival manuscript and does not describe the final evidence.
 
 ## Final research question
 
@@ -52,6 +65,11 @@ The PTB teacher, quality student, and efficiency student have `36.264M`, `31.434
 - `benchmark_ptb_efficiency_v4.py`: quality and efficiency benchmark.
 
 ## Reading order
+
+For the latest pilot, read the Phase 4A handoff/report and then
+`AI_RESEARCH_HANDOFF.md`. The following order concerns the immutable legacy
+manuscript-evidence package only; do not mix its confirmatory endpoints with
+the modern single-seed pilot.
 
 1. `research/final_evidence/GPT_MANUSCRIPT_HANDOFF.md`
 2. `research/final_evidence/FINAL_EVIDENCE_LEDGER.md`

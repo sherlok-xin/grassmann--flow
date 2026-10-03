@@ -1,0 +1,50 @@
+{
+  "dataset": "tinystories",
+  "seed": 42,
+  "arms": {
+    "teacher": {
+      "test_nll": 1.4524211118365953,
+      "test_ppl": 4.273448496997153,
+      "validation_nll": 1.404917415723857,
+      "selected_sha256": "a9d292a2a0559ea9d102a5a3318297092ffcbdfa8363df3bbaba4989c06dab1f",
+      "best_step": 1221
+    },
+    "s0": {
+      "test_nll": 1.619276130018675,
+      "test_ppl": 5.049433859730114,
+      "validation_nll": 1.5787737717844597,
+      "selected_sha256": "d8c9fe54b3c22a4996b5e2f095a304b70901fd4d88ac61599f80ceecafe2c48a",
+      "best_step": 1221
+    },
+    "ce": {
+      "test_nll": 1.579429492790327,
+      "test_ppl": 4.852186813886059,
+      "validation_nll": 1.5345059862607946,
+      "selected_sha256": "615e5580f8e0d812521e082c14a9db89081b1c98298b6250fe49acbca92816ae",
+      "best_step": 1221
+    },
+    "kd1": {
+      "test_nll": 1.5744808607893879,
+      "test_ppl": 4.828234441563117,
+      "validation_nll": 1.5301683804270885,
+      "selected_sha256": "3d4d214ecf7a67e1bc05bfb997d9428ae0d1ae4c254a6d971a5d1157ac00f93f",
+      "best_step": 1221,
+      "gain_test_nll": 0.0049486320009390905,
+      "gain_validation_nll": 0.004337605833706126,
+      "clear_effect": false
+    },
+    "kd5": {
+      "test_nll": 1.584226882212436,
+      "test_ppl": 4.875520569384921,
+      "validation_nll": 1.5404909387357966,
+      "selected_sha256": "6a8ff3fafae3db16d01d768254c91359676c38036bf237656a4a40d2a33759f8",
+      "best_step": 1221,
+      "gain_test_nll": -0.004797389422108944,
+      "gain_validation_nll": -0.00598495247500197,
+      "clear_effect": false
+    }
+  },
+  "test_evaluation_completed": true,
+  "numerically_valid": true,
+  "decision": "STOP_MODERN_REPLICATION"
+}

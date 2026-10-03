@@ -1,0 +1,11 @@
+{
+  "checks": {
+    "tinystories": "PASS_ALL_DATA_SELECTION_BUDGET_FINITE_HASH_GAIN_CHECKS",
+    "fineweb": "PASS_ALL_DATA_SELECTION_BUDGET_FINITE_HASH_GAIN_CHECKS"
+  },
+  "total_formal_target_tokens": 100000000,
+  "runs": 10,
+  "test_model_forwards": 0,
+  "final_evidence_aggregate_sha256": "3d172e634db611edad0d566e74ea0f826ed8cdae69922120baa94ebf9e6e2b96",
+  "status": "PASS"
+}
