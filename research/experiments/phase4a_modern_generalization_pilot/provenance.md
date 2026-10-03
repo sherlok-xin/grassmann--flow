@@ -3,7 +3,9 @@
 User-authorized new external-validity phase; Phase 3A remains terminal.
 Parent HEAD c7dd579a1e2b0f30586aacaad3cce0a40d194987.
 Initial feasibility protocol commit: 3ad6ea6, pushed before real-model smoke.
-Formal protocol commit will precede endpoint training.
+Formal protocol commit: 58f4cd7897858d84d577c3c048cc3fd83294d50c,
+pushed before endpoint training. TinyStories preparation runs launched on
+GPU 0 (teacher) and GPU 1 (S0); continuations use GPU 0/1/2 (CE/KD1/KD5).
 
 All model computation runs on 10.42.0.197 through exec_grassmann.sh. Local
 editing and official model downloads use the shared NFS mount. Remote
@@ -18,6 +20,22 @@ its empty output files were moved to tinystories_prepare_failed_1. No target
 training occurred before this repair. Transient imports while pip was still
 installing were retried only after installation finished. No framework source
 was patched and the original environment remains intact.
+
+Isolated wheel SHA256: transformers-4.46.3-py3-none-any.whl
+a12ef6f52841fd190a3e5602145b542d03507222f2c64ebb7ee92e8788093aef;
+tokenizers-0.20.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+f2b7cb962564785a83dafbba0144ecb7f579f1d57d8c406cdaa7f32fe32f18ad.
+The earlier cp310 wheel downloaded by local pip is not used remotely.
+
+Reproduction: download_models.py runs locally, install these two wheels with
+remote pip --no-deps --target outputs/phase4a_modern/python_deps, then set
+PYTHONPATH to that directory. Run remote unittest discovery and stage0.py,
+prepare_data.py tinystories and smoke_fullbatch.py. The formal entry point is
+bash scripts/run_dataset.sh tinystories. Use the same entry point for fineweb
+only after Stage 1 completes and deterministic FineWeb tokens are materialized.
+Model state files and token streams are not committed; hashes, compact
+metrics and ordered document manifests are committed. Plot script reads only
+these committed compact artifacts.
 
 Frozen final-evidence aggregate SHA256 before work:
 3d172e634db611edad0d566e74ea0f826ed8cdae69922120baa94ebf9e6e2b96.
