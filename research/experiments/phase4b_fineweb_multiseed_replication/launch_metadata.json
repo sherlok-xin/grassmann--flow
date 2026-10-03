@@ -1,0 +1,7 @@
+{
+  "protocol_commit": "1a525c379d7b72e809847dfed6ef1bf71fd0fe50",
+  "remote_host": "10.42.0.197",
+  "launcher_pid": 587220,
+  "initial_s0_pids": {"123": 587237, "456": 587238},
+  "process_registry": "outputs/phase4b_fineweb/process_registry.txt"
+}

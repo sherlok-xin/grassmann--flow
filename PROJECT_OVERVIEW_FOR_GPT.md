@@ -2,6 +2,15 @@
 
 ## Authoritative entry point
 
+Current authorized work: Phase4B FineWeb-Edu replication only, independent
+student seeds123/456 with the unchanged Phase4A adapted teacher/data and reused
+seed42 results. It is RUNNING, not complete. Read
+`research/experiments/phase4b_fineweb_multiseed_replication/GPT_HANDOFF.md`
+and `experiment_plan.md`. No TinyStories replication, lambda/clip change,
+new method or manuscript/evidence edit is authorized. Complete the eight
+bounded runs and diagnostic/primary audit, then STOP. The Phase4A paragraph
+below records its earlier stop boundary, now superseded only for Phase4B.
+
 The authorized Phase 4A modern external-validity pilot is complete and STOPPED.
 Read `research/experiments/phase4a_modern_generalization_pilot/GPT_HANDOFF.md`
 and `REPORT.md` for the latest result: FineWeb-Edu lambda5 has seed42 test
