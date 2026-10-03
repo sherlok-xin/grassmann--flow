@@ -1,5 +1,13 @@
 # Grassmann / Transformer / Distillation Research Handoff
 
+## 2026-10-03 Authorized Post-Freeze Extension: Phase 3A
+
+Phase 3A, the offline Safe-Distillation diagnostic, is complete. It did not launch KD training, use test data for score construction, write checkpoints, alter endpoints, edit the manuscript, or modify `research/final_evidence/`.
+
+The terminal decision is `STOP_NEW_METHOD_DIAGNOSTIC_FAILED`. Across 21 seed-level conditions and three deterministic calibration subsets, the second-order quadratic score and first-order validation-gradient dot product have identical signs on all 63 rows and identical primary classification metrics. They fail to retain established positive WT2 Teacher J/TG, Grassmann-only, and TT families. Only 11/21 seed-level conditions are sign-stable across calibration subsets. The nominal-LR virtual AdamW control identifies harmful rows but falsely predicts harm for 9/15 beneficial seed rows. The literal first scheduled AdamW update is a verified zero-LR no-op.
+
+The authoritative Phase 3A entry points are `research/experiments/phase3a_safe_lambda_diagnostic/REPORT.md`, `GPT_HANDOFF.md`, `diagnostics_blinded.csv`, `diagnostics_with_endpoints.csv`, and `condition_summary.csv`. The blind-table SHA256 is `594ac6d441fbe19776280225a0d652eb38baa7402dbf7a7295e065f7530fd9ad`. Do not start Phase 3B or turn this failed diagnostic into a method claim.
+
 Audit date: 2026-09-19
 
 Scope: repository, experiment artifacts, logs, current CAC manuscript, and post-rejection work in /home/xin/fuwuqi/grassmann-flows.

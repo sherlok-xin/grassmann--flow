@@ -1,0 +1,22 @@
+{
+  "family_rows": 7,
+  "first_order_second_order_seed_sign_identity": true,
+  "first_order_second_order_subset_sign_identity": true,
+  "harmful_families": [
+    "TinyStories_fused",
+    "WT2_A_fixed_composition"
+  ],
+  "positive_families": [
+    "PTB_fused",
+    "WT2_Grassmann_only",
+    "WT2_J_fused_TG",
+    "WT2_TT_homogeneous",
+    "WT2_Transformer_only"
+  ],
+  "seed_rows": 21,
+  "stable_seed_fraction": {
+    "first_order": 0.5238095238095238,
+    "second_order": 0.5238095238095238,
+    "virtual": 0.47619047619047616
+  }
+}

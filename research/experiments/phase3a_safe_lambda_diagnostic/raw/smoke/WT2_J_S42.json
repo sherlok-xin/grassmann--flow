@@ -1,0 +1,235 @@
+{
+  "calibration_subsets": {
+    "314159": {
+      "indices": [
+        937
+      ],
+      "kd_curvature_c": 4.265897655197409,
+      "lambda_safe": 481.28160472150586,
+      "lambda_safe_status": "finite_positive_upper_crossing",
+      "mixed_curvature_b": 0.5468948456892035,
+      "predicted_delta_v_quad_lambda5": -5.079421451987828e-05,
+      "predicted_gain_quad_lambda5": 5.079421451987828e-05,
+      "predicted_quad_sign_lambda5": "beneficial",
+      "student_validation_nll": 4.556982517242432,
+      "teacher_residual_advantage": -0.03793144226074219,
+      "teacher_validation_nll": 4.594913959503174,
+      "validation_gradient_norm": 3.8755931357230486,
+      "validation_kd_cosine": 0.016028059270106507,
+      "validation_kd_dot_a": 0.10270959293812483
+    }
+  },
+  "condition": {
+    "condition_id": "WT2_J_S42",
+    "dataset": "wikitext2",
+    "family": "WT2_J_fused_TG",
+    "student_seed": 42
+  },
+  "manifest": {
+    "amp": false,
+    "calibration_examples_per_subset": 1,
+    "calibration_seeds": [
+      314159
+    ],
+    "clip_norm": 1.0,
+    "condition_id": "WT2_J_S42",
+    "created_at_utc": "2026-10-03T05:53:27.723517+00:00",
+    "dataset": "wikitext2",
+    "eta": 0.0001,
+    "formal_total_training_steps": 2940,
+    "formal_warmup_steps": 147,
+    "fp32": true,
+    "full_parameter_gradients": true,
+    "lambda_grid": [
+      0.0,
+      0.5,
+      1.0,
+      2.5,
+      5.0,
+      10.0
+    ],
+    "literal_first_step_lr": 0.0,
+    "performs_persistent_training": false,
+    "phase": "Phase 3A authorized post-freeze offline diagnostic",
+    "saves_virtual_states": false,
+    "student_checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260515_004119_wt2_hybrid_lite_baseline_224x56_l6_e20/checkpoints/hybrid_best.pt",
+    "student_checkpoint_sha256_after": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+    "student_checkpoint_sha256_before": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+    "student_parameter_count": 31434257,
+    "student_run_dir": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260515_004119_wt2_hybrid_lite_baseline_224x56_l6_e20",
+    "teacher_checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260328_080104_wt2_hybrid_alpha_joint/checkpoints/hybrid_best.pt",
+    "teacher_checkpoint_alpha": [
+      0.5064820647239685
+    ],
+    "teacher_checkpoint_sha256_after": "a5ad284f6895c0b4ed516c855c1b149e6636b945173aa2e842b8132299582694",
+    "teacher_checkpoint_sha256_before": "a5ad284f6895c0b4ed516c855c1b149e6636b945173aa2e842b8132299582694",
+    "teacher_effective_alpha": [
+      0.5
+    ],
+    "teacher_run_dir": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260328_080104_wt2_hybrid_alpha_joint",
+    "teacher_type": "tg",
+    "temperature": 2.0,
+    "train_dataset_stats": {
+      "char_count": 10683234,
+      "dataset_name": "wikitext2",
+      "dataset_path": "/workspace/grassmannflows/datasets/wikitext2_v1_saved",
+      "encode_chars_per_batch": 200000,
+      "max_lines": 0,
+      "max_seq_len": 256,
+      "non_empty_lines": 23767,
+      "num_chunks": 9379,
+      "source": "disk",
+      "split": "train",
+      "split_seed": 42,
+      "text_field": "text",
+      "tinystories_val_frac": 0.02,
+      "token_count_before_trim": 2401115
+    },
+    "train_microbatch_size": 1,
+    "train_probe_indices": [
+      0,
+      1
+    ],
+    "train_probe_size": 2,
+    "uses_test_data": false,
+    "validation_dataset_stats": {
+      "char_count": 1110211,
+      "dataset_name": "wikitext2",
+      "dataset_path": "/workspace/grassmannflows/datasets/wikitext2_v1_saved",
+      "encode_chars_per_batch": 200000,
+      "max_lines": 0,
+      "max_seq_len": 256,
+      "non_empty_lines": 2461,
+      "num_chunks": 991,
+      "source": "disk",
+      "split": "validation",
+      "split_seed": 42,
+      "text_field": "text",
+      "tinystories_val_frac": 0.02,
+      "token_count_before_trim": 253809
+    },
+    "weight_decay": 0.01
+  },
+  "training_probe": {
+    "g_c_norm": 2.596514175238923,
+    "g_d_norm": 1.653453136277686,
+    "train_ce": 3.787415027618408,
+    "train_ce_kd_cosine": 0.12420701247324957,
+    "train_ce_kd_dot": 0.5332473477515137,
+    "train_kl_token_mean": 1.0011439621448517
+  },
+  "virtual_step_curves": {
+    "literal_scheduler_step": [
+      {
+        "calibration_nll": {
+          "314159": 4.556982517242432
+        },
+        "clipped": true,
+        "lambda": 0.0,
+        "lr_used": 0.0,
+        "preclip_grad_norm": 2.5965142250061035
+      },
+      {
+        "calibration_nll": {
+          "314159": 4.556982517242432
+        },
+        "clipped": true,
+        "lambda": 0.5,
+        "lr_used": 0.0,
+        "preclip_grad_norm": 2.8211007118225098
+      },
+      {
+        "calibration_nll": {
+          "314159": 4.556982517242432
+        },
+        "clipped": true,
+        "lambda": 1.0,
+        "lr_used": 0.0,
+        "preclip_grad_norm": 3.2468888759613037
+      },
+      {
+        "calibration_nll": {
+          "314159": 4.556982517242432
+        },
+        "clipped": true,
+        "lambda": 2.5,
+        "lr_used": 0.0,
+        "preclip_grad_norm": 5.147333145141602
+      },
+      {
+        "calibration_nll": {
+          "314159": 4.556982517242432
+        },
+        "clipped": true,
+        "lambda": 5.0,
+        "lr_used": 0.0,
+        "preclip_grad_norm": 8.967833518981934
+      },
+      {
+        "calibration_nll": {
+          "314159": 4.556982517242432
+        },
+        "clipped": true,
+        "lambda": 10.0,
+        "lr_used": 0.0,
+        "preclip_grad_norm": 17.05278778076172
+      }
+    ],
+    "nominal_lr_sensitivity": [
+      {
+        "calibration_nll": {
+          "314159": 4.56005859375
+        },
+        "clipped": true,
+        "lambda": 0.0,
+        "lr_used": 0.0001,
+        "preclip_grad_norm": 2.5965142250061035
+      },
+      {
+        "calibration_nll": {
+          "314159": 4.5609517097473145
+        },
+        "clipped": true,
+        "lambda": 0.5,
+        "lr_used": 0.0001,
+        "preclip_grad_norm": 2.8211007118225098
+      },
+      {
+        "calibration_nll": {
+          "314159": 4.56118631362915
+        },
+        "clipped": true,
+        "lambda": 1.0,
+        "lr_used": 0.0001,
+        "preclip_grad_norm": 3.2468888759613037
+      },
+      {
+        "calibration_nll": {
+          "314159": 4.561153411865234
+        },
+        "clipped": true,
+        "lambda": 2.5,
+        "lr_used": 0.0001,
+        "preclip_grad_norm": 5.147333145141602
+      },
+      {
+        "calibration_nll": {
+          "314159": 4.561048984527588
+        },
+        "clipped": true,
+        "lambda": 5.0,
+        "lr_used": 0.0001,
+        "preclip_grad_norm": 8.967833518981934
+      },
+      {
+        "calibration_nll": {
+          "314159": 4.560888767242432
+        },
+        "clipped": true,
+        "lambda": 10.0,
+        "lr_used": 0.0001,
+        "preclip_grad_norm": 17.05278778076172
+      }
+    ]
+  }
+}

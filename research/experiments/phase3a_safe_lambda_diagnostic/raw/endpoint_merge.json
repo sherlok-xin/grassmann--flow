@@ -1,0 +1,12 @@
+{
+  "blinded_table_sha256_verified": "594ac6d441fbe19776280225a0d652eb38baa7402dbf7a7295e065f7530fd9ad",
+  "endpoint_sources": [
+    "research/experiments/post_rejection_program/results.csv",
+    "research/experiments/phase2d_fixed_composition_teacher_quality/results_multiseed.csv",
+    "research/experiments/phase2e_teacher_branch_ablation/results_multiseed.csv",
+    "research/experiments/phase2f_homogeneous_ensemble_control/results_multiseed.csv",
+    "research/experiments/phase2g_tinystories_negative_transfer/results_multiseed.csv"
+  ],
+  "output_sha256": "89fe9e08d1b3190a1c2c9041ef1754efacbde2eda163bc6bd0dcd7ca6974ad91",
+  "row_count": 63
+}

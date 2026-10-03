@@ -265,3 +265,13 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - 三域 confirmatory gain 为 PTB `+0.144937±0.003938`、WT2 `+0.155665±0.007692`、TinyStories `-0.107219±0.000415` NLL，每个数据集均 3/3 同号。CodeParrot 被单独标为 single-seed legacy observation。
 - 最终四项主张围绕 transfer boundary、fixed-composition teacher state、global likelihood insufficiency 与 ensemble control。Phase 2F 正式删除 Grassmann-specific KD、Plücker causality 和 heterogeneity superiority。
 - 旧 CAC tex 未修改；逐段审计、主张集、六组表格、十节蓝图与 GPT handoff 已生成。项目状态更新为 `manuscript_reconstruction`，等待明确授权后再写完整论文。
+
+## 30. 2026-10-03 Phase 3A offline safe-distillation diagnostic
+
+- 用户显式授权一次 post-freeze offline diagnostic extension；未运行 KD training、lambda sweep training，未写 checkpoint、读取 test split、改 endpoint、改论文或改 `research/final_evidence/`。
+- protocol commit `80904d5` 在任何模型诊断前推送。21 个 seed-level 条件覆盖 PTB fused、WT2 J/A/T/G/TT 与 TinyStories fused；每项使用三个固定 validation calibration subsets，全参数 FP32 HVP，无 AMP 或 last-layer 近似。
+- blind table 在 endpoint merge 前固化，SHA256 为 `594ac6d441fbe19776280225a0d652eb38baa7402dbf7a7295e065f7530fd9ad`；blinded commit 为 `ea86510`。
+- 二阶 quadratic score 与一阶 validation dot 在 63/63 subset rows 上符号完全相同，seed-level sign accuracy/balanced accuracy/MCC/AUROC 为 0.571/0.650/0.279/0.644。WT2 J、G、TT 三个已确认正迁移 family 被误判为 harmful。
+- curvature correction 的绝对值中位数仅 `2.73e-7`，为 first-order term 绝对值的中位数 0.52%，没有改变任何符号。仅 22/63 行存在 finite positive `lambda_safe`，范围 56.44--6429.64；41/63 为 no positive local safe interval。
+- calibration sign 仅 11/21 seed conditions 稳定。nominal-LR virtual AdamW 识别全部 6 个 harmful seed rows，但误判 9/15 positive rows；literal formal first step 因 scheduler 初始化 lr=0 为严格 no-op。
+- 最终决策为 `STOP_NEW_METHOD_DIAGNOSTIC_FAILED`，不是 `PROCEED_TO_PHASE3B` 或 `THEORY_NEEDS_REVISION`。不得启动 Phase 3B、Safe-KD、lambda tuning、Qwen 或自动 manuscript rewrite。

@@ -1,7 +1,7 @@
 schema_version: 1
 updated: "2026-10-03"
-status: manuscript_reconstruction
-phase: final_evidence_package_complete
+status: post_freeze_diagnostic_complete
+phase: phase3a_safe_lambda_diagnostic_stopped
 objective: >-
   Preserve the frozen evidence for domain-dependent knowledge-distillation
   transfer and reconstruct the manuscript without a Grassmann-specific KD
@@ -21,6 +21,8 @@ constraints:
   - smoke_before_full_run
   - do_not_modify_datasets_or_checkpoints
   - preserve_legacy_checkpoints_and_loss_mode
+  - phase3a_no_training_no_endpoint_or_manuscript_changes
+  - phase3b_not_authorized
 current_baselines:
   teacher_ptb_ppl: 50.1125
   student_quality_ptb_ppl: 51.8431
@@ -49,14 +51,19 @@ hypotheses:
   H4:
     title: TinyStories warm-start KD negative transfer is robust to independent student initialization
     status: confirmed_three_of_three_seeds
+  H5:
+    title: Validation-risk-aware local curvature at S0 predicts fixed-strength KD transfer
+    status: contradicted_diagnostic_failed_no_increment_over_first_order
 next_action: >-
-  Await explicit authorization to write the full manuscript from
-  research/final_evidence. Preserve the old CAC source as an archival record;
-  do not launch Phase 2H or any additional experiment.
+  Await research-lead review of the terminal Phase 3A decision
+  STOP_NEW_METHOD_DIAGNOSTIC_FAILED. Do not launch Phase 3B, Safe-KD training,
+  coefficient sweeps, Qwen experiments, or manuscript rewriting automatically.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
 resolved_protocol:
+  - date: "2026-10-03"
+    issue: Phase 3A completed 21 seed-level offline full-parameter diagnostics across seven families. First- and second-order signs were identical on all 63 calibration rows, positive WT2 J/G/TT families were missed, and calibration stability failed. Decision STOP_NEW_METHOD_DIAGNOSTIC_FAILED; no Phase 3B.
   - date: "2026-10-03"
     issue: The final evidence ledger, conservative four-claim set, manuscript tables, old-manuscript audit, and reconstruction blueprint were completed. The authoritative narrative removes Grassmann-specific KD, Plucker-causality, heterogeneity-superiority, strong-JSD, and successful-CRBD claims.
   - date: "2026-10-03"
@@ -122,4 +129,9 @@ artifacts:
   manuscript_blueprint: research/final_evidence/MANUSCRIPT_BLUEPRINT.md
   manuscript_gpt_handoff: research/final_evidence/GPT_MANUSCRIPT_HANDOFF.md
   final_manuscript_tables: research/final_evidence/table_*.csv and table_*.md
+  phase3a_report: research/experiments/phase3a_safe_lambda_diagnostic/REPORT.md
+  phase3a_blinded: research/experiments/phase3a_safe_lambda_diagnostic/diagnostics_blinded.csv
+  phase3a_results: research/experiments/phase3a_safe_lambda_diagnostic/diagnostics_with_endpoints.csv
+  phase3a_condition_summary: research/experiments/phase3a_safe_lambda_diagnostic/condition_summary.csv
+  phase3a_handoff: research/experiments/phase3a_safe_lambda_diagnostic/GPT_HANDOFF.md
   gpt_entrypoint: PROJECT_OVERVIEW_FOR_GPT.md

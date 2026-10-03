@@ -354,3 +354,12 @@
 - 建立 `research/final_evidence/FINAL_EVIDENCE_LEDGER.md`，逐项记录 claim、experiment、dataset、seed 数、effect size、status、confound 与 main-paper permission。
 - 生成保守的四项 `PAPER_CLAIMS.md`、六组 CSV/Markdown 论文表、`OLD_MANUSCRIPT_AUDIT.md`、十节 `MANUSCRIPT_BLUEPRINT.md` 和 `GPT_MANUSCRIPT_HANDOFF.md`。
 - 旧稿保持不变。仓库入口已更新到 final evidence，项目状态为 `manuscript_reconstruction`；完整论文尚未撰写，Phase 2H 仍被禁止。
+
+## [2026-10-03] Phase 3A offline safe-distillation diagnostic completion
+
+- 先锁定并推送 protocol commit `80904d5`，远端 4 项 quadratic/HVP/leakage tests 全部通过；WT2-J real-model smoke 验证 31.43M student 全参数 FP32 HVP 可在 RTX 3090 完成且 checkpoint hash 不变。
+- 197 四卡并行完成 21/21 正式 condition JSON。train probe 为前 32 个 train chunks，FP32 microbatch=2；calibration seeds 为 314159/271828/161803，每个 subset 两个 validation chunks。无 test dataset construction、AMP、damping、finite-difference model HVP 或 last-layer fallback。
+- `diagnostics_blinded.csv` 先生成并以 SHA256 `594ac6d4...d9ad` 固化、提交、推送；随后 endpoint merger 验证 hash 后才生成 `diagnostics_with_endpoints.csv`。
+- first-order 与 quadratic signs 在全部 63 行完全重合，且 seed-level Spearman/AUROC/sign accuracy 均相同。二者正确判断 family-mean PTB、TinyStories、WT2 A、WT2 T，但误判正迁移的 WT2 J、G、TT。
+- first/second order 仅 11/21 seed rows 跨 calibration subsets 同号。nominal virtual step 虽无 harmful false positive，却将 9/15 positive seed rows 判为 harm；literal scheduler step 的 lr=0 曲线全部严格平坦。
+- 完成四组 PDF/300-dpi PNG 图、condition/family summaries、predictor metrics、REPORT、GPT handoff 与 provenance。终止码 `STOP_NEW_METHOD_DIAGNOSTIC_FAILED`；未启动 Phase 3B 或任何训练。
