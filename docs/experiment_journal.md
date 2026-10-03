@@ -347,3 +347,10 @@
 - `Delta_KD` 为 -0.107479/-0.107439/-0.106740，mean -0.107219、sample SD 0.000415、3/3 negative。预注册结论为 `CONFIRMED`。
 - 所有 endpoint 均有限。KD gradient norm 与 clipping 高于 CE，但 max overflow/non-finite 仅 0.000611，无数值失败。GPU-3 上受 `SW Power Cap` 影响的不完整 seed-456 尝试被排除；经授权在 GPU 1 从头重跑的 endpoint 为唯一有效结果。
 - compact evidence 位于 `research/experiments/phase2g_tinystories_negative_transfer/`。实验现已冻结，下一阶段仅为 manuscript reconstruction，不启动 Phase 2H。
+
+## [2026-10-03] Final evidence ledger and manuscript preparation
+
+- 本阶段未运行实验，只读取冻结的 Phase 2A--2G 产物、PTB benchmark JSON 与旧 CAC tex。
+- 建立 `research/final_evidence/FINAL_EVIDENCE_LEDGER.md`，逐项记录 claim、experiment、dataset、seed 数、effect size、status、confound 与 main-paper permission。
+- 生成保守的四项 `PAPER_CLAIMS.md`、六组 CSV/Markdown 论文表、`OLD_MANUSCRIPT_AUDIT.md`、十节 `MANUSCRIPT_BLUEPRINT.md` 和 `GPT_MANUSCRIPT_HANDOFF.md`。
+- 旧稿保持不变。仓库入口已更新到 final evidence，项目状态为 `manuscript_reconstruction`；完整论文尚未撰写，Phase 2H 仍被禁止。

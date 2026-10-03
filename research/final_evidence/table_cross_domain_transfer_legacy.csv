@@ -1,0 +1,2 @@
+dataset,seeds,protocol,ws_ce_nll,ws_kd_nll,kd_gain_nll,ws_ce_ppl,ws_kd_ppl,status,main_table_eligible,confound,source
+CodeParrot_common_5k,1,legacy_batch_normalized_winner,1.980364,1.792055,0.188309,7.2454,6.0018,EXPLORATORY,no,single_seed_legacy_loss_and_winner_selection,research/experiments/phase2_teacher_transfer_audit

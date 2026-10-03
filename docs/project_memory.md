@@ -258,3 +258,10 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - teacher 比三个 matched CE endpoint 分别差 0.021960/0.021422/0.019714 NLL。该结果是 domain- and protocol-specific boundary，不是普适 KD 结论，也不是 Grassmann-specific mechanism。
 - 所有 endpoint 均有限。KD clipping 明显高于 CE 但未饱和，max overflow/non-finite 为 0.000611。无效的不完整 GPU-3 seed-456 尝试被排除，仅使用授权后在 GPU 1 从头完成的 retry。
 - 项目状态为 `experiments_frozen_manuscript_rewrite_next`。不得启动 Phase 2H；下一任务是基于已验证证据重构论文。
+
+## 29. 2026-10-03 final evidence package
+
+- 实验继续冻结，没有启动 Phase 2H 或任何训练。`research/final_evidence/` 成为论文重构的 authoritative evidence layer。
+- 三域 confirmatory gain 为 PTB `+0.144937±0.003938`、WT2 `+0.155665±0.007692`、TinyStories `-0.107219±0.000415` NLL，每个数据集均 3/3 同号。CodeParrot 被单独标为 single-seed legacy observation。
+- 最终四项主张围绕 transfer boundary、fixed-composition teacher state、global likelihood insufficiency 与 ensemble control。Phase 2F 正式删除 Grassmann-specific KD、Plücker causality 和 heterogeneity superiority。
+- 旧 CAC tex 未修改；逐段审计、主张集、六组表格、十节蓝图与 GPT handoff 已生成。项目状态更新为 `manuscript_reconstruction`，等待明确授权后再写完整论文。

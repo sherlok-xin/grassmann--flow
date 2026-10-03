@@ -657,3 +657,15 @@ The frozen teacher test NLL is 1.603229. Teacher residual advantage is negative 
 All endpoints and gradient records are finite. KD mean gradient norm is 0.974--0.981 and mean clipping fraction is 0.237--0.283, both higher than CE; maximum overflow/non-finite fraction is 0.000611. This optimization difference must be disclosed, but the runs are neither clip-saturated nor numerically failed. The incomplete GPU-3 seed-456 attempt was excluded because of a persistent software power cap; after explicit approval, an otherwise identical from-scratch GPU-1 retry completed and is the accepted endpoint.
 
 The allowed claim is limited to stable negative transfer for the frozen TinyStories teacher, warm start, `lambda=5`, and `T=2` protocol. It is not a universal KD claim and does not restore any Grassmann-specific mechanism claim. Complete artifacts are under `research/experiments/phase2g_tinystories_negative_transfer/`. The project state is `experiments_frozen_manuscript_rewrite_next`; no Phase 2H may be launched.
+
+## 24. Final Evidence Package and Manuscript Reconstruction State
+
+No experiment was launched after Phase 2G. The project evidence was consolidated under `research/final_evidence/`, and that directory is now the authoritative bridge from experiments to the future manuscript. `FINAL_EVIDENCE_LEDGER.md` maps every major claim to its experiment, dataset, seed count, exact effect, status, confound, and main-paper permission. `PAPER_CLAIMS.md` freezes four conservative central claims. `OLD_MANUSCRIPT_AUDIT.md` classifies the current CAC source by line range without modifying it, and `MANUSCRIPT_BLUEPRINT.md` specifies the ten-section reconstruction.
+
+The confirmatory cross-domain table contains only matched token-mean three-seed results: PTB gain `+0.144937±0.003938` NLL, WikiText-2 `+0.155665±0.007692`, and TinyStories `-0.107219±0.000415`, all with 3/3 sign consistency. CodeParrot common-5k is separated as a one-seed legacy batch-normalized observation.
+
+The final narrative is teacher distillability under warm-start KD. Phase 2D supports a fixed-composition teacher-state effect (`Q=+0.183319±0.001375`). Phase 2C contradicts the universal rule that a globally worse teacher must transfer negatively, because the alpha-0.0 condition gives mean gain `+0.040991` with 3/3 positive signs. Phase 2F contradicts a Grassmann-specific or heterogeneity-superiority claim because TT beats TG by mean `0.012460` NLL for all three students.
+
+The main manuscript must not claim Plücker-geometry causality, Grassmann-specific KD advantage, heterogeneous-ensemble superiority, strong branch-JSD mechanism, successful CRBD, warm-start necessity, or unique Grassmann efficiency. The PTB efficiency result remains a secondary, hardware-specific operating-point analysis. The old file `论文投稿/cac/conference_101719.tex` is unchanged and must be preserved as an archival source.
+
+Project status is now `manuscript_reconstruction`. The next action requires explicit authorization to write a new full manuscript from the final evidence package. Experiments remain frozen, and Phase 2H is prohibited.

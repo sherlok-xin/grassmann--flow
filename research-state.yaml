@@ -1,19 +1,22 @@
 schema_version: 1
 updated: "2026-10-03"
-status: experiments_frozen_manuscript_rewrite_next
-phase: phase2g_tinystories_negative_transfer_complete
+status: manuscript_reconstruction
+phase: final_evidence_package_complete
 objective: >-
   Preserve the frozen evidence for domain-dependent knowledge-distillation
   transfer and reconstruct the manuscript without a Grassmann-specific KD
   mechanism claim.
-primary_metric: test_ppl
-selection_metric: validation_ppl
+primary_metric: paired_test_nll_gain
+selection_metric: validation_nll
 secondary_metrics:
   - parameter_count
   - batch_latency_ms
   - tokens_per_second
   - peak_memory_gb
 constraints:
+  - experiments_frozen_no_new_training
+  - do_not_launch_phase2h
+  - final_evidence_ledger_is_authoritative
   - heavy_training_remote_only_10_42_0_197
   - smoke_before_full_run
   - do_not_modify_datasets_or_checkpoints
@@ -26,6 +29,10 @@ current_baselines:
   matched_ptb_token_kd_mean_ppl: 51.2859
   matched_tinystories_ce_seed42_ppl: 4.8611
   matched_tinystories_token_kd_seed42_ppl: 5.4127
+  matched_wt2_ce_mean_nll: 4.276364
+  matched_wt2_token_kd_mean_nll: 4.120699
+  matched_tinystories_ce_mean_nll: 1.582197
+  matched_tinystories_token_kd_mean_nll: 1.689416
 hypotheses:
   H0:
     title: Token-normalized KD is required for comparable distillation strength
@@ -43,13 +50,15 @@ hypotheses:
     title: TinyStories warm-start KD negative transfer is robust to independent student initialization
     status: confirmed_three_of_three_seeds
 next_action: >-
-  Reconstruct the manuscript from the frozen evidence. Do not launch Phase 2H
-  or any additional experiment without a new explicit authorization and
-  preregistration.
+  Await explicit authorization to write the full manuscript from
+  research/final_evidence. Preserve the old CAC source as an archival record;
+  do not launch Phase 2H or any additional experiment.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
 resolved_protocol:
+  - date: "2026-10-03"
+    issue: The final evidence ledger, conservative four-claim set, manuscript tables, old-manuscript audit, and reconstruction blueprint were completed. The authoritative narrative removes Grassmann-specific KD, Plucker-causality, heterogeneity-superiority, strong-JSD, and successful-CRBD claims.
   - date: "2026-10-03"
     issue: Phase 2G confirmed TinyStories warm-start KD negative transfer across independent seeds 42/123/456. Delta_KD was negative for all three (mean -0.107219 NLL, sample SD 0.000415); experiments are now frozen and manuscript rewrite is next.
   - date: "2026-09-30"
@@ -107,4 +116,10 @@ artifacts:
   phase2g_report: research/experiments/phase2g_tinystories_negative_transfer/REPORT.md
   phase2g_results: research/experiments/phase2g_tinystories_negative_transfer/results_multiseed.csv
   phase2g_gpt_handoff: research/experiments/phase2g_tinystories_negative_transfer/GPT_HANDOFF.md
+  final_evidence_ledger: research/final_evidence/FINAL_EVIDENCE_LEDGER.md
+  final_paper_claims: research/final_evidence/PAPER_CLAIMS.md
+  old_manuscript_audit: research/final_evidence/OLD_MANUSCRIPT_AUDIT.md
+  manuscript_blueprint: research/final_evidence/MANUSCRIPT_BLUEPRINT.md
+  manuscript_gpt_handoff: research/final_evidence/GPT_MANUSCRIPT_HANDOFF.md
+  final_manuscript_tables: research/final_evidence/table_*.csv and table_*.md
   gpt_entrypoint: PROJECT_OVERVIEW_FOR_GPT.md
