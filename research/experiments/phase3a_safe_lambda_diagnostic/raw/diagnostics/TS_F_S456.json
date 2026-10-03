@@ -1,0 +1,330 @@
+{
+  "calibration_subsets": {
+    "161803": {
+      "indices": [
+        7920,
+        3264
+      ],
+      "kd_curvature_c": 0.9794491196424454,
+      "lambda_safe": 876.5360082790194,
+      "lambda_safe_status": "finite_positive_upper_crossing",
+      "mixed_curvature_b": 0.026496816260240655,
+      "predicted_delta_v_quad_lambda5": -2.1340629401139415e-05,
+      "predicted_gain_quad_lambda5": 2.1340629401139415e-05,
+      "predicted_quad_sign_lambda5": "beneficial",
+      "student_validation_nll": 1.9559553265571594,
+      "teacher_residual_advantage": 0.002973616123199463,
+      "teacher_validation_nll": 1.95298171043396,
+      "validation_gradient_norm": 1.8508321675272896,
+      "validation_kd_cosine": 0.03237914420362252,
+      "validation_kd_dot_a": 0.04292877076381547
+    },
+    "271828": {
+      "indices": [
+        668,
+        25188
+      ],
+      "kd_curvature_c": 0.5675291410411851,
+      "lambda_safe": null,
+      "lambda_safe_status": "no_positive_local_safe_interval",
+      "mixed_curvature_b": 0.027006423058337656,
+      "predicted_delta_v_quad_lambda5": 2.272166593094842e-05,
+      "predicted_gain_quad_lambda5": -2.272166593094842e-05,
+      "predicted_quad_sign_lambda5": "harmful",
+      "student_validation_nll": 1.7349974513053894,
+      "teacher_residual_advantage": 0.028654098510742188,
+      "teacher_validation_nll": 1.7063433527946472,
+      "validation_gradient_norm": 1.7103717669591967,
+      "validation_kd_cosine": -0.0369725704329868,
+      "validation_kd_dot_a": -0.04529874893433071
+    },
+    "314159": {
+      "indices": [
+        3852,
+        36229
+      ],
+      "kd_curvature_c": 0.6608143232855881,
+      "lambda_safe": null,
+      "lambda_safe_status": "no_positive_local_safe_interval",
+      "mixed_curvature_b": 0.03158147990703728,
+      "predicted_delta_v_quad_lambda5": 1.958652836291195e-05,
+      "predicted_gain_quad_lambda5": -1.958652836291195e-05,
+      "predicted_quad_sign_lambda5": "harmful",
+      "student_validation_nll": 1.8457684516906738,
+      "teacher_residual_advantage": 0.004841208457946777,
+      "teacher_validation_nll": 1.840927243232727,
+      "validation_gradient_norm": 1.7242066330277281,
+      "validation_kd_cosine": -0.03157995705386737,
+      "validation_kd_dot_a": -0.0390046949970118
+    }
+  },
+  "condition": {
+    "condition_id": "TS_F_S456",
+    "dataset": "tinystories",
+    "family": "TinyStories_fused",
+    "student_seed": 456
+  },
+  "manifest": {
+    "amp": false,
+    "calibration_examples_per_subset": 2,
+    "calibration_seeds": [
+      314159,
+      271828,
+      161803
+    ],
+    "clip_norm": 1.0,
+    "condition_id": "TS_F_S456",
+    "created_at_utc": "2026-10-03T06:00:16.211975+00:00",
+    "dataset": "tinystories",
+    "eta": 0.0001,
+    "formal_total_training_steps": 81890,
+    "formal_warmup_steps": 4094,
+    "fp32": true,
+    "full_parameter_gradients": true,
+    "lambda_grid": [
+      0.0,
+      0.5,
+      1.0,
+      2.5,
+      5.0,
+      10.0
+    ],
+    "literal_first_step_lr": 0.0,
+    "performs_persistent_training": false,
+    "phase": "Phase 3A authorized post-freeze offline diagnostic",
+    "saves_virtual_states": false,
+    "student_checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260930_085713_phase2g_ts_s0_seed456_e20/checkpoints/hybrid_best.pt",
+    "student_checkpoint_sha256_after": "6eaa7b735ee425e98711103b594e68709cc94359cbfbddbe0eb9a87795c6fbc7",
+    "student_checkpoint_sha256_before": "6eaa7b735ee425e98711103b594e68709cc94359cbfbddbe0eb9a87795c6fbc7",
+    "student_parameter_count": 31434257,
+    "student_run_dir": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260930_085713_phase2g_ts_s0_seed456_e20",
+    "teacher_checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260515_022710_ts_latefusion_last1_joint_e10/checkpoints/hybrid_best.pt",
+    "teacher_checkpoint_alpha": [
+      0.5994059443473816
+    ],
+    "teacher_checkpoint_sha256_after": "db9ffda81d1f95ebc3f3d5967e3121b1c6dd859104c9c47cc80b0bab1fcaedfb",
+    "teacher_checkpoint_sha256_before": "db9ffda81d1f95ebc3f3d5967e3121b1c6dd859104c9c47cc80b0bab1fcaedfb",
+    "teacher_effective_alpha": [
+      0.5994059443473816
+    ],
+    "teacher_run_dir": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260515_022710_ts_latefusion_last1_joint_e10",
+    "teacher_type": "tg",
+    "temperature": 2.0,
+    "train_dataset_stats": {
+      "char_count": 268845044,
+      "dataset_name": "tinystories",
+      "dataset_path": "/workspace/grassmannflows/datasets/tinystories_saved",
+      "encode_chars_per_batch": 200000,
+      "max_lines": 300000,
+      "max_seq_len": 256,
+      "non_empty_lines": 300000,
+      "num_chunks": 262036,
+      "source": "disk",
+      "split": "train",
+      "split_seed": 42,
+      "text_field": "text",
+      "tinystories_val_frac": 0.02,
+      "token_count_before_trim": 67081279
+    },
+    "train_microbatch_size": 2,
+    "train_probe_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "train_probe_size": 32,
+    "uses_test_data": false,
+    "validation_dataset_stats": {
+      "char_count": 37838618,
+      "dataset_name": "tinystories",
+      "dataset_path": "/workspace/grassmannflows/datasets/tinystories_saved",
+      "encode_chars_per_batch": 200000,
+      "max_lines": 300000,
+      "max_seq_len": 256,
+      "non_empty_lines": 42391,
+      "num_chunks": 36876,
+      "source": "disk",
+      "split": "validation",
+      "split_seed": 42,
+      "text_field": "text",
+      "tinystories_val_frac": 0.02,
+      "token_count_before_trim": 9440302
+    },
+    "weight_decay": 0.01
+  },
+  "training_probe": {
+    "g_c_norm": 0.4508375141102853,
+    "g_d_norm": 0.7163347877773747,
+    "train_ce": 1.6487052142620087,
+    "train_ce_kd_cosine": 0.0841213839611801,
+    "train_ce_kd_dot": 0.02716705100183634,
+    "train_kl_token_mean": 1.0426824539899826
+  },
+  "virtual_step_curves": {
+    "literal_scheduler_step": [
+      {
+        "calibration_nll": {
+          "161803": 1.9559553265571594,
+          "271828": 1.7349974513053894,
+          "314159": 1.8457684516906738
+        },
+        "clipped": false,
+        "lambda": 0.0,
+        "lr_used": 0.0,
+        "preclip_grad_norm": 0.45083752274513245
+      },
+      {
+        "calibration_nll": {
+          "161803": 1.9559553265571594,
+          "271828": 1.7349974513053894,
+          "314159": 1.8457684516906738
+        },
+        "clipped": false,
+        "lambda": 0.5,
+        "lr_used": 0.0,
+        "preclip_grad_norm": 0.5989201664924622
+      },
+      {
+        "calibration_nll": {
+          "161803": 1.9559553265571594,
+          "271828": 1.7349974513053894,
+          "314159": 1.8457684516906738
+        },
+        "clipped": false,
+        "lambda": 1.0,
+        "lr_used": 0.0,
+        "preclip_grad_norm": 0.8779088854789734
+      },
+      {
+        "calibration_nll": {
+          "161803": 1.9559553265571594,
+          "271828": 1.7349974513053894,
+          "314159": 1.8457684516906738
+        },
+        "clipped": true,
+        "lambda": 2.5,
+        "lr_used": 0.0,
+        "preclip_grad_norm": 1.8831322193145752
+      },
+      {
+        "calibration_nll": {
+          "161803": 1.9559553265571594,
+          "271828": 1.7349974513053894,
+          "314159": 1.8457684516906738
+        },
+        "clipped": true,
+        "lambda": 5.0,
+        "lr_used": 0.0,
+        "preclip_grad_norm": 3.6473708152770996
+      },
+      {
+        "calibration_nll": {
+          "161803": 1.9559553265571594,
+          "271828": 1.7349974513053894,
+          "314159": 1.8457684516906738
+        },
+        "clipped": true,
+        "lambda": 10.0,
+        "lr_used": 0.0,
+        "preclip_grad_norm": 7.215271949768066
+      }
+    ],
+    "nominal_lr_sensitivity": [
+      {
+        "calibration_nll": {
+          "161803": 1.955487608909607,
+          "271828": 1.734311580657959,
+          "314159": 1.8443613052368164
+        },
+        "clipped": false,
+        "lambda": 0.0,
+        "lr_used": 0.0001,
+        "preclip_grad_norm": 0.45083752274513245
+      },
+      {
+        "calibration_nll": {
+          "161803": 1.954634964466095,
+          "271828": 1.7379736304283142,
+          "314159": 1.8480814695358276
+        },
+        "clipped": false,
+        "lambda": 0.5,
+        "lr_used": 0.0001,
+        "preclip_grad_norm": 0.5989201664924622
+      },
+      {
+        "calibration_nll": {
+          "161803": 1.9550898671150208,
+          "271828": 1.7397366166114807,
+          "314159": 1.8504567742347717
+        },
+        "clipped": false,
+        "lambda": 1.0,
+        "lr_used": 0.0001,
+        "preclip_grad_norm": 0.8779088854789734
+      },
+      {
+        "calibration_nll": {
+          "161803": 1.956170380115509,
+          "271828": 1.7415123581886292,
+          "314159": 1.853142261505127
+        },
+        "clipped": true,
+        "lambda": 2.5,
+        "lr_used": 0.0001,
+        "preclip_grad_norm": 1.8831322193145752
+      },
+      {
+        "calibration_nll": {
+          "161803": 1.9566175937652588,
+          "271828": 1.7421253323554993,
+          "314159": 1.854078471660614
+        },
+        "clipped": true,
+        "lambda": 5.0,
+        "lr_used": 0.0001,
+        "preclip_grad_norm": 3.6473708152770996
+      },
+      {
+        "calibration_nll": {
+          "161803": 1.956784188747406,
+          "271828": 1.7424543499946594,
+          "314159": 1.8545331358909607
+        },
+        "clipped": true,
+        "lambda": 10.0,
+        "lr_used": 0.0001,
+        "preclip_grad_norm": 7.215271949768066
+      }
+    ]
+  }
+}
