@@ -1,0 +1,21 @@
+{
+  "dataset": "fineweb",
+  "seed": 456,
+  "s0_sha256": "e63284985be6e3fd78c96a6fed27728e1d27def0e6f7bb8b6bf81d11a3733d12",
+  "teacher_sha256": "c7411708b61e6524ef05bd24e9e618f19fcc119e9a3c0664c5f4f169dbf16928",
+  "s0_validation_nll": 2.96755394287309,
+  "teacher_validation_nll": 2.74748592931419,
+  "teacher_residual_advantage_over_s0": 0.22006801355890016,
+  "probe": "first matched continuation global batch, 32 x 256 targets, full student parameter gradients",
+  "ce": 2.8351441025733948,
+  "scaled_kl_T2": 1.3848663866519928,
+  "gradient_norm_ce": 0.990355248195178,
+  "gradient_norm_kd_unweighted": 2.4392258640193933,
+  "gradient_ratio_kd_over_ce": 2.4629807015862593,
+  "gradient_ratio_lambda1_kd_over_ce": 2.4629807015862593,
+  "gradient_ratio_lambda5_kd_over_ce": 12.314903507931296,
+  "gradient_ratio_ce_over_lambda1_kd": 0.4060121134347336,
+  "gradient_ratio_ce_over_lambda5_kd": 0.08120242268694672,
+  "no_optimizer_step": true,
+  "test_access": false
+}

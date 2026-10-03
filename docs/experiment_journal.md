@@ -386,3 +386,13 @@
 - 在 parent e4b9878f50afb21cc8d05a2e3bfa149897b075f7 后获 FineWeb-only 多 seed 确认授权，新增 seeds123/456，不重跑42/teacher。现有197四张3090读取时均空闲，不修改其他用户任务。
 - 3项新 source-equivalence/selection/decision 测试与4项旧核心数值测试通过；输入哈希与论文/final_evidence锁定。disposable2-step fullbatch BF16 KD smoke PASS，无 test/model-state write，teacher哈希不变。
 - 预注册 exact budget/selection/primary Gain 和 secondary best_including_S0；单独8run共80M targets。报告必保留 saturated clipping warnings、S0→CE变化和 teacher/pretraining/optimizer confounds。任何数值失败不调参/静默重试，完成后STOP。
+
+## [2026-10-04] Phase 4B final completion and freeze
+
+- 197远端launcher587220正常完成八个10M-target正式run和selected-state test evaluation，输出 PHASE4B_TRAINING_AND_TEST_COMPLETE。无重跑42/teacher/TinyStories，无lambda/clip/AMP/预算/选择变化。Git始终在本机执行。
+- Primary Gain1 mean -0.013550460935、sample SD0.003542273400；Gain5 mean -0.043924082202、sample SD0.004016675497。分别3/3 negative，6/6 validation/test方向一致。按用户规则决策 FINEWEB_L1_L5_NEGATIVE_REPLICATED，同时满足lambda5-only flag。
+- 原adapted S0允许为step0的validation-only选择在新test前序列化，9/9返回S0；source artifact SHA256 943442b28bd90f2cbd31fb0a0337b7a31c169446a021e9007c015073558580f5。c89cf5b随后归档选择，不把Git时间错误描述成先于所有in-flight test。诊断Gain1/Gain5均0，主endpoint不变。
+- CE→S0 test deterioration为 +0.005562117276/+0.005268004845/+0.012924411904，三seed全正。负KD发生在进一步CE本身没有held-out benefit的continuation regime，不能泛化成modern KD普遍失败。
+- 所有lambda5全程clip=1.0，永久warning；lambda1 clipping约0.7985–0.8542；observed nonfinite/overflow全0。CE456有限梯度尖峰86.48发生于step711，而primary选中step256；保留未知后续trajectory/selection影响，不调参/排除/补跑。
+- Collector、final read-only audit均通过，生成主/诊断/optimization/statistics/state CSV、raw summaries/压缩step telemetry、完整报告handoff与两组PDF/300-dpiPNG图。图形检查修正长ylabel裁切，不改变数据。
+- 论文/final_evidence aggregate与parent e4b9878一致；Phase4A目录和Phase4B锁定训练源码保持不变。项目设为 experiments_frozen_phase4b_complete，提交compact artifacts后STOP，不自动启动后续实验。

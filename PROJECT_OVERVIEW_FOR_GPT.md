@@ -2,18 +2,22 @@
 
 ## Authoritative entry point
 
-Current authorized work: Phase4B FineWeb-Edu replication only, independent
-student seeds123/456 with the unchanged Phase4A adapted teacher/data and reused
-seed42 results. It is RUNNING, not complete. Read
+Latest result: Phase 4B FineWeb-Edu replication is COMPLETE and STOPPED.
+Independent student seeds123/456 reused the unchanged Phase4A teacher/data;
+seed42 was not rerun. Read
 `research/experiments/phase4b_fineweb_multiseed_replication/GPT_HANDOFF.md`
-and `experiment_plan.md`. No TinyStories replication, lambda/clip change,
-new method or manuscript/evidence edit is authorized. Complete the eight
-bounded runs and diagnostic/primary audit, then STOP. The Phase4A paragraph
-below records its earlier stop boundary, now superseded only for Phase4B.
+and `REPORT.md`. Decision FINEWEB_L1_L5_NEGATIVE_REPLICATED: lambda1/lambda5
+test gains are -0.013550±0.003542 / -0.043924±0.004017 NLL (mean/sample SD),
+both 3/3 negative with validation/test agreement. All9/9 best_including_S0
+choices select S0, while further CE itself harms held-out likelihood. Keep
+CLIP_SATURATION_WARNING for all lambda5 arms and the CE456 gradient-event
+disclosure. These are bounded continuation-regime results, not universal
+modern KD failure or clipping causality. No further training, control,
+new method or manuscript/evidence edit is authorized.
 
 The authorized Phase 4A modern external-validity pilot is complete and STOPPED.
 Read `research/experiments/phase4a_modern_generalization_pilot/GPT_HANDOFF.md`
-and `REPORT.md` for the latest result: FineWeb-Edu lambda5 has seed42 test
+and `REPORT.md` for the earlier pilot: FineWeb-Edu lambda5 has seed42 test
 gain -0.046403663516, meeting the pilot replication gate, with permanent
 CLIP_SATURATION_WARNING. TinyStories effects are below the clear-effect
 threshold. No independent-seed replication is authorized. Phase 3A remains
@@ -75,7 +79,7 @@ The PTB teacher, quality student, and efficiency student have `36.264M`, `31.434
 
 ## Reading order
 
-For the latest pilot, read the Phase 4A handoff/report and then
+For the latest modern replication, read the Phase 4B handoff/report and then
 `AI_RESEARCH_HANDOFF.md`. The following order concerns the immutable legacy
 manuscript-evidence package only; do not mix its confirmatory endpoints with
 the modern single-seed pilot.

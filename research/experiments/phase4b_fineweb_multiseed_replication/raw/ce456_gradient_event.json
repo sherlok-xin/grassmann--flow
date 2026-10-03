@@ -1,0 +1,26 @@
+{
+  "warning": "CE456_GRADIENT_SPIKE_WARNING",
+  "analysis_type": "post_run_read_only_telemetry_QA_not_a_new_gate",
+  "seed": 456,
+  "arm": "ce",
+  "event_step": 711,
+  "event_tokens": 5824512,
+  "event_ce": 2.787736654281616,
+  "event_gradient_norm_preclip": 86.4821548461914,
+  "event_clipped": true,
+  "event_lr": 0.00002034744981752741,
+  "selected_primary_step": 256,
+  "event_after_selected_state": true,
+  "norms_above_2_count": 1,
+  "neighbor_gradient_norms": {
+    "709": 0.9837732315063477,
+    "710": 0.9970890879631042,
+    "712": 1.0251940488815308,
+    "713": 0.9144176840782166
+  },
+  "matched_seed123_step711_gradient_norm": 0.9595311284065247,
+  "nonfinite_fraction": 0.0,
+  "cause": "UNKNOWN_not_attributed_to_data_hardware_or_clipping",
+  "primary_endpoint_changed": false,
+  "note": "The saved step256 weights precede this event. An effect on later trajectory and checkpoint selection cannot be isolated without further controls, which are not authorized."
+}

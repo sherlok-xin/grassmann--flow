@@ -4,8 +4,9 @@ import gzip
 import hashlib
 import json
 import math
+import statistics
 from pathlib import Path
-from selection import including_s0
+from selection import including_s0, decisions
 
 ART=Path(__file__).resolve().parents[1]
 ROOT=ART.parents[2]
@@ -85,10 +86,29 @@ def main():
     assert len(set(s0_hashes))==len(set(preparation_orders))==3
     assert len(set(continuation_orders))==1
     assert counts=={'reused_runs':4,'new_runs':8,'new_target_tokens':80_000_000}
+    stats=list(csv.DictReader((ART/'summary_statistics.csv').open()))
+    for row in stats:
+        values=[float(r[row['metric']]) for r in results]
+        assert float(row['mean'])==statistics.mean(values)
+        assert float(row['sample_sd'])==statistics.stdev(values)
+        assert int(row['negative_signs'])==sum(v<0 for v in values)
+        assert int(row['positive_signs'])==sum(v>0 for v in values)
+    flags=decisions([float(r['Gain_1']) for r in results],
+                    [float(r['Gain_5']) for r in results],
+                    [r['gain5_validation_test_agrees']=='True' for r in results])
+    decision=json.loads((ART/'decision.json').read_text())
+    assert decision['flags']==flags and decision['decision']==flags[-1]
+    assert decision['best_including_s0_count']==sum(int(r['selected_step'])==0 for r in diagnostic)
+    event=json.loads((ART/'raw/ce456_gradient_event.json').read_text())
+    ce456=[json.loads(x) for x in (NEW/'456/ce/metrics.jsonl').read_text().splitlines()][1:]
+    peak=max(ce456,key=lambda r:r['gradient_norm_preclip'])
+    assert peak['step']==event['event_step'] and peak['gradient_norm_preclip']==event['event_gradient_norm_preclip']
+    assert sum(r['gradient_norm_preclip']>2 for r in ce456)==event['norms_above_2_count']
     result={'status':'PASS',**counts,'independent_adapted_s0_states':3,
             'matched_continuation_orders':True,'teacher_sha256':initial['teacher_sha256'],
             'data_unchanged':True,'frozen_evidence_unchanged':True,'manuscript_unchanged':True,
-            'validation_only_diagnostic_selection':True,'test_model_forwards':0}
+            'validation_only_diagnostic_selection':True,'paired_statistics_and_decision_verified':True,
+            'gradient_event_telemetry_verified':True,'test_model_forwards':0}
     (ART/'completed_run_audit.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result,indent=2),flush=True)
 

@@ -1,0 +1,19 @@
+{
+  "decision": "FINEWEB_L1_L5_NEGATIVE_REPLICATED",
+  "flags": [
+    "FINEWEB_L5_NEGATIVE_REPLICATED",
+    "FINEWEB_L1_L5_NEGATIVE_REPLICATED"
+  ],
+  "student_seeds": [
+    42,
+    123,
+    456
+  ],
+  "new_training_target_tokens": 80000000,
+  "new_formal_runs": 8,
+  "teacher_reused": true,
+  "primary_step0_eligible": false,
+  "best_including_s0_count": 9,
+  "best_including_s0_total_arms": 9,
+  "further_training_authorized": false
+}

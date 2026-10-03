@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "reused_runs": 4,
+  "new_runs": 8,
+  "new_target_tokens": 80000000,
+  "independent_adapted_s0_states": 3,
+  "matched_continuation_orders": true,
+  "teacher_sha256": "c7411708b61e6524ef05bd24e9e618f19fcc119e9a3c0664c5f4f169dbf16928",
+  "data_unchanged": true,
+  "frozen_evidence_unchanged": true,
+  "manuscript_unchanged": true,
+  "validation_only_diagnostic_selection": true,
+  "paired_statistics_and_decision_verified": true,
+  "gradient_event_telemetry_verified": true,
+  "test_model_forwards": 0
+}

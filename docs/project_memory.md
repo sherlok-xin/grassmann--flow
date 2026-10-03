@@ -299,3 +299,13 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - source-equivalence 测试证明新增 train.py 只替换 seeds/输出路径/CLI/共享模块引用，旧 train/core 未改。S0 preparation permutation 为对应 seed，continuation 固定4242，保持同 seed 三 arm matched。
 - 7项单测通过，teacher/data/frozen-evidence/论文 hashes 已锁定；完整 batch32 的 disposable BF16 KD smoke 有限，峰值5.062GiB，无 checkpoint 保存/test access。
 - 次级 best_including_S0 只用 validation 比较原 selected S0 与 trained selected endpoint，tie选step0，绝不替代主比较。协议须在正式训练前 commit/push。完成后 STOP。
+
+## 34. 2026-10-04 Phase 4B confirmed bounded modern negative transfer / STOP
+
+- Protocol commit 1a525c379d7b72e809847dfed6ef1bf71fd0fe50 在 formal 前推送。两个独立 S0 preparation 和六个 continuation 均完整完成，每 run10M targets，共80M；seed42、同一360M teacher、FineWeb token splits直接复用，无重训/retokenization。
+- Gain1 seeds42/123/456 为 -0.015718598299/-0.015470071017/-0.009462713488，mean -0.013550460935、sample SD0.003542273400；Gain5 为 -0.046403663516/-0.046078763438/-0.039289819652，mean -0.043924082202、sample SD0.004016675497。两种强度均3/3 negative、全部validation/test同向。决策 FINEWEB_L1_L5_NEGATIVE_REPLICATED。
+- Teacher residual validation/test mean为 +0.219866198612/+0.218703697246，但 CE 本身相对S0也3/3退化，test change mean +0.007918178008、SD0.004338019006。best_including_S0 的9/9 arm全部选原 adapted S0，诊断 Gain全为0，不替代主比较。必须明确这是进一步continuation本身不必要/有害的 regime。
+- 三个lambda5 clipping均1.0，永久 CLIP_SATURATION_WARNING。lambda1 clipping为0.850123/0.854218/0.798526，虽非全饱和仍频繁受限。所有 observed nonfinite/overflow为0，不能归因clipping causality。
+- CE456在step711出现一次finite norm86.482155，clip生效；selected CE是更早step256，因而saved weights不直接受该事件影响，但latertrajectory/selection影响未知。CE456_GRADIENT_SPIKE_WARNING保留，无改gate/exclusion/retry/新控制。
+- S0 prep selected256/256/1221，CE selected1221/1221/256，所有KD selected1221。Final audit PASS：独立S0/order hashes、matched continuation order、预算、选择、telemetry、teacher/data/论文/final_evidence哈希均通过。旧Phase4A源码和锁定Phase4B train/adapter源码未改。
+- 产物位于 research/experiments/phase4b_fineweb_multiseed_replication/，含完整报告/交接、主比较/step0/optimization/statistics CSV、raw compact telemetry及两组vectorPDF/300-dpiPNG图。状态 experiments_frozen_phase4b_complete；STOP，不运行任何clipping control或后续modern实验，不改论文。

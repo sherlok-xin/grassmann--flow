@@ -1,17 +1,39 @@
 # Grassmann / Transformer / Distillation Research Handoff
 
-## 2026-10-03 Phase 4B explicitly authorized — protocol locked
+## 2026-10-04 Phase 4B complete — both-strength negative replication / STOP
 
-The lead authorized only FineWeb-Edu replication with independently prepared
-student seeds123/456, reusing the frozen Phase4A adapted teacher, data and
-seed42 endpoints. Eight new10M-target runs, no coefficient/clipping changes,
-no TinyStories replication or new method. Read
-research/experiments/phase4b_fineweb_multiseed_replication/experiment_plan.md.
-Seven adapter/selection/decision/numerical tests, immutable-input preflight
-and disposable fullbatch KD smoke passed. No endpoint is available yet.
-best_including_S0 is validation-only diagnostic, not a replacement primary
-endpoint. Manuscript and final_evidence remain immutable. STOP after results;
-no automatic clipping control or further modern experiment.
+All eight new FineWeb-Edu runs finished: independent S0 preparations for
+seeds 123/456 plus six exact-S0 continuations, each exactly 10M targets. The
+Phase 4A teacher, data and seed42 endpoints were reused, not rerun. No
+coefficient, clipping or training/selection protocol change occurred.
+
+Decision FINEWEB_L1_L5_NEGATIVE_REPLICATED: Gain1 for seeds42/123/456 is
+-0.015718598299/-0.015470071017/-0.009462713488, mean -0.013550460935,
+sample SD 0.003542273400. Gain5 is
+-0.046403663516/-0.046078763438/-0.039289819652, mean -0.043924082202,
+sample SD 0.004016675497. Both are 3/3 negative with validation/test agreement
+for every pair. The FINEWEB_L5_NEGATIVE_REPLICATED flag is also satisfied.
+
+All9/9 validation-only best_including_S0 choices select the original adapted
+S0; diagnostic gains are zero without changing primary endpoints. CE itself
+degrades test NLL for all seeds (mean +0.007918178008). The negative KD
+boundary therefore occurs where further continuation itself offers no
+held-out benefit. Teacher validation/test advantage over S0 averages
++0.219866198612/+0.218703697246, but does not imply positive KD here.
+
+CLIP_SATURATION_WARNING applies to all lambda5 arms (fraction1.0); lambda1
+clips on 79.85–85.42% of steps, not full saturation. All observed nonfinite/
+overflow fractions are zero. CE456_GRADIENT_SPIKE_WARNING records a finite
+norm86.482155 at step711, after its selected step256 checkpoint; a later
+trajectory/selection effect is not isolated. Do not attribute cause or rerun.
+
+Read research/experiments/phase4b_fineweb_multiseed_replication/REPORT.md and
+GPT_HANDOFF.md, then primary/diagnostic/optimization CSVs and the completed
+audit (PASS). Three adapted-student seeds, one teacher/subset, pretraining
+overlap, selection, finite budget and clipping constrain generalization.
+The manuscript, final_evidence and Phase4A artifacts remain unchanged. Project
+status experiments_frozen_phase4b_complete. STOP; no clipping control, new
+modern experiment, method or manuscript writing is authorized.
 
 ## 2026-10-03 Phase 4A complete — modern negative-transfer pilot / STOP
 

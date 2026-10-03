@@ -56,7 +56,7 @@ for ax,split in zip(axs,['validation','test']):
     ax.set_xlabel('Student seed')
     ax.set_title(split.capitalize()+' endpoints',fontsize=11)
     ax.grid(axis='y',alpha=.15)
-axs[0].set_ylabel('Primary continuation NLL minus S0\nPositive = degradation')
+axs[0].set_ylabel('NLL change from S0\nPositive = degradation')
 axs[1].legend(loc='upper left',bbox_to_anchor=(1.02,1))
 fig.tight_layout()
 save(fig,'fig_continuation_regime')

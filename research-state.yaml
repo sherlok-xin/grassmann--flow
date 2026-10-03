@@ -1,13 +1,13 @@
 schema_version: 1
 updated: "2026-10-04"
-status: phase4b_training_complete_final_evaluation_running
-phase: phase4b_fineweb_multiseed_replication
-decision: PENDING_PHASE4B_ENDPOINTS
+status: experiments_frozen_phase4b_complete
+phase: phase4b_fineweb_multiseed_replication_complete
+decision: FINEWEB_L1_L5_NEGATIVE_REPLICATED
 training_authorized: false
 objective: >-
-  Replicate only FineWeb-Edu with independently prepared student seeds123/456,
-  reusing frozen Phase4A teacher/data/seed42 endpoints. Eight authorized 10M
-  target-token runs; preserve clipping and primary selection. STOP afterwards.
+  Phase4B is complete. Review protocol-bounded FineWeb negative transfer at
+  both strengths across three adapted-student seeds, persistent clipping and
+  the all-S0 early-stop diagnostic. No further training or manuscript edit.
 primary_metric: paired_test_nll_gain
 selection_metric: validation_nll
 secondary_metrics:
@@ -16,7 +16,7 @@ secondary_metrics:
   - tokens_per_second
   - peak_memory_gb
 constraints:
-  - phase4b_training_complete_only_fixed_final_evaluation_and_analysis_authorized
+  - experiments_frozen_phase4b_complete_no_new_training_or_control
   - do_not_launch_phase2h
   - final_evidence_ledger_is_authoritative
   - heavy_training_remote_only_10_42_0_197
@@ -25,7 +25,7 @@ constraints:
   - preserve_legacy_checkpoints_and_loss_mode
   - phase3a_terminal_no_further_diagnostic_or_method_work
   - phase3b_not_authorized
-  - phase4b_explicitly_authorized_seeds123_456_no_other_new_seed_or_dataset
+  - phase4b_authorized_seed_replication_complete_no_other_new_seed_or_dataset
   - phase4a_final_evidence_and_manuscript_immutable
 current_baselines:
   teacher_ptb_ppl: 50.1125
@@ -59,17 +59,19 @@ hypotheses:
     title: Validation-risk-aware local curvature at S0 predicts fixed-strength KD transfer
     status: contradicted_diagnostic_failed_no_increment_over_first_order
   H6:
-    title: Modern pretrained warm-start KD transfer depends on setting and strength
-    status: exploratory_seed42_fineweb_lambda5_negative_clip_saturated_replication_review_only
+    title: Frozen SmolLM2 FineWeb-Edu warm-start KD harms matched CE continuation
+    status: confirmed_fineweb_l1_l5_negative_three_seeds_fixed_protocol_clip_warning_all_s0_diagnostic
 next_action: >-
-  All eight authorized runs completed. Finish already-selected test evaluation,
-  collect primary and diagnostic results, audit hashes/budgets/statistics,
-  commit compact artifacts and STOP. Nine validation-only diagnostic choices
-  select S0; primary selection remains unchanged. No further training.
+  STOP. Read the Phase4B report and primary/diagnostic/optimization evidence.
+  Both strengths are 3/3 negative, but all9 diagnostic arms choose S0 and CE
+  itself harms likelihood. Retain clipping and CE456 gradient-event warnings.
+  No clipping control, further modern experiment, method or manuscript edit.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
 resolved_protocol:
+  - date: "2026-10-04"
+    issue: "Phase4B completed eight new10M-target runs (80M), with seed42/teacher/data reused. Gain1 mean -0.013550460935, sample SD 0.003542273400; Gain5 mean -0.043924082202, sample SD 0.004016675497; both3/3 negative with validation/test agreement. FINEWEB_L1_L5_NEGATIVE_REPLICATED. All9/9 best_including_S0 choices return S0; CE itself degrades test NLL. All lambda5 arms retain CLIP_SATURATION_WARNING. Finite CE456 step711 gradient spike disclosed after its selected step256. Final audit PASS. Training frozen; STOP."
   - date: "2026-10-03"
     issue: "Phase 4A completed ten seed42 formal runs, exactly 100M predicted targets. TinyStories gains lambda1/lambda5 are +0.004948632001/-0.004797389422; FineWeb-Edu gains are -0.015718598299/-0.046403663516. Only FineWeb lambda5 meets the preregistered gate. MODERN_REPLICATION_WORTHWHILE is a recommendation only; both lambda5 arms retain CLIP_SATURATION_WARNING. All optimization is finite; final audit PASS. No new training authorized."
   - date: "2026-10-03"
@@ -156,4 +158,14 @@ artifacts:
   phase4b_preflight: research/experiments/phase4b_fineweb_multiseed_replication/preflight_audit.json
   phase4b_smoke: research/experiments/phase4b_fineweb_multiseed_replication/smoke_audit.json
   phase4b_handoff: research/experiments/phase4b_fineweb_multiseed_replication/GPT_HANDOFF.md
+  phase4b_report: research/experiments/phase4b_fineweb_multiseed_replication/REPORT.md
+  phase4b_results: research/experiments/phase4b_fineweb_multiseed_replication/results_multiseed.csv
+  phase4b_statistics: research/experiments/phase4b_fineweb_multiseed_replication/summary_statistics.csv
+  phase4b_best_including_s0: research/experiments/phase4b_fineweb_multiseed_replication/best_including_s0.csv
+  phase4b_optimization: research/experiments/phase4b_fineweb_multiseed_replication/optimization_audit.csv
+  phase4b_selected_states: research/experiments/phase4b_fineweb_multiseed_replication/selected_state_manifest.csv
+  phase4b_audit: research/experiments/phase4b_fineweb_multiseed_replication/completed_run_audit.json
+  phase4b_decision: research/experiments/phase4b_fineweb_multiseed_replication/decision.json
+  phase4b_provenance: research/experiments/phase4b_fineweb_multiseed_replication/provenance.md
+  phase4b_figures: research/experiments/phase4b_fineweb_multiseed_replication/figures
   gpt_entrypoint: PROJECT_OVERVIEW_FOR_GPT.md
