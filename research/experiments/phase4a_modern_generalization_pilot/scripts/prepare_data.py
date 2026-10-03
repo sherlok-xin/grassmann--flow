@@ -99,7 +99,10 @@ def main(name):
     else:
         meta = json.loads((ART / 'fineweb_source_metadata.json').read_text())
         revision = meta['sha']
-        ds = load_dataset('HuggingFaceFW/fineweb-edu', 'sample-10BT', revision=revision, split='train', streaming=True,
+        # The mirror returns pagination links to the inaccessible main domain.
+        # Read the same pinned config's first shard directly, without repo listing.
+        source_url = f'https://hf-mirror.com/datasets/HuggingFaceFW/fineweb-edu/resolve/{revision}/sample/10BT/000_00000.parquet'
+        ds = load_dataset('parquet', data_files={'train': [source_url]}, split='train', streaming=True,
                           cache_dir=str(OUT / 'hf_metadata_cache'))
         for i, batch in enumerate(ds.iter(batch_size=64)):
             enc = tokenizer(batch['text'], add_special_tokens=False)['input_ids']
@@ -113,6 +116,9 @@ def main(name):
             if writer.counts == COUNTS:
                 break
         source = {'repo': 'HuggingFaceFW/fineweb-edu', 'revision': revision, 'config': 'sample-10BT',
+                  'source_shards': ['sample/10BT/000_00000.parquet'],
+                  'origin_url': source_url.replace('hf-mirror.com', 'huggingface.co'),
+                  'transport': 'direct pinned parquet streaming through hf-mirror; bypass unavailable listing pagination',
                   'order': 'pinned official streaming shard/row order, no shuffle',
                   'split': 'SHA256(document ID) modulo 22: 0..19 train, 20 validation, 21 test',
                   'deduplicate_text': True, 'pretraining_overlap': 'FineWeb-Edu included in SmolLM2 pretraining; exact overlap unknown'}

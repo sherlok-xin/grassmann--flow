@@ -1,0 +1,34 @@
+{
+  "source": {
+    "repo": "HuggingFaceFW/fineweb-edu",
+    "revision": "87f09149ef4734204d70ed1d046ddc9ca3f2b8f9",
+    "config": "sample-10BT",
+    "source_shards": [
+      "sample/10BT/000_00000.parquet"
+    ],
+    "origin_url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu/resolve/87f09149ef4734204d70ed1d046ddc9ca3f2b8f9/sample/10BT/000_00000.parquet",
+    "transport": "direct pinned parquet streaming through hf-mirror; bypass unavailable listing pagination",
+    "order": "pinned official streaming shard/row order, no shuffle",
+    "split": "SHA256(document ID) modulo 22: 0..19 train, 20 validation, 21 test",
+    "deduplicate_text": true,
+    "pretraining_overlap": "FineWeb-Edu included in SmolLM2 pretraining; exact overlap unknown"
+  },
+  "token_counts": {
+    "train": 20000000,
+    "validation": 1000000,
+    "test": 1000000
+  },
+  "documents": {
+    "train": 18926,
+    "validation": 875,
+    "test": 926
+  },
+  "packing": "concatenate documents with one EOS; no BOS; no added tokens",
+  "token_dtype": "little-endian uint32",
+  "sha256": {
+    "train": "bed0ede1aa50fa4465d951701fe642e9c4e7eec756be8adea234b4b052862aae",
+    "validation": "c8e1011d6e8d955a5c7fc5634bee2f520b9c221bd36d0026cbfb3cf78064e69b",
+    "test": "51edcd47566f8594c310d050d28bb8ce9b2136adaa0bb925e449d5a9dc34cc2c"
+  },
+  "document_order_sha256": "42d42b8936bd213e0ea830578675c95dee489b67e143fb4ab26caa4011ea7b9b"
+}

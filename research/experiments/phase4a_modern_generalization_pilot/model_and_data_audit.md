@@ -42,7 +42,17 @@ NLL values are not comparable with the old GPT2-tokenized experiment.
 FineWeb-Edu official sample-10BT revision and ODC-BY license are recorded in
 fineweb_source_metadata.json. Source URL:
 https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu . Token subset and
-document-order manifest will be produced only after Stage 1 completes.
+document-order manifest was produced after clean Stage 1 completion; see
+data_manifest_fineweb.json. It contains 20M/1M/1M tokens across
+18,926/875/926 documents. The official sample-10BT first-shard prefix is
+sufficient; only that shard's needed range data was streamed. Mirror directory
+pagination returned inaccessible main-domain links, so direct pinned Parquet
+streaming bypassed listing. No full 2.15GB shard was downloaded or saved.
+The official first shard reports LFS SHA256
+b1ba7b2ce4cb5ea6ef42dca40263eabb85f37700d01693a68e9b30a31d78e871
+and size 2,152,819,114 bytes. These identify the origin file; the entire-file
+hash is not claimed to have been verified from partial range reads. The
+materialized token-stream hashes identify the actual pilot inputs.
 
 Pretraining confounds: both official model cards list FineWeb-Edu among
 pretraining sources; exact document overlap is unknown. The 135M and 360M

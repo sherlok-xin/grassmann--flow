@@ -48,3 +48,29 @@ selected state hashes, optimization telemetry and validation selection steps.
 Test evaluator first verifies all five completed training summaries and the
 same S0 and continuation-order hashes across CE/KD, then evaluates only the
 fixed selected states. No test values influence model selection.
+
+TinyStories training completion: all five runs consumed exactly 10,000,000
+predicted targets. Selected continuation validation NLL was CE 1.5345059863,
+KD1 1.5301683804, KD5 1.5404909387, all at step 1221. KD5 clipping fraction
+was 1.0: `CLIP_SATURATION_WARNING`. This is a finite but optimization-constrained
+arm; its endpoint cannot be interpreted independently of sustained clipping.
+Lambda and clip value were not modified. CE/KD1 clipping fractions were
+0.0049140049 / 0.4799344799. Test evaluation follows the fixed selection.
+
+Stage 1 completed successfully before Stage 2 preparation. TinyStories final
+test CE/KD1/KD5 NLL is 1.5794294928 / 1.5744808608 / 1.5842268822;
+paired gains +0.0049486320 / -0.0047973894. Both validation/test directions
+agree but neither reaches abs(gain)>=0.02. Its standalone replication gate
+is STOP_MODERN_REPLICATION. FineWeb-Edu remains authorized as the second
+pilot; no training setting or token budget is changed after these results.
+
+Stage 2 data preparation: the mirror's repository listing returned absolute
+main-domain pagination links and timed out before reading any document. Only
+the verified owned preparation PID 578401 was terminated; no training or
+other user's process was stopped. Its empty token outputs were moved to
+fineweb_listing_failed_1. Direct streaming of the pinned official first
+sample-10BT Parquet shard then succeeded (byte-range test returned HTTP206
+and PAR1). This preserves the same official-config prefix and frozen document
+split rule while bypassing listing infrastructure. The 20M/1M/1M subset and
+20,727 ordered document records are frozen before FineWeb endpoint training.
+No complete large corpus file is materialized or committed.

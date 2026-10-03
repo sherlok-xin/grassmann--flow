@@ -15,7 +15,7 @@ def main(dataset):
     assert all(s['status'] == 'TRAIN_COMPLETE_VALIDATION_SELECTED' and s['consumed_target_tokens'] == 10_000_000 for s in summaries.values())
     assert len({summaries[a]['s0_sha256'] for a in ['ce', 'kd1', 'kd5']}) == 1
     assert len({summaries[a]['order_sha256'] for a in ['ce', 'kd1', 'kd5']}) == 1
-    result = {'dataset': dataset, 'seed': 42, 'arms': {}}
+    result = {'dataset': dataset, 'seed': 42, 'arms': {}, 'test_evaluation_completed': False}
     for arm in names:
         state = root / arm / 'selected.pt'
         assert sha(state) == summaries[arm]['selected_sha256']
@@ -38,6 +38,7 @@ def main(dataset):
         result['arms'][arm].update({'gain_test_nll': gain, 'gain_validation_nll': vg,
                                    'clear_effect': abs(gain) >= 0.02 and gain * vg > 0})
     result['numerically_valid'] = all(s['nonfinite_fraction'] == 0 for s in summaries.values())
+    result['test_evaluation_completed'] = True
     result['decision'] = 'MODERN_REPLICATION_WORTHWHILE' if result['numerically_valid'] and any(result['arms'][a]['clear_effect'] for a in ['kd1', 'kd5']) else 'STOP_MODERN_REPLICATION'
     (root / 'final_result.json').write_text(json.dumps(result, indent=2) + '\n')
     print(json.dumps(result, indent=2), flush=True)
