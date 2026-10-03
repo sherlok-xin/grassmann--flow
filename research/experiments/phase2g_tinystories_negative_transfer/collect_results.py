@@ -91,8 +91,13 @@ def validate_endpoint(run_dir, seed, kd_lambda, reference_config, s0_hash, teach
     check_equal(config["kd_lambda"], float(kd_lambda), f"endpoint seed {seed} lambda")
     check_equal(summary["kd_loss_mode"], "token_mean", f"endpoint seed {seed} loss mode")
     check_equal(summary["temperature"], 2.0, f"endpoint seed {seed} temperature")
-    check_equal(summary["student_init_checkpoint_sha256"], s0_hash,
-                f"endpoint seed {seed} S0 hash")
+    recorded_s0_hash = summary.get("student_init_checkpoint_sha256")
+    if recorded_s0_hash is None:
+        # The historical seed-42 runs predate the summary hash field. Verify the
+        # resolved initialization checkpoint recorded in config.json instead.
+        init_checkpoint = Path(payload["student_init"]["student_init_checkpoint"])
+        recorded_s0_hash = sha256(init_checkpoint)
+    check_equal(recorded_s0_hash, s0_hash, f"endpoint seed {seed} S0 hash")
     teacher_checkpoint = Path(payload["source_teacher"]["teacher_checkpoint"])
     check_equal(sha256(teacher_checkpoint), teacher_hash, f"endpoint seed {seed} teacher hash")
     checkpoint = run_dir / "checkpoints/student_best.pt"

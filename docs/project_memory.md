@@ -251,3 +251,10 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - 新 TT KD seeds 42/123/456 test NLL 为 4.094289/4.118854/4.111574；复用 TG 为 4.108241/4.130183/4.123673。`Gain_TT` mean 0.168125，`Gain_TG` mean 0.155665；`H=Gain_TG-Gain_TT` mean -0.012460、sample SD 0.001348、3/3 negative。
 - TT 早期 clipping 较高但不饱和，overflow/non-finite 与 TG 同量级且无 NaN。teacher validation NLL 差异方向一致，TT/TG alpha LR 又为 `1e-2`/`5e-3`，teacher quality/training 是主要混杂；参数量与 clipping 不提供 TT 获胜的明显正向解释。
 - 决策：Phase 2F 否定 TG 优于 homogeneous TT 的假设。Grassmann-specific KD mechanism claim 必须删除，Phase 2E 的 fused gain 降为 generic ensemble supervision/teacher-quality 证据。Phase 2G 对保留该主张没有必要，未启动。
+
+## 28. 2026-10-03 Phase 2G final boundary
+
+- TinyStories warm-start token-mean KD 在冻结的 `lambda=5`、`T=2` 协议下跨 seeds 42/123/456 稳定负迁移。`Delta_KD` 为 -0.107479/-0.107439/-0.106740，mean -0.107219、sample SD 0.000415、3/3 negative，因此预注册决策为 `CONFIRMED`。
+- teacher 比三个 matched CE endpoint 分别差 0.021960/0.021422/0.019714 NLL。该结果是 domain- and protocol-specific boundary，不是普适 KD 结论，也不是 Grassmann-specific mechanism。
+- 所有 endpoint 均有限。KD clipping 明显高于 CE 但未饱和，max overflow/non-finite 为 0.000611。无效的不完整 GPU-3 seed-456 尝试被排除，仅使用授权后在 GPU 1 从头完成的 retry。
+- 项目状态为 `experiments_frozen_manuscript_rewrite_next`。不得启动 Phase 2H；下一任务是基于已验证证据重构论文。

@@ -645,3 +645,15 @@ Using the frozen Phase 2C S0 checkpoints and the identical token-mean KD protoco
 All TT runs completed without NaNs. Formal epoch-1 clipping is 0.8435--0.9286 and falls to 0.0034; maximum overflow/non-finite fractions remain 0.013605. TT is more strongly clipped than TG but not saturated, so clipping does not provide an evident explanation for its advantage. Teacher quality is a material, direction-aligned confound, and the authorized TT alpha learning rate `1e-2` differs from the historical TG value `5e-3`. The parameter difference is also disclosed, although TT is smaller rather than larger.
 
 The Grassmann-specific KD mechanism claim is contradicted by this control and must be removed. Phase 2E is now interpreted as evidence for beneficial ensemble supervision, not unique Grassmann signal. Phase 2G is not necessary to preserve the rejected claim and was not launched. Complete artifacts are under `research/experiments/phase2f_homogeneous_ensemble_control/`, including `REPORT.md`, `GPT_HANDOFF.md`, exact CSV/JSON results, provenance, and PDF/300-dpi PNG figures.
+
+## 23. Phase 2G TinyStories Negative-Transfer Confirmation
+
+Phase 2G was subsequently authorized as an independent final confirmation of the TinyStories negative-transfer boundary, not as an attempt to preserve the rejected Grassmann-specific claim. Seed 42 reuses the historical matched pair. Seeds 123 and 456 use independently trained 20-epoch S0 checkpoints, followed by matched WS+CE and frozen token-mean WS+KD continuations with `lambda=5` and `T=2`. The three S0 checkpoint hashes are distinct.
+
+For seeds 42/123/456, WS+CE test NLL is 1.581269/1.581807/1.583515 and WS+KD test NLL is 1.688747/1.689246/1.690255. `Delta_KD=NLL_WS_CE-NLL_WS_KD` is -0.107479/-0.107439/-0.106740, with mean -0.107219, sample SD 0.000415, and 3/3 negative signs. Under the preregistered rule, the TinyStories negative-transfer boundary is `CONFIRMED`.
+
+The frozen teacher test NLL is 1.603229. Teacher residual advantage is negative for all three seeds, so the teacher is worse than the matched CE endpoint by 0.019714--0.021960 NLL. This is consistent with the teacher-quality boundary hypothesis but does not establish a causal mechanism.
+
+All endpoints and gradient records are finite. KD mean gradient norm is 0.974--0.981 and mean clipping fraction is 0.237--0.283, both higher than CE; maximum overflow/non-finite fraction is 0.000611. This optimization difference must be disclosed, but the runs are neither clip-saturated nor numerically failed. The incomplete GPU-3 seed-456 attempt was excluded because of a persistent software power cap; after explicit approval, an otherwise identical from-scratch GPU-1 retry completed and is the accepted endpoint.
+
+The allowed claim is limited to stable negative transfer for the frozen TinyStories teacher, warm start, `lambda=5`, and `T=2` protocol. It is not a universal KD claim and does not restore any Grassmann-specific mechanism claim. Complete artifacts are under `research/experiments/phase2g_tinystories_negative_transfer/`. The project state is `experiments_frozen_manuscript_rewrite_next`; no Phase 2H may be launched.

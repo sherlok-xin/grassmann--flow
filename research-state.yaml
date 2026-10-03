@@ -1,11 +1,11 @@
 schema_version: 1
-updated: "2026-09-30"
-status: active
-phase: phase2g_tinystories_negative_transfer_preregistered
+updated: "2026-10-03"
+status: experiments_frozen_manuscript_rewrite_next
+phase: phase2g_tinystories_negative_transfer_complete
 objective: >-
-  Establish when heterogeneous Grassmann--Transformer knowledge distillation
-  helps or hurts, then develop a branch-aware method that reduces negative
-  transfer without weakening the quality--efficiency trade-off.
+  Preserve the frozen evidence for domain-dependent knowledge-distillation
+  transfer and reconstruct the manuscript without a Grassmann-specific KD
+  mechanism claim.
 primary_metric: test_ppl
 selection_metric: validation_ppl
 secondary_metrics:
@@ -29,7 +29,7 @@ current_baselines:
 hypotheses:
   H0:
     title: Token-normalized KD is required for comparable distillation strength
-    status: confirmed_domain_dependent_three_seed_ptb_and_seed42_tinystories
+    status: confirmed_protocol_adopted_transfer_domain_dependent
   H1:
     title: Teacher branch disagreement predicts conflict and enables consensus-to-branch routing
     status: diagnostic_gate_passed_but_bounded_crbd_prototype_failed
@@ -39,14 +39,19 @@ hypotheses:
   H3:
     title: A Transformer+Grassmann teacher transfers better than a homogeneous Transformer+Transformer ensemble
     status: contradicted_tt_better_three_of_three_seeds
+  H4:
+    title: TinyStories warm-start KD negative transfer is robust to independent student initialization
+    status: confirmed_three_of_three_seeds
 next_action: >-
-  Run only the preregistered Phase 2G TinyStories seeds 123 and 456 S0,
-  WS+CE, and WS+KD matrix; then freeze experiments, prepare manuscript
-  rewrite handoff, and do not launch Phase 2H.
+  Reconstruct the manuscript from the frozen evidence. Do not launch Phase 2H
+  or any additional experiment without a new explicit authorization and
+  preregistration.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
 resolved_protocol:
+  - date: "2026-10-03"
+    issue: Phase 2G confirmed TinyStories warm-start KD negative transfer across independent seeds 42/123/456. Delta_KD was negative for all three (mean -0.107219 NLL, sample SD 0.000415); experiments are now frozen and manuscript rewrite is next.
   - date: "2026-09-30"
     issue: Phase 2F completed the homogeneous ensemble control. TT beat TG for all three students (mean H=-0.012460 NLL); teacher quality and alpha-learning-rate differences remain disclosed confounds, and no Grassmann-specific KD advantage is supported.
   - date: "2026-09-30"
@@ -99,4 +104,7 @@ artifacts:
   phase2f_figures: research/experiments/phase2f_homogeneous_ensemble_control/figures
   phase2f_gpt_handoff: research/experiments/phase2f_homogeneous_ensemble_control/GPT_HANDOFF.md
   phase2g_plan: research/experiments/phase2g_tinystories_negative_transfer/experiment_plan.md
+  phase2g_report: research/experiments/phase2g_tinystories_negative_transfer/REPORT.md
+  phase2g_results: research/experiments/phase2g_tinystories_negative_transfer/results_multiseed.csv
+  phase2g_gpt_handoff: research/experiments/phase2g_tinystories_negative_transfer/GPT_HANDOFF.md
   gpt_entrypoint: PROJECT_OVERVIEW_FOR_GPT.md

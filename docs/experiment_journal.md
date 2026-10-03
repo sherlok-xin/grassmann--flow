@@ -340,3 +340,10 @@
 - TT KD seeds 42/123/456 test NLL 为 4.094289/4.118854/4.111574，均优于复用 TG 的 4.108241/4.130183/4.123673。`H=NLL_TT-NLL_TG` 为 -0.013952/-0.011329/-0.012099，mean -0.012460、sample SD 0.001348、3/3 negative。
 - 三个 TT endpoint 均无 NaN，max overflow/non-finite 为 0.013605。TT 早期 clipping 高于 TG，但未饱和且最低降至 0.0034；更强 clipping 下仍获胜，不构成其优势的明显解释。
 - teacher quality 差异与 endpoint 方向一致，且 TT/TG teacher alpha LR 为 `1e-2`/`5e-3`，必须作为混杂保留。结论按预注册规则执行：删除 Grassmann-specific KD mechanism claim；Phase 2E 仅支持 generic ensemble supervision。Phase 2G 不启动。
+
+## [2026-10-03] Phase 2G TinyStories negative-transfer confirmation
+
+- 最终 TinyStories 确认实验在 197 服务器完成。seed 42 复用历史 matched pair；seed 123/456 分别独立训练 S0 后运行 WS+CE 与固定 token-mean WS+KD。
+- `Delta_KD` 为 -0.107479/-0.107439/-0.106740，mean -0.107219、sample SD 0.000415、3/3 negative。预注册结论为 `CONFIRMED`。
+- 所有 endpoint 均有限。KD gradient norm 与 clipping 高于 CE，但 max overflow/non-finite 仅 0.000611，无数值失败。GPU-3 上受 `SW Power Cap` 影响的不完整 seed-456 尝试被排除；经授权在 GPU 1 从头重跑的 endpoint 为唯一有效结果。
+- compact evidence 位于 `research/experiments/phase2g_tinystories_negative_transfer/`。实验现已冻结，下一阶段仅为 manuscript reconstruction，不启动 Phase 2H。
