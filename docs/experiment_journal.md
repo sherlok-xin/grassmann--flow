@@ -380,3 +380,9 @@
 - final read-only audit 检查预算、finite telemetry、选择步骤、source-state/order hashes、split doc-ID/text disjointness 和 Gain，状态 PASS，无 model forward。frozen final_evidence aggregate SHA256 仍为 3d172e634db611edad0d566e74ea0f826ed8cdae69922120baa94ebf9e6e2b96。
 - 生成 results_seed42.csv、optimization_audit.csv、selected_state_manifest.csv、decision.json、REPORT、GPT_HANDOFF、raw summaries/压缩 telemetry/doc manifests 与两组 PDF/300-dpi PNG 图，并进行图形检查。
 - MODERN_REPLICATION_WORTHWHILE 的唯一 qualifying effect 是 FineWeb lambda5 负迁移；TinyStories 两个小效应未达到 0.02。证据只有单 seed 且受 clipping/pretraining overlap 等限制。只推荐负责人审阅独立 student replication，不自动运行。Phase 4A COMPLETE / STOP，论文与 final_evidence 未改。
+
+## [2026-10-03] Phase 4B protocol and gate
+
+- 在 parent e4b9878f50afb21cc8d05a2e3bfa149897b075f7 后获 FineWeb-only 多 seed 确认授权，新增 seeds123/456，不重跑42/teacher。现有197四张3090读取时均空闲，不修改其他用户任务。
+- 3项新 source-equivalence/selection/decision 测试与4项旧核心数值测试通过；输入哈希与论文/final_evidence锁定。disposable2-step fullbatch BF16 KD smoke PASS，无 test/model-state write，teacher哈希不变。
+- 预注册 exact budget/selection/primary Gain 和 secondary best_including_S0；单独8run共80M targets。报告必保留 saturated clipping warnings、S0→CE变化和 teacher/pretraining/optimizer confounds。任何数值失败不调参/静默重试，完成后STOP。

@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "formal_result": false,
+  "saved_model_state": false,
+  "test_access": false,
+  "teacher_sha256": "c7411708b61e6524ef05bd24e9e618f19fcc119e9a3c0664c5f4f169dbf16928",
+  "records": [
+    {
+      "step": 1,
+      "ce": 2.8998923897743225,
+      "scaled_kl_T2": 1.4055228978395462,
+      "gradient_norm_preclip": 11.945768356323242
+    },
+    {
+      "step": 2,
+      "ce": 3.0303560495376587,
+      "scaled_kl_T2": 1.35488161444664,
+      "gradient_norm_preclip": 12.973458290100098
+    }
+  ],
+  "peak_allocated_gib": 5.062201499938965,
+  "tokens_per_second": 2311.541674084673
+}

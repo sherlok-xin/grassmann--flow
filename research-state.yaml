@@ -1,13 +1,13 @@
 schema_version: 1
 updated: "2026-10-03"
-status: modern_pilot_complete_replication_review_next
-phase: phase4a_modern_generalization_pilot_complete
-decision: MODERN_REPLICATION_WORTHWHILE
-training_authorized: false
+status: phase4b_protocol_locked_smoke_passed
+phase: phase4b_fineweb_multiseed_replication
+decision: PENDING_PHASE4B_ENDPOINTS
+training_authorized: true
 objective: >-
-  Phase 4A is complete. Review the single-seed modern SmolLM2 negative-transfer
-  pilot on FineWeb-Edu under sustained clipping. Preserve frozen evidence and
-  manuscript; no new training is authorized.
+  Replicate only FineWeb-Edu with independently prepared student seeds123/456,
+  reusing frozen Phase4A teacher/data/seed42 endpoints. Eight authorized 10M
+  target-token runs; preserve clipping and primary selection. STOP afterwards.
 primary_metric: paired_test_nll_gain
 selection_metric: validation_nll
 secondary_metrics:
@@ -16,7 +16,7 @@ secondary_metrics:
   - tokens_per_second
   - peak_memory_gb
 constraints:
-  - experiments_frozen_phase4a_complete_no_new_training
+  - legacy_and_phase4a_frozen_only_phase4b_fineweb_seeds123_456_authorized
   - do_not_launch_phase2h
   - final_evidence_ledger_is_authoritative
   - heavy_training_remote_only_10_42_0_197
@@ -25,7 +25,7 @@ constraints:
   - preserve_legacy_checkpoints_and_loss_mode
   - phase3a_terminal_no_further_diagnostic_or_method_work
   - phase3b_not_authorized
-  - phase4a_no_seeds123_456_without_review
+  - phase4b_explicitly_authorized_seeds123_456_no_other_new_seed_or_dataset
   - phase4a_final_evidence_and_manuscript_immutable
 current_baselines:
   teacher_ptb_ppl: 50.1125
@@ -62,10 +62,10 @@ hypotheses:
     title: Modern pretrained warm-start KD transfer depends on setting and strength
     status: exploratory_seed42_fineweb_lambda5_negative_clip_saturated_replication_review_only
 next_action: >-
-  STOP. Research-lead review only: consider unchanged FineWeb-Edu replication
-  with independent student seeds123/456 and the same frozen seed42 teacher.
-  The negative lambda5 pilot meets the effect gate but is clipping-constrained.
-  Do not launch replication, Phase 3B/2H, new methods or manuscript edits.
+  Commit/push the Phase4B protocol before formal training, independently prepare
+  S0 seeds123/456, then run exact-S0 CE/KD1/KD5. Freeze validation-only diagnostic
+  best_including_S0 choices before new test evaluation. Audit all endpoints,
+  commit compact evidence and STOP. No new dataset, method or clipping control.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
@@ -152,4 +152,8 @@ artifacts:
   phase4a_decision: research/experiments/phase4a_modern_generalization_pilot/decision.json
   phase4a_handoff: research/experiments/phase4a_modern_generalization_pilot/GPT_HANDOFF.md
   phase4a_figures: research/experiments/phase4a_modern_generalization_pilot/figures
+  phase4b_plan: research/experiments/phase4b_fineweb_multiseed_replication/experiment_plan.md
+  phase4b_preflight: research/experiments/phase4b_fineweb_multiseed_replication/preflight_audit.json
+  phase4b_smoke: research/experiments/phase4b_fineweb_multiseed_replication/smoke_audit.json
+  phase4b_handoff: research/experiments/phase4b_fineweb_multiseed_replication/GPT_HANDOFF.md
   gpt_entrypoint: PROJECT_OVERVIEW_FOR_GPT.md

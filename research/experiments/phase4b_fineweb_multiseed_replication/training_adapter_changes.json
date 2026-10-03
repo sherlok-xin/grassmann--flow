@@ -1,0 +1,58 @@
+[
+  [
+    "\"\"\"Single-GPU seed42 target adaptation and matched warm-start continuations.\"\"\"",
+    "\"\"\"Phase 4B seed-aware copy of the frozen Phase 4A training loop.\"\"\""
+  ],
+  [
+    "import time\n",
+    "import time\nimport sys\n"
+  ],
+  [
+    "from core import chunk_losses, packed_batch, schedule\n",
+    ""
+  ],
+  [
+    "OUT = ROOT / 'outputs/phase4a_modern'",
+    "OUT = ROOT / 'outputs/phase4a_modern'\nP4A = ROOT / 'research/experiments/phase4a_modern_generalization_pilot'\nRUNS = ROOT / 'outputs/phase4b_fineweb/runs'\nsys.path.insert(0, str(P4A / 'scripts'))\nfrom core import chunk_losses, packed_batch, schedule"
+  ],
+  [
+    "(ART / 'model_download_manifest.json')",
+    "(P4A / 'model_download_manifest.json')"
+  ],
+  [
+    "torch.manual_seed(42)",
+    "torch.manual_seed(args.seed)"
+  ],
+  [
+    "torch.cuda.manual_seed_all(42)",
+    "torch.cuda.manual_seed_all(args.seed)"
+  ],
+  [
+    "run = OUT / 'runs' / args.dataset / args.arm",
+    "run = RUNS / str(args.seed) / args.arm"
+  ],
+  [
+    "student_state = OUT / 'runs' / args.dataset / 's0/selected.pt'",
+    "student_state = RUNS / str(args.seed) / 's0/selected.pt'"
+  ],
+  [
+    "order_seed = 4242 if continuation else 42",
+    "order_seed = 4242 if continuation else args.seed"
+  ],
+  [
+    "'seed': 42, 'arm': args.arm",
+    "'seed': args.seed, 'arm': args.arm"
+  ],
+  [
+    "choices=['tinystories', 'fineweb']",
+    "choices=['fineweb']"
+  ],
+  [
+    "choices=['teacher', 's0', 'ce', 'kd1', 'kd5']",
+    "choices=['s0', 'ce', 'kd1', 'kd5']"
+  ],
+  [
+    "    train(p.parse_args())",
+    "    p.add_argument('--seed', required=True, type=int, choices=[123, 456])\n    train(p.parse_args())"
+  ]
+]

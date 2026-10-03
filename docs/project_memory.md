@@ -292,3 +292,10 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - teacher validation residual advantage 为 TinyStories +0.173856356061、FineWeb +0.219626011745。FineWeb S0 选中 step256，但 preparation 仍跑满预算；CE endpoint 也略差于 S0。模型预训练包含 FineWeb-Edu，确切重叠未知，135M/360M 预训练预算不同。
 - 原 HF 镜像分页跳转失败后，以 pinned official sample-10BT 首个 Parquet shard 的 byte-range streaming 完成同样 document-order prefix；20M/1M/1M token hashes 和 doc-ID/text-hash disjointness 已核验。只提交 compact artifacts，不提交 token、模型、数据正文或 wheels。
 - 状态 modern_pilot_complete_replication_review_next。报告/交接/CSV/两组 PDF+PNG 位于 research/experiments/phase4a_modern_generalization_pilot/；final_evidence、旧论文、datasets/、checkpoints/ 未改。推荐负责人审阅固定 teacher 下独立 S0 seeds123/456 的 FineWeb replication；当前 STOP，未启动。
+
+## 33. 2026-10-03 Phase 4B authorization and smoke
+
+- 用户明确授权 FineWeb-only seeds123/456 的独立 S0 preparation 和 CE/KD1/KD5，共8个10M-target run；seed42/teacher/data直接复用，不改 clip/lambda/协议，不扩到 TinyStories。
+- source-equivalence 测试证明新增 train.py 只替换 seeds/输出路径/CLI/共享模块引用，旧 train/core 未改。S0 preparation permutation 为对应 seed，continuation 固定4242，保持同 seed 三 arm matched。
+- 7项单测通过，teacher/data/frozen-evidence/论文 hashes 已锁定；完整 batch32 的 disposable BF16 KD smoke 有限，峰值5.062GiB，无 checkpoint 保存/test access。
+- 次级 best_including_S0 只用 validation 比较原 selected S0 与 trained selected endpoint，tie选step0，绝不替代主比较。协议须在正式训练前 commit/push。完成后 STOP。

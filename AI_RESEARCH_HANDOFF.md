@@ -1,5 +1,18 @@
 # Grassmann / Transformer / Distillation Research Handoff
 
+## 2026-10-03 Phase 4B explicitly authorized — protocol locked
+
+The lead authorized only FineWeb-Edu replication with independently prepared
+student seeds123/456, reusing the frozen Phase4A adapted teacher, data and
+seed42 endpoints. Eight new10M-target runs, no coefficient/clipping changes,
+no TinyStories replication or new method. Read
+research/experiments/phase4b_fineweb_multiseed_replication/experiment_plan.md.
+Seven adapter/selection/decision/numerical tests, immutable-input preflight
+and disposable fullbatch KD smoke passed. No endpoint is available yet.
+best_including_S0 is validation-only diagnostic, not a replacement primary
+endpoint. Manuscript and final_evidence remain immutable. STOP after results;
+no automatic clipping control or further modern experiment.
+
 ## 2026-10-03 Phase 4A complete — modern negative-transfer pilot / STOP
 
 The research lead authorized a bounded new phase using official base SmolLM2

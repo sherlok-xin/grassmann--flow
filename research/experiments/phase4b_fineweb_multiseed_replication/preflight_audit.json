@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "teacher_sha256": "c7411708b61e6524ef05bd24e9e618f19fcc119e9a3c0664c5f4f169dbf16928",
+  "data_sha256": {
+    "train": "bed0ede1aa50fa4465d951701fe642e9c4e7eec756be8adea234b4b052862aae",
+    "validation": "c8e1011d6e8d955a5c7fc5634bee2f520b9c221bd36d0026cbfb3cf78064e69b",
+    "test": "51edcd47566f8594c310d050d28bb8ce9b2136adaa0bb925e449d5a9dc34cc2c"
+  },
+  "document_order_sha256": "42d42b8936bd213e0ea830578675c95dee489b67e143fb4ab26caa4011ea7b9b",
+  "final_evidence_aggregate_sha256": "3d172e634db611edad0d566e74ea0f826ed8cdae69922120baa94ebf9e6e2b96",
+  "manuscript_sha256": "8b8e3fcc3f04b596058cd4b63ddfe38b6eab91f338c7d4f12db4b602c9982ec8",
+  "phase4a_train_sha256": "d7d8ad350f45164b657daf1895b38b3f49e2e2e9466996961641a653a0c1c565",
+  "phase4a_core_sha256": "427c90edc3ba353d929b2d75a942d67779429bf2707525ddb55c271e8ce8c3cf",
+  "no_model_forward": true,
+  "new_training_seeds": [
+    123,
+    456
+  ]
+}
