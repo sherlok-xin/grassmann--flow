@@ -20,3 +20,11 @@ does not save a state or access test. Protocol is committed/pushed before
 formal endpoint runs. All heavy work is on10.42.0.197 via exec_grassmann.sh;
 editing/Git remain local NFS operations. The isolated dependency path from
 Phase4A is reused without package installation or framework surgery.
+
+Formal protocol commit:1a525c379d7b72e809847dfed6ef1bf71fd0fe50, pushed before
+the launcher started. Owned remote launcher PID587220; preparation child
+PIDs587237/587238 on GPU0/1. GPU0/1/2/3 were read-only checked idle immediately
+before launch. Subsequent exact child PID/arm/GPU identities are appended to
+outputs/phase4b_fineweb/process_registry.txt by the launcher. Other-user tasks
+are never terminated. Analysis/collection/plot helpers may be added while
+training runs, but cannot alter the locked train/core/source behavior.

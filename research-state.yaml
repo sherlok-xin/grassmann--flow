@@ -1,6 +1,6 @@
 schema_version: 1
 updated: "2026-10-03"
-status: phase4b_protocol_locked_smoke_passed
+status: phase4b_formal_replication_running
 phase: phase4b_fineweb_multiseed_replication
 decision: PENDING_PHASE4B_ENDPOINTS
 training_authorized: true
