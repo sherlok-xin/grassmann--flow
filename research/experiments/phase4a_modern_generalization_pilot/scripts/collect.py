@@ -60,7 +60,7 @@ def main():
     write_csv(ART / 'results_seed42.csv', results)
     write_csv(ART / 'optimization_audit.csv', opt)
     write_csv(ART / 'selected_state_manifest.csv', selected)
-    decision = 'MODERN_REPLICATION_WORTHWHILE' if any(r['clear_effect'] is True for r in results) else 'STOP_MODERN_REPLICATION'
+    decision = 'MODERN_REPLICATION_WORTHWHILE' if any(r['clear_effect'] is True and r['numerically_valid'] for r in results) else 'STOP_MODERN_REPLICATION'
     (ART / 'decision.json').write_text(json.dumps({'decision': decision, 'replication_authorized': False, 'independent_training_seeds': [42]}, indent=2) + '\n')
     print(decision, flush=True)
 
