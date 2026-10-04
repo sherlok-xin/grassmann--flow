@@ -1,0 +1,22 @@
+\section{Teacher Source, Ensemble, and Diagnostic Controls}
+\label{sec:controls}
+\writingtodo{Test V2-H2--H4 while retaining quality/parameter/optimization confounds.}
+% - E6/C4: fused gains > both branch gains; T-only saturation warning.
+% - E7: TT better all3, H=-0.012460 +/-0.001348; teacher quality and count
+%   favor TT, alpha LR differs. No intrinsic superiority in either direction.
+% - E8/E9: JSD incremental AUROC tiny; larger TG disagreement yet lower gain.
+% - E10/Phase3A: 21 dependent seed-level conditions, 7 families, 63 calibration
+%   rows. First/second-order signs identical; seed AUROC0.644444,
+%   sign accuracy0.571429, stable subsets11/21. Curvature adds no sign split.
+% - This is negative diagnostic evidence, not a successful or proposed method.
+% TODO[CAVEAT]: original source ranking PARTIAL; no Safe-lambda recommendation.
+% TODO[CITE]: du2020agree, stanton2021really, zhou2022metadistil; do not
+% refute their adaptive/online methods from our offline predictor failure.
+% MUST NOT: heterogeneity superiority, JSD universal mechanism, Pluecker cause.
+\input{tables/teacher_sources}
+\input{tables/tt_vs_tg}
+\input{tables/local_diagnostics}
+\figureplaceholder{F4: Homogeneous ensemble control}
+{Paired TG/TT gains and a separate teacher-quality/diversity panel. Include
+parameter counts, H direction and alpha-learning-rate mismatch.}
+{fig:ensemble_control}

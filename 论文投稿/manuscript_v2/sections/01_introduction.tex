@@ -1,0 +1,13 @@
+\section{Introduction}\label{sec:introduction}
+\writingtodo{Introduce the paired warm-start distillation question and C1--C4.}
+% - RQ: what determines useful transfer to an already-trained LM student?
+% - C1/E1-E3: PTB/WT2/TinyStories gains +0.144937/+0.155665/-0.107219,
+%   three independent student seeds each, not dataset-caused sign.
+% - C2/E4: fixed alpha0.5 J/A state intervention, Q +0.183319 NLL.
+% - C3/E5: globally weaker G versus C0, yet gain +0.040991.
+% - C4/E6-E7: fused > branches; TT > TG, H -0.012460, caveats retained.
+% TODO[CITE]: teacher accuracy insufficiency is not new; use cho2019efficacy,
+% kaplun2022bad and closest autoregressive prior zhong2024atkd.
+% TODO[NOVELTY]: specific controlled evidence chain, no new loss/theory.
+% MUST NOT: old Grassmann-specific contribution, first harmful LM KD,
+% universal teacher selection rule or clean modern-scale abstract headline.

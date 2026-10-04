@@ -1,0 +1,15 @@
+\section{Reproducible Positive and Negative Transfer}
+\label{sec:cross-domain-transfer}
+\writingtodo{Present C1 using matched three-seed endpoints, not legacy results.}
+% - E1/PTB +0.144937 +/-0.003938; E2/WT2 +0.155665 +/-0.007692;
+%   E3/TinyStories -0.107219 +/-0.000415; each three consistent signs.
+% - All are lambda5 T2 token_mean; exact S0 within a seed.
+% - TinyStories CE improves over S0, unlike modern FineWeb Phase4B regime.
+% TODO[FIGURE]: dots for each seed plus mean/sample SD; zero line.
+% MUST NOT: corpus identity as cause; pooled absolute NLL across tokenizers;
+% extra independent seeds from reused source/teacher controls.
+\input{tables/cross_domain_transfer}
+\figureplaceholder{F2: Cross-domain paired gains}
+{PTB, WT2 and TinyStories; three student-seed gain dots per domain, mean and
+sample SD. Exact endpoint inventory; no pooled absolute-NLL ranking.}
+{fig:cross_domain_gain}

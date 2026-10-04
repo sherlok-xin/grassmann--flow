@@ -1,0 +1,9 @@
+# table_weaker_teacher
+
+Globally weaker means worse held-out likelihood than the validation-selected matched C0 CE endpoint on the same subset, not automatically worse than S0. No weak-teacher superiority claim.
+
+| seed | teacher_validation_subset_nll | comparator | c0_validation_subset_nll | teacher_residual_vs_c0 | test_gain |
+| --- | --- | --- | --- | --- | --- |
+| 42 | 4.652063846588135 | validation-selected_C0_CE_on_same_subset | 4.385544027451994 | -0.26651981913614087 | 0.04677062695360945 |
+| 123 | 4.652063846588135 | validation-selected_C0_CE_on_same_subset | 4.398571805445925 | -0.25349204114221013 | 0.03359769743728247 |
+| 456 | 4.652063846588135 | validation-selected_C0_CE_on_same_subset | 4.4010577654192735 | -0.25100608116886125 | 0.04260379744123188 |

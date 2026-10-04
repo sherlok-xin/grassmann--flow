@@ -1,0 +1,9 @@
+# table_teacher_quality_intervention
+
+Frozen Phase-2 snapshot, copied without changing values. Source: research/final_evidence/table_teacher_quality_intervention.csv. Teacher NLL scope: the archived 512-validation-chunk subset (130560 predicted targets), not the full-split Phase-2F evaluation.
+
+| row_type | condition | teacher_validation_nll | seed42_gain_nll | seed123_gain_nll | seed456_gain_nll | mean_gain_or_contrast | sample_sd | sign_consistency | status | confound |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| teacher | Teacher_J_joint | 4.300644 | 0.162501 | 0.147337 | 0.157157 | 0.155665 | 0.007692 | 3/3_positive | CONFIRMED | joint_training_changes_both_branch_representations |
+| teacher | Teacher_A_alpha_only | 6.376220 | -0.022394 | -0.035362 | -0.025206 | -0.027654 | 0.006822 | 3/3_negative | CONFIRMED | joint_training_state_not_scalar_nll_is_the_intervention |
+| contrast | Q_NLL_A_minus_NLL_J |  | 0.184895 | 0.182699 | 0.182364 | 0.183319 | 0.001375 | 3/3_positive | CONFIRMED | fixed_composition_but_parameter_states_differ |

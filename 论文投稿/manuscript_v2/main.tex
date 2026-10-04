@@ -1,0 +1,65 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+
+% Venue-neutral writing skeleton only: no conference/template is selected.
+% Input HEAD: 64db3aebd158f56373385db18dcdf056aeea4c52.
+% Experiments permanently frozen. Never alter research/final_evidence/.
+% Recommended title below; alternatives:
+% - Controlled Evidence on Distillability in Warm-Start Language Modeling
+% - Teacher Quality and Distillability in Warm-Start Language Modeling
+% TODO[VENUE]: research lead chooses venue before template/page-limit binding.
+% TODO[AUTHOR]: insert approved authors/affiliations only at full writing stage.
+\title{What Makes Knowledge Distillation Transfer?\newline
+Controlled Evidence from Warm-Start Language Modeling}
+\author{Manuscript V2 planning skeleton}
+\date{}
+
+\newcommand{\writingtodo}[1]{\par\noindent TODO: #1\par}
+\newcommand{\figureplaceholder}[3]{%
+  \begin{figure}[htbp]\centering
+  \fbox{\begin{minipage}[c][2.7cm][c]{0.90\linewidth}\centering
+    #1\par\smallskip\small #2
+  \end{minipage}}
+  \caption{#1 (figure placeholder, not completed artwork).}\label{#3}
+  \end{figure}}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\writingtodo{Draft only after approval of the V2 claim set. This document
+contains evidence notes, numerical planning tables and figure placeholders,
+not a complete manuscript.}
+% TODO[ABSTRACT:C1-C4]: paired +/+/- transfer; fixed-composition state reversal;
+% weaker-source counterexample; homogeneous ensemble falsification.
+% MUST NOT: method/geometry superiority; universal diagnostic; clean modern KD.
+\end{abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_problem_setting}
+\input{sections/04_experimental_setting}
+\input{sections/05_cross_domain_transfer}
+\input{sections/06_distillability}
+\input{sections/07_controls}
+\input{sections/08_external_validity}
+\input{sections/09_discussion}
+\input{sections/10_conclusion}
+\clearpage
+% These verified records are planned background, not a finished Related Work.
+\nocite{cho2019efficacy,park2021friendly,yuan2021selection,zhong2024atkd,
+stanton2021really,du2020agree,zhou2022metadistil,kaplun2022bad,
+menon2021statistical,wang2021selective,gu2024minillm,agarwal2024gkd,
+xie2026adakd,jin2026entropy}
+\bibliographystyle{plainnat}
+\bibliography{references}
+\clearpage
+\appendix
+\input{sections/appendix}
+\end{document}

@@ -1,0 +1,17 @@
+\section{Problem Setting and Paired Distillability Evaluation}
+\label{sec:problem-setting}
+\writingtodo{Specify the operational gain and matched checkpoint-selection unit.}
+% - Gain = test_NLL_CE - test_NLL_KD; positive means benefit over matched CE.
+% - Same S0 hash within each seed, independent student preparations between
+%   seeds; frozen teacher; validation-NLL selects, test only reports endpoints.
+% - Existing token_mean forward KL(p_T || p_S), T=2, archived T^2 scaling.
+% TODO[LOSS]: transcribe implementation normalization exactly, not legacy
+% batchmean; state target mask/shift and finite optimizer reset protocol.
+% - Three paired-gain sample SDs are not SEs or significance tests.
+% - Phase4B primary excludes S0; best_including_S0 is separate diagnostic;
+%   Phase4C includes S0 in CE gate, has no authorized KD/test after failure.
+% MUST NOT: definition-as-theorem, unmatched random-init necessity proof.
+\figureplaceholder{F1: Paired warm-start evaluation}
+{Exact S0 forks into matched CE and KD; independent validation selection;
+final test reporting. Step-0 eligibility is a separately labeled protocol choice.}
+{fig:paired_protocol}

@@ -1,0 +1,9 @@
+# table_modern_gate_optimization
+
+Appendix/source audit only. Archived observations; no new training or model evaluation. Read the corresponding report and warning registry before interpretation.
+
+| arm | lr | lambda | steps | targets | selected_step | clip_fraction | preclip_gradient_norm_mean | preclip_gradient_norm_max | nonfinite_fraction | overflow_fraction | warning |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ce_lr5e-6 | 5e-06 | 0.0 | 977 | 8000000 | 977 | 0.06038894575230297 | 0.9409822079761978 | 2.301602363586426 | 0.0 | 0.0 |  |
+| ce_lr1e-5 | 1e-05 | 0.0 | 977 | 8000000 | 977 | 0.07983623336745138 | 0.9436999456909321 | 1.3754286766052246 | 0.0 | 0.0 |  |
+| ce_lr2e-5 | 2e-05 | 0.0 | 977 | 8000000 | 977 | 0.08290685772773797 | 0.9591653359216946 | 14.602655410766602 | 0.0 | 0.0 |  |

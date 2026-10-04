@@ -410,3 +410,11 @@
 - 不运行条件KD/gradient probe/test，不写KD freeze commit，不加LR/budget/clipping/new method/seeds。test/Gain/ratio留空并明确NOT_RUN。Teacher val residual+0.219626011745仅复用旧teacher验证记录。
 - All finite，CE clip fractions约6.04%/7.98%/8.29%，无clip saturation。2e-5 step656 norm14.602655为finite outlier并已clipped，原因和trajectory影响未知，无排除或重跑。原Phase4B warning不变。
 - Collector和完整state/manifest/budget/selection/telemetry audit PASS，归档完整CSV、7类要求文档/manifest及raw gzip。论文/final_evidence、oldPhase4A/B、datasets/checkpoints均无Git diff；.gitignore用户改动不stage。项目冻结，STOP整个modern extension。
+
+## [2026-10-04] Manuscript V2 reconstruction preparation only / no experiments
+
+- Input HEAD64db3aeb；本阶段只读已归档Phase2–4C证据，整合到research/manuscript_v2，不改旧Phase2快照或旧CAC稿。没有新增训练、模型forward、诊断、测试集访问、调参或远程计算。
+- 明确四项主张与证据层级；保留所有clipping/协议修订/有限梯度事件警告、teacher validation scope差异、TT参数/质量/alpha LR混杂和WT2重复使用的seed/control。现代压力测试不能作为clean规模确认。
+- 从官方CVF/ACL/NeurIPS/ICLR/AAAI/PMLR导出14项核验文献；写入重叠/区别与full-text TODO，不编造citation或假装adaptive baseline已运行。
+- LaTeX骨架在新论文投稿/manuscript_v2，含10个主章、8张数值规划表、5图占位框及appendix；只有注释与TODO，无完整正文。本机latexmk/BibTeX编译并检查label/citation/CSV/protected hashes，build输出不提交。
+- ARS outline与ML写作流程用于证据映射、先行工作审计与编译QA；未选择venue、未启动全文pipeline。状态manuscript_v2_ready_for_writing，提交compact text/table/source后STOP。

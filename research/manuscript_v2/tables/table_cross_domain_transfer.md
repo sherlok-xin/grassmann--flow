@@ -1,0 +1,9 @@
+# table_cross_domain_transfer
+
+Frozen Phase-2 snapshot, copied without changing values. Source: research/final_evidence/table_cross_domain_transfer.csv.
+
+| dataset | seeds | protocol | ws_ce_nll_mean | ws_ce_nll_sample_sd | ws_kd_nll_mean | ws_kd_nll_sample_sd | kd_gain_nll_mean | kd_gain_nll_sample_sd | ws_ce_ppl_mean | ws_kd_ppl_mean | relative_ppl_change_pct | sign_consistency | status | source |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| PTB | 3 | token_mean_lambda5_T2 | 4.082352 | 0.005423 | 3.937415 | 0.001649 | 0.144937 | 0.003938 | 59.2853 | 51.2859 | -13.49 | 3/3_positive | CONFIRMED | research/experiments/post_rejection_program |
+| WikiText-2 | 3 | token_mean_lambda5_T2 | 4.276364 | 0.005142 | 4.120699 | 0.011269 | 0.155665 | 0.007692 | 71.9789 | 61.6049 | -14.41 | 3/3_positive | CONFIRMED | research/experiments/phase2c_multiseed_teacher_utility |
+| TinyStories | 3 | token_mean_lambda5_T2 | 1.582197 | 0.001173 | 1.689416 | 0.000768 | -0.107219 | 0.000415 | 4.8656 | 5.4163 | 11.32 | 3/3_negative | CONFIRMED | research/experiments/phase2g_tinystories_negative_transfer |

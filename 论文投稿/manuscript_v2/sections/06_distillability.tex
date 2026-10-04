@@ -1,0 +1,19 @@
+\section{What Determines Distillability?}\label{sec:distillability}
+\writingtodo{Test global quality with the fixed-composition contrast and counterexample.}
+% - V2-H1 is a retrospective writing hypothesis, not new preregistration.
+% - C2/E4: J/A forcedalpha0.5 gains +0.155665/-0.027654; Q+0.183319
+%   +/-0.001375. Teacher subset NLL J4.300644/A6.376220.
+% - Teacher state and quality modulate; branch representations also change.
+% - C3/E5: G teacher subset NLL4.652064 worse than C0 on same subset;
+%   three residuals negative, three KD gains positive, mean+0.040991.
+% TODO[CAVEAT]: weakness comparator is C0, not automatically S0;
+% original failed A smoke and amended gate must remain explicit.
+% TODO[CITE]: prior quality limitations cho2019efficacy, kaplun2022bad,
+% menon2021statistical; no first-discovery claim.
+% MUST NOT: quality irrelevant, weak-teacher-generally-better, NLL-only cause.
+\input{tables/teacher_state}
+\input{tables/weaker_teacher}
+\figureplaceholder{F3: Teacher state and quality controls}
+{Panel A: paired J/A gain reversal. Panel B: negative teacher residual versus
+positive G-source gain. Distinguish state intervention from scalar-quality causality.}
+{fig:teacher_state_quality}

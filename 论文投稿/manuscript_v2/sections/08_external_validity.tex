@@ -1,0 +1,21 @@
+\section{External-Validity Stress Test}\label{sec:external-validity}
+\writingtodo{Present bounded modern stress results, not clean large-model confirmation.}
+% - E11/FineWeb SmolLM2-360M->135M: Gain1=-0.013550460935
+%   +/-0.003542273400; Gain5=-0.043924082202 +/-0.004016675497.
+% - Adaptation seeds42/123/456, one pretrained base/teacher/subset;42 reused.
+% - E12: step0-eligible validation selects S0 for9/9 arms, diagnostic gains0;
+%   CE worsens S0 test NLL mean+0.007918178008.
+% - E13: disjoint8M CE gate best improvement+0.004849292809 <0.01;
+%   small positive headroom, but required regime not established. NO KD/test.
+% - Lambda5 CLIP_SATURATION_WARNING; lambda1 frequent clipping;
+%   CE456_GRADIENT_SPIKE_WARNING; CE2e-5 Phase4C finite outlier disclosed.
+% TODO[PROTOCOL]: pretraining overlap/budgets, selection eligibility and
+% diagnostics/primary comparator distinctions; blank NOT_RUN is not zero.
+% MUST NOT: all FineWeb continuation/KD harms, clipping cause, clean modern
+% negative confirmation or fabricated Phase4C KD/gradient-ratio/test results.
+\input{tables/modern_stress}
+\input{tables/modern_ce_gate}
+\figureplaceholder{F5: Modern selection and headroom gate}
+{Trained-only negative gain; all9/9 step-0 choices prefer S0; disjoint CE
+headroom gate fails; STOP. No Phase4C KD branch or test endpoint exists.}
+{fig:modern_selection_gate}

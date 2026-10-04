@@ -1,0 +1,16 @@
+% Generated from frozen sources by build_tables.py; not a prose draft.
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+Teacher/state contrast & Teacher val NLL & Gain/contrast & Sample SD & Signs \\
+\midrule
+Joint J & 4.300644 & 0.155665 & 0.007692 & 3/3 + \\
+Alpha-only A & 6.376220 & -0.027654 & 0.006822 & 3/3 -- \\
+$Q$ (student test contrast) & -- & 0.183319 & 0.001375 & 3/3 + \\
+\bottomrule
+\end{tabular}
+\caption{Fixed-composition WT2 teacher-state intervention (planning table).}
+\label{tab:teacher_state}
+\par\smallskip\begin{minipage}{0.96\linewidth}\footnotesize $Q$ is the KD-student test NLL under A minus that under J, not the teacher NLL difference. Teacher NLL uses the archived 512-chunk validation subset. Forced fusion weight is 0.5. Changing training state also changes branch representations; this is not a scalar-NLL causal intervention. The failed short smoke and explicitly amended full-data gate must remain in the protocol appendix.\end{minipage}
+\end{table}

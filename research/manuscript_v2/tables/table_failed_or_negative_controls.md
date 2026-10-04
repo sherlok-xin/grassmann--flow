@@ -1,0 +1,15 @@
+# table_failed_or_negative_controls
+
+Frozen Phase-2 snapshot, copied without changing values. Source: research/final_evidence/table_failed_or_negative_controls.csv. Legacy/negative controls only: do not pool into confirmatory tables.
+
+| control | dataset | seeds_or_units | exact_result | evidence_status | paper_use | confound_or_limit |
+| --- | --- | --- | --- | --- | --- | --- |
+| TinyStories_fixed_KD | TinyStories | 3_students | mean_gain_nll_-0.107219_sd_0.000415_3of3_negative | CONFIRMED | central_negative_boundary | specific_lambda5_teacher_and_warm_start |
+| Teacher_A_fixed_composition | WikiText-2 | 3_students | mean_gain_nll_-0.027654_sd_0.006822_3of3_negative | CONFIRMED | teacher_state_control | joint_training_changes_representations |
+| TG_superiority_control | WikiText-2 | 3_students | H_-0.012460_sd_0.001348_3of3_TT_better | CONTRADICTED | remove_Grassmann_specific_claim | teacher_quality_and_alpha_lr_differ |
+| JSD_strong_predictor | PTB_and_TinyStories | tokens_from_1_endpoint_pair_per_dataset | auc_delta_-0.000323_and_0.010910_r2_delta_0.000533_and_0.003061 | CONTRADICTED | negative_mechanism_result | tokens_not_independent_model_seeds |
+| CRBD_repair | TinyStories_20k | 1_seed | test_ppl_CE_5.0195_fixed_5.3018_CRBD_5.5067_repair_-0.7220 | CONTRADICTED | appendix_failed_method | all_KD_arms_clip_saturated |
+| CRBD_vs_shuffle | TinyStories_20k | 1_seed | CRBD_5.5067_vs_shuffle_5.5010_test_ppl | CONTRADICTED | appendix_failed_routing_control | one_seed_and_clip_saturation |
+| Plucker_geometry_causality | WikiText-2_control | 0_causal_seeds | TT_beats_TG_by_mean_0.012460_nll | EXPLORATORY_UNSUPPORTED | delete_causal_claim | no_geometry_isolation |
+| Warm_start_necessity | WT2_TinyStories_Code | 1_legacy_run_each | random_init_protocols_unmatched | EXPLORATORY_UNSUPPORTED | exclude | learning_rate_and_training_budget_mismatch |
+| CodeParrot_positive_transfer | CodeParrot_common_5k | 1 | legacy_gain_nll_0.188309 | EXPLORATORY | appendix_only | legacy_loss_single_seed_winner_selection |

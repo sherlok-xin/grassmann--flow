@@ -1,0 +1,23 @@
+{
+  "created_on": "2026-10-04",
+  "activity": "archived CSV formatting/descriptive checks only",
+  "sources": {
+    "research/final_evidence/table_cross_domain_transfer.csv": "34485b61b7c35005a98e2e8e87f0b0268b4c99ed66f18d0649e42711fbbbc8cb",
+    "research/final_evidence/table_teacher_quality_intervention.csv": "81ed4e03c4083dcff01ffc751f0f4c06e40134d92c8deb5bac2bc0d6406f9095",
+    "research/final_evidence/table_teacher_source_ablation.csv": "4efd593fd932465197f57bf716dd81726813d8bbb617d576cb1083b5976b5b1a",
+    "research/final_evidence/table_tt_vs_tg.csv": "8acc38ad6f0fa5307d9e42f143af84944414e58414babc25760f7f51fbbc29b7",
+    "research/final_evidence/table_efficiency.csv": "6fd235d856cf9973f35956334d66e2969737015b977bf71fa22278728d7e8458",
+    "research/final_evidence/table_failed_or_negative_controls.csv": "8e9c594ce74e2c96bca33d7bddb15c19c5deb469e0e0db5bcf5cc1984866c5dc",
+    "research/experiments/phase2c_multiseed_teacher_utility/results_multiseed.csv": "c1b6cd4e2da00ba7f17e5c1a063c8af95e4c5b50b35e520b3e850f0cf7412ad4",
+    "research/experiments/phase3a_safe_lambda_diagnostic/condition_summary.csv": "cd43f9081302021840d5ffaabc1aea7af6f1cddc5cac1d8a82eda1a9393aeffc",
+    "research/experiments/phase3a_safe_lambda_diagnostic/predictor_metrics.csv": "c46a3c0008c90a34510a91ce198838f320f429197ef955087fb2cd787625493b",
+    "research/experiments/phase4b_fineweb_multiseed_replication/results_multiseed.csv": "1c9bbd08bff2940e7b86e5ca31e24eeea725d883c918229212b250fd8762c4be",
+    "research/experiments/phase4c_nondegenerate_modern_control/ce_lr_gate.csv": "c291e32b19292fe8694091d16067debfdc06675ee8d81c0a796e846c33bd2e90",
+    "research/experiments/phase4b_fineweb_multiseed_replication/best_including_s0.csv": "1b2cd92b7702c2d3d133040a5346d678c32f3545f0fddf2ab2df7ce2aeb71f33",
+    "research/experiments/phase4b_fineweb_multiseed_replication/optimization_audit.csv": "903662224a2b0727bf0c77c146b1588649405d07c845499f26da68ec1ca86c4e",
+    "research/experiments/phase4c_nondegenerate_modern_control/optimization_audit.csv": "76e363dda076dcd645ab87d9a74136060530c470978142bce543bb0b02f28c2b",
+    "research/experiments/phase2f_homogeneous_ensemble_control/results_multiseed.csv": "48493b2f22c840406b6f2c8efe5140df3b386473302242e0358cd09bc7f40238"
+  },
+  "gain_sign_checks": "PASS",
+  "independent_seed_unit": "student initialization or adaptation, not corpus/teacher/pretraining replication"
+}

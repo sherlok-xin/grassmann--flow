@@ -1,0 +1,15 @@
+% Generated from frozen sources by build_tables.py; not a prose draft.
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{lrrr}
+\toprule
+Strength & Mean test gain & Sample SD & Negative signs \\
+\midrule
+1 & -0.013550 & 0.003542 & 3/3 \\
+5 & -0.043924 & 0.004017 & 3/3 \\
+\bottomrule
+\end{tabular}
+\caption{Bounded modern-model stress test, not clean confirmation (planning table).}
+\label{tab:modern_stress}
+\par\smallskip\begin{minipage}{0.96\linewidth}\footnotesize All 9/9 step-0-eligible choices select S0; CE also worsens S0 test NLL (mean change $+0.007918$). All lambda-5 arms retain \texttt{CLIP\_SATURATION\_WARNING}; lambda-1 clipping is 0.798526--0.854218. Teacher advantage, pretraining overlap and finite CE456 gradient spike remain confounds. Phase4C did not resolve continuation degeneracy.\end{minipage}
+\end{table}

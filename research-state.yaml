@@ -1,13 +1,15 @@
 schema_version: 1
 updated: "2026-10-04"
-status: experiments_frozen_phase4c_gate_failed
-phase: phase4c_nondegenerate_modern_control_complete
-decision: STOP_MODERN_CONTINUATION_NOT_ESTABLISHED
+status: manuscript_v2_ready_for_writing
+phase: manuscript_v2_evidence_story_and_skeleton_complete
+decision: MANUSCRIPT_V2_READY_EXPERIMENTS_PERMANENTLY_FROZEN
 training_authorized: false
+experimental_program: permanently_frozen
 objective: >-
-  Phase4C complete: exact step256 S0 and disjoint8M continuation; three CE
-  LRs all select trained977, but best validation improvement0.004849292809
-  fails0.01. No KD/test. STOP entire modern extension; no more tuning/training.
+  Integrate frozen Phase2 and post-freeze Phase3A/4A-4C into a conservative
+  four-claim empirical manuscript identity. V2 evidence/story/literature audit
+  and compiling venue-neutral LaTeX skeleton complete; no full prose drafted.
+  Preserve Phase2 final_evidence and old CAC source. STOP before full writing.
 primary_metric: paired_test_nll_gain
 selection_metric: validation_nll
 secondary_metrics:
@@ -16,9 +18,12 @@ secondary_metrics:
   - tokens_per_second
   - peak_memory_gb
 constraints:
+  - experimental_program_permanently_frozen_no_training_sweeps_scaling_methods
+  - full_manuscript_writing_requires_new_explicit_instruction
+  - new_manuscript_sources_only_under_manuscript_v2
   - phase4c_gate_failed_stop_entire_modern_extension_no_new_training
   - do_not_launch_phase2h
-  - final_evidence_ledger_is_authoritative
+  - phase2_final_evidence_immutable_v2_integrates_post_freeze_evidence
   - heavy_training_remote_only_10_42_0_197
   - smoke_before_full_run
   - do_not_modify_datasets_or_checkpoints
@@ -26,7 +31,7 @@ constraints:
   - phase3a_terminal_no_further_diagnostic_or_method_work
   - phase3b_not_authorized
   - phase4b_authorized_seed_replication_complete_no_other_new_seed_or_dataset
-  - phase4a_final_evidence_and_manuscript_immutable
+  - phase4_legacy_manuscript_and_phase2_snapshot_immutable_new_v2_only
 current_baselines:
   teacher_ptb_ppl: 50.1125
   student_quality_ptb_ppl: 51.8431
@@ -64,14 +69,27 @@ hypotheses:
   H7:
     title: Fixed early S0 and disjoint continuation establish modern CE validation headroom of at least 0.01
     status: not_established_phase4c_gate_failed_best_improvement_0_004849292809
+manuscript_v2:
+  base_commit: 64db3aebd158f56373385db18dcdf056aeea4c52
+  working_title: "What Makes Knowledge Distillation Transfer? Controlled Evidence from Warm-Start Language Modeling"
+  central_claims: [C1, C2, C3, C4]
+  hypothesis_labels: retrospective_writing_organization_not_new_preregistration
+  contribution_type: controlled_empirical_evidence_not_new_method_or_theory
+  phase3_role: negative_offline_diagnostic
+  phase4_role: bounded_stress_test_degenerate_continuation_unresolved
+  venue_status: criteria_binding_unavailable
+  full_manuscript_written: false
 next_action: >-
-  STOP. Phase4C CE gate failed despite small positive validation improvement.
-  No KD/test or clean modern transfer conclusion. Do not tune more LRs/budgets,
-  launch clipping sweeps/methods/seeds123_456, or edit manuscript/final_evidence.
+  STOP. Review research/manuscript_v2/GPT_WRITING_HANDOFF.md and the compiling
+  skeleton under 论文投稿/manuscript_v2. A new instruction is required before
+  full manuscript writing. No new training, sweep, clipping control, scaling
+  or method. Phase4C gate failed; no clean modern KD confirmation.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
 resolved_protocol:
+  - date: "2026-10-04"
+    issue: "V2 evidence/story package integrates Phase3A and Phase4A-4C without changing frozen Phase2 evidence or the old CAC manuscript. Four conservative claims; hypothesis-testing story; fourteen publisher-metadata-verified related works with overlap/full-text TODOs; ten-section compiling LaTeX skeleton with comment notes, eight planning tables and five figure placeholders. No new experiments or full manuscript. State manuscript_v2_ready_for_writing; STOP."
   - date: "2026-10-04"
     issue: "Phase4C finished three seed42 CE LR trials, exactly24M new targets, disjoint from fixed preparation step256. Best1e-5 selects977 with validation improvement0.004849292809<0.01, so STOP_MODERN_CONTINUATION_NOT_ESTABLISHED. No KD/gradient-ratio probe/test. All checks finite, clip fractions0.060389/0.079836/0.082907;2e-5 finite norm outlier14.602655 at656 disclosed without retry/exclusion. Final audit PASS. Entire modern extension stopped."
   - date: "2026-10-04"
@@ -98,6 +116,16 @@ resolved_infrastructure:
   - date: "2026-09-16"
     issue: Removed the invalid eager src.data import, corrected the endpoint-harm test fixture, and passed all 10 KD/branch-diagnostic/statistical tests remotely.
 artifacts:
+  manuscript_v2_evidence: research/manuscript_v2/EVIDENCE_INTEGRATION_V2.md
+  manuscript_v2_claims: research/manuscript_v2/CLAIMS_V2.md
+  manuscript_v2_story: research/manuscript_v2/MANUSCRIPT_STORY_V2.md
+  manuscript_v2_table_figure_plan: research/manuscript_v2/TABLE_FIGURE_PLAN_V2.md
+  manuscript_v2_related_work: research/manuscript_v2/RELATED_WORK_GAPS.md
+  manuscript_v2_citation_audit: research/manuscript_v2/citation_verification.json
+  manuscript_v2_table_sources: research/manuscript_v2/table_source_manifest.json
+  manuscript_v2_handoff: research/manuscript_v2/GPT_WRITING_HANDOFF.md
+  manuscript_v2_main: 论文投稿/manuscript_v2/main.tex
+  manuscript_v2_compile_qa: research/manuscript_v2/skeleton_qa.json
   project_map: docs/project_map.md
   experiment_registry: docs/generated/experiment_registry.csv
   inventory: docs/generated/experiment_inventory.md

@@ -1,0 +1,16 @@
+% Generated from frozen sources by build_tables.py; not a prose draft.
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+Offline predictor & Conditions & AUROC & Sign accuracy & Spearman \\
+\midrule
+Validation dot a & 21 & 0.644444 & 0.571429 & 0.249351 \\
+Quadratic gain & 21 & 0.644444 & 0.571429 & 0.249351 \\
+Virtual nominal gain & 21 & 0.700000 & 0.571429 & 0.427273 \\
+\bottomrule
+\end{tabular}
+\caption{Local diagnostics do not reliably predict endpoint transfer (planning table).}
+\label{tab:local_diagnostics}
+\par\smallskip\begin{minipage}{0.96\linewidth}\footnotesize 21 conditions in seven dependent families; three calibration subsets each, not 63 independent runs. First/second-order signs agree on 63/63 calibration rows, but are calibration-stable for only 11/21 conditions. Curvature adds no sign separation. Negative diagnostic, not a proposed successful Safe-lambda method.\end{minipage}
+\end{table}

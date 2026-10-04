@@ -1,0 +1,16 @@
+% Generated from frozen sources by build_tables.py; not a prose draft.
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{lrrr}
+\toprule
+Source & $\alpha$ & Teacher val NLL & Gain (mean $\pm$ SD) \\
+\midrule
+Fused & 0.5 & 4.300646 & 0.155665 $\pm$ 0.007692 \\
+Transformer\_only & 1.0 & 4.445647 & 0.134868 $\pm$ 0.008906 \\
+Grassmann\_only & 0.0 & 4.652064 & 0.040991 $\pm$ 0.006733 \\
+\bottomrule
+\end{tabular}
+\caption{WT2 fixed-source ablation (planning table).}
+\label{tab:teacher_sources}
+\par\smallskip\begin{minipage}{0.96\linewidth}\footnotesize Three paired students; teacher NLL is on the archived validation subset. Fused minus Transformer gain: $0.020797\pm0.001214$; fused minus Grassmann: $0.114674\pm0.001001$, both 3/3 positive. Transformer-only retains \texttt{CLIP\_SATURATION\_WARNING}; quality and composition also vary. No geometry-specific benefit is supported.\end{minipage}
+\end{table}

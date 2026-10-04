@@ -1,5 +1,42 @@
 # Grassmann / Transformer / Distillation Research Handoff
 
+## 2026-10-04 Manuscript V2 evidence/story/skeleton complete — STOP
+
+Current state `manuscript_v2_ready_for_writing`; experimental program is
+permanently frozen. New authorization allowed evidence integration and a
+new manuscript skeleton only, not full paper prose or further experiments.
+This entry supersedes historical next-action restrictions against any
+manuscript preparation, while preserving every old experiment/decision.
+
+Read `research/manuscript_v2/GPT_WRITING_HANDOFF.md`, then the V2 integration,
+four-claim set, story, table/figure plan and related-work overlap audit.
+Recommended title: What Makes Knowledge Distillation Transfer? Controlled
+Evidence from Warm-Start Language Modeling. Paired Gain=test_NLL_CE−test_NLL_KD
+is an operational convention, not a new theorem. V2-H1–H4 are retrospective
+writing hypotheses, not a newly claimed preregistration.
+
+Primary evidence is Phase2 PTB/WT2/TinyStories +/+/- across three students;
+fixed-composition J/A state reversal; weaker G versus C0 yet positive transfer;
+source/TT controls removing Grassmann/heterogeneity claims. Phase3A is negative
+offline-diagnostic evidence, not a proposed successful method. Phase4A/B is a
+bounded modern stress test: negative CE-relative gains, but9/9 step0 choices
+prefer S0. Phase4C fails the0.01 headroom gate with small positive0.004849292809
+validation improvement; no KD/new test. No clean modern confirmation.
+
+Keep all clipping/protocol/gradient-event warnings, subset/full-validation
+teacher NLL scopes, TT quality/count/alpha-LR differences and shared-seed
+dependencies. Fourteen publisher-exported citations are metadata-verified;
+closest-paper full-text comparisons and model/dataset citations remain TODOs.
+No first-harmful-KD, new universal predictor or causal geometry claim.
+
+New source `论文投稿/manuscript_v2/main.tex` is venue-neutral article with ten
+sections, eight numerical planning tables, five labeled figure boxes and
+comment/TODO notes, not a complete paper. Compile QA is archived in
+`research/manuscript_v2/skeleton_qa.json`; build products remain outputs-only.
+Frozen `research/final_evidence/` and old CAC source remain hash-identical.
+Project-specific memory/journal updated. STOP before full manuscript writing;
+no experiment, sweep, clipping control, scaling or method automatically.
+
 ## 2026-10-04 Phase4C complete — CE headroom gate failed / STOP
 
 DECISION STOP_MODERN_CONTINUATION_NOT_ESTABLISHED. Exact fixed seed42

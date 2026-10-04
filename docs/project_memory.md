@@ -324,3 +324,12 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - CE有小幅validation headroom，不能写成零改善或普遍无法continuation；不足以建立预注册non-degenerate regime。没有KD025/KD1、initial-gradient probe或新test；这些量留空/NOT_RUN，不填旧test或0。Phase4B degeneracy尚未修复，不能添加clean modern transfer claim。
 - CE clipping0.060389/0.079836/0.082907，无饱和，observed nonfinite/overflow0。2e-5 step656 finite norm14.602655 clipped，cause/impact UNKNOWN，无排除/重跑；bestLR是另一arm。已保留event与完整telemetry。
 - 完整7类要求文件及raw/auditPASS已生成。精确S0、teacher、data、old code、论文/final_evidence保护均通过。状态experiments_frozen_phase4c_gate_failed，STOP整个modern extension，不补LR/budget/clip/method/seeds。
+
+## 37. 2026-10-04 Manuscript V2 evidence integration and skeleton / STOP
+
+- 用户明确授权从64db3aeb整合证据与准备新骨架，不写完整正文；实验永久冻结，不补任何训练/调参/控制/方法。旧CAC tex与research/final_evidence继续保持原始哈希。
+- 新research/manuscript_v2含证据分层、C1–C4保守主张、假设检验叙事、表图规划、文献重叠审计与GPT交接。V2-H1–H4仅是回顾性写作标签，不冒充事前预注册。核心是配对CE-relative结果与反例，不是Grassmann方法论文。
+- Phase2 +/+/-、J/A固定组成符号反转、弱G仍正迁移、TT优于TG构成主线；Phase3A为失败离线诊断；Phase4B为受continuation退化/clipping限制的压力测试，Phase4C门控失败未修复，不能当成clean modern确认。
+- 14篇文献从官方出版记录获取BibTeX并核验元数据；ATKD直接先行、teacher质量不足等不是首创。最接近工作的完整protocol比较及基础dataset/model文献仍TODO，不声称全面文献覆盖。
+- 新论文投稿/manuscript_v2采用venue-neutral article、10章、8张真实数值规划表、5个图框、appendix与注释TODO，无润色全文；本机LaTeX构建，不访问GPU。CSV源哈希、编译和冻结文件保护QA归档在V2。
+- 状态manuscript_v2_ready_for_writing；仅显式新授权后开始要求范围内的正文写作，仍不得默认启动任何新实验。Git本机执行，保留用户已有.gitignore改动不stage。

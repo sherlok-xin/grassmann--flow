@@ -1,0 +1,9 @@
+# table_efficiency
+
+Frozen Phase-2 snapshot, copied without changing values. Source: research/final_evidence/table_efficiency.csv. Legacy/negative controls only: do not pool into confirmatory tables.
+
+| model | parameters_m | parameter_reduction_vs_teacher_pct | test_ppl | ppl_evidence | batch1_latency_ms | batch8_latency_ms | batch32_latency_ms | batch1_change_vs_teacher_pct | batch8_change_vs_teacher_pct | batch32_change_vs_teacher_pct | batch32_tokens_per_sec | batch32_peak_memory_gb | status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Teacher | 36.264305 | 0.00 | 50.1125 | single_frozen_checkpoint | 15.482 | 19.145 | 55.984 | 0.00 | 0.00 | 0.00 | 139644.7 | 4.9089 | PARTIAL_HARDWARE_SPECIFIC |
+| Quality_student | 31.434257 | 13.32 | 51.8339 | three_seed_mean_sd_0.0554 | 16.089 | 19.332 | 48.460 | 3.92 | 0.97 | -13.44 | 161326.9 | 4.8711 | PARTIAL_LEGACY_ENDPOINT |
+| Efficiency_student | 23.565121 | 35.02 | 53.9139 | three_seed_mean_sd_0.0692 | 11.502 | 16.559 | 34.959 | -25.71 | -13.51 | -37.55 | 223626.4 | 4.7919 | PARTIAL_LEGACY_ENDPOINT |
