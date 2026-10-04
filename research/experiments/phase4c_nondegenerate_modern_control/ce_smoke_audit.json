@@ -1,0 +1,60 @@
+{
+  "seed": 42,
+  "arm": "ce_lr5e-6",
+  "lambda": 0.0,
+  "budget_target_tokens": 8000000,
+  "steps": 977,
+  "seq_len": 256,
+  "global_batch": 32,
+  "microbatch": 4,
+  "optimizer": {
+    "lr": 5e-06,
+    "weight_decay": 0.01,
+    "betas": [
+      0.9,
+      0.95
+    ],
+    "eps": 1e-08
+  },
+  "scheduler": "Phase4A 5% linear warmup + cosine; 977 steps; warmup49",
+  "temperature": 2,
+  "kd_reduction": "token_mean forward KL times T squared",
+  "gradient_clip": 1.0,
+  "precision": "FP32 weights / BF16 autocast / FP32 CE-KL / no GradScaler",
+  "attention": "sdpa",
+  "checkpoint_schedule": [
+    0,
+    256,
+    512,
+    768,
+    977
+  ],
+  "selection": "minimum validation NLL including fixed S0 step0; ties earlier",
+  "initial_validation_nll": 2.9671119410592275,
+  "s0_sha256": "f497cf2310050b163ecb167f75ae4f89c2780d4165aa8f25ff77025715f4bd28",
+  "teacher_sha256": null,
+  "manifest_sha256": "b81200c6648a8dfbe2a3d9b432800377152162f490ac7290b3f91fb8492974d1",
+  "order_sha256": "c43ec9fc22b28cd14b2586707858039ad8931ce621d4d24fe4b63ef8cce42708",
+  "freeze_commit": null,
+  "framework": {
+    "torch": "2.6.0a0+df5bbc09d1.nv24.11"
+  },
+  "test_evaluated": false,
+  "status": "SMOKE_PASS",
+  "consumed_target_tokens": 16384,
+  "best_validation_nll": 2.9671119410592275,
+  "best_validation_step": 0,
+  "best_validation_tokens": 0,
+  "selected_path": "outputs/phase4a_modern/runs/fineweb/s0/selected.pt",
+  "clip_fraction": 0.5,
+  "nonfinite_fraction": 0.0,
+  "overflow_fraction": 0.0,
+  "gradient_norm_mean": 0.9917042255401611,
+  "gradient_norm_max": 1.0160603523254395,
+  "ce_mean": 2.9625950008630753,
+  "scaled_kl_mean": 0.0,
+  "wall_seconds": 1.9084211010485888,
+  "peak_allocated_gib": 3.5496983528137207,
+  "warning": "",
+  "overflow_interpretation": "No GradScaler; losses, preclip norms, parameters checked finite every update."
+}

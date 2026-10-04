@@ -1,5 +1,18 @@
 # Grassmann / Transformer / Distillation Research Handoff
 
+## 2026-10-04 Phase4C bounded authorization — CE gate pending
+
+Explicit new user authorization permits only a seed42 non-degenerate
+continuation control. Read research/experiments/phase4c_nondegenerate_modern_control/.
+The exact preparation step256 state exists and its hash matches provenance;
+reuse it by fixed time point, not a new validation choice. Freeze a disjoint
+8M-target continuation manifest before any outcomes, then only three CE LRs
+5e-6/1e-5/2e-5 with S0 eligible. Gate requires validation improvement>=.01
+and a trained selected state. Failure stops the entire modern extension.
+No KD before gate; if passed commit chosen protocol before lambda.25/1 KD.
+No lambda5, new seed, clipping sweep, new method or manuscript/final_evidence
+edit. Phase4B evidence and Phase3A terminal status remain unchanged.
+
 ## 2026-10-04 Phase 4B complete — both-strength negative replication / STOP
 
 All eight new FineWeb-Edu runs finished: independent S0 preparations for

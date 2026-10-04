@@ -309,3 +309,10 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - CE456在step711出现一次finite norm86.482155，clip生效；selected CE是更早step256，因而saved weights不直接受该事件影响，但latertrajectory/selection影响未知。CE456_GRADIENT_SPIKE_WARNING保留，无改gate/exclusion/retry/新控制。
 - S0 prep selected256/256/1221，CE selected1221/1221/256，所有KD selected1221。Final audit PASS：独立S0/order hashes、matched continuation order、预算、选择、telemetry、teacher/data/论文/final_evidence哈希均通过。旧Phase4A源码和锁定Phase4B train/adapter源码未改。
 - 产物位于 research/experiments/phase4b_fineweb_multiseed_replication/，含完整报告/交接、主比较/step0/optimization/statistics CSV、raw compact telemetry及两组vectorPDF/300-dpiPNG图。状态 experiments_frozen_phase4b_complete；STOP，不运行任何clipping control或后续modern实验，不改论文。
+
+## 35. 2026-10-04 Phase4C bounded CE-gate authorization
+
+- 新授权仅seed42：固定early preparation step256，2,097,152 targets；existing selected.pt恰好就是该step，SHA f497cf23...匹配，不重新按validation挑S0。
+- 冻结manifest排除early S0的8192 target chunks，从原seed4242 permutation过滤后取31250新chunks，8M targets；manifest SHA b81200c6648a8dfbe2a3d9b432800377152162f490ac7290b3f91fb8492974d1。相邻context允许一token重叠，但target positions不重叠。
+- CE-only LR gate只允许5e-6/1e-5/2e-5，977 updates，validation steps0/256/512/768/977；选择包含S0，不做test LR selection。需trained selected且val改善>=.01，失败即停止整个modern extension。
+- 条件KD仅lambda.25/1，必须CE gate通过后另行commit冻结selected LR/hash/全协议，再运行。无lambda5、clipping sweep、新方法、论文/final_evidence改动或额外seed。9项单测通过，先做CE-only smoke。

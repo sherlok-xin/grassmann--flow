@@ -1,13 +1,13 @@
 schema_version: 1
 updated: "2026-10-04"
-status: experiments_frozen_phase4b_complete
-phase: phase4b_fineweb_multiseed_replication_complete
-decision: FINEWEB_L1_L5_NEGATIVE_REPLICATED
-training_authorized: false
+status: phase4c_ce_gate_authorized
+phase: phase4c_nondegenerate_modern_control
+decision: CE_GATE_PENDING
+training_authorized: true
 objective: >-
-  Phase4B is complete. Review protocol-bounded FineWeb negative transfer at
-  both strengths across three adapted-student seeds, persistent clipping and
-  the all-S0 early-stop diagnostic. No further training or manuscript edit.
+  Explicit Phase4C authorization: fixed seed42 preparation step256, disjoint8M
+  targets, CE-only LR gate5e-6/1e-5/2e-5. No KD unless validation improves>=.01
+  and a trained state is selected; freeze/commit protocol before KD025/KD1.
 primary_metric: paired_test_nll_gain
 selection_metric: validation_nll
 secondary_metrics:
@@ -16,7 +16,7 @@ secondary_metrics:
   - tokens_per_second
   - peak_memory_gb
 constraints:
-  - experiments_frozen_phase4b_complete_no_new_training_or_control
+  - phase4c_only_bounded_ce_gate_then_conditional_kd025_kd1
   - do_not_launch_phase2h
   - final_evidence_ledger_is_authoritative
   - heavy_training_remote_only_10_42_0_197
@@ -62,10 +62,9 @@ hypotheses:
     title: Frozen SmolLM2 FineWeb-Edu warm-start KD harms matched CE continuation
     status: confirmed_fineweb_l1_l5_negative_three_seeds_fixed_protocol_clip_warning_all_s0_diagnostic
 next_action: >-
-  STOP. Read the Phase4B report and primary/diagnostic/optimization evidence.
-  Both strengths are 3/3 negative, but all9 diagnostic arms choose S0 and CE
-  itself harms likelihood. Retain clipping and CE456 gradient-event warnings.
-  No clipping control, further modern experiment, method or manuscript edit.
+  Run only preregistered CE gate after smoke and protocol commit. No test LR
+  selection. If gate fails STOP; if passes commit selected KD settings first.
+  No lambda5, clipping sweeps, new method, extra seeds or manuscript edits.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.

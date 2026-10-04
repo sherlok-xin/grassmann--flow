@@ -396,3 +396,9 @@
 - 所有lambda5全程clip=1.0，永久warning；lambda1 clipping约0.7985–0.8542；observed nonfinite/overflow全0。CE456有限梯度尖峰86.48发生于step711，而primary选中step256；保留未知后续trajectory/selection影响，不调参/排除/补跑。
 - Collector、final read-only audit均通过，生成主/诊断/optimization/statistics/state CSV、raw summaries/压缩step telemetry、完整报告handoff与两组PDF/300-dpiPNG图。图形检查修正长ylabel裁切，不改变数据。
 - 论文/final_evidence aggregate与parent e4b9878一致；Phase4A目录和Phase4B锁定训练源码保持不变。项目设为 experiments_frozen_phase4b_complete，提交compact artifacts后STOP，不自动启动后续实验。
+
+## [2026-10-04] Phase4C exact early-S0 audit and manifest freeze
+
+- Parent6506c79；step256 checkpoint SHA与archive一致，metric row与summary共同确认2,097,152 targets，prep seed42/order hash一致。197 GPU0/1/2/3读取时均空闲。所有重计算仍仅远端，本机只edit/git。
+- continuation manifest固定8M disjoint targets、31250 chunks；排除8192已用chunks，无validation/test训练混入。manifest SHA b81200c6648a8dfbe2a3d9b432800377152162f490ac7290b3f91fb8492974d1。
+- 新5项protocol tests与旧4项packing/KL/gradient/scheduler tests全部PASS；仅CE smoke先行，未运行KD或test forward。CE三LR门控需先commit。既有.gitignore用户修改保留不stage。

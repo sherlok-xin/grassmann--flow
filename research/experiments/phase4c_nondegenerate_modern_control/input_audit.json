@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "parent_commit": "6506c79e560efd2bbdacce7b87e7164b21d56180",
+  "fixed_s0_step": 256,
+  "fixed_s0_targets": 2097152,
+  "s0_sha256": "f497cf2310050b163ecb167f75ae4f89c2780d4165aa8f25ff77025715f4bd28",
+  "s0_validation_nll_recorded": 2.9671119410592275,
+  "historical_selection_note": "Historical selected.pt happens to be exact step256; Phase4C chooses this fixed time point, not a new validation optimum.",
+  "teacher_sha256": "c7411708b61e6524ef05bd24e9e618f19fcc119e9a3c0664c5f4f169dbf16928",
+  "continuation_manifest_sha256": "b81200c6648a8dfbe2a3d9b432800377152162f490ac7290b3f91fb8492974d1",
+  "continuation_order_sha256": "c43ec9fc22b28cd14b2586707858039ad8931ce621d4d24fe4b63ef8cce42708",
+  "excluded_chunks": 8192,
+  "additional_targets": 8000000,
+  "preparation_summary_sha256": "9018c64de3aac143e576763e29e7cab3d86c961c6c6db7b06788bcf18c250f10",
+  "preparation_metrics_sha256": "e11ddbe62a068388eb33e7d8a8ed46e671b70ff05fc6dc5ace8334eefaa93ee0",
+  "test_forward": false
+}
