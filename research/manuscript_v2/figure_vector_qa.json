@@ -1,0 +1,242 @@
+{
+  "date": "2026-10-04",
+  "input_commit": "11b3ed94344c7c8e41ced2d3e03311da1ad759c8",
+  "activity": "Semantic vector reconstruction only; no bitmap tracing, OCR, embedded reference rasters, model access, or experiments.",
+  "status": "VECTOR_AND_LAYOUT_CHECKS_PASS_WITH_PRINT_READABILITY_LIMITATION",
+  "figures": {
+    "fig1_paired_protocol": {
+      "canvas": [
+        1672,
+        941
+      ],
+      "aspect_ratio": 1.7768331562167907,
+      "pdf_points": [
+        489.59999999999997,
+        275.54641148325356
+      ],
+      "png_pixels": [
+        4080,
+        2296
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "svg_text_nodes": 37,
+      "pdf_embedded_images": 0,
+      "font_family": "Liberation Sans, Arial, Helvetica, sans-serif",
+      "base_text_size_pt_at_6_8in": [
+        5.534,
+        10.249
+      ],
+      "bounds_violations": [],
+      "text_overlaps": [],
+      "sha256": {
+        ".svg": "a2c3a6bec4c08f2c4aa1caf1f01b30ec3aa847c53124fcf3423e047b73bdaf39",
+        ".pdf": "8941d582144db23802ef3313fc14798ea7bd6cd9ea2f81093986235963c3136c",
+        "_600dpi.png": "685d44c8ec7dffd355100c762603b4b7375fb073fe7f57f6d0e0707050856e31"
+      },
+      "reference_path": "论文投稿/manuscript_v2/figures/reference_png/fig1_paired_protocol_ref.png",
+      "reference_sha256": "7c263c457d8fedca485aae647020a247a8e04dc7cff73f383f0cf0dc30c23894",
+      "paths": {
+        "svg": "论文投稿/manuscript_v2/figures/fig1_paired_protocol.svg",
+        "pdf": "论文投稿/manuscript_v2/figures/fig1_paired_protocol.pdf",
+        "png": "论文投稿/manuscript_v2/figures/fig1_paired_protocol_600dpi.png"
+      },
+      "minimum_text_pt_including_scripts_at_6_8in": 4.919,
+      "visual_comparison": "MANUALLY_REVIEWED",
+      "readability_at_two_column_width": "LIMITED_FINE_PRINT"
+    },
+    "fig3_teacher_quality": {
+      "canvas": [
+        1774,
+        887
+      ],
+      "aspect_ratio": 2,
+      "pdf_points": [
+        489.59999999999997,
+        244.79999999999998
+      ],
+      "png_pixels": [
+        4080,
+        2040
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "svg_text_nodes": 29,
+      "pdf_embedded_images": 0,
+      "font_family": "Liberation Sans, Arial, Helvetica, sans-serif",
+      "base_text_size_pt_at_6_8in": [
+        5.931,
+        15.179
+      ],
+      "bounds_violations": [],
+      "text_overlaps": [],
+      "sha256": {
+        ".svg": "11636bb85f91e4694b1559994695340ffc7ae11147d7620990af0604496bdf48",
+        ".pdf": "0436d7a5eebcc989627979a65fdb5d102e9b1705a818853e7cfda340486b8342",
+        "_600dpi.png": "9b5cda9672eff88896a045b131fc421e6a2c4cae909246b57aa5c395688edb51"
+      },
+      "reference_path": "论文投稿/manuscript_v2/figures/reference_png/fig3_teacher_quality_ref.png",
+      "reference_sha256": "c410be31c0d61bb32a1e87cb60024687d84d924f67a3cc39ef134e3f2f4562c1",
+      "paths": {
+        "svg": "论文投稿/manuscript_v2/figures/fig3_teacher_quality.svg",
+        "pdf": "论文投稿/manuscript_v2/figures/fig3_teacher_quality.pdf",
+        "png": "论文投稿/manuscript_v2/figures/fig3_teacher_quality_600dpi.png"
+      },
+      "minimum_text_pt_including_scripts_at_6_8in": 5.931,
+      "visual_comparison": "MANUALLY_REVIEWED",
+      "readability_at_two_column_width": "LIMITED_FINE_PRINT"
+    },
+    "fig4_ensemble_control": {
+      "canvas": [
+        1983,
+        793
+      ],
+      "aspect_ratio": 2.5006305170239598,
+      "pdf_points": [
+        489.59999999999997,
+        195.79062027231467
+      ],
+      "png_pixels": [
+        4080,
+        1632
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "svg_text_nodes": 44,
+      "pdf_embedded_images": 0,
+      "font_family": "Liberation Sans, Arial, Helvetica, sans-serif",
+      "base_text_size_pt_at_6_8in": [
+        4.815,
+        9.629
+      ],
+      "bounds_violations": [],
+      "text_overlaps": [],
+      "sha256": {
+        ".svg": "1689e117be02e23479bef4a36bf6b1af64e11eefd0edf5f8786305457a0775ca",
+        ".pdf": "2f46e16c1dd2a0ad24fe931a0d63a6176f2c5deda790082bcba6261f3d3cb295",
+        "_600dpi.png": "eae16a5aac3696af5ee0fe31088e9abbfc11baff07f347ed2e364993e01ad425"
+      },
+      "reference_path": "论文投稿/manuscript_v2/figures/reference_png/fig4_ensemble_control_ref.png",
+      "reference_sha256": "aed4126b9f09f2e1fb18571f39f7b1e26afba5ef333da4d21110c97c8b9a42a4",
+      "paths": {
+        "svg": "论文投稿/manuscript_v2/figures/fig4_ensemble_control.svg",
+        "pdf": "论文投稿/manuscript_v2/figures/fig4_ensemble_control.pdf",
+        "png": "论文投稿/manuscript_v2/figures/fig4_ensemble_control_600dpi.png"
+      },
+      "minimum_text_pt_including_scripts_at_6_8in": 4.815,
+      "visual_comparison": "MANUALLY_REVIEWED",
+      "readability_at_two_column_width": "LIMITED_FINE_PRINT"
+    },
+    "figA1_teacher_architecture": {
+      "canvas": [
+        1774,
+        887
+      ],
+      "aspect_ratio": 2,
+      "pdf_points": [
+        489.59999999999997,
+        244.79999999999998
+      ],
+      "png_pixels": [
+        4080,
+        2040
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "svg_text_nodes": 47,
+      "pdf_embedded_images": 0,
+      "font_family": "Liberation Sans, Arial, Helvetica, sans-serif",
+      "base_text_size_pt_at_6_8in": [
+        3.795,
+        8.28
+      ],
+      "bounds_violations": [],
+      "text_overlaps": [],
+      "sha256": {
+        ".svg": "927b8589bde8db598c29c6cdb51c44034c6d1ae80a8233a811a2e7148ebe68ba",
+        ".pdf": "ce2bc5ed19700570b14d93e899d91ac0f76110aa685bfcc8d3dbfd08f0ff3df3",
+        "_600dpi.png": "8e81a34fcd168364286001777d0be23b7485c8ba07b7905202bf1b9b99af1cff"
+      },
+      "reference_path": "论文投稿/manuscript_v2/figures/reference_png/figA1_architecture_ref.png",
+      "reference_sha256": "7154aff3281e4f2f7b601597e390ca4eab8976f63b506da0b32198c42f5bdcde",
+      "paths": {
+        "svg": "论文投稿/manuscript_v2/figures/figA1_teacher_architecture.svg",
+        "pdf": "论文投稿/manuscript_v2/figures/figA1_teacher_architecture.pdf",
+        "png": "论文投稿/manuscript_v2/figures/figA1_teacher_architecture_600dpi.png"
+      },
+      "minimum_text_pt_including_scripts_at_6_8in": 2.782,
+      "visual_comparison": "MANUALLY_REVIEWED",
+      "readability_at_two_column_width": "LIMITED_FINE_PRINT"
+    }
+  },
+  "checks": {
+    "semantic_vector_primitives": "PASS",
+    "reference_aspect_ratios": "PASS",
+    "white_background": "PASS",
+    "editable_svg_text": "PASS",
+    "pdf_font_embedding": "PASS",
+    "pdf_embedded_images": "ZERO_IN_ALL_FOUR",
+    "text_owner_bounds": "PASS",
+    "pairwise_text_overlap": "PASS",
+    "manual_arrow_and_equation_review": "PASS",
+    "reference_wording_with_authorized_changes": "PASS",
+    "full_manuscript_copy_compile": "PASS",
+    "fine_print_at_two_column_width": "LIMITED_NOT_FULLY_CERTIFIED"
+  },
+  "compile": {
+    "mode": "Temporary full manuscript copy with actual four vector PDF figures; production manuscript sources untouched.",
+    "directory": "outputs/manuscript_v2_vector_qa/manuscript-wUmJtk",
+    "command": "latexmk -pdf -interaction=nonstopmode -halt-on-error -outdir=build main.tex",
+    "exit_code": 0,
+    "pages": 17,
+    "text_width_inches": 6.5,
+    "rendered_and_inspected_pages": {
+      "fig1_paired_protocol": 4,
+      "fig3_teacher_quality": 8,
+      "fig4_ensemble_control": 10,
+      "figA1_teacher_architecture": 16
+    },
+    "overfull_notices": 0,
+    "underfull_figure_notices": 0,
+    "underfull_bibliography_notices": 3,
+    "unresolved_references": 0,
+    "duplicate_destinations": 0,
+    "pdf_sha256": "a0a98c1272b041ad7a48659ba27d76c0a9e049dc33da7755a3e39db6c7bd586a",
+    "log_sha256": "293ae8ffb27863ee3546aea903295d29b08e6d660ecd2c36ec71f944d70a96a6"
+  },
+  "protected_user_source_sha256": {
+    "论文投稿/manuscript_v2/main.tex": "5d2dd6c64e804c5dd360e9a9837e1d3b9e38524ca61c53711d699fecc72559e0",
+    "论文投稿/manuscript_v2/sections/01_introduction.tex": "49df0525f643851f275515ad6e76c87eeaaebb9371a971d429f2b33058a58282"
+  },
+  "font_notes": {
+    "primary_family": "Liberation Sans",
+    "svg_fallback_stack": "Liberation Sans, Arial, Helvetica, sans-serif",
+    "pdf_symbol_fallbacks": {
+      "fig1_paired_protocol": "Arimo",
+      "figA1_teacher_architecture": "NimbusSans-Regular"
+    },
+    "all_pdf_fonts_embedded_and_subset": true
+  },
+  "authorization_notes": {
+    "fig1": "Use 'the tested local diagnostics are not reliable predictors'.",
+    "fig3": "All wording and causal boundaries unchanged.",
+    "fig4": "Keep G/T/TG/TT gains and both cautions. Remove all decorative green rank arrows and gain-size adjectives including 'moderate gain'; use numerical gain and Positive transfer. Keep module geometry and the resulting whitespace.",
+    "figA1": "W_red and p_ij replace the visible reference W_in and p as explicitly instructed. Keep causal z_(t−Δ) → z_t, valid-window mean, epsilon floor, and generic alpha fusion."
+  },
+  "unavoidable_differences": [
+    "Known sans-serif font metrics and antialiasing differ from raster references; selected long labels were fitted within unchanged modules.",
+    "References contain mild shading; masters use flat pastel fills, white background, and vector borders.",
+    "Native integer PNG height incurs at most half a pixel of aspect-ratio rounding.",
+    "Dense frozen layout contains sub-7pt annotations at full two-column width; no cropping, enlargement or rearrangement was performed."
+  ],
+  "production_manuscript_integration": "NOT_PERFORMED; placeholders remain in committed prose, to keep this commit figure/QA-only.",
+  "stop": "Vector reconstruction complete. No further experiment, redesign, manuscript drafting, or automatic integration."
+}
