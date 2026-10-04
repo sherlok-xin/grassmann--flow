@@ -333,3 +333,11 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - 14篇文献从官方出版记录获取BibTeX并核验元数据；ATKD直接先行、teacher质量不足等不是首创。最接近工作的完整protocol比较及基础dataset/model文献仍TODO，不声称全面文献覆盖。
 - 新论文投稿/manuscript_v2采用venue-neutral article、10章、8张真实数值规划表、5个图框、appendix与注释TODO，无润色全文；本机LaTeX构建，不访问GPU。CSV源哈希、编译和冻结文件保护QA归档在V2。
 - 状态manuscript_v2_ready_for_writing；仅显式新授权后开始要求范围内的正文写作，仍不得默认启动任何新实验。Git本机执行，保留用户已有.gitignore改动不stage。
+
+## 38. 2026-10-04 Manuscript V2 scoped body draft / STOP
+
+- 输入1c153e49；用户只授权Section 3–8。六章已改为自然英文段落，以配对Gain、跨域+/+/−、固定组成J/A和弱G反例为主线，保留TT优于TG以及失败离线诊断、现代压力测试的边界。
+- 用户已有main.tex摘要及Introduction正文原样保留，不纳入本次提交；只在本地删除重复Introduction标题/label及相邻空行，修复后续章节编号。原Git版本已只有一个标题。Section 2/9/10、appendix不写，旧CAC及final_evidence保持哈希。
+- 保留clipping/AMP/失败gate/有限梯度事件警告；明确教师validation子集与全量scope、弱教师比较对象C0、TT参数/质量/alpha LR不匹配、21诊断条件依赖与现代adaptation seed而非pretraining seed。
+- ml-paper-writing用于证据写作与编译QA；本机只LaTeX及只读CSV/hash/引用检查，不运行新训练、模型forward或实验。正文状态与只读QA见research/manuscript_v2/BODY_DRAFT_STATUS.md及body_draft_qa.json。
+- 五张图仍占位框、八表保留planning captions，数据集/模型引用及完整近邻文献比较待核验。状态manuscript_v2_body_sections_3_to_8_drafted，STOP，等待新写作授权。

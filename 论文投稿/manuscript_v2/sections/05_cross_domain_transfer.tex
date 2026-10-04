@@ -1,15 +1,16 @@
 \section{Reproducible Positive and Negative Transfer}
 \label{sec:cross-domain-transfer}
-\writingtodo{Present C1 using matched three-seed endpoints, not legacy results.}
-% - E1/PTB +0.144937 +/-0.003938; E2/WT2 +0.155665 +/-0.007692;
-%   E3/TinyStories -0.107219 +/-0.000415; each three consistent signs.
-% - All are lambda5 T2 token_mean; exact S0 within a seed.
-% - TinyStories CE improves over S0, unlike modern FineWeb Phase4B regime.
-% TODO[FIGURE]: dots for each seed plus mean/sample SD; zero line.
-% MUST NOT: corpus identity as cause; pooled absolute NLL across tokenizers;
-% extra independent seeds from reused source/teacher controls.
+
+Table~\ref{tab:cross_domain_transfer} reports the matched three-seed comparisons. Warm-start KD improves PTB test NLL by $0.144937\pm0.003938$ and WikiText-2 by $0.155665\pm0.007692$ (mean $\pm$ sample SD). The corresponding mean CE and KD NLLs are 4.082352 and 3.937415 on PTB, and 4.276364 and 4.120699 on WikiText-2. Every paired gain is positive in both domains.
+
+TinyStories exhibits the opposite direction. Mean test NLL increases from 1.582197 under CE to 1.689416 under KD, yielding a gain of $-0.107219\pm0.000415$. All three independently prepared students are harmed relative to matched CE continuation. Figure~\ref{fig:cross_domain_gain} places these paired gains on the same sign convention.
+
+In these small-model TinyStories runs, CE improves over $S_0$ on test for every seed, unlike the modern continuation regime discussed in Section~\ref{sec:external-validity}. All accepted endpoints are finite. KD nevertheless has higher mean gradient norms and clipping fractions of 0.237--0.283, compared with 0.000391 for CE; maximum AMP overflow/nonfinite fractions are 0.000611 and 0.000488, respectively. The negative result is therefore specific to the frozen optimization protocol, not an optimization-independent property of KD. An incomplete, power-capped seed-456 attempt was excluded; its authorized, protocol-identical restart from scratch is the accepted endpoint (Appendix~\ref{app:protocols}).
+
+The positive--positive--negative pattern establishes that this token-normalized warm-start KD recipe has no uniform transfer effect across the tested configurations. It does not identify the cause of the sign change: teacher state, student preparation, and corpus properties vary jointly across domains. The controlled analyses that follow investigate candidate explanations within WikiText-2. Unmatched legacy results, including single-seed observations with batch-normalized KL, are excluded from this confirmatory comparison.
+
 \input{tables/cross_domain_transfer}
-\figureplaceholder{F2: Cross-domain paired gains}
-{PTB, WT2 and TinyStories; three student-seed gain dots per domain, mean and
-sample SD. Exact endpoint inventory; no pooled absolute-NLL ranking.}
+\figureplaceholder{F2: Cross-domain paired transfer}
+{Per-seed CE-relative NLL gain on PTB, WikiText-2, and TinyStories;
+mean and sample SD over three independent student preparations per domain.}
 {fig:cross_domain_gain}

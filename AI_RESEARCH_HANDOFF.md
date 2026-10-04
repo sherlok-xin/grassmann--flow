@@ -1,5 +1,30 @@
 # Grassmann / Transformer / Distillation Research Handoff
 
+## 2026-10-04 Manuscript V2 Sections 3–8 first draft complete — STOP
+
+Current state `manuscript_v2_body_sections_3_to_8_drafted`. From input
+`1c153e49efa19132481fb74bbc98032bf610544e`, only the six body sections
+were authorized and drafted. Read `research/manuscript_v2/BODY_DRAFT_STATUS.md`,
+the six LaTeX sources, and `body_draft_qa.json`. No scientific conclusions
+changed and no new experiment, model forward, tuning, or method was run.
+The local LaTeX document compiles with Sections 1–10, eight table labels and
+five figure labels; reference and numerical-source checks pass.
+
+Existing local user Abstract/Introduction edits are preserved and excluded
+from the body-draft commit. Only duplicate Introduction structural commands
+and the adjacent blank line were removed locally; all prose is unchanged.
+Sections 2/9/10 and appendix remain undrafted, table captions still say
+planning table, and figures remain boxes. Dataset/model citations and
+closest-prior-work connections still require verification/insertion.
+Frozen final_evidence, old CAC, data/checkpoints and experiments are untouched.
+
+The ML writing skill guided evidence-to-prose mapping and compilation QA,
+not a full-paper pipeline. Permanent clipping and gradient-event warnings,
+teacher likelihood scopes, TT quality/count/alpha-LR confounds, dependent
+diagnostic units, and failed modern headroom gate remain explicit.
+STOP after this scoped first draft. A new instruction is needed for other
+sections or revisions; the experimental program stays permanently frozen.
+
 ## 2026-10-04 Manuscript V2 evidence/story/skeleton complete — STOP
 
 Current state `manuscript_v2_ready_for_writing`; experimental program is

@@ -1,15 +1,15 @@
 schema_version: 1
 updated: "2026-10-04"
-status: manuscript_v2_ready_for_writing
-phase: manuscript_v2_evidence_story_and_skeleton_complete
-decision: MANUSCRIPT_V2_READY_EXPERIMENTS_PERMANENTLY_FROZEN
+status: manuscript_v2_body_sections_3_to_8_drafted
+phase: manuscript_v2_scoped_body_first_draft_complete
+decision: BODY_SECTIONS_3_TO_8_DRAFTED_STOP_EXPERIMENTS_PERMANENTLY_FROZEN
 training_authorized: false
 experimental_program: permanently_frozen
 objective: >-
-  Integrate frozen Phase2 and post-freeze Phase3A/4A-4C into a conservative
-  four-claim empirical manuscript identity. V2 evidence/story/literature audit
-  and compiling venue-neutral LaTeX skeleton complete; no full prose drafted.
-  Preserve Phase2 final_evidence and old CAC source. STOP before full writing.
+  Complete only authorized manuscript V2 Sections 3-8 from frozen evidence.
+  Preserve existing user Abstract and Introduction prose, scientific conclusions,
+  Phase2 final_evidence and old CAC source. No Related Work, Discussion,
+  Conclusion or appendix drafting. STOP after the scoped body first draft.
 primary_metric: paired_test_nll_gain
 selection_metric: validation_nll
 secondary_metrics:
@@ -79,15 +79,22 @@ manuscript_v2:
   phase4_role: bounded_stress_test_degenerate_continuation_unresolved
   venue_status: criteria_binding_unavailable
   full_manuscript_written: false
+  body_draft_input_commit: 1c153e49efa19132481fb74bbc98032bf610544e
+  body_sections_drafted: [3, 4, 5, 6, 7, 8]
+  undrafted_sections: [2, 9, 10]
+  appendix_drafted: false
+  user_abstract_introduction_edits_preserved_uncommitted: true
 next_action: >-
-  STOP. Review research/manuscript_v2/GPT_WRITING_HANDOFF.md and the compiling
-  skeleton under 论文投稿/manuscript_v2. A new instruction is required before
-  full manuscript writing. No new training, sweep, clipping control, scaling
-  or method. Phase4C gate failed; no clean modern KD confirmation.
+  STOP. Review research/manuscript_v2/BODY_DRAFT_STATUS.md and Sections 3-8.
+  A new instruction is required before drafting Sections 2/9/10 or appendix,
+  adding artwork/citations, or further manuscript revision. No new training,
+  sweeps, clipping controls, scaling or methods. Scientific conclusions unchanged.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
 resolved_protocol:
+  - date: "2026-10-04"
+    issue: "Authorized only manuscript V2 Sections 3-8 first draft from input 1c153e49. No new experiments or scientific conclusions. Existing user Abstract/Introduction prose preserved; duplicate Introduction heading/label removed locally only. Sections 2/9/10, appendix, frozen final_evidence and old CAC unchanged. Body citations/figure artwork and submission polish remain; STOP."
   - date: "2026-10-04"
     issue: "V2 evidence/story package integrates Phase3A and Phase4A-4C without changing frozen Phase2 evidence or the old CAC manuscript. Four conservative claims; hypothesis-testing story; fourteen publisher-metadata-verified related works with overlap/full-text TODOs; ten-section compiling LaTeX skeleton with comment notes, eight planning tables and five figure placeholders. No new experiments or full manuscript. State manuscript_v2_ready_for_writing; STOP."
   - date: "2026-10-04"
@@ -116,6 +123,9 @@ resolved_infrastructure:
   - date: "2026-09-16"
     issue: Removed the invalid eager src.data import, corrected the endpoint-harm test fixture, and passed all 10 KD/branch-diagnostic/statistical tests remotely.
 artifacts:
+  manuscript_v2_body_status: research/manuscript_v2/BODY_DRAFT_STATUS.md
+  manuscript_v2_body_qa: research/manuscript_v2/body_draft_qa.json
+  manuscript_v2_body_audit: research/manuscript_v2/scripts/audit_body_draft.py
   manuscript_v2_evidence: research/manuscript_v2/EVIDENCE_INTEGRATION_V2.md
   manuscript_v2_claims: research/manuscript_v2/CLAIMS_V2.md
   manuscript_v2_story: research/manuscript_v2/MANUSCRIPT_STORY_V2.md

@@ -1,5 +1,35 @@
 # Entry point for manuscript V2 writing
 
+## Current scoped body-draft handoff — STOP
+
+From input commit `1c153e49efa19132481fb74bbc98032bf610544e`, the research
+lead authorized first-draft prose for Sections 3–8 only. Those six sources
+are now written and compile with the current local manuscript. Read
+`BODY_DRAFT_STATUS.md` and `body_draft_qa.json` before continuing.
+Scientific conclusions and archived experiments are unchanged; no model
+training, evaluation, diagnostic run, tuning, or new method occurred.
+
+Sections 2/9/10 and appendix remain unchanged skeletons. Eight numerical
+tables retain their planning captions and five figures remain labeled boxes.
+Foundational dataset/model citations and closest-prior-work connections
+remain comment TODOs. This is not a complete or submission-ready paper.
+The local Abstract/Introduction were user edits predating this stage and are
+excluded from its commit. Only a duplicate Introduction heading/label and
+its adjacent blank line were removed locally, preserving all prose. The
+committed prior skeleton already has a single Introduction heading.
+
+The scientific scope remains C1–C4: state/quality matter but scalar teacher
+likelihood is insufficient; fused sources help without TG/heterogeneity
+superiority; Phase3A is a failed retrospective diagnostic; Phase4 remains
+continuation- and clipping-confounded. All warnings stay next to results.
+STOP. Further writing requires a new instruction; experiments remain
+permanently frozen.
+
+## Historical skeleton-stage handoff
+
+The following records the previous preparation stage, not current writing
+authorization. Its scientific safeguards and evidence paths remain valid.
+
 Status: `manuscript_v2_ready_for_writing`. Experiments are permanently frozen.
 This stage has prepared evidence/story/verified literature and a compiling
 venue-neutral source skeleton only. The full paper has NOT been drafted.

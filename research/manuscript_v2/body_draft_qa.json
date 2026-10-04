@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "date": "2026-10-04",
+  "input_commit": "1c153e49efa19132481fb74bbc98032bf610544e",
+  "activity": "read-only document, archived-table, hash, compiled-LaTeX checks; no model access",
+  "checks": {
+    "main_and_undrafted_sections_unchanged": "PASS",
+    "introduction_only_duplicate_structure_removed_final_newline_normalized": "PASS",
+    "frozen_experiments_data_checkpoints_old_manuscript_unchanged": "PASS",
+    "frozen_evidence_and_cac_hashes": "PASS",
+    "archived_numeric_source_hashes": "PASS",
+    "six_sections_paragraph_style_and_scoped_todos": "PASS",
+    "core_effects_scoped_to_archived_tables": "PASS (62 numeric checks)",
+    "permanent_warning_and_failed_gate_labels": "PASS",
+    "latex_bibtex_no_errors_unresolved_references_or_overfull": "PASS",
+    "sections_1_to_10_unique_labels_and_body_references": "PASS",
+    "training_permanently_frozen": "PASS"
+  },
+  "numeric_checks": 62,
+  "body_source_sha256": {
+    "论文投稿/manuscript_v2/sections/03_problem_setting.tex": "a4b3f360c2313f399b16613a89cd7d0914490167134640a3c00f3434f4a8608f",
+    "论文投稿/manuscript_v2/sections/04_experimental_setting.tex": "52975eb35d65d042b8b52ff94168d8f5b2692b253867d57d5cbcbea88e6ab106",
+    "论文投稿/manuscript_v2/sections/05_cross_domain_transfer.tex": "b1db50d6100d4fb0de33fefce172950157c94b75554e7e9c94b45b7e75ac08de",
+    "论文投稿/manuscript_v2/sections/06_distillability.tex": "a555bf078f077c43effd650965e0fb9663baad01e7c82e0edec9297138eae17f",
+    "论文投稿/manuscript_v2/sections/07_controls.tex": "655344131a33bbbd02dfd0747c4cb6a03a5447785cea9a0910ccfbe4d62c0cd6",
+    "论文投稿/manuscript_v2/sections/08_external_validity.tex": "2b8e231784039f0bf7341c18ce78143ea139057de384bb1f37a89583f8a4a034"
+  },
+  "compiled_workspace_main_sha256": "5d2dd6c64e804c5dd360e9a9837e1d3b9e38524ca61c53711d699fecc72559e0",
+  "compiled_workspace_introduction_sha256": "49df0525f643851f275515ad6e76c87eeaaebb9371a971d429f2b33058a58282",
+  "build_directory": "outputs/manuscript_v2_build",
+  "pdf_pages": 15,
+  "pdf_sha256": "3086eb0e69dc8b53253f19872ee2f6caf3c65510098d10a0a1108748033761d2",
+  "underfull_bibliography_notices": 3,
+  "scope_note": "Local PDF includes pre-existing user Abstract/Introduction edits, excluded from this commit. Five figures and eight planning-table captions remain placeholders. Sections 2/9/10 and appendix were not drafted.",
+  "limits": "Core table values automatically checked; ancillary protocol, optimization and interpretation claims reviewed against original reports. Not submission-readiness certification.",
+  "staged_snapshot_compile": {
+    "status": "PASS",
+    "activity": "compile exported Git index, without pre-existing uncommitted user prose",
+    "command": [
+      "latexmk",
+      "-pdf",
+      "-interaction=nonstopmode",
+      "-halt-on-error",
+      "-outdir=build",
+      "main.tex"
+    ],
+    "compile_exit_code": 0,
+    "pdf_pages": 13,
+    "underfull_bibliography_notices": 3,
+    "no_unresolved_labels_citations_duplicate_labels_or_overfull": true,
+    "export_directory": "/tmp/grassmann-body-staged-x6m8uo39"
+  },
+  "staged_snapshot_compile_note": "Separate clean index export compiles to 13 pages; local 15-page PDF additionally includes uncommitted user Abstract/Introduction prose. Build files not committed."
+}

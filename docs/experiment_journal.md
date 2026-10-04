@@ -418,3 +418,10 @@
 - 从官方CVF/ACL/NeurIPS/ICLR/AAAI/PMLR导出14项核验文献；写入重叠/区别与full-text TODO，不编造citation或假装adaptive baseline已运行。
 - LaTeX骨架在新论文投稿/manuscript_v2，含10个主章、8张数值规划表、5图占位框及appendix；只有注释与TODO，无完整正文。本机latexmk/BibTeX编译并检查label/citation/CSV/protected hashes，build输出不提交。
 - ARS outline与ML写作流程用于证据映射、先行工作审计与编译QA；未选择venue、未启动全文pipeline。状态manuscript_v2_ready_for_writing，提交compact text/table/source后STOP。
+
+## [2026-10-04] Manuscript V2 Sections 3–8 body draft only
+
+- 仅六章英文首稿，已有数据表和五个figure labels沿用；论文定位为warm-start distillability受控证据，不是Grassmann方法。未执行训练、forward、新test、诊断或调参。
+- 摘要文件哈希不变；用户引言正文保留，仅本地去重复标题/label，未将用户已有三个dirty文件纳入提交。Section 2/9/10和appendix、冻结实验/final_evidence、旧CAC不动。
+- 主要效果数值与已归档表逐项核对；所有警告/协议修订、NLL scope、TT参数/质量/优化混杂和现代step0/gate失败写入正文。新版只读document QA单独存档，不覆盖旧skeleton_qa。
+- 本机latexmk/BibTeX编译，检查编号1–10、8表/5图引用和版面警告；正文仍为first draft，图/基础引用/其他章节待用户另行授权。项目与GPT交接已更新，STOP，实验永久冻结。

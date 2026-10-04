@@ -1,16 +1,28 @@
 \section{Experimental Test Bed and Controlled Interventions}
 \label{sec:experimental-setting}
-\writingtodo{Describe frozen data, students, teachers and intervention axes.}
-% - Phase2C/2D/2E/2F/2G original plans and hashes are protocol authority.
-% - Phase2 WT2 continuation: lambda5, T2, token_mean, 10 epochs, batch32,
-%   lr1e-4, wd0.01, warmup0.05, cosine, seq256, AMP, clip1.
-% - Do not assume every dataset has identical size/architecture/S0 preparation;
-%   record domain-specific values from original plans, not copied WT2 defaults.
-% - J/A fixes architecture/source identities and alpha0.5, changes trained states.
-% - TG/TT compares heterogeneous vs homogeneous late-logit supervision;
-%   not strictly parameter/training matched; alpha LR TT0.01/TG0.005.
-% - 512-chunk teacher validation subset differs from full Phase2F validation.
-% TODO[PROTOCOL]: include exact datasets/tokenizers/splits, S0 preparation,
-% branch/fusion identities and original/amended gates in Appendix B.
-% TODO[CITE:VERIFY_EXTERNAL]: datasets/model/background primary citations.
-% MUST NOT: Pluecker geometry novelty or isolated scalar-NLL intervention.
+
+\subsection{Main warm-start comparisons}
+
+The main confirmatory evidence covers PTB, WikiText-2, and TinyStories using archived training, validation, and test splits. The small-model experiments use the local GPT-2 tokenizer and sequences of length 256. Within each dataset, CE and KD start from the same validation-selected student checkpoint and follow the matched continuation protocol. These comparisons share the token-normalized KD recipe, but corpus sizes, teachers, and preparation histories differ across domains. We therefore compare paired gains within each domain, not absolute NLL across domains.
+% TODO: Insert verified primary citations for PTB, WikiText-2, TinyStories, and the tokenizer.
+
+The WikiText-2 student has six Hybrid-lite layers, model width 224, eight heads, and reduced width 56. Its prepared checkpoints come from independent 20-epoch training runs. Continuations use 10 epochs, batch size 32, AdamW with learning rate $10^{-4}$ and weight decay 0.01, a 5\% warmup followed by cosine decay, AMP, and gradient clipping at 1.0. Domain-specific preparation settings and the archived data and checkpoint identifiers belong in Appendix~\ref{app:protocols}; they are not inferred from the WikiText-2 configuration. The TinyStories confirmation adds independently prepared seeds 123 and 456 to the existing seed-42 matched pair, without changing the frozen teacher or KD settings.
+
+\subsection{Teacher constructions}
+
+The heterogeneous teacher combines Transformer and Grassmann branch logits through
+\begin{equation}
+z_{\mathrm{TG}}=\alpha z_{\mathrm{T}}+(1-\alpha)z_{\mathrm{G}}.
+\label{eq:teacher-fusion}
+\end{equation}
+This is late-logit fusion, not an average of branch probabilities. The Grassmann branch supplies a structurally different supervision source within the experimental test bed; it is not a proposed contribution of this paper. Architecture details are deferred to Appendix~\ref{app:architecture}.
+
+On WikiText-2, Teacher J is a jointly trained TG checkpoint, whereas Teacher A was trained by updating the fusion weight with the branches frozen. The fixed-composition intervention evaluates both with $\alpha=0.5$. Thus, architecture and branch-source identities remain fixed, but trained branch states differ. The source ablation instead holds Teacher J fixed and forces $\alpha$ to 0.5, 1.0, or 0.0, producing fused, Transformer-only, and Grassmann-only supervision without retraining the teacher.
+
+The homogeneous TT control combines the existing Transformer source with a second independently trained Transformer of the same architecture, data, tokenizer, and 20-epoch budget. Its joint teacher training follows the TG schedule of 10 epochs, branches frozen during the first epoch, branch learning rate $10^{-5}$, and validation selection. TT uses an initial fusion weight of 0.5 and fusion-weight learning rate $10^{-2}$; the historical TG teacher used $5\times10^{-3}$. Both are forced to $\alpha=0.5$ for comparison and KD. Parameter counts and teacher likelihood also differ, so TT and TG are not strictly parameter- or training-matched controls.
+
+\subsection{Evidence organization}
+
+Phase 2D supplies the fixed-composition J/A intervention; Phases 2E and 2F supply the source ablation and homogeneous-ensemble control; and Phase 2G completes the three-seed TinyStories confirmation. These controls reuse the established WikiText-2 CE and TG endpoints rather than treating each reuse as a new replication. Teacher likelihood in the state and source analyses is measured on a fixed 512-chunk validation subset, containing 130,560 targets. The TT/TG comparison uses full validation likelihood. We keep these scopes separate when reporting teacher quality.
+
+Phase 3A evaluates local diagnostics retrospectively without training a new KD model. Phases 4A--4C examine a pretrained SmolLM2 family under a separate, bounded modern protocol. Their optimization and continuation-selection limitations preclude treating them as additional clean confirmatory evidence. The relevant failed gates and protocol amendments are reported alongside the results rather than removed from the evidence chain.

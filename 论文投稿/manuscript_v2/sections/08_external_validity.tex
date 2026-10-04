@@ -1,18 +1,32 @@
-\section{External-Validity Stress Test}\label{sec:external-validity}
-\writingtodo{Present bounded modern stress results, not clean large-model confirmation.}
-% - E11/FineWeb SmolLM2-360M->135M: Gain1=-0.013550460935
-%   +/-0.003542273400; Gain5=-0.043924082202 +/-0.004016675497.
-% - Adaptation seeds42/123/456, one pretrained base/teacher/subset;42 reused.
-% - E12: step0-eligible validation selects S0 for9/9 arms, diagnostic gains0;
-%   CE worsens S0 test NLL mean+0.007918178008.
-% - E13: disjoint8M CE gate best improvement+0.004849292809 <0.01;
-%   small positive headroom, but required regime not established. NO KD/test.
-% - Lambda5 CLIP_SATURATION_WARNING; lambda1 frequent clipping;
-%   CE456_GRADIENT_SPIKE_WARNING; CE2e-5 Phase4C finite outlier disclosed.
-% TODO[PROTOCOL]: pretraining overlap/budgets, selection eligibility and
-% diagnostics/primary comparator distinctions; blank NOT_RUN is not zero.
-% MUST NOT: all FineWeb continuation/KD harms, clipping cause, clean modern
-% negative confirmation or fabricated Phase4C KD/gradient-ratio/test results.
+\section{External-Validity Stress Test}
+\label{sec:external-validity}
+
+\subsection{A bounded pretrained-model pilot}
+\label{sec:modern-pilot}
+
+We separately examine SmolLM2-360M teachers and SmolLM2-135M students on fixed TinyStories and FineWeb-Edu subsets. Each domain uses a frozen adapted teacher, a 10M-target student preparation budget, and 10M-target CE, KD1, and KD5 continuations, where KD1 and KD5 denote $\lambda=1$ and 5. The protocol uses $T=2$, token-mean KL, BF16, sequences of length 256, batch size 32, AdamW, and clipping at 1.0. Primary selection considers scheduled trained checkpoints at steps 256, 512, 768, 1024, and 1221, excluding $S_0$.
+% TODO: Insert verified primary citations for SmolLM2 and FineWeb-Edu.
+
+The seed-42 TinyStories pilot gives gains $+0.004949$ for KD1 and $-0.004797$ for KD5. These small, strength-dependent single-seed observations are not a replication of the small-model TinyStories result. FineWeb-Edu is the only modern setting replicated over three independent student adaptation seeds. They share one pretrained base, one frozen adapted teacher, and the same fixed token splits; they are not independent pretraining runs.
+
+\subsection{Replicated degradation, but unnecessary continuation}
+\label{sec:modern-replication}
+
+FineWeb-Edu gains are $-0.013550\pm0.003542$ for KD1 and $-0.043924\pm0.004017$ for KD5 (Table~\ref{tab:modern_stress}). Both are negative for all three seeds, with validation and test directions agreeing. The teacher has substantially better held-out likelihood than each $S_0$: mean residual advantages are 0.219866 on validation and 0.218704 on test.
+
+However, CE itself worsens test NLL relative to $S_0$ for every seed, by $0.007918\pm0.004338$ on average. In the separate \texttt{best\_including\_S0} analysis, adding the original $S_0$ as a validation-selectable step-0 candidate selects it for all nine CE, KD1, and KD5 arms. The resulting diagnostic CE--KD gains are zero within every seed. This does not replace the frozen trained-only comparison, but shows that its negative transfer occurs in a regime where further continuation is unnecessary under validation selection.
+
+Optimization remains a second limitation. All FineWeb-Edu KD5 runs are fully clip-saturated and retain \texttt{CLIP\_SATURATION\_WARNING}; the modern TinyStories KD5 pilot has the same warning. FineWeb-Edu KD1 clipping fractions are 0.850123, 0.854218, and 0.798526, so the lower-strength result is not restricted to fully saturated runs but still involves frequent clipping. Observed nonfinite/overflow fractions are zero. The finite preclip norm 86.482155 in CE seed 456 occurred at step 711, after its selected step-256 checkpoint. We preserve \texttt{CE456\_GRADIENT\_SPIKE\_WARNING}: the selected weights were not directly affected by that event, but effects on the later trajectory and checkpoint competition remain unknown. None of these observations identifies clipping as the cause of degradation.
+
+\subsection{The non-degenerate continuation gate fails}
+\label{sec:modern-headroom}
+
+Phase 4C attempts to establish genuine remaining CE headroom before any further KD comparison. It fixes the seed-42 preparation checkpoint at step 256, after 2,097,152 target tokens, rather than selecting an early checkpoint by validation. A hashed continuation manifest supplies 8M additional targets disjoint from those consumed in preparing that checkpoint. The CE-only gate tests learning rates $5\times10^{-6}$, $10^{-5}$, and $2\times10^{-5}$ with fixed optimizer family, scheduler form, budget, and clipping. Selection includes $S_0$; passing requires a trained checkpoint and validation improvement of at least 0.01.
+
+All three candidates select trained step 977, with validation improvements 0.004214, 0.004849, and 0.003941 (Table~\ref{tab:modern_ce_gate}). The best candidate, $10^{-5}$, fails the preregistered threshold. CE therefore has small positive validation headroom, but the required non-degenerate continuation regime is not established. The recorded decision is \texttt{STOP\_MODERN\_CONTINUATION\_NOT\_ESTABLISHED}. No conditional KD run, initial KD-gradient probe, or new test evaluation follows this failure. Missing endpoints are unrun, not zero. These CE candidates are not clip-saturated and have no observed nonfinite events; the finite norm 14.602655 in the $2\times10^{-5}$ arm was clipped, with cause and trajectory impact unknown.
+
+Figure~\ref{fig:modern_selection_gate} distinguishes the trained-only result, step-0 diagnostic, and failed headroom gate. The stress test suggests that CE-relative KD degradation can reappear in a modern pretrained family despite better teacher likelihood. Yet the continuation regime lacks the required headroom, and clipping remains a limitation. One model family, fixed subsets, short contexts, and unknown exact pretraining overlap further restrict external validity (Appendix~\ref{app:modern}). We therefore do not elevate these results to a primary claim or a clean large-scale confirmation of negative transfer.
+
 \input{tables/modern_stress}
 \input{tables/modern_ce_gate}
 \figureplaceholder{F5: Modern selection and headroom gate}
