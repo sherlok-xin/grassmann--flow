@@ -40,3 +40,22 @@ telemetry summaries and compressed metrics are archived separately on completion
 Manuscript SHA8b8e3fcc3f04b596058cd4b63ddfe38b6eab91f338c7d4f12db4b602c9982ec8;
 final_evidence aggregate SHA3d172e634db611edad0d566e74ea0f826ed8cdae69922120baa94ebf9e6e2b96.
 No old Phase4A/B endpoint, datasets/ or checkpoints/ write is performed.
+
+## Completion chain
+
+Formal CE protocol commit dabd3f6e31e1a371cdf4a78ac7ca3c6bd9cfd65f was pushed
+before launch. Remote launcher608564 owned CE children608566/608567/608568
+on GPU0/1/2. All exit0; all3 runs consumed8M targets/977 updates. raw/ archives
+registry, completion, original summaries and gzip-compressed full metrics.
+ce_lr_gate.csv records selected-state SHA256 and validation-only comparisons;
+all selected977, but max improvement0.004849292809 failed.01. No KD settings
+commit, KD run or new test evaluation. Gradient ratio/test remain unmeasured.
+
+collect_gate.py independently checks full target accounting, exact validation
+schedule/minimum/tie selection, telemetry and state hashes before
+archive_gate_failure.py emits explicit NOT_RUN rows. Final audit PASS.
+The2e-5 CE finite norm14.602655411 at656 is retained in raw telemetry and
+gradient_event_audit.json; cause/impact UNKNOWN, no exclusion or retry.
+Old Phase4A/B, datasets/checkpoints, manuscript and final_evidence have no
+Git diff against parent6506c79. Existing .gitignore edit is untouched.
+Compact artifacts only; STOP_MODERN_CONTINUATION_NOT_ESTABLISHED is terminal.

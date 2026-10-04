@@ -1,5 +1,32 @@
 # Grassmann / Transformer / Distillation Research Handoff
 
+## 2026-10-04 Phase4C complete — CE headroom gate failed / STOP
+
+DECISION STOP_MODERN_CONTINUATION_NOT_ESTABLISHED. Exact fixed seed42
+preparation step256 state was audited/reused. Frozen continuation manifest
+excludes8192 consumed chunks and fixes31250 disjoint chunks/8M new targets.
+Three CE LR trials5e-6/1e-5/2e-5 each completed977 updates/8M targets. All
+select trained977; validation improvements0.004214441514/0.004849292809/
+0.003940636206. Best candidate1e-5 improves less than required0.01. No KD,
+initial KD-gradient probe or new test evaluation was run. Blank fields in
+results_seed42.csv are unmeasured, not zero or copied old endpoints.
+
+The small positive CE validation improvement must be acknowledged; this is
+not proof of zero headroom/universal continuation failure. The specified
+non-degenerate regime was not established, so Phase4B degeneracy remains
+unresolved and no clean modern negative/beneficial KD claim can be added.
+Teacher residual validation advantage over S0 remains+0.219626011745.
+CE clip fractions0.060389/0.079836/0.082907; no saturation or observed
+nonfinite/overflow.2e-5 has a finite norm14.602655 at step656, clipped,
+cause/impact UNKNOWN; no exclusion/retry, best candidate is another arm.
+
+Read research/experiments/phase4c_nondegenerate_modern_control/REPORT.md and
+GPT_HANDOFF.md, gate/result/optimization CSVs, explicit manifest and auditPASS.
+Protocol dabd3f6e31e1a371cdf4a78ac7ca3c6bd9cfd65f preceded CE training.
+Old Phase4A/B, manuscript/final_evidence, datasets/checkpoints unchanged.
+State experiments_frozen_phase4c_gate_failed. STOP entire modern extension;
+no extra LR/budget/clipping/new method/seed123_456 or manuscript work.
+
 ## 2026-10-04 Phase4C bounded authorization — CE gate pending
 
 Explicit new user authorization permits only a seed42 non-degenerate

@@ -1,0 +1,16 @@
+{
+  "status": "FINITE_EVENT_DISCLOSED_NO_EXCLUSION_OR_RETRY",
+  "arm": "ce_lr2e-5",
+  "step": 656,
+  "tokens": 5373952,
+  "ce": 3.001750022172928,
+  "gradient_norm_preclip": 14.602655410766602,
+  "clipped": true,
+  "clip_threshold": 1.0,
+  "nonfinite": false,
+  "cause": "UNKNOWN",
+  "trajectory_impact": "UNKNOWN",
+  "best_lr_is_other_arm": "ce_lr1e-5",
+  "posthoc_decision_or_protocol_change": false,
+  "source": "outputs/phase4c_nondegenerate/runs/ce_lr2e-5/metrics.jsonl"
+}

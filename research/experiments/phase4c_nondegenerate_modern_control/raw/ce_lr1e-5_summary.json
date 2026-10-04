@@ -1,0 +1,61 @@
+{
+  "seed": 42,
+  "arm": "ce_lr1e-5",
+  "lambda": 0.0,
+  "budget_target_tokens": 8000000,
+  "steps": 977,
+  "seq_len": 256,
+  "global_batch": 32,
+  "microbatch": 4,
+  "optimizer": {
+    "lr": 1e-05,
+    "weight_decay": 0.01,
+    "betas": [
+      0.9,
+      0.95
+    ],
+    "eps": 1e-08
+  },
+  "scheduler": "Phase4A 5% linear warmup + cosine; 977 steps; warmup49",
+  "temperature": 2,
+  "kd_reduction": "token_mean forward KL times T squared",
+  "gradient_clip": 1.0,
+  "precision": "FP32 weights / BF16 autocast / FP32 CE-KL / no GradScaler",
+  "attention": "sdpa",
+  "checkpoint_schedule": [
+    0,
+    256,
+    512,
+    768,
+    977
+  ],
+  "selection": "minimum validation NLL including fixed S0 step0; ties earlier",
+  "initial_validation_nll": 2.9671119410592275,
+  "s0_sha256": "f497cf2310050b163ecb167f75ae4f89c2780d4165aa8f25ff77025715f4bd28",
+  "teacher_sha256": null,
+  "manifest_sha256": "b81200c6648a8dfbe2a3d9b432800377152162f490ac7290b3f91fb8492974d1",
+  "order_sha256": "c43ec9fc22b28cd14b2586707858039ad8931ce621d4d24fe4b63ef8cce42708",
+  "freeze_commit": null,
+  "framework": {
+    "torch": "2.6.0a0+df5bbc09d1.nv24.11"
+  },
+  "test_evaluated": false,
+  "status": "TRAIN_COMPLETE_VALIDATION_SELECTED",
+  "consumed_target_tokens": 8000000,
+  "best_validation_nll": 2.9622626482505976,
+  "best_validation_step": 977,
+  "best_validation_tokens": 8000000,
+  "selected_path": "outputs/phase4c_nondegenerate/runs/ce_lr1e-5/selected.pt",
+  "clip_fraction": 0.07983623336745138,
+  "nonfinite_fraction": 0.0,
+  "overflow_fraction": 0.0,
+  "gradient_norm_mean": 0.9436999456909321,
+  "gradient_norm_max": 1.3754286766052246,
+  "ce_mean": 2.9301792282903887,
+  "scaled_kl_mean": 0.0,
+  "wall_seconds": 1130.2895789928734,
+  "peak_allocated_gib": 3.5587620735168457,
+  "warning": "",
+  "overflow_interpretation": "No GradScaler; losses, preclip norms, parameters checked finite every update.",
+  "selected_sha256": "e1ea4d380f6feda66e6e9321a3fd9a42979fae8f4945b90b5942695a780cc234"
+}

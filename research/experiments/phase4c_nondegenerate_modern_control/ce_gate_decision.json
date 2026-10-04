@@ -1,0 +1,17 @@
+{
+  "status": "STOP_MODERN_CONTINUATION_NOT_ESTABLISHED",
+  "ce_gate_passed": false,
+  "best_lr_by_validation": 1e-05,
+  "best_arm_by_validation": "ce_lr1e-5",
+  "s0_validation_nll": 2.9671119410592275,
+  "best_ce_validation_nll": 2.9622626482505976,
+  "ce_validation_improvement": 0.00484929280862989,
+  "selected_step": 977,
+  "test_evaluated": false,
+  "teacher_validation_nll": 2.74748592931419,
+  "teacher_residual_advantage_validation": 0.2196260117450377,
+  "initial_kd_ce_gradient_ratio": "NOT_MEASURED_BEFORE_CE_GATE",
+  "manifest_sha256": "b81200c6648a8dfbe2a3d9b432800377152162f490ac7290b3f91fb8492974d1",
+  "s0_sha256": "f497cf2310050b163ecb167f75ae4f89c2780d4165aa8f25ff77025715f4bd28",
+  "audit": "PASS"
+}

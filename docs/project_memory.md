@@ -316,3 +316,11 @@ TinyStories reduced prototype 的 C0/C1/C2/C4/C5/C6/C7 已完成，C3 缺失。v
 - 冻结manifest排除early S0的8192 target chunks，从原seed4242 permutation过滤后取31250新chunks，8M targets；manifest SHA b81200c6648a8dfbe2a3d9b432800377152162f490ac7290b3f91fb8492974d1。相邻context允许一token重叠，但target positions不重叠。
 - CE-only LR gate只允许5e-6/1e-5/2e-5，977 updates，validation steps0/256/512/768/977；选择包含S0，不做test LR selection。需trained selected且val改善>=.01，失败即停止整个modern extension。
 - 条件KD仅lambda.25/1，必须CE gate通过后另行commit冻结selected LR/hash/全协议，再运行。无lambda5、clipping sweep、新方法、论文/final_evidence改动或额外seed。9项单测通过，先做CE-only smoke。
+
+## 36. 2026-10-04 Phase4C CE gate failed / terminal STOP
+
+- Protocol dabd3f6e31e1a371cdf4a78ac7ca3c6bd9cfd65f先于正式CE，launcher608564/PIDs608566_608567_608568均正常exit0。3个LR candidates各8M targets/977 updates，总24M；一个seed，不是三seed replication。
+- S0 val2.967111941059；5e-6/1e-5/2e-5 selected val2.962897499546/2.962262648251/2.963171304853，均选977。改善0.004214441514/0.004849292809/0.003940636206，best1e-5仍未过0.01。决策STOP_MODERN_CONTINUATION_NOT_ESTABLISHED。
+- CE有小幅validation headroom，不能写成零改善或普遍无法continuation；不足以建立预注册non-degenerate regime。没有KD025/KD1、initial-gradient probe或新test；这些量留空/NOT_RUN，不填旧test或0。Phase4B degeneracy尚未修复，不能添加clean modern transfer claim。
+- CE clipping0.060389/0.079836/0.082907，无饱和，observed nonfinite/overflow0。2e-5 step656 finite norm14.602655 clipped，cause/impact UNKNOWN，无排除/重跑；bestLR是另一arm。已保留event与完整telemetry。
+- 完整7类要求文件及raw/auditPASS已生成。精确S0、teacher、data、old code、论文/final_evidence保护均通过。状态experiments_frozen_phase4c_gate_failed，STOP整个modern extension，不补LR/budget/clip/method/seeds。

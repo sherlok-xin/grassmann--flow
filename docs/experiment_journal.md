@@ -402,3 +402,11 @@
 - Parent6506c79；step256 checkpoint SHA与archive一致，metric row与summary共同确认2,097,152 targets，prep seed42/order hash一致。197 GPU0/1/2/3读取时均空闲。所有重计算仍仅远端，本机只edit/git。
 - continuation manifest固定8M disjoint targets、31250 chunks；排除8192已用chunks，无validation/test训练混入。manifest SHA b81200c6648a8dfbe2a3d9b432800377152162f490ac7290b3f91fb8492974d1。
 - 新5项protocol tests与旧4项packing/KL/gradient/scheduler tests全部PASS；仅CE smoke先行，未运行KD或test forward。CE三LR门控需先commit。既有.gitignore用户修改保留不stage。
+
+## [2026-10-04] Phase4C final gate failure and STOP
+
+- Protocol dabd3f6先commit/push，197 GPU0/1/2各一个CE。3run完成24M targets，各977步，launcher/children exit0。门控允许S0 step0，全部validation最优trained977。
+- 三LR validation改善为+0.004214441514/+0.004849292809/+0.003940636206；best1e-5未过>=0.01。STOP_MODERN_CONTINUATION_NOT_ESTABLISHED。小幅正改善是真实的，但不能当作通过gate，不能说完全没headroom。
+- 不运行条件KD/gradient probe/test，不写KD freeze commit，不加LR/budget/clipping/new method/seeds。test/Gain/ratio留空并明确NOT_RUN。Teacher val residual+0.219626011745仅复用旧teacher验证记录。
+- All finite，CE clip fractions约6.04%/7.98%/8.29%，无clip saturation。2e-5 step656 norm14.602655为finite outlier并已clipped，原因和trajectory影响未知，无排除或重跑。原Phase4B warning不变。
+- Collector和完整state/manifest/budget/selection/telemetry audit PASS，归档完整CSV、7类要求文档/manifest及raw gzip。论文/final_evidence、oldPhase4A/B、datasets/checkpoints均无Git diff；.gitignore用户改动不stage。项目冻结，STOP整个modern extension。

@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "scope": "independent read-only compact artifact QA",
+  "decision": "STOP_MODERN_CONTINUATION_NOT_ESTABLISHED",
+  "best_lr": 1e-05,
+  "best_validation_improvement": 0.00484929280862989,
+  "formal_targets": 24000000,
+  "new_training": false,
+  "new_test_forward": false,
+  "source_event_verified": true,
+  "raw_archive_equals_original": true,
+  "required_files_present": true,
+  "stop_state_verified": true
+}

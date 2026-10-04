@@ -1,13 +1,13 @@
 schema_version: 1
 updated: "2026-10-04"
-status: phase4c_ce_gate_authorized
-phase: phase4c_nondegenerate_modern_control
-decision: CE_GATE_PENDING
-training_authorized: true
+status: experiments_frozen_phase4c_gate_failed
+phase: phase4c_nondegenerate_modern_control_complete
+decision: STOP_MODERN_CONTINUATION_NOT_ESTABLISHED
+training_authorized: false
 objective: >-
-  Explicit Phase4C authorization: fixed seed42 preparation step256, disjoint8M
-  targets, CE-only LR gate5e-6/1e-5/2e-5. No KD unless validation improves>=.01
-  and a trained state is selected; freeze/commit protocol before KD025/KD1.
+  Phase4C complete: exact step256 S0 and disjoint8M continuation; three CE
+  LRs all select trained977, but best validation improvement0.004849292809
+  fails0.01. No KD/test. STOP entire modern extension; no more tuning/training.
 primary_metric: paired_test_nll_gain
 selection_metric: validation_nll
 secondary_metrics:
@@ -16,7 +16,7 @@ secondary_metrics:
   - tokens_per_second
   - peak_memory_gb
 constraints:
-  - phase4c_only_bounded_ce_gate_then_conditional_kd025_kd1
+  - phase4c_gate_failed_stop_entire_modern_extension_no_new_training
   - do_not_launch_phase2h
   - final_evidence_ledger_is_authoritative
   - heavy_training_remote_only_10_42_0_197
@@ -61,14 +61,19 @@ hypotheses:
   H6:
     title: Frozen SmolLM2 FineWeb-Edu warm-start KD harms matched CE continuation
     status: confirmed_fineweb_l1_l5_negative_three_seeds_fixed_protocol_clip_warning_all_s0_diagnostic
+  H7:
+    title: Fixed early S0 and disjoint continuation establish modern CE validation headroom of at least 0.01
+    status: not_established_phase4c_gate_failed_best_improvement_0_004849292809
 next_action: >-
-  Run only preregistered CE gate after smoke and protocol commit. No test LR
-  selection. If gate fails STOP; if passes commit selected KD settings first.
-  No lambda5, clipping sweeps, new method, extra seeds or manuscript edits.
+  STOP. Phase4C CE gate failed despite small positive validation improvement.
+  No KD/test or clean modern transfer conclusion. Do not tune more LRs/budgets,
+  launch clipping sweeps/methods/seeds123_456, or edit manuscript/final_evidence.
 blockers:
   - date: "2026-09-16"
     issue: Local system Python cannot import torch because libtorch_python.so is unreadable; training remains remote-only.
 resolved_protocol:
+  - date: "2026-10-04"
+    issue: "Phase4C finished three seed42 CE LR trials, exactly24M new targets, disjoint from fixed preparation step256. Best1e-5 selects977 with validation improvement0.004849292809<0.01, so STOP_MODERN_CONTINUATION_NOT_ESTABLISHED. No KD/gradient-ratio probe/test. All checks finite, clip fractions0.060389/0.079836/0.082907;2e-5 finite norm outlier14.602655 at656 disclosed without retry/exclusion. Final audit PASS. Entire modern extension stopped."
   - date: "2026-10-04"
     issue: "Phase4B completed eight new10M-target runs (80M), with seed42/teacher/data reused. Gain1 mean -0.013550460935, sample SD 0.003542273400; Gain5 mean -0.043924082202, sample SD 0.004016675497; both3/3 negative with validation/test agreement. FINEWEB_L1_L5_NEGATIVE_REPLICATED. All9/9 best_including_S0 choices return S0; CE itself degrades test NLL. All lambda5 arms retain CLIP_SATURATION_WARNING. Finite CE456 step711 gradient spike disclosed after its selected step256. Final audit PASS. Training frozen; STOP."
   - date: "2026-10-03"
@@ -167,4 +172,11 @@ artifacts:
   phase4b_decision: research/experiments/phase4b_fineweb_multiseed_replication/decision.json
   phase4b_provenance: research/experiments/phase4b_fineweb_multiseed_replication/provenance.md
   phase4b_figures: research/experiments/phase4b_fineweb_multiseed_replication/figures
+  phase4c_report: research/experiments/phase4c_nondegenerate_modern_control/REPORT.md
+  phase4c_handoff: research/experiments/phase4c_nondegenerate_modern_control/GPT_HANDOFF.md
+  phase4c_gate: research/experiments/phase4c_nondegenerate_modern_control/ce_lr_gate.csv
+  phase4c_results: research/experiments/phase4c_nondegenerate_modern_control/results_seed42.csv
+  phase4c_optimization: research/experiments/phase4c_nondegenerate_modern_control/optimization_audit.csv
+  phase4c_manifest: research/experiments/phase4c_nondegenerate_modern_control/continuation_manifest.json
+  phase4c_audit: research/experiments/phase4c_nondegenerate_modern_control/completed_run_audit.json
   gpt_entrypoint: PROJECT_OVERVIEW_FOR_GPT.md

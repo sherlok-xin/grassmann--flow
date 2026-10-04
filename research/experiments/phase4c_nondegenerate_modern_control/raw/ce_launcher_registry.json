@@ -1,0 +1,47 @@
+{
+  "launcher_pid": 608564,
+  "children": [
+    {
+      "pid": 608566,
+      "gpu": 0,
+      "arm": "ce_lr5e-6",
+      "lr": 5e-06,
+      "command": [
+        "/workspace/.venvs/grassmannflows/bin/python3",
+        "-u",
+        "/workspace/grassmannflows/grassmann-flows/research/experiments/phase4c_nondegenerate_modern_control/scripts/train.py",
+        "ce_lr5e-6",
+        "--lr",
+        "5e-06"
+      ]
+    },
+    {
+      "pid": 608567,
+      "gpu": 1,
+      "arm": "ce_lr1e-5",
+      "lr": 1e-05,
+      "command": [
+        "/workspace/.venvs/grassmannflows/bin/python3",
+        "-u",
+        "/workspace/grassmannflows/grassmann-flows/research/experiments/phase4c_nondegenerate_modern_control/scripts/train.py",
+        "ce_lr1e-5",
+        "--lr",
+        "1e-05"
+      ]
+    },
+    {
+      "pid": 608568,
+      "gpu": 2,
+      "arm": "ce_lr2e-5",
+      "lr": 2e-05,
+      "command": [
+        "/workspace/.venvs/grassmannflows/bin/python3",
+        "-u",
+        "/workspace/grassmannflows/grassmann-flows/research/experiments/phase4c_nondegenerate_modern_control/scripts/train.py",
+        "ce_lr2e-5",
+        "--lr",
+        "2e-05"
+      ]
+    }
+  ]
+}
