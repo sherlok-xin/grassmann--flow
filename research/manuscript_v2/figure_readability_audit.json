@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "date": "2026-10-08",
+  "figures": {
+    "fig1_paired_protocol": {
+      "pure_vector": "PASS",
+      "editable_svg_text": "PASS",
+      "embedded_pdf_fonts": "PASS",
+      "readability_thresholds": "PASS",
+      "export_hashes": "PASS"
+    },
+    "fig3_teacher_quality": {
+      "pure_vector": "PASS",
+      "editable_svg_text": "PASS",
+      "embedded_pdf_fonts": "PASS",
+      "readability_thresholds": "PASS",
+      "export_hashes": "PASS"
+    },
+    "fig4_ensemble_control": {
+      "pure_vector": "PASS",
+      "editable_svg_text": "PASS",
+      "embedded_pdf_fonts": "PASS",
+      "readability_thresholds": "PASS",
+      "export_hashes": "PASS"
+    },
+    "figA1_teacher_architecture": {
+      "pure_vector": "PASS",
+      "editable_svg_text": "PASS",
+      "embedded_pdf_fonts": "PASS",
+      "readability_thresholds": "PASS",
+      "export_hashes": "PASS"
+    },
+    "fig2_cross_domain_gain": {
+      "pure_vector": "PASS",
+      "editable_svg_text": "PASS",
+      "embedded_pdf_fonts": "PASS",
+      "readability_thresholds": "PASS",
+      "export_hashes": "PASS"
+    }
+  },
+  "scientific_wording_and_causal_connectivity": "PASS",
+  "pdf_figures_are_actual_manuscript_build_inputs": "PASS",
+  "limits": "Geometry checks supplemented by manual visual comparison; not certification for a future single-column conference layout.",
+  "manual_visual_review": {
+    "date": "2026-10-08",
+    "all_manuscript_pages": 23,
+    "enlarged_figure_pages": [
+      4,
+      6,
+      8,
+      9,
+      16
+    ],
+    "reference_comparison": "Four original PNG references versus final SVG-derived renders; authorized local typography/canvas differences only",
+    "figure2_first_draft_issue": "Legend overlapped mean label; corrected before final export",
+    "final_observed_overlaps_or_clipping": "none",
+    "scope": "6.8-inch full-width venue-neutral article; no single-column or conference-template approval"
+  }
+}

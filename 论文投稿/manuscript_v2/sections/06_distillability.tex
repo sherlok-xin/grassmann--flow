@@ -1,34 +1,31 @@
-\section{What Determines Distillability?}
+\section{What Determines Teacher Distillability?}
 \label{sec:distillability}
 
-\subsection{A fixed-composition teacher-state intervention}
+\subsection{Fixed-composition teacher-state intervention}
 \label{sec:teacher-state}
 
-The J/A comparison is the strongest controlled intervention in the evidence set. Both teachers have the same architecture and branch-source identities, and both supply fused logits with $\alpha=0.5$. Their training histories differ: joint training changes the branch states in Teacher J, whereas Teacher A retains the frozen source branches. Teacher J has validation-subset NLL 4.300644, compared with 6.376220 for Teacher A.
-
-This teacher-state change reverses downstream transfer (Table~\ref{tab:teacher_state}). Teacher J gives mean paired gain $+0.155665\pm0.007692$, with three positive signs; Teacher A gives $-0.027654\pm0.006822$, with three negative signs. Holding the students and CE comparators fixed, the paired contrast is
+To separate teacher state from composition, we compare jointly trained Teacher J with fusion-weight-only Teacher A at the same $\alpha=0.5$. Their teacher validation-subset NLLs are 4.300644 and 6.376220. Teacher J produces positive transfer in all three students, whereas Teacher A produces negative transfer in all three: mean gains are $+0.155665\pm0.007692$ and $-0.027654\pm0.006822$ (Table~\ref{tab:teacher_state}). The paired state contrast is
 \begin{equation}
-Q=\mathrm{Gain}_{J}-\mathrm{Gain}_{A}
-=\mathrm{NLL}_{\mathrm{KD},A}^{\mathrm{test}}-\mathrm{NLL}_{\mathrm{KD},J}^{\mathrm{test}}.
+Q=\mathrm{NLL}_{\mathrm{KD,A}}-\mathrm{NLL}_{\mathrm{KD,J}}
+=+0.183319\pm0.001375,
 \label{eq:teacher-state-contrast}
 \end{equation}
-Its mean is $+0.183319\pm0.001375$, positive for every seed. This is a student endpoint contrast, not the difference between teacher NLLs. It supports a substantial effect of teacher training state under fixed composition. Since the intervention also changes representations and predictive distributions, it does not isolate scalar likelihood as the causal variable.
+with all three differences positive.
 
-The optimization audit places an important boundary on this interpretation. The initial short-data Teacher A smoke test failed, with full clipping saturation and an overflow/nonfinite fraction of 0.16. Formal training proceeded only after an explicitly authorized, matched full-data gate for both J and A. In that gate, clipping fractions were 0.234694 and 0.275510, respectively, and the overflow/nonfinite fraction was 0.013605 for both. Across the three students, the initial A/J parameter-gradient norm ratios were 1.102792, 1.148522, and 1.093056, within the preregistered range. Teacher A still had higher first-epoch clipping in the formal runs. These checks do not remove optimization as a possible contributor, but they distinguish the accepted comparison from the failed short-data smoke test.
+The reversal shows that teacher training state matters even with fixed architecture and fusion composition. It does not isolate scalar likelihood as the cause: joint training also changes branch representations and the distribution of errors. Better predictive quality accompanies more useful supervision here, but the intervention is on trained teacher state, not NLL alone. Optimization gates and the documented protocol amendment are retained in Appendix~\ref{app:protocols}.
 
 \subsection{A globally weaker teacher can still help}
 \label{sec:weaker-teacher}
 
-Teacher likelihood is nevertheless insufficient as a standalone criterion. The Grassmann-only source from Teacher J has validation-subset NLL 4.652064, worse than the matched CE endpoint $C_0$ for every seed on exactly the same subset. The residual advantages, defined as $\mathrm{NLL}_{C_0}^{\mathrm{val}}-\mathrm{NLL}_{G}^{\mathrm{val}}$, are $-0.266520$, $-0.253492$, and $-0.251006$. Here the comparator is the validation-selected CE endpoint, not automatically the initial $S_0$.
+The Grassmann-only source supplies a counterexample to a simple likelihood rule. Its validation-subset NLL is 4.652064, worse than every matched CE endpoint on that subset, yet its test gain is positive in all three students, averaging $+0.040991\pm0.006733$ (Table~\ref{tab:weaker_teacher}). A globally weaker teacher can therefore provide useful supervision under this continuation protocol.
 
-Despite this unfavorable global ranking, KD from that source produces test gains of $+0.046771$, $+0.033598$, and $+0.042604$, or $+0.040991\pm0.006733$ on average (Table~\ref{tab:weaker_teacher}). This is a matched counterexample to determining transfer sign solely from whether the teacher has better held-out likelihood than the CE comparator. It does not establish that weaker teachers are generally preferable, nor does it attribute the gain to Grassmann geometry.
-
-Together, the state intervention and weaker-teacher counterexample support a qualified conclusion: teacher training state and predictive quality strongly modulate transfer, but held-out teacher likelihood alone does not determine distillability. Figure~\ref{fig:teacher_state_quality} separates the controlled state contrast from the global-quality counterexample.
-% TODO: Connect this scoped conclusion to the verified prior work on teacher-quality limitations when Related Work is drafted.
+The reference student is the validation-selected CE continuation, not an arbitrary initialization. Teacher residual advantage and transfer gain also use different held-out scopes, as stated in the table. This result does not make teacher quality irrelevant; together with the state reversal, it shows that global held-out teacher likelihood alone is insufficient to determine distillability. Figure~\ref{fig:teacher_quality} summarizes these complementary controls without assigning a geometric cause to the gain.
 
 \input{tables/teacher_state}
 \input{tables/weaker_teacher}
-\figureplaceholder{F3: Teacher state and quality controls}
-{Panel A: paired J/A gain reversal. Panel B: negative teacher residual versus
-positive G-source gain. Distinguish state intervention from scalar-quality causality.}
-{fig:teacher_state_quality}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/fig3_teacher_quality.pdf}
+\caption{Teacher-state and likelihood controls on WikiText-2. Changing trained teacher state reverses transfer at fixed composition. A weaker Grassmann-only source still transfers positively. Neither control establishes scalar-likelihood causality or a geometry-specific KD advantage.}
+\label{fig:teacher_quality}
+\end{figure}

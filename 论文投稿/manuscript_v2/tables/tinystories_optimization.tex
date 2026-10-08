@@ -1,0 +1,15 @@
+\begingroup\small
+\setlength{\tabcolsep}{5pt}
+\begin{table}[htbp]\centering
+\begin{tabular}{lrrrrr}
+\toprule
+Seed & Residual & KD KL & CE norm & KD norm & KD clip \\
+\midrule
+42 & -0.021960 & 0.380224 & 0.486891 & 0.973546 & 0.236891 \\
+123 & -0.021422 & 0.381402 & 0.488263 & 0.981438 & 0.283344 \\
+456 & -0.019714 & 0.383282 & 0.483211 & 0.973942 & 0.240090 \\
+\bottomrule
+\end{tabular}
+\caption{Primary TinyStories telemetry. Residual is teacher advantage over the CE test endpoint. KL includes temperature-squared scaling; norms and clip fractions are epoch means across the completed run.}\label{tab:tinystories_optimization}
+\end{table}
+\endgroup

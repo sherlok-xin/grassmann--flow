@@ -1,54 +1,174 @@
 \section{Grassmann and Test-Bed Details}\label{app:architecture}
-\writingtodo{Add verified architecture equations and dimensions as test-bed context.}
-% - Preserve actual feature-dependent gates; distinguish branch models from
-%   late-logit scalar alpha composition. Do not recycle inaccurate old claims.
-% TODO[VERIFY_EXTERNAL]: primary Grassmann/Pluecker background references.
-% MUST NOT: mathematical detail as evidence of geometric KD superiority.
+
+The Grassmann branch uses causal local pairs, not future-token pairs. For a token embedding $h_t\in\mathbb{R}^d$, define the reduced representation $z_t=W_{\mathrm{red}}h_t+b_{\mathrm{red}}\in\mathbb{R}^r$. With $\mathcal{D}_t=\{\Delta\in\{1,2,4\}:t-\Delta\geq0\}$, the local direction is $z_{t-\Delta}\rightarrow z_t$. The coordinates of the exterior product are
+\begin{equation}
+p_{ij,t}^{(\Delta)}
+=z_{t,i}z_{t-\Delta,j}-z_{t,j}z_{t-\Delta,i},
+\qquad i<j.
+\end{equation}
+There are $r(r-1)/2$ coordinates. The subspace background follows the Grassmann interpretation of basis equivalence~\citep{edelman1998geometry}; the exterior-product interpretation of Pl\"ucker coordinates is documented by the authors of the geometric-algebra reference.\footnote{\url{https://cs.uwaterloo.ca/~smann/GA/plucker_coordinates.html}. This author-maintained reference is used only for the exterior-product background, not as evidence about KD.}
+When the two vectors are dependent, the exterior product is zero; the implementation remains finite through the normalization
+\begin{equation}
+\widehat p_t^{(\Delta)}
+=\frac{p_t^{(\Delta)}}{\max(\|p_t^{(\Delta)}\|_2,\epsilon)},
+\qquad \epsilon=10^{-8}.
+\end{equation}
+Geometric projection precedes the valid-window mean:
+\begin{equation}
+g_t^{(\Delta)}=W_{\mathrm{plu}}\widehat p_t^{(\Delta)}+b_{\mathrm{plu}},
+\qquad
+g_t=\frac{\sum_{\Delta\in\mathcal{D}_t}g_t^{(\Delta)}}
+{\max(1,|\mathcal{D}_t|)}.
+\end{equation}
+An empty window gives zero. Mixing uses a feature-dependent vector gate, not a scalar average:
+\begin{equation}
+a_t=\sigma(W_{\mathrm{gate}}[h_t;g_t]+b_{\mathrm{gate}}),
+\qquad
+h_t^{\mathrm{mix}}=a_t\odot h_t+(1-a_t)\odot g_t.
+\end{equation}
+The implementation includes LayerNorm, dropout, and residual feed-forward processing around this core. The LM head produces G logits. The Transformer branch produces T logits independently; scalar $\alpha$ acts only at late-logit fusion (Equation~\ref{eq:teacher-fusion}). Figure~\ref{fig:teacher_architecture} describes this generic teacher and does not fix $\alpha=0.5$.
+
+The compact primary student is recorded internally as \texttt{hybrid\_lite}. It uses six layers, width 224, eight Transformer heads, reduced width 56, dropout 0.1, and final-block fusion (\texttt{late\_k}=1). The selected student has 31,434,257 parameters. The local GPT-2 tokenizer has vocabulary size 50,257 and no added special tokens. Teacher dimensions and states are loaded from the frozen source configurations rather than inferred from student dimensions.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/figA1_teacher_architecture.pdf}
+\caption{Generic heterogeneous teacher. The folded Grassmann path preserves causal local pairs, normalized Pl\"ucker coordinates, geometric projection, valid-window averaging, gated mixing, and the LM head. Late fusion acts on logits with free $\alpha$. The architecture is a test bed, not evidence of geometric KD superiority.}
+\label{fig:teacher_architecture}
+\end{figure}
 
 \section{Full Protocols and Amendments}\label{app:protocols}
-\writingtodo{Transcribe exact frozen per-domain protocols, hashes and amendments.}
-% - Original Phase2D failed short A smoke; explicitly amended matched full-data
-%   gate; Phase2E authorized unchanged T saturation; FP16 AMP maxima nonzero.
-% - Teacher val subset vs full-split scope, validation-selected endpoints,
-%   per-domain budgets, S0 independent training, teacher identity and hashes.
-% - Modern protocol/reset/order/BF16 and step0 eligibility differ from Phase2.
+
+\subsection{Primary corpus and student protocols}
+
+PTB and WikiText-2 use their archived native splits; TinyStories uses a seed-42 98/2 train-derived split and the original validation split as test. PTB uses all records, including 42,068 nonempty training lines and 4,439 training chunks. TinyStories uses 300,000 training lines (67,081,279 pre-trim tokens; 262,036 chunks), 42,391 validation lines (9,440,302 tokens; 36,876 chunks), and 21,990 test lines (4,765,822 tokens; 18,616 chunks). Fixed 256-token chunks contribute positions 1--255 to evaluation. No held-out targets enter training.
+
+Primary $S_0$ preparation uses 20 epochs, batch 32, learning rate $2\times10^{-4}$, weight decay 0.01, AMP, and validation-NLL checkpoint selection. The preparation optimizer is AdamW with the source implementation defaults; preparation uses a fixed learning rate rather than the continuation scheduler. Each seed prepares its own student. All matched continuations reset AdamW and use 10 epochs, batch 32, learning rate $10^{-4}$, weight decay 0.01, 5\% linear warmup followed by cosine decay, AMP, clipping at 1, $\tau=2$, and \texttt{token\_mean} forward KL. Only $\lambda$ distinguishes CE (0) from primary KD (5). These are archived training settings, not settings selected during manuscript revision.
+
+The state and source controls use the same 512 WikiText-2 validation chunks, sampled without replacement with seed 20260920 and then sorted (130,560 targets). Full-validation TT/TG metrics are separate. Small differences between repeated subset evaluations of J (4.300644 versus 4.300646) are retained at their original precision and scope rather than averaged away.
+
+\subsection{Teacher-state and source gates}
+
+Table~\ref{tab:teacher_training_protocol} records the original teacher-training modes and learning rates. Teacher A has a five-epoch fusion-weight-only budget, whereas J and TT have ten-epoch joint budgets. The state intervention holds deployed architecture and composition fixed, not all teacher-training history. The two Transformer sources in TT use six layers, width 256, dropout 0.1, batch 32, learning rate $3\times10^{-4}$, and 20 epochs, with seeds 42 and 123; both select epoch 12. Their matched source preparation is distinct from subsequent joint teacher training.
+\input{tables/teacher_training_protocol}
+
+The historical teacher J continues both branch parameter states during joint training; A keeps the branches frozen and updates only the fusion weight. Both are forced to $\alpha=0.5$ in the state intervention; 179 of 191 state tensors differ. A reduced 2,000-line A smoke had clipping fraction 1 and AMP/nonfinite fraction 0.16. An explicitly authorized, matched full-data one-epoch gate replaced this reduced smoke for eligibility, without changing the objective or clipping threshold. J/A gate clipping fractions were 0.234694, 0.275510 and both AMP/nonfinite fractions were 0.013605. A/J full-parameter gradient ratios for seeds 42, 123, 456 were 1.102792, 1.148522, 1.093056, within the registered interval $[0.5,2]$. Formal A first-epoch clipping was 0.666667, 0.503401, 0.513605, with maximum AMP/nonfinite fraction 0.013605.
+
+Transformer-only supervision required a separate explicit amendment. Its full-data gate clipped every update but had finite parameter gradients, T/F gradient ratios 1.3164, 1.2788, 1.2324, and AMP/nonfinite fraction 0.013605. The authorized formal runs retained every training setting. Their first epochs were fully clip-saturated, while mean epoch clipping fractions over training were 0.4990, 0.4605, 0.4398 and late clipping decreased to approximately 0.0034. Every run selected epoch 10. The permanent label is \texttt{CLIP\_SATURATION\_WARNING}; endpoints may be affected by this optimization constraint.
+
+The homogeneous TT teacher combines the existing Transformer with an independent seed-123 source trained for 20 epochs; the new source selected epoch 12. Joint teacher training uses 10 epochs, a first frozen-branch epoch, branch learning rate $10^{-5}$, initial $\alpha=0.5$, and fusion-weight learning rate $10^{-2}$, compared with $5\times10^{-3}$ for the historical TG teacher. TT selects epoch 10; evaluation and KD force $\alpha=0.5$. TT student first-epoch clipping fractions are 0.928571, 0.843537, 0.874150, but corresponding mean epoch fractions are 0.170068, 0.137755, 0.127551. Maximum AMP/nonfinite fractions are 0.013605. These histories are not strict teacher-training matches.
+
+\subsection{TinyStories stability and infrastructure retry}
+
+Table~\ref{tab:tinystories_optimization} retains primary TinyStories diagnostics. All CE and KD runs select epoch 10. CE mean clipping is 0.000391 in each seed; KD mean clipping is 0.236891, 0.283344, 0.240090, with first-epoch values between 0.583 and 0.643. Maximum CE AMP/nonfinite fraction is 0.000488 and KD is 0.000611. Accepted endpoints remain finite and formal KD is not persistently fully clip-saturated.
+
+The original seed-456 KD attempt was interrupted in epoch 2 because GPU 3 remained software-power-capped at approximately 210--255 MHz. The incomplete attempt was excluded before any final endpoint existed. An explicitly authorized infrastructure retry restarted from the identical $S_0$ on GPU 1, without resuming optimizer state or changing the teacher, seed, data, objective, budget, or selection rule. Only this completed retry is an accepted endpoint. The short random-$S_0$ smoke is not a formal stability result.
+\input{tables/tinystories_optimization}
+
+\subsection{Reproducibility identifiers}
+
+The compact repository contains the frozen reports, run configurations, selected-checkpoint hashes, split manifests, and per-seed records. Internal phase identifiers below locate archived evidence and are not separate experimental contributions. Primary PTB endpoints originate in the post-rejection confirmation, WT2 preparation in Phase 2C, the state intervention in Phase 2D, source ablation in Phase 2E, TT control in Phase 2F, and TinyStories replication in Phase 2G. Reused controls count only once.
+
+\newcommand{\artifacthash}[2]{\par\noindent #1:\par\noindent{\small\ttfamily #2}\par}
+\artifacthash{WT2 teacher J SHA256}{a5ad284f6895c0b4ed516c855c1b149e6636b945173aa2e842b8132299582694}
+\artifacthash{WT2 teacher A SHA256}{43d288db1dba826d8ad1bb3fcbd09b9720bdde24c198e858e00ce4c4658df012}
+\artifacthash{WT2 common validation-index SHA256}{236633612db1e3144b8f3187a5bfb1795f558a50f26368252a8adf3f0b49413f}
+\artifacthash{TinyStories frozen teacher SHA256}{db9ffda81d1f95ebc3f3d5967e3121b1c6dd859104c9c47cc80b0bab1fcaedfb}
+\artifacthash{WT2 S0 seed 42 SHA256}{9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef}
+\artifacthash{WT2 S0 seed 123 SHA256}{a44b64ba5a84d3bd2708a96aad4eae829ff7ab0f00476f0e31146fc314da1f13}
+\artifacthash{WT2 S0 seed 456 SHA256}{3fbe985d6474c84d1c61fd7937ea906102cf460846829eb3af4c709593b01757}
+\artifacthash{TinyStories S0 seed 42 SHA256}{e4d0959603bb39f0ad7b7a98025024975e2b87d117d36037e9f9aa9da966f9c2}
+\artifacthash{TinyStories S0 seed 123 SHA256}{b30d662bcd51db22e841455bd29a8b83617447d583a71c0b0cc97eb362ede8b3}
+\artifacthash{TinyStories S0 seed 456 SHA256}{6eaa7b735ee425e98711103b594e68709cc94359cbfbddbe0eb9a87795c6fbc7}
 
 \section{Per-Seed Endpoint Tables}\label{app:per-seed}
-\writingtodo{Insert exact per-seed tables from the V2 source inventory.}
-% - research/manuscript_v2/tables/table_endpoint_inventory.csv; original
-%   Phase2C/2D/2E/2F/2G CSVs; PTB legacy-rounded PPL is not an exact NLL source.
-% - Same WT2 seeds reused across controls; no independent-condition inflation.
+
+Table~\ref{tab:per_seed_gains} reports every confirmatory family in the archived inventory. It uses exact NLL-derived records, not logarithms of rounded legacy PPL. All sources for a WikiText-2 seed share its CE comparator. The weaker-source residuals against CE on the common validation subset are $-0.266520$, $-0.253492$, and $-0.251006$. Its test gains are $+0.046771$, $+0.033598$, and $+0.042604$. The teacher is weaker globally under this comparator while still giving positive transfer; these are not independent replications of teacher training.
+\input{tables/per_seed_gains}
+\input{tables/ptb_endpoints}
+\input{tables/wt2_endpoints}
+
+\begin{table}[htbp]\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+Seed & $S_0$ test & CE test & KD test & KD--CE validation\\
+\midrule
+42 & 1.622437 & 1.581269 & 1.688747 & 0.108394\\
+123 & 1.623954 & 1.581807 & 1.689246 & 0.108082\\
+456 & 1.624901 & 1.583515 & 1.690255 & 0.108040\\
+\bottomrule
+\end{tabular}
+\caption{Primary TinyStories selected endpoints. All arms select epoch 10. The positive validation differences agree with negative CE-relative test gains.}
+\label{tab:ts_endpoints}
+\end{table}
 
 \section{Branch Disagreement Details}\label{app:branch-diagnostics}
-\writingtodo{Insert token-level JSD analysis with its observational limits.}
-% - Incremental AUROC PTB-0.000323/TS+0.010910; R2+0.000533/+0.003061.
-% - One endpoint pair per dataset; token bootstrap not model-seed replication.
+
+On the fixed validation subset, J has branch NLLs 4.445648 and 4.652064, JSD 0.181288, agreement 0.508395, and fusion gain 0.145003 over its better branch. A has branch NLLs 6.540640 and 6.696787, JSD 0.176641, agreement 0.543719, and fusion gain 0.164420. Teacher quality changes substantially, but disagreement and fusion gain do not move in a single favorable direction.
+
+Full-validation TG and TT teacher NLLs are 4.303697 and 4.293589. TG branch NLLs are 4.451680, 4.655020; TT branch NLLs are 4.406160, 4.422151. Their JSDs are 0.182087, 0.099793, agreements 0.507034, 0.630170, and fusion gains 0.147983, 0.112570. Parameter counts are 37,749,633 and 35,340,801. Thus higher TG disagreement accompanies lower KD gain, but quality, count, and training mismatches prevent a causal diversity comparison.
+
+The token-level disagreement analysis uses one selected CE/KD endpoint pair per dataset, not three independent teacher/student replications. Adding JSD to the archived baseline predicts gradient conflict with incremental AUROC $-0.000323$ on PTB and $+0.010910$ on TinyStories; incremental endpoint $R^2$ is $+0.000533$ and $+0.003061$. Chunk-grouped analysis and token/chunk bootstrap uncertainty do not create additional model seeds. These small increments do not establish disagreement as a strong transfer mechanism.
 
 \section{Local Gradient and Curvature Diagnostics}\label{app:local-diagnostics}
-\writingtodo{Reuse Phase3A tables/figures with failed-diagnostic scope.}
-% - Seven families/21 dependent conditions/63 calibration rows; calibration
-%   instability, first/second same signs, curvature0.52% median correction.
-% - Literal first LR0 no-op; candidate safe lambdas not recommendations.
+
+The archived Phase 3A analysis comprises seven families and 21 dependent seed-level conditions. Training probes use the first 32 chunks, accumulated in FP32 microbatches of two over all 31.43M student parameters. Calibration seeds 314159, 271828, and 161803 each select two disjoint validation chunks, producing 63 calibration rows. Scores were frozen before endpoint merging. No test data enter the probes and no parameter updates are retained.
+
+Let $g=\nabla\mathcal{L}_{\mathrm{CE}}$, $k=\nabla\mathcal{L}_{\mathrm{distill}}$, $v=\nabla\mathcal{L}_{\mathrm{val}}$, and $H_{\mathrm{val}}=\nabla^2\mathcal{L}_{\mathrm{val}}$ at $S_0$. Write $a=v^\top k$, $b=g^\top H_{\mathrm{val}}k$, and $c=k^\top H_{\mathrm{val}}k$. The nominal local gain approximation is
+\begin{equation}
+\widehat G_{\mathrm{local}}(\lambda)
+=\eta\lambda a-\eta^2\lambda b-\tfrac12\eta^2\lambda^2c,
+\qquad \eta=10^{-4}.
+\end{equation}
+This is a local Taylor diagnostic, not a bound on the validation-selected test endpoint. All gradients and HVPs are finite. First- and second-order signs agree in 63/63 rows. Their seed-level AUROC is 0.644444 and sign accuracy 0.571429; family-mean AUROC is 0.600000. Both miss positive WT2 J, G, and TT families. Only 11/21 conditions have stable quadratic signs across all calibration subsets.
+
+The median absolute curvature correction is $2.73\times10^{-7}$, or 0.52\% of the first-order magnitude; its largest relative contribution is 20.9\% near a small first-order term. It never changes a sign. A finite positive candidate $\lambda_{\mathrm{safe}}$ exists in 22/63 rows, ranging from 56.44 to 6429.64; 41 rows have no positive interval. These are diagnostic crossings, not recommended coefficients or verified safe training settings.
+
+The literal first scheduler step has learning rate zero and is a no-op for every coefficient. This does not demonstrate safety. A separate nominal-rate clipped AdamW virtual step gives AUROC 0.700000, sign accuracy 0.571429, and Spearman correlation 0.427273; it misses 9/15 beneficial outcomes and has stable signs in 10/21 conditions. Table~\ref{tab:full_predictors} gives the full seed-level comparison. Calibration rows and families are dependent; these scores are not universal classifiers.
+\input{tables/full_predictors}
+\input{tables/local_diagnostics}
 
 \section{Modern Selection and Optimization Details}\label{app:modern}
-\writingtodo{Insert Phase4A--4C records and permanent warnings.}
-% - Modern TinyStories pilot42 unreplicated, distinct from Phase2G confirmation.
-% - All9/9 best_including_S0 choices; CE deterioration; adapted not pretrained
-%   seed independence; original primary trained-step comparisons unchanged.
-% - CLIP_SATURATION_WARNING, frequent L1 clipping, CE456 finite86.482155
-%   spike and Phase4C2e-5 finite14.602655 spike; causes/impacts UNKNOWN.
-% - Gate fails at0.004849292809; no conditional KD or new test/ratio measurements.
+
+\subsection{Frozen pretrained-model protocol}
+
+The modern stress test uses base SmolLM2 models with 134,515,008 and 361,821,120 unique parameters and a shared 49,152-token vocabulary. The 360M teacher is adapted once and frozen. Each student seed independently adapts the same pretrained 135M model; these are adaptation seeds, not independent pretraining runs. FP32 model weights use BF16 autocast and FP32 losses, without GradScaler. AdamW uses learning rate $5\times10^{-5}$, weight decay 0.01, betas $(0.9,0.95)$, and epsilon $10^{-8}$, with 5\% warmup and cosine decay. Sequence length is 256, global batch 32, microbatch 4, and clipping threshold 1. The teacher adaptation, student preparation, and each continuation receive 10M target tokens (1,221 updates). KD uses $\tau=2$ and token-mean forward KL.
+
+FineWeb-Edu uses the first shard of \texttt{sample-10BT} at the pinned revision below. Deterministic document-ID hashing and exact-text deduplication produce disjoint training, validation, and test splits with 20M, 1M, 1M encoded tokens; each held-out split evaluates 999,999 targets. The primary validation schedule is steps 256, 512, 768, 1024, 1221, excluding $S_0$. Test follows selection. Primary results are not retrospectively replaced by the step-0 diagnostic.
+
+Teacher validation/test NLLs are 2.747486, 2.726017. Its residual advantage over $S_0$ is positive in every seed. CE test NLL increases from $S_0$ by 0.005562, 0.005268, 0.012924; mean deterioration is $+0.007918\pm0.004338$. Allowing step 0 selects $S_0$ for all nine continuations and gives diagnostic CE-relative gain zero. SmolLM2 pretraining includes FineWeb-derived data, so exact document-level overlap with this subset remains unknown.
+\input{tables/modern_optimization}
+\input{tables/modern_endpoints}
+
+For seeds 42, 123, 456, initial unweighted KD/CE gradient ratios are 2.150561, 2.485828, 2.462981; multiplying by five gives 10.752805, 12.429139, 12.314904. KD1 clip fractions are 0.850123, 0.854218, 0.798526; KD5 clips every update. All recorded overflow/nonfinite fractions are zero. The seed-456 CE preclip norm reaches 86.482155 at step 711; its selected step 256 precedes that event. The cause and full trajectory impact are unknown.
+
+We retain \texttt{CLIP\_SATURATION\_WARNING} for KD5.
+
+We retain \texttt{CE456\_GRADIENT\_SPIKE\_WARNING}. The run is not excluded.
+
+\subsection{Failed disjoint-continuation headroom gate}
+
+Phase 4C chooses the exact seed-42 step-256 checkpoint, with 2,097,152 consumed targets, by fixed time point rather than a new validation search. The continuation manifest excludes its 8,192 target chunks and fixes 31,250 new chunks (8M targets). A shared boundary context token is permitted; consumed prediction targets are excluded. The manifest and order were hashed before observing continuation endpoints.
+
+The CE-only candidates use learning rates $5\times10^{-6}$, $10^{-5}$, and $2\times10^{-5}$ with the same AdamW family, scheduler, batch, sequence length, clipping, and 8M-target budget. Selection includes step 0 and steps 256, 512, 768, 977; ties select the earlier checkpoint. All candidates select step 977. Validation improvements are 0.004214, 0.004849, 0.003941, below the required 0.01 gate (Table~\ref{tab:modern_ce_gate}). Clip fractions are 0.060389, 0.079836, 0.082907, with zero nonfinite fractions. The $2\times10^{-5}$ arm has a finite preclip spike of 14.602655 at step 656; its cause and effect are unknown.
+
+The frozen decision is \texttt{STOP\_MODERN\_CONTINUATION\_NOT\_ESTABLISHED}. Conditional KD at $\lambda=0.25$ or 1 was not run; new test endpoints and initial KD/CE gradient ratios were not measured. These entries are missing by design, not zero. The modern TinyStories seed-42 pilot is a separate, unreplicated observation: gains at $\lambda=1$ and 5 are $+0.004949$ and $-0.004797$. It is not pooled with primary TinyStories confirmation.
+\input{tables/modern_ce_gate}
+
+\artifacthash{FineWeb-Edu pinned data revision}{87f09149ef4734204d70ed1d046ddc9ca3f2b8f9}
+\artifacthash{Modern frozen adapted teacher SHA256}{c7411708b61e6524ef05bd24e9e618f19fcc119e9a3c0664c5f4f169dbf16928}
+\artifacthash{Fixed early modern S0 SHA256}{f497cf2310050b163ecb167f75ae4f89c2780d4165aa8f25ff77025715f4bd28}
+\artifacthash{Disjoint continuation manifest SHA256}{b81200c6648a8dfbe2a3d9b432800377152162f490ac7290b3f91fb8492974d1}
+\artifacthash{Disjoint continuation order SHA256}{c43ec9fc22b28cd14b2586707858039ad8931ce621d4d24fe4b63ef8cce42708}
 
 \section{Failed and Legacy Controls}\label{app:failed-controls}
-\writingtodo{Keep failed CRBD, shuffle, legacy CodeParrot and unmatched RI separate.}
-% - CRBD20k one seed: CE5.0195/fixedKD5.3018/CRBD5.5067/shuffle5.5010 PPL;
-%   all KD clip-saturated; repair-0.7220. Not a successful method contribution.
-% - Legacy CodeParrot common5k gain+0.188309, old loss/single-seed/winner-selection.
-% - Random-init learning rates/budgets unmatched: no warm-start necessity.
+
+The exploratory CRBD attempt used a 20,000-story, single-seed prototype, not the confirmatory TinyStories matrix. Its test PPLs are 5.0195 for CE, 5.3018 for fixed KD, 5.5067 for CRBD, and 5.5010 for shuffled routing. The archived repair score is $-0.7220$, and all KD arms are clip-saturated. CRBD is a failed method attempt, not a successful contribution; the shuffled result does not validate meaningful routing.
+
+Legacy CodeParrot on common 5,000-record subsets gives gain $+0.188309$ in one sweep-selected run using batch-normalized KL. It is neither an independent multi-seed confirmation nor directly comparable to the token-normalized primary matrix. Random-initialization comparisons have unmatched learning rates and budgets and therefore cannot establish that warm starting is necessary. Earlier mixed-domain predictor correlations combine these evidence tiers and remain exploratory.
 
 \section{Legacy Efficiency and Deployment Trade-offs}\label{app:efficiency}
-\writingtodo{Insert frozen PTB deployment observations with scope labels.}
-% - Historical configs36.264305/31.434257/23.565121M, not current TT/TG counts.
-% - Batch32 latency55.984/48.460/34.959ms, RTX3090 seq256, single checkpoint;
-%   batch1 quality16.089ms >teacher15.482ms, so no universal inference speedup.
-% - Frozen table_efficiency.csv is separate from confirmatory matched KD gains.
+
+Historical PTB deployment observations use a frozen teacher and quality/efficiency student configurations distinct from the current TT/TG comparison. They retain legacy endpoint provenance and are not substitutes for matched confirmatory gains. Parameter counts are 36.264305M, 31.434257M, 23.565121M, with test PPL 50.1125, 51.8339, 53.9139. Student PPLs are three-seed means (sample SD 0.0554, 0.0692); teacher PPL is a single checkpoint.
+
+On an RTX 3090 with sequence length 256, batch-1 latencies are 15.482, 16.089, 11.502 ms, batch-8 latencies 19.145, 19.332, 16.559 ms, and batch-32 latencies 55.984, 48.460, 34.959 ms. Quality-student batch-1 latency is 3.92\% higher than the teacher, despite a 13.44\% reduction at batch 32. The efficiency student reduces parameters by 35.02\% and batch-32 latency by 37.55\%. Batch-32 throughput is 139,644.7, 161,326.9, 223,626.4 tokens/s and peak memory is 4.9089, 4.8711, 4.7919 GB. These single-checkpoint timing observations describe hardware- and batch-specific trade-offs, not a universal speedup or a geometry-derived efficiency benefit.

@@ -1,15 +1,21 @@
 \documentclass[11pt]{article}
-\usepackage[margin=1in]{geometry}
+\usepackage[left=0.85in,right=0.85in,top=1in,bottom=1in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{amsmath,amssymb,booktabs}
+\usepackage{graphicx,longtable}
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage[hidelinks]{hyperref}
 \usepackage{url}
+\setlength{\emergencystretch}{1em}
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.10}
+\renewcommand{\floatpagefraction}{0.8}
 
-% Venue-neutral writing skeleton only: no conference/template is selected.
-% Input HEAD: 64db3aebd158f56373385db18dcdf056aeea4c52.
+% Venue-neutral complete empirical draft; conference/template not yet selected.
+% Full-revision input HEAD: 56ab6cee930da08637c3fa7c6b36d5cb22ccf09f.
 % Experiments permanently frozen. Never alter research/final_evidence/.
 % Recommended title below; alternatives:
 % - Controlled Evidence on Distillability in Warm-Start Language Modeling
@@ -18,24 +24,13 @@
 % TODO[AUTHOR]: insert approved authors/affiliations only at full writing stage.
 \title{What Makes Knowledge Distillation Transfer?\newline
 Controlled Evidence from Warm-Start Language Modeling}
-\author{Manuscript V2 planning skeleton}
+\author{Anonymous authors}
 \date{}
-
-\newcommand{\writingtodo}[1]{\par\noindent TODO: #1\par}
-\newcommand{\figureplaceholder}[3]{%
-  \begin{figure}[htbp]\centering
-  \fbox{\begin{minipage}[c][2.7cm][c]{0.90\linewidth}\centering
-    #1\par\smallskip\small #2
-  \end{minipage}}
-  \caption{#1 (figure placeholder, not completed artwork).}\label{#3}
-  \end{figure}}
 
 \begin{document}
 \maketitle
 \begin{abstract}
-\writingtodo{Draft only after approval of the V2 claim set. This document
-contains evidence notes, numerical planning tables and figure placeholders,
-not a complete manuscript.}
+Knowledge distillation (KD) is commonly evaluated by the performance of the distilled student, yet a more basic question is often left implicit: given an already trained student, does adding teacher supervision actually improve over continuing maximum-likelihood training from the same state? We study this question in autoregressive language modeling using matched warm-start continuations, controlled teacher interventions, and independent student replications. Under the same token-normalized KD formulation, KD yields reproducible positive transfer on Penn Treebank and WikiText-2 but reproducible negative transfer on TinyStories, with consistent directions across three student initializations in each setting. We then test several natural explanations for these outcomes. At fixed teacher architecture and fusion composition, changing the trained teacher state reverses the sign of transfer, showing that teacher state and predictive quality strongly modulate distillation. However, global teacher likelihood is not sufficient: a teacher that is worse than the matched student on held-out likelihood still improves all three students. Likewise, greater branch disagreement and architectural heterogeneity do not imply better transfer; a homogeneous Transformer ensemble outperforms the heterogeneous Transformer--Grassmann teacher in all three matched comparisons. Additional local gradient and curvature diagnostics also fail to reliably predict long-horizon transfer. Together, these results support a configuration-dependent view of distillability: whether KD helps depends jointly on the teacher, the warm-start student, and the training configuration, and is not captured by a single teacher-quality or compatibility statistic.
 % TODO[ABSTRACT:C1-C4]: paired +/+/- transfer; fixed-composition state reversal;
 % weaker-source counterexample; homogeneous ensemble falsification.
 % MUST NOT: method/geometry superiority; universal diagnostic; clean modern KD.
@@ -52,14 +47,14 @@ not a complete manuscript.}
 \input{sections/09_discussion}
 \input{sections/10_conclusion}
 \clearpage
-% These verified records are planned background, not a finished Related Work.
-\nocite{cho2019efficacy,park2021friendly,yuan2021selection,zhong2024atkd,
-stanton2021really,du2020agree,zhou2022metadistil,kaplun2022bad,
-menon2021statistical,wang2021selective,gu2024minillm,agarwal2024gkd,
-xie2026adakd,jin2026entropy}
 \bibliographystyle{plainnat}
+\begingroup\raggedright
 \bibliography{references}
+\endgroup
 \clearpage
 \appendix
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{A\arabic{figure}}
+\renewcommand{\theHfigure}{appendix.\arabic{figure}}
 \input{sections/appendix}
 \end{document}

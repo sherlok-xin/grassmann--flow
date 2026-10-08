@@ -1,7 +1,4 @@
-\section{Conclusion}\label{sec:conclusion}
-\writingtodo{Summarize only C1--C4 and their bounded configuration-level implication.}
-% - Reproducible +/+/- outcomes; fixed-composition teacher-state modulation;
-%   scalar quality insufficiency; ensemble gains without TG superiority.
-% - Secondary diagnostics/stress test constrain, not enlarge, mechanism claims.
-% MUST NOT: new evidence, new proposed method, automatic experiments or a
-% theorem that distillability is fully explained by measured configuration axes.
+\section{Conclusion}
+\label{sec:conclusion}
+
+Matched warm-start continuations show reproducible positive transfer on PTB and WikiText-2 and negative transfer on TinyStories. At fixed composition, changing the trained teacher state reverses transfer, showing that state and predictive quality strongly modulate the outcome. A globally weaker source nevertheless improves all three students, so teacher likelihood alone is insufficient. Finally, ensemble supervision improves transfer, but the heterogeneous Transformer--Grassmann teacher has no advantage over the homogeneous control. These bounded findings support configuration-dependent evaluation rather than a geometry-specific mechanism or a general teacher-selection rule.

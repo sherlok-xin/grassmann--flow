@@ -1,35 +1,18 @@
-\section{External-Validity Stress Test}
+\section{A Bounded Modern External-Validity Stress Test}
 \label{sec:external-validity}
 
-\subsection{A bounded pretrained-model pilot}
-\label{sec:modern-pilot}
+We examine pretrained SmolLM2-360M teacher supervision of SmolLM2-135M students~\citep{benallal2025smollm2} on a fixed FineWeb-Edu subset~\citep{penedo2024fineweb}. Three independent student adaptations use the same frozen adapted teacher, token splits, and continuation protocol. Relative to matched CE, KD gives mean gains of $-0.013550\pm0.003542$ at $\lambda=1$ and $-0.043924\pm0.004017$ at $\lambda=5$, both negative in all three seeds with agreeing validation and test directions (Table~\ref{tab:modern_stress}). The teacher has substantially better held-out likelihood.
 
-We separately examine SmolLM2-360M teachers and SmolLM2-135M students on fixed TinyStories and FineWeb-Edu subsets. Each domain uses a frozen adapted teacher, a 10M-target student preparation budget, and 10M-target CE, KD1, and KD5 continuations, where KD1 and KD5 denote $\lambda=1$ and 5. The protocol uses $T=2$, token-mean KL, BF16, sequences of length 256, batch size 32, AdamW, and clipping at 1.0. Primary selection considers scheduled trained checkpoints at steps 256, 512, 768, 1024, and 1221, excluding $S_0$.
-% TODO: Insert verified primary citations for SmolLM2 and FineWeb-Edu.
+Each preparation and continuation receives the same 10M-target budget. CE and KD begin from identical selected student weights within a seed, and test follows validation selection. These replications vary adaptation of one pretrained student base, not independent pretraining. The comparison therefore concerns the frozen continuation recipe rather than modern KD in general.
 
-The seed-42 TinyStories pilot gives gains $+0.004949$ for KD1 and $-0.004797$ for KD5. These small, strength-dependent single-seed observations are not a replication of the small-model TinyStories result. FineWeb-Edu is the only modern setting replicated over three independent student adaptation seeds. They share one pretrained base, one frozen adapted teacher, and the same fixed token splits; they are not independent pretraining runs.
+Checkpoint eligibility changes the interpretation. When the original $S_0$ is added as a step-0 validation candidate, all nine CE, KD1, and KD5 selections choose $S_0$. This diagnostic leaves primary trained-checkpoint endpoints intact but shows that further CE training is itself unnecessary in this regime. The result is therefore not a clean modern negative-transfer confirmation. The $\lambda=5$ arms retain \texttt{CLIP\_SATURATION\_WARNING}; frequent clipping at $\lambda=1$ remains a limitation, not evidence that clipping causes degradation.
 
-\subsection{Replicated degradation, but unnecessary continuation}
-\label{sec:modern-replication}
+Thus, degradation relative to CE and lack of useful continuation are distinct observations that must be reported together.
 
-FineWeb-Edu gains are $-0.013550\pm0.003542$ for KD1 and $-0.043924\pm0.004017$ for KD5 (Table~\ref{tab:modern_stress}). Both are negative for all three seeds, with validation and test directions agreeing. The teacher has substantially better held-out likelihood than each $S_0$: mean residual advantages are 0.219866 on validation and 0.218704 on test.
+A CE-only headroom control starts from a fixed early student and uses a deterministic continuation stream excluding targets already consumed in preparation. Under the preregistered learning-rate candidates and budget, the best validation improvement is only $+0.004849$, below the 0.01 gate. The gate fails, so no conditional KD or new test endpoint is evaluated.
 
-However, CE itself worsens test NLL relative to $S_0$ for every seed, by $0.007918\pm0.004338$ on average. In the separate \texttt{best\_including\_S0} analysis, adding the original $S_0$ as a validation-selectable step-0 candidate selects it for all nine CE, KD1, and KD5 arms. The resulting diagnostic CE--KD gains are zero within every seed. This does not replace the frozen trained-only comparison, but shows that its negative transfer occurs in a regime where further continuation is unnecessary under validation selection.
+This control asks whether CE can first establish sufficient remaining headroom, not which KD strength yields a preferred outcome. Its small positive validation change does not satisfy the registered requirement.
 
-Optimization remains a second limitation. All FineWeb-Edu KD5 runs are fully clip-saturated and retain \texttt{CLIP\_SATURATION\_WARNING}; the modern TinyStories KD5 pilot has the same warning. FineWeb-Edu KD1 clipping fractions are 0.850123, 0.854218, and 0.798526, so the lower-strength result is not restricted to fully saturated runs but still involves frequent clipping. Observed nonfinite/overflow fractions are zero. The finite preclip norm 86.482155 in CE seed 456 occurred at step 711, after its selected step-256 checkpoint. We preserve \texttt{CE456\_GRADIENT\_SPIKE\_WARNING}: the selected weights were not directly affected by that event, but effects on the later trajectory and checkpoint competition remain unknown. None of these observations identifies clipping as the cause of degradation.
-
-\subsection{The non-degenerate continuation gate fails}
-\label{sec:modern-headroom}
-
-Phase 4C attempts to establish genuine remaining CE headroom before any further KD comparison. It fixes the seed-42 preparation checkpoint at step 256, after 2,097,152 target tokens, rather than selecting an early checkpoint by validation. A hashed continuation manifest supplies 8M additional targets disjoint from those consumed in preparing that checkpoint. The CE-only gate tests learning rates $5\times10^{-6}$, $10^{-5}$, and $2\times10^{-5}$ with fixed optimizer family, scheduler form, budget, and clipping. Selection includes $S_0$; passing requires a trained checkpoint and validation improvement of at least 0.01.
-
-All three candidates select trained step 977, with validation improvements 0.004214, 0.004849, and 0.003941 (Table~\ref{tab:modern_ce_gate}). The best candidate, $10^{-5}$, fails the preregistered threshold. CE therefore has small positive validation headroom, but the required non-degenerate continuation regime is not established. The recorded decision is \texttt{STOP\_MODERN\_CONTINUATION\_NOT\_ESTABLISHED}. No conditional KD run, initial KD-gradient probe, or new test evaluation follows this failure. Missing endpoints are unrun, not zero. These CE candidates are not clip-saturated and have no observed nonfinite events; the finite norm 14.602655 in the $2\times10^{-5}$ arm was clipped, with cause and trajectory impact unknown.
-
-Figure~\ref{fig:modern_selection_gate} distinguishes the trained-only result, step-0 diagnostic, and failed headroom gate. The stress test suggests that CE-relative KD degradation can reappear in a modern pretrained family despite better teacher likelihood. Yet the continuation regime lacks the required headroom, and clipping remains a limitation. One model family, fixed subsets, short contexts, and unknown exact pretraining overlap further restrict external validity (Appendix~\ref{app:modern}). We therefore do not elevate these results to a primary claim or a clean large-scale confirmation of negative transfer.
+These modern results are a bounded stress test of continuation and selection, not a primary claim about modern KD. They neither show that better teachers generally harm students nor identify FineWeb-Edu as a cause of negative transfer. Exact selection records, optimization telemetry, pretraining-overlap uncertainty, and the failed gate appear in Appendix~\ref{app:modern}.
 
 \input{tables/modern_stress}
-\input{tables/modern_ce_gate}
-\figureplaceholder{F5: Modern selection and headroom gate}
-{Trained-only negative gain; all9/9 step-0 choices prefer S0; disjoint CE
-headroom gate fails; STOP. No Phase4C KD branch or test endpoint exists.}
-{fig:modern_selection_gate}

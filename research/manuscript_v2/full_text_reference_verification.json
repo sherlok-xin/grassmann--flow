@@ -1,0 +1,312 @@
+{
+  "checked_on": "2026-10-08",
+  "scope": "Focused relevant-section review, not an exhaustive systematic literature review. Existing 14 metadata records retained as history; ten new primary exports added. No adaptive algorithm is evaluated.",
+  "records": [
+    {
+      "key": "hinton2015distilling",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://doi.org/10.48550/arXiv.1503.02531",
+      "metadata_export_sha256": "f514263924f67a3783854865b7930319ffc77e0426655bb7b5b3ac71ad99613e",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://arxiv.org/pdf/1503.02531",
+      "pdf_sha256": "74e6689115c539db499f9d6153edecb364059926fd45402454f8210442444c5a",
+      "text_sha256": "18e9f477d35d11e3d3e534924233864bc608c4aae2c0f4e7aa2b23a425931c1a",
+      "reading_scope": "Section 2, equations 1-2",
+      "allowed_use": "Temperature-softened soft targets, hard-label objective and temperature-squared gradient scaling."
+    },
+    {
+      "key": "cho2019efficacy",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://openaccess.thecvf.com/content_ICCV_2019/html/Cho_On_the_Efficacy_of_Knowledge_Distillation_ICCV_2019_paper.html",
+      "metadata_export_sha256": "6f78a3041e26d42b3bade025be793b73e28083fc60252c18495b5133139baaf9",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://openaccess.thecvf.com/content_ICCV_2019/papers/Cho_On_the_Efficacy_of_Knowledge_Distillation_ICCV_2019_paper.pdf",
+      "pdf_sha256": "bcdab0d30abb0353905e5426c85964641a48ecff2e9e475d1fd9cce0d79f4d31",
+      "text_sha256": "c5434ec45e6556945ee03a64a9d074138dcf909dc9a6da6dac917fd805afeb54",
+      "reading_scope": "Sections 5.1-5.3",
+      "allowed_use": "Capacity mismatch; early stopping and harmful late-training teaching in the studied image-classification setting."
+    },
+    {
+      "key": "park2021friendly",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://proceedings.neurips.cc/paper_files/paper/12641-/bibtex",
+      "metadata_export_sha256": "6d3236934cfbd8057405dea866697968f1116377ad5948d3d72d0adcabae3b29",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://proceedings.neurips.cc/paper_files/paper/2021/file/6e7d2da6d3953058db75714ac400b584-Paper.pdf",
+      "pdf_sha256": "3445883e648934f37ac2786ed2cddd662edaf0452d5111293bba49eb6fdd34ef",
+      "text_sha256": "d47cadef75cb5935363f755ce3c2fc1c3e8af14878cdc60e4381eb88f1921f55",
+      "reading_scope": "Section 3.1",
+      "allowed_use": "Student branches participate in teacher training; not a frozen-logit warm-start intervention."
+    },
+    {
+      "key": "kaplun2022bad",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://proceedings.neurips.cc/paper_files/paper/19353-/bibtex",
+      "metadata_export_sha256": "fad38fa2119207419b6ab0effee48ce66765bc602ad83db23e4c2499387b1409",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://proceedings.neurips.cc/paper_files/paper/2022/file/b88edf805e96654a4f9e7b783e854ae3-Paper-Conference.pdf",
+      "pdf_sha256": "8c6a282f4765573b65b537809c9f29fc882969f3c4dc14964dba35f628658310",
+      "text_sha256": "1104f765ac06fbb0fedddbf71266211897014f7daf7616dd1ac49fd0a7508fbe",
+      "reading_scope": "Sections 2.2 and 3",
+      "allowed_use": "Definition and theoretical assumptions for useful teachers that are poor classifiers; not a universal autoregressive likelihood rule."
+    },
+    {
+      "key": "menon2021statistical",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://proceedings.mlr.press/v139/menon21a.html",
+      "metadata_export_sha256": "ed37a6d40ec3e59f40d7540fe6c15929b5357b103213b8693f5fdb4b7b8e91a4",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://proceedings.mlr.press/v139/menon21a/menon21a.pdf",
+      "pdf_sha256": "00e6d2209e083b2d267de5d8a2fb0dee7edb2a56c32f82b2d8f3d1715c11d994",
+      "text_sha256": "2117b7765821a715889ec47923bdf5529fbb772ca933409c130098e45e8f3715",
+      "reading_scope": "Sections 4.1-4.2",
+      "allowed_use": "Probability-estimation quality and bias-variance account; does not make our fixed-state intervention a scalar causal-quality experiment."
+    },
+    {
+      "key": "yuan2021selection",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://doi.org/10.1609/aaai.v35i16.17680",
+      "metadata_export_sha256": "3019cda17ed37037d23c22f7121bf620bb2187837af147eb9188d2b04daa651f",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://arxiv.org/pdf/2012.06048",
+      "pdf_sha256": "76e254fe5c13aa0b5a26c1cb1318945c1a02f51af501a052fd2e2113c7a5b280",
+      "text_sha256": "82b2788024e7022ac5b4997c553ee96540fca982313a4b0549bb4b3ed8830427",
+      "reading_scope": "RL-based teacher-selection method",
+      "allowed_use": "Instance-dependent selection uses student feedback, rather than one fixed fused teacher."
+    },
+    {
+      "key": "zhou2022metadistil",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://aclanthology.org/2022.acl-long.485.bib",
+      "metadata_export_sha256": "af24147a9176c54c602d28c8e0fe612bacdb16b1ddc91b34f1823ea72a8279a5",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://aclanthology.org/2022.acl-long.485.pdf",
+      "pdf_sha256": "cf3919fffa971d3734cffad08b6e6298de134bf5966fca87eaae16d89bd218ee",
+      "text_sha256": "940c4cfb85909daa59a413dacbaf3e6c0def2d7e2c21835cbfd886c2e17cf2f7",
+      "reading_scope": "Algorithm 1 and meta-update method",
+      "allowed_use": "Quiz-set performance after simulated student learning updates the teacher."
+    },
+    {
+      "key": "zhong2024atkd",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://aclanthology.org/2024.acl-long.587.bib",
+      "metadata_export_sha256": "4456b7fb0671fd988032564e4325d88c8cff7daf8edc9fd0f7ede305412b7688",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://aclanthology.org/2024.acl-long.587.pdf",
+      "pdf_sha256": "4f145043fabc18e73a5831e44c7ffbbb78b7f2c6556b620977d4b8af7bdeb6f8",
+      "text_sha256": "048ae1632574cf8d4ef979def44b44b293f8d456ff7a70096f380d916a78f0cf",
+      "reading_scope": "Sections 3-4",
+      "allowed_use": "Easy/hard-token analysis and target-related adaptive teaching; prior harmful-LM-supervision observation."
+    },
+    {
+      "key": "gu2024minillm",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://proceedings.iclr.cc/paper_files/paper/4166-/bibtex",
+      "metadata_export_sha256": "53b5a7c0f0b7ea4f820c915d67d601b7369f55a8b01474ac8a73696efa212910",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://proceedings.iclr.cc/paper_files/paper/2024/file/8ac015d409635f196f9e3e9dcfb9a94e-Paper-Conference.pdf",
+      "pdf_sha256": "4098c3b8efad75e52bd792964cf42faa958a236ea31f30a2a4be66bab3a3431b",
+      "text_sha256": "90fcbca2db2cb703b206d5d6e493250b5b5498a70b4afafa3c765c0acd7b0a79",
+      "reading_scope": "Sections 2.1-2.2",
+      "allowed_use": "Reverse KL, policy-gradient optimization and student sampling differ from corpus-based token-mean forward KL."
+    },
+    {
+      "key": "agarwal2024gkd",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://proceedings.iclr.cc/paper_files/paper/4414-/bibtex",
+      "metadata_export_sha256": "06d6b9df7e01a0c02358ce597bf53a1f059000924674966067453c79a98a6c8c",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://proceedings.iclr.cc/paper_files/paper/2024/file/5be69a584901a26c521c2b51e40a4c20-Paper-Conference.pdf",
+      "pdf_sha256": "8d116b2d5dfa5151d8877b411e09de6421f90ff98e4ba000a972b5b0cd55c20f",
+      "text_sha256": "4f9bce9bed3b3cca154d576824d8c8bbbe638ebf2efce3efb9c3ff2abfb41e21",
+      "reading_scope": "Algorithm 1 and objective",
+      "allowed_use": "Student-generated sequences, on-policy mixtures and flexible divergences; not our fixed continuation recipe."
+    },
+    {
+      "key": "du2020agree",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://proceedings.neurips.cc/paper_files/paper/10759-/bibtex",
+      "metadata_export_sha256": "c7e73687e80450980f8746eae1ac81a5722e1d87b0cf3b62b7da7b991ee83ae9",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://proceedings.neurips.cc/paper_files/paper/2020/file/91c77393975889bd08f301c9e13a44b7-Paper.pdf",
+      "pdf_sha256": "b8f56aaebf0a4ebb97b6dd31cb648e9bd15c02b2d747018f516bc13ff48644f9",
+      "text_sha256": "968578106f80338d6d6ceff3bf5f7a98ac53ff55103877ba1cee3d69e28da47e",
+      "reading_scope": "Sections 3.1-3.2",
+      "allowed_use": "Teacher-loss gradient guidance for adaptive ensemble weighting."
+    },
+    {
+      "key": "stanton2021really",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://proceedings.neurips.cc/paper_files/paper/12152-/bibtex",
+      "metadata_export_sha256": "6fd891325be601e40474cd1cf891ef5d5946016849016e8b26102eb61ef35d57",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://proceedings.neurips.cc/paper_files/paper/2021/file/376c6b9ff3bedbbea56751a84fffc10c-Paper.pdf",
+      "pdf_sha256": "52db48fea143c2cb1eb38640ec2def6bd435a104445e1d29277f568b3fef37ab",
+      "text_sha256": "068fcffc690c216f0926ad7befa9b8248f244c6aba96d4859d13d502befd174b",
+      "reading_scope": "Section 4.4 and ensemble experiments",
+      "allowed_use": "Fidelity and generalization need not coincide; not an architectural heterogeneity advantage."
+    },
+    {
+      "key": "wang2021selective",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://aclanthology.org/2021.acl-long.504.bib",
+      "metadata_export_sha256": "4096378ceb3e19887801fbb7e8258b77c82a210bc9b5cb2228194733b9820be7",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://aclanthology.org/2021.acl-long.504.pdf",
+      "pdf_sha256": "f5d0825ae777b892732a848cb3c0d0cc910650abf499e929c1dbb90529176896",
+      "text_sha256": "7969e3f5f418b7a5b2dd8a62e57b8f912479c67670c623aa05791c9ee4c93051",
+      "reading_scope": "Section 5, selective distillation",
+      "allowed_use": "Harmful supervision motivates selective NMT KD; our work is not the first negative-transfer finding."
+    },
+    {
+      "key": "xie2026adakd",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://doi.org/10.1609/aaai.v40i40.40701",
+      "metadata_export_sha256": "e83b3a6addc13ea36bd81bbc45913c91f63e3c95dec539b8aadd53e2bcb20cfa",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/view/40701/44662",
+      "pdf_sha256": "d9a68ef7234b622335d85d553bca9f127eeaa5cf8fc67e77f6c47f949db6e80a",
+      "text_sha256": "126a7b502b1e6455b6902779c8b5c56fe85d74ff5042f7152ff9c8fdfa5d9e21",
+      "reading_scope": "Adaptive method: Hellinger difficulty, LATF and IDTS",
+      "allowed_use": "Token difficulty and EMA loss feedback adapt focus and temperature."
+    },
+    {
+      "key": "jin2026entropy",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://proceedings.mlr.press/v306/jin26e.html",
+      "metadata_export_sha256": "b9237381e8321ada4680bf73186698af742a6287972d9fa247b8bdce7ab52b67",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://raw.githubusercontent.com/mlresearch/v306/main/assets/jin26e/jin26e.pdf",
+      "pdf_sha256": "57cf6b539bf2b782a3ed0435a3ea6ce1cb17da49812507107a19dd7b33c1b9ec",
+      "text_sha256": "18ad767a9342c8cc645f527fc7345e5644d30d6dfe7ca1c9cf31ee376a091dc1",
+      "reading_scope": "Algorithm 1 and equation 9",
+      "allowed_use": "On-policy reverse KL supplemented by forward KL at high teacher entropy."
+    },
+    {
+      "key": "busbridge2025scaling",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://proceedings.mlr.press/v267/busbridge25a.html",
+      "metadata_export_sha256": "56fd9df72e9544922704a6eab058f83e1e09fa39e2a9a1426ddad17f646d32ec",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://raw.githubusercontent.com/mlresearch/v267/main/assets/busbridge25a/busbridge25a.pdf",
+      "pdf_sha256": "1b1c4fe3a4bc767a9b754bed5fda66d94290295920f49caae3e33c3c814df255",
+      "text_sha256": "2a88bfa4a9c8788c1e2f48989b443dfb7739311e50908c7ba9e88c249c9b40a4",
+      "reading_scope": "Section 4.2 and scaling-law formulation",
+      "allowed_use": "Distilled student likelihood depends on teacher quality, size and compute allocation; no claim to supersede the scaling law."
+    },
+    {
+      "key": "panigrahi2026grace",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://proceedings.iclr.cc/paper_files/paper/8855-/bibtex",
+      "metadata_export_sha256": "316399d42e32c49e4f59ef5b7a21db763a9ecef15a4800085777fc96e4be3813",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://proceedings.iclr.cc/paper_files/paper/2026/file/59fa5d049b777d880fdcddba2b24738f-Paper-Conference.pdf",
+      "pdf_sha256": "6e328e93b19d8505ffcee00d87f187be4e6581bb92832c90bc42d03d2f0b48b5",
+      "text_sha256": "2afa4bf9a043be5bc1cc9b2a14199825dd7b98635d3dc41ebc6137358984dbaf",
+      "reading_scope": "Sections 2.1-2.2",
+      "allowed_use": "Student gradients on teacher-generated autoregressive responses; cross-validated spectral teacher ranking without teacher logits. Our validation-gradient/HVP diagnostic is different and does not refute GRACE."
+    },
+    {
+      "key": "marcus1993ptb",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://aclanthology.org/J93-2004.bib",
+      "metadata_export_sha256": "c4b4ea3fff68e8689c36ff9c1035697e4395017d2cb42c1a3a3a037e7ef05841",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://aclanthology.org/J93-2004.pdf",
+      "pdf_sha256": "419b783be4976f3fdff3bdfdc602b518dde5f055e082da1c975487e82166372e",
+      "text_sha256": "43a672810856dfca4220392f2906ea2db3505386067d4855a69eed295740d3ed",
+      "reading_scope": "Title page and corpus introduction",
+      "allowed_use": "Penn Treebank corpus attribution only, not modern preprocessing or endpoint evidence."
+    },
+    {
+      "key": "merity2016wikitext",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://doi.org/10.48550/arXiv.1609.07843",
+      "metadata_export_sha256": "f7e384fa8cbb1bf52eb54b3c0dc80292ed3bf63ebe0dc8144b62bafec7edb72f",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://arxiv.org/pdf/1609.07843",
+      "pdf_sha256": "12e43c9ed8fa25ef9ad16bb818270c24fa32ca4d74fd46277b5932a3b82043c8",
+      "text_sha256": "cf08f630c554959725380258f97a28d4370669bdda2ebe68e45a12385c07d910",
+      "reading_scope": "Title page and WikiText dataset section",
+      "allowed_use": "Dataset attribution; verified arXiv 2016 version, without inventing conference metadata."
+    },
+    {
+      "key": "eldan2023tinystories",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://doi.org/10.48550/arXiv.2305.07759",
+      "metadata_export_sha256": "3a2cfa066c8334f03024678887d6c4572421008029d557ba533e0537379f896d",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://arxiv.org/pdf/2305.07759",
+      "pdf_sha256": "e9d2d82534b4ccb7163559f00e68556988c49192a1433f860481544bc7dc2445",
+      "text_sha256": "1bbc768860e1ed46656de45f3f4693071991ec7bd71043a1bd7dd02bc0e06fdb",
+      "reading_scope": "Title page and dataset construction",
+      "allowed_use": "TinyStories attribution; our split/token budget is separately sourced to archived manifests."
+    },
+    {
+      "key": "vaswani2017attention",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Bibtex.bib",
+      "metadata_export_sha256": "9ec3339f2e27750b8d16af3c12af3cc6d228ba0405ebf3f7e66a49a2d9d9c870",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://proceedings.neurips.cc/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf",
+      "pdf_sha256": "d87d482d5ae7960e2e43d7dd6d21377e60e73e8fce1bf2a01aff7aca8a08c537",
+      "text_sha256": "d0857559e0ff9f26044facd273a3faacfaa986106f5774218f750c2e0f7bfd91",
+      "reading_scope": "Section 3, model architecture",
+      "allowed_use": "Transformer background only; no claim that our compact test bed reproduces the original recipe."
+    },
+    {
+      "key": "benallal2025smollm2",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://doi.org/10.48550/arXiv.2502.02737",
+      "metadata_export_sha256": "d77c3ee4c4df430ac6ba0a36af6864a4e08faec067e067fc251234a02ee7299b",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://arxiv.org/pdf/2502.02737",
+      "pdf_sha256": "a95fbda201d21cd25c89e949636373d36c288bd2d287e3cabd208e2041ea36d3",
+      "text_sha256": "54f3097cb04018e66055ec97d474a6822a1914355f9d4d04cce052b4f926fae9",
+      "reading_scope": "Section 6, 135M/360M; model cards",
+      "allowed_use": "Small pretrained-model background. Official 360M model card explicitly lists FineWeb-Edu; document-level overlap with our subset remains unknown."
+    },
+    {
+      "key": "penedo2024fineweb",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://proceedings.neurips.cc/paper_files/paper/25221-/bibtex",
+      "metadata_export_sha256": "b875adfed3ce0d8f36938ff0019146f5cc836c00101cfcfa53861a260df84fa7",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://proceedings.neurips.cc/paper_files/paper/2024/file/370df50ccfdf8bde18f8f9c2d9151bda-Paper-Datasets_and_Benchmarks_Track.pdf",
+      "pdf_sha256": "cc631d707ea5508831956d4924da82365776995d9ca2aa5a911e685d96c5b272",
+      "text_sha256": "8ed31fcd62e5a39057ef5ed10431e7baffd5b9bbd3533c6412b8c7dae1f61066",
+      "reading_scope": "FineWeb and FineWeb-Edu construction sections",
+      "allowed_use": "Data attribution; pinned subset revision and splits come from archived manifests."
+    },
+    {
+      "key": "edelman1998geometry",
+      "metadata_status": "VERIFIED_PRIMARY_EXPORT",
+      "metadata_url": "https://api.crossref.org/works/10.1137%2FS0895479895290954/transform/application/x-bibtex",
+      "metadata_export_sha256": "d8c2a4aa46257df5d02db0d4835cce35a5ee39a9553c0461c601010571144671",
+      "fulltext_status": "REVIEWED_RELEVANT_METHOD_OR_BACKGROUND_SECTIONS",
+      "pdf_url": "https://arxiv.org/pdf/physics/9806030",
+      "pdf_sha256": "6cea55b0c5b3d69e4a5710a8eab9d9abd4c1b60b952d4f1c91a0e738bf224895",
+      "text_sha256": "2e88b66def67fe39bb9280986bd04686fe9b73608463a5352d8be2a0764f0c5c",
+      "reading_scope": "Section 2, Grassmann/Stiefel geometry",
+      "allowed_use": "Basis-equivalence/subspace background only; no evidence for a geometric KD mechanism."
+    }
+  ],
+  "supplementary_primary_sources": [
+    {
+      "url": "https://cs.uwaterloo.ca/~smann/GA/plucker_coordinates.html",
+      "scope": "Author-maintained Dorst/Fontijne/Mann companion page, exterior product and Plucker-coordinate background only. Unverified book metadata deliberately excluded."
+    },
+    {
+      "url": "https://huggingface.co/HuggingFaceTB/SmolLM2-360M/raw/main/README.md",
+      "scope": "Model Summary explicitly includes FineWeb-Edu; cannot determine our exact document overlap."
+    }
+  ],
+  "retrieval_notes": [
+    "Cho HTML returned no fresh BibTeX; reused previously verified publisher export hash and checked PDF.",
+    "AdaKD initially wrong attachment ID 44679; corrected to official 44662.",
+    "SmolLM2 OpenReview PDF returned 403; used matching arXiv 2502.02737 PDF and DataCite metadata.",
+    "Edelman DOI negotiation failed; used direct Crossref exported BibTeX and matching arXiv PDF.",
+    "Unverified Dorst book DOI excluded rather than inventing a BibTeX record.",
+    "Ben Allal author ordering/case normalized against primary PDF/model-card author text."
+  ]
+}

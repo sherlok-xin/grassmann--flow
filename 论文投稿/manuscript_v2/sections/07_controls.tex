@@ -1,43 +1,38 @@
-\section{Teacher Source, Ensemble, and Diagnostic Controls}
+\section{Ensemble and Branch Ablations}
 \label{sec:controls}
 
-\subsection{Fused supervision versus its component sources}
+\subsection{Fused supervision versus component sources}
 \label{sec:source-ablation}
 
-For the fixed Teacher J checkpoint, fused, Transformer-only, and Grassmann-only supervision all yield positive gain for every student (Table~\ref{tab:teacher_sources}). Their mean gains are $0.155665\pm0.007692$, $0.134868\pm0.008906$, and $0.040991\pm0.006733$, respectively. Fused supervision exceeds the Transformer-only source by $0.020797\pm0.001214$ and the Grassmann-only source by $0.114674\pm0.001001$, with three positive paired contrasts in each comparison. Thus, fusion supplies an additional benefit over either branch in this checkpoint and protocol.
+Holding Teacher J fixed, fused supervision yields mean gain $+0.155665$, compared with $+0.134868$ for Transformer-only and $+0.040991$ for Grassmann-only (Table~\ref{tab:teacher_sources}). Fused gains exceed component gains in all three seeds: paired differences are $+0.020797\pm0.001214$ over Transformer-only and $+0.114674\pm0.001001$ over Grassmann-only. Fusion is useful in this comparison, but composition and teacher quality change together.
 
-The Transformer-only arm carries a permanent \texttt{CLIP\_SATURATION\_WARNING}. Its reduced-data smoke failed with clipping fraction 1.0 and overflow/nonfinite fraction 0.16. The subsequent full-data gate and first formal epoch also have clipping fraction 1.0, but the full-data runs satisfy the finite-gradient and gradient-ratio checks. An explicit protocol amendment allowed them to proceed without changing the KD weight or clipping threshold. Mean clipping fractions over the formal epochs are 0.4990, 0.4605, and 0.4398, decreasing substantially later in training; the maximum reported AMP overflow/nonfinite fraction is 0.013605. The small fused-versus-Transformer contrast may therefore be influenced by optimization constraints. It is not evidence of an unconstrained intrinsic branch advantage.
+The Transformer-only gate initially clips every update despite finite parameter gradients. Its authorized continuation preserves \texttt{CLIP\_SATURATION\_WARNING}; the relatively small fused--Transformer gap must be interpreted cautiously. The unchanged protocol and formal clipping trajectory appear in Appendix~\ref{app:protocols}. This comparison alone cannot identify heterogeneity as the source of the fused benefit.
 
-\subsection{The homogeneous-ensemble control}
+\subsection{Homogeneous ensemble control}
 \label{sec:homogeneous-control}
 
-The TT control tests whether fused TG supervision offers an advantage beyond a homogeneous ensemble. It does not: TT gives mean gain $0.168125\pm0.008948$, exceeding TG for every matched student. With
+TT produces gain $+0.168125\pm0.008948$, compared with $+0.155665\pm0.007692$ for TG. Define
 \begin{equation}
 H=\mathrm{Gain}_{\mathrm{TG}}-\mathrm{Gain}_{\mathrm{TT}}
-=\mathrm{NLL}_{\mathrm{KD},\mathrm{TT}}^{\mathrm{test}}-\mathrm{NLL}_{\mathrm{KD},\mathrm{TG}}^{\mathrm{test}},
+=\mathrm{NLL}_{\mathrm{TT}}-\mathrm{NLL}_{\mathrm{TG}}.
 \label{eq:ensemble-contrast}
 \end{equation}
-the mean contrast is $-0.012460\pm0.001348$ (Table~\ref{tab:tt_vs_tg}). Figure~\ref{fig:ensemble_control} separates this student contrast from teacher quality and diversity.
+The mean is $H=-0.012460\pm0.001348$, with all three differences negative. The tested heterogeneous teacher has no KD advantage over the homogeneous control (Table~\ref{tab:tt_vs_tg}, Figure~\ref{fig:ensemble_control}).
 
-TT also has better full-validation teacher NLL: 4.293589 versus 4.303697 for TG. This 0.010108-NLL teacher-quality gap is direction-aligned with, and similar in magnitude to, the student endpoint contrast. Parameter counts are 35,340,801 and 37,749,633, respectively, making TT approximately 6.38\% smaller. The fusion-weight learning rates differ as described in Section~\ref{sec:experimental-setting}. Optimization is not identical either: TT first-epoch clipping fractions are 0.928571, 0.843537, and 0.874150, with mean epoch fractions 0.170068, 0.137755, and 0.127551; maximum AMP overflow/nonfinite fractions are 0.013605. These quality, parameter, training, and optimization differences prevent attributing the endpoint contrast solely to architecture. They do not rescue a TG superiority claim, and the comparison does not establish intrinsic homogeneous-ensemble superiority either.
+TT also has a 0.010108 full-validation teacher-NLL advantage and 6.38\% fewer parameters. Fusion-weight learning rates and training histories differ. These confounds prevent attributing the result to intrinsic TT superiority, but they do not support a Grassmann-specific or heterogeneity advantage. TG exhibits more branch disagreement than TT without producing more transferable supervision (Appendix~\ref{app:branch-diagnostics}).
 
-Greater branch disagreement does not resolve the result. TG has mean branch JSD 0.182087 and agreement 0.507034, compared with 0.099793 and 0.630170 for TT. Its measured fusion gain is also larger, 0.147983 versus 0.112570 NLL. Yet TT transfers better. The earlier token-level branch diagnostic likewise adds only $-0.000323$ AUROC on PTB and $+0.010910$ on TinyStories when JSD is included. Those analyses concern individual endpoint pairs, not independent multiseed mechanism replications (Appendix~\ref{app:branch-diagnostics}). Disagreement is therefore not supported as a strong standalone explanation of the observed transfer gains.
-
-\subsection{Local diagnostics do not reliably separate outcomes}
+\subsection{Limits of local diagnostics}
 \label{sec:local-diagnostics}
 
-Phase 3A retrospectively evaluates teacher residual likelihood, KL magnitude, gradient norms, gradient alignment, and a second-order validation-risk approximation against archived transfer outcomes. It uses seven teacher/configuration families across three seed conditions, giving 21 dependent conditions and 63 calibration rows. Shared students and controls mean that these are not 21 independently trained students or 63 KD runs. Full-parameter gradients and curvature are estimated at $S_0$ from 32 training chunks and three small validation calibration subsets, rather than from the full continuation trajectory. These subset residuals compare the teacher with $S_0$ and do not replace the held-out endpoint-quality comparisons in Section~\ref{sec:distillability}.
+A retrospective analysis asks whether local CE--KD gradients and validation curvature predict archived full-horizon gains. Across seven teacher--domain families and three student seeds per family, first- and second-order scores both achieve AUROC approximately 0.644 and sign accuracy approximately 0.571. They misclassify known positive WikiText-2 families, and curvature adds no sign separation. The tested local diagnostics are not reliable predictors of these endpoints.
 
-The first- and second-order scores both have AUROC 0.644444 and sign accuracy 0.571429 at the seed-condition level (Table~\ref{tab:local_diagnostics}). Their predicted signs agree for all 63 calibration rows, and only 11 of 21 conditions retain a stable sign across calibration subsets. Both diagnostics incorrectly reject positive-transfer conditions from the jointly trained fused, Grassmann-only, and TT teacher families. Curvature does not improve sign separation in this implementation. The nominal virtual-update diagnostic also has sign accuracy 0.571429 and stable signs for only 10 of 21 conditions. The literal first scheduled update has zero learning rate and is a no-op, not evidence of safe transfer.
-
-Simple scalar diagnostics are not uniformly uninformative: teacher residual likelihood and KL magnitude attain AUROC 0.711111 and 0.722222. However, beneficial and harmful families overlap, so these retrospective associations do not provide a reliable transfer decision rule. Gradient norm has AUROC 0.5, and the measured training CE/KD gradient cosine has AUROC 0.477778. The local calibration size, dependent conditions, and nominal-step approximation limit extrapolation. This is failed diagnostic evidence, not a new predictor or a test of adaptive online KD methods; implementation details belong in Appendix~\ref{app:local-diagnostics}.
-
-Taken together, the controls support an ensemble benefit in the tested source ablation but not a Grassmann-specific or heterogeneity-specific advantage. Neither branch disagreement nor the tested local diagnostics explains all transfer signs. These results constrain explanations of this evidence set rather than establish a general impossibility of predicting distillability.
+Some scalar predictors discriminate the pooled outcomes better, but the small, dependent collection does not establish a general selection rule. Token-level branch JSD likewise adds little predictive information after accounting for CE token difficulty. Calibration stability, full predictor results, and observational limits appear in Appendices~\ref{app:branch-diagnostics} and~\ref{app:local-diagnostics}. These failures concern the tested offline diagnostics, not adaptive distillation methods in general.
 
 \input{tables/teacher_sources}
 \input{tables/tt_vs_tg}
-\input{tables/local_diagnostics}
-\figureplaceholder{F4: Homogeneous ensemble control}
-{Paired TG/TT gains and a separate teacher-quality/diversity panel. Include
-parameter counts, H direction and alpha-learning-rate mismatch.}
-{fig:ensemble_control}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/fig4_ensemble_control.pdf}
+\caption{Teacher-source and ensemble gains on WikiText-2, rounded to four decimals. All sources transfer positively; TT exceeds TG in all paired students. T-only: early clipping saturation; interpret F--T gap cautiously. TT and TG teachers are not strictly quality- or training-matched.}
+\label{fig:ensemble_control}
+\end{figure}

@@ -1,29 +1,32 @@
-\section{Problem Setting and Paired Distillability Evaluation}
+\section{Experimental Setting and Warm-Start KD}
 \label{sec:problem-setting}
 
-We evaluate whether teacher supervision benefits an already-trained autoregressive student. For each seed, a prepared student checkpoint $S_0$ initializes two continuations: maximum-likelihood training with CE and training with CE plus KD from a frozen teacher. Both arms load exactly the same student weights and use fresh optimizers, matched continuation data, and the same training budget. Each arm selects its checkpoint independently by validation NLL. Test NLL is reported only for the selected endpoints.
+We ask whether a frozen teacher improves an already trained autoregressive student beyond matched maximum-likelihood continuation. For each seed, the same validation-selected checkpoint $S_0$ initializes a CE arm and a CE+KD arm. Both load identical weights, reset the optimizer, and use the same continuation data and budget. Each arm independently selects a checkpoint by validation NLL; test NLL is evaluated only after selection. Figure~\ref{fig:paired_protocol} summarizes this design.
 
-For a temperature $T$, let $p_T^{(T)}$ and $p_S^{(T)}$ denote the teacher and student distributions obtained by applying softmax to logits divided by $T$. The implemented objective is
-\begin{equation}
-\mathcal{L}_{\mathrm{KD}} = \mathcal{L}_{\mathrm{CE}}
-+ \lambda\frac{T^2}{|\mathcal{I}|}
-\sum_{i\in\mathcal{I}}\mathrm{KL}\!\left(p_{T,i}^{(T)}\,\|\,p_{S,i}^{(T)}\right),
-\label{eq:kd-objective}
-\end{equation}
-where $\mathcal{I}$ contains valid next-token prediction positions after the causal shift and excludes masked targets. Both CE and KL are normalized over valid target tokens; the implementation uses \texttt{token\_mean}, not the legacy batch-normalized KL. The main confirmatory continuations use $T=2$ and $\lambda=5$; the matched CE arm has $\lambda=0$.
+Let $p_{\mathrm{teach},i}^{(\tau)}$ and $p_{\mathrm{stud},i}^{(\tau)}$ be teacher and student next-token distributions at temperature $\tau$. Over valid positions $\mathcal{I}$, excluding masked targets after the causal shift, we use
+\begin{align}
+\mathcal{L} &= \mathcal{L}_{\mathrm{CE}}+\lambda\mathcal{L}_{\mathrm{distill}},\label{eq:kd-objective}\\
+\mathcal{L}_{\mathrm{distill}} &=
+\frac{\tau^2}{|\mathcal{I}|}\sum_{i\in\mathcal{I}}
+\mathrm{KL}\!\left(p_{\mathrm{teach},i}^{(\tau)}
+\,\|\,p_{\mathrm{stud},i}^{(\tau)}\right).\nonumber
+\end{align}
+Both terms are averaged over target tokens. This \texttt{token\_mean} normalization differs from the batch-normalized KL used in some legacy runs. Primary comparisons fix $\tau=2$ and $\lambda=5$; matched CE uses $\lambda=0$.
 
-Our operational measure of distillability is the paired endpoint difference
+The protocol-specific paired transfer endpoint is
 \begin{equation}
-\mathrm{Gain}_{\mathrm{KD}}
-=\mathrm{NLL}_{\mathrm{CE}}^{\mathrm{test}}
--\mathrm{NLL}_{\mathrm{KD}}^{\mathrm{test}}.
+\mathrm{Gain}_{\mathrm{KD}}=
+\mathrm{NLL}_{\mathrm{CE}}^{\mathrm{test}}-
+\mathrm{NLL}_{\mathrm{KD}}^{\mathrm{test}}.
 \label{eq:paired-gain}
 \end{equation}
-Positive gain indicates a benefit over continued CE training, and negative gain indicates harm relative to that alternative. This comparison controls the starting student within each pair. Comparing KD with an unrelated baseline would also reflect differences in initialization, prior training, or continuation budget. Conversely, positive paired gain does not by itself establish improvement over $S_0$, so we examine that distinction explicitly in the modern stress test.
+Positive gain means that KD improves over CE continuation, not necessarily over $S_0$. An unrelated baseline would confound this comparison with initialization or training history. Whether continuation itself remains useful is examined separately in Section~\ref{sec:external-validity}.
 
-Confirmatory comparisons use three independently prepared student seeds, 42, 123, and 456. We report individual paired gains, their mean, sample SD, and sign consistency. The SD describes variation across three student preparations; it is not a standard error or a significance test. Teachers and corpus splits remain fixed, so these seeds do not constitute independent replications of teacher training or data collection. Checkpoint eligibility is also part of the protocol: the main comparisons select trained continuation checkpoints, whereas the explicitly labeled modern step-0 diagnostic additionally admits $S_0$ (Section~\ref{sec:external-validity}). Figure~\ref{fig:paired_protocol} summarizes the paired design.
+We report gains for three independently prepared student seeds, 42, 123, and 456, with their mean, sample SD, and sign consistency. These replications vary student preparation, not teacher training or corpus collection. The SD is descriptive, not a standard error or significance test. Primary endpoints select among trained continuation checkpoints. An explicitly labeled diagnostic also permits the unmodified $S_0$ as step 0; it does not replace the primary endpoint.
 
-\figureplaceholder{F1: Paired warm-start evaluation}
-{Exact S0 forks into matched CE and KD; independent validation selection;
-final test reporting. Step-0 eligibility is a separately labeled protocol choice.}
-{fig:paired_protocol}
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/fig1_paired_protocol.pdf}
+\caption{Paired warm-start evaluation. Identical $S_0$ weights initialize CE and KD continuations, with separate validation selection before test reporting. The evidence map distinguishes replicated transfer from bounded explanatory controls.}
+\label{fig:paired_protocol}
+\end{figure}

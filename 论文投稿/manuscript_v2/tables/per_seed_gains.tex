@@ -1,0 +1,19 @@
+\begingroup\small
+\setlength{\tabcolsep}{5pt}
+\begin{table}[htbp]\centering
+\begin{tabular}{lrrr}
+\toprule
+Condition & Seed 42 & Seed 123 & Seed 456 \\
+\midrule
+PTB fused & 0.142284 & 0.149462 & 0.143066 \\
+TinyStories fused & -0.107479 & -0.107439 & -0.106740 \\
+WT2 J/TG & 0.162501 & 0.147337 & 0.157157 \\
+WT2 A & -0.022394 & -0.035362 & -0.025206 \\
+WT2 G & 0.046771 & 0.033598 & 0.042604 \\
+WT2 T & 0.142785 & 0.125226 & 0.136593 \\
+WT2 TT & 0.176453 & 0.158666 & 0.169257 \\
+\bottomrule
+\end{tabular}
+\caption{Archived paired test-NLL gains. Positive values favor KD; every WikiText-2 arm shares the same CE endpoint within a seed.}\label{tab:per_seed_gains}
+\end{table}
+\endgroup

@@ -1,0 +1,220 @@
+{
+  "date": "2026-10-08",
+  "input_commit": "56ab6cee930da08637c3fa7c6b36d5cb22ccf09f",
+  "status": "PASS_READABILITY_REVISION",
+  "scope": "Authorized font pass; local A1 folding/cropping; new Figure 2 from frozen CSV. Original figure_vector_qa.json retained as historical frozen-layout QA.",
+  "figures": {
+    "fig1_paired_protocol": {
+      "canvas": [
+        1752,
+        941
+      ],
+      "aspect_ratio": 1.8618490967056323,
+      "pdf_points": [
+        489.59999999999997,
+        262.96438356164384
+      ],
+      "png_pixels": [
+        4080,
+        2191
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "svg_text_nodes": 37,
+      "pdf_embedded_images": 0,
+      "font_family": "Liberation Sans, Arial, Helvetica, sans-serif",
+      "base_text_size_pt_at_6_8in": [
+        7.266,
+        9.781
+      ],
+      "bounds_violations": [],
+      "text_overlaps": [],
+      "sha256": {
+        ".svg": "41bca92260ec2b19f81ffeb775dfc1d942945c1d8153c1ca88464ea1c3dab1a6",
+        ".pdf": "fa3166b1d7d984608518ec75d94400d66111d9308358ffecda0b6bdb5b1f17db",
+        "_600dpi.png": "ef6b8bdf12b01cb2d519ca64c49d2d733791ed1cb72da44d0cba6af59302ebb1"
+      },
+      "normal_text_min_pt": 7.265753424657534,
+      "all_text_min_pt": 6.147945205479452,
+      "reference_path": "论文投稿/manuscript_v2/figures/reference_png/fig1_paired_protocol_ref.png",
+      "reference_sha256": "7c263c457d8fedca485aae647020a247a8e04dc7cff73f383f0cf0dc30c23894",
+      "paths": {
+        "svg": "论文投稿/manuscript_v2/figures/fig1_paired_protocol.svg",
+        "pdf": "论文投稿/manuscript_v2/figures/fig1_paired_protocol.pdf",
+        "png": "论文投稿/manuscript_v2/figures/fig1_paired_protocol_600dpi.png"
+      }
+    },
+    "fig3_teacher_quality": {
+      "canvas": [
+        1774,
+        887
+      ],
+      "aspect_ratio": 2,
+      "pdf_points": [
+        489.59999999999997,
+        244.79999999999998
+      ],
+      "png_pixels": [
+        4080,
+        2040
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "svg_text_nodes": 29,
+      "pdf_embedded_images": 0,
+      "font_family": "Liberation Sans, Arial, Helvetica, sans-serif",
+      "base_text_size_pt_at_6_8in": [
+        7.038,
+        15.179
+      ],
+      "bounds_violations": [],
+      "text_overlaps": [],
+      "sha256": {
+        ".svg": "9414fe1223dc6cc39079e63bd3a0e3b4f76e84a83196e58ea1591812442398eb",
+        ".pdf": "0fd0d22d54ed52388398637b0fff72a371efbe41ed142cd9c8d27ec5182a863d",
+        "_600dpi.png": "47fcf67c4930d8e86e77ffd416ecfd27bea94d52d7ff694639304072aa8644e0"
+      },
+      "normal_text_min_pt": 7.037655016910937,
+      "all_text_min_pt": 7.037655016910937,
+      "reference_path": "论文投稿/manuscript_v2/figures/reference_png/fig3_teacher_quality_ref.png",
+      "reference_sha256": "c410be31c0d61bb32a1e87cb60024687d84d924f67a3cc39ef134e3f2f4562c1",
+      "paths": {
+        "svg": "论文投稿/manuscript_v2/figures/fig3_teacher_quality.svg",
+        "pdf": "论文投稿/manuscript_v2/figures/fig3_teacher_quality.pdf",
+        "png": "论文投稿/manuscript_v2/figures/fig3_teacher_quality_600dpi.png"
+      }
+    },
+    "fig4_ensemble_control": {
+      "canvas": [
+        1983,
+        793
+      ],
+      "aspect_ratio": 2.5006305170239598,
+      "pdf_points": [
+        489.59999999999997,
+        195.79062027231467
+      ],
+      "png_pixels": [
+        4080,
+        1632
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "svg_text_nodes": 41,
+      "pdf_embedded_images": 0,
+      "font_family": "Liberation Sans, Arial, Helvetica, sans-serif",
+      "base_text_size_pt_at_6_8in": [
+        7.16,
+        9.629
+      ],
+      "bounds_violations": [],
+      "text_overlaps": [],
+      "sha256": {
+        ".svg": "f553ca7ddc3984fc9401c4fff0159b2d8e0f254a5660992f95840531fb4d9bcb",
+        ".pdf": "fd4fb7869ee394be3bb5040ab64427494717d044b98bb1844231f95a83dd30b0",
+        "_600dpi.png": "028820e3aaaa8e8a4c0f7ee9a85a1e3145ecfe1a9ff64b6c1c7a6fb58b250f9f"
+      },
+      "normal_text_min_pt": 7.160060514372164,
+      "all_text_min_pt": 7.160060514372164,
+      "reference_path": "论文投稿/manuscript_v2/figures/reference_png/fig4_ensemble_control_ref.png",
+      "reference_sha256": "aed4126b9f09f2e1fb18571f39f7b1e26afba5ef333da4d21110c97c8b9a42a4",
+      "paths": {
+        "svg": "论文投稿/manuscript_v2/figures/fig4_ensemble_control.svg",
+        "pdf": "论文投稿/manuscript_v2/figures/fig4_ensemble_control.pdf",
+        "png": "论文投稿/manuscript_v2/figures/fig4_ensemble_control_600dpi.png"
+      }
+    },
+    "figA1_teacher_architecture": {
+      "canvas": [
+        1774,
+        730
+      ],
+      "aspect_ratio": 2.43013698630137,
+      "pdf_points": [
+        489.59999999999997,
+        201.47012401352876
+      ],
+      "png_pixels": [
+        4080,
+        1679
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "svg_text_nodes": 48,
+      "pdf_embedded_images": 0,
+      "font_family": "Liberation Sans, Arial, Helvetica, sans-serif",
+      "base_text_size_pt_at_6_8in": [
+        7.728,
+        8.832
+      ],
+      "bounds_violations": [],
+      "text_overlaps": [],
+      "sha256": {
+        ".svg": "290f072e459dce4f405d648d521ec2db16ca8ecee499b811c15d3672581b64db",
+        ".pdf": "67f23eb7594282d91de1c6d2ed401524976724f1ab676d231a613d383c418188",
+        "_600dpi.png": "4c91280b84c2c577b7dda0b78ee6a6d8f269192e3e12b2f9422096825dfebeb5"
+      },
+      "normal_text_min_pt": 7.727621195039459,
+      "all_text_min_pt": 6.071702367531004,
+      "reference_path": "论文投稿/manuscript_v2/figures/reference_png/figA1_architecture_ref.png",
+      "reference_sha256": "7154aff3281e4f2f7b601597e390ca4eab8976f63b506da0b32198c42f5bdcde",
+      "paths": {
+        "svg": "论文投稿/manuscript_v2/figures/figA1_teacher_architecture.svg",
+        "pdf": "论文投稿/manuscript_v2/figures/figA1_teacher_architecture.pdf",
+        "png": "论文投稿/manuscript_v2/figures/figA1_teacher_architecture_600dpi.png"
+      }
+    },
+    "fig2_cross_domain_gain": {
+      "normal_text_min_pt": 8,
+      "all_text_min_pt": 7.699999809265137,
+      "paths": {
+        "svg": "论文投稿/manuscript_v2/figures/fig2_cross_domain_gain.svg",
+        "pdf": "论文投稿/manuscript_v2/figures/fig2_cross_domain_gain.pdf",
+        "png": "论文投稿/manuscript_v2/figures/fig2_cross_domain_gain_600dpi.png"
+      },
+      "sha256": {
+        ".svg": "a035652158f775e1651229b1bf7d469509f113654a4d7871289686b9fc3834da",
+        ".pdf": "1800382f4615322852eba6d0a085495661e8612235095865cb70a232a75f3771",
+        "_600dpi.png": "091afebe464300ab47931ba91d4edd563f4348d5227a04317fc4d3996ad50bf7"
+      },
+      "png_pixels": [
+        4080,
+        1590
+      ],
+      "png_dpi": [
+        599.9988,
+        599.9988
+      ],
+      "pdf_points": [
+        489.6000061035156,
+        190.8000030517578
+      ],
+      "canvas": [
+        489.6,
+        190.8
+      ],
+      "bounds_violations": [],
+      "text_overlaps": [],
+      "bounds_method": "PDF span bounds; manual inter-label overlap review after moving legend outside axes",
+      "source_csv": "research/manuscript_v2/tables/table_endpoint_inventory.csv",
+      "source_sha256": "28e2ebe006e4c6f1f1a3369d65efdc5f77db16bd20c9fcb8896f80760f8db2d4",
+      "error_bars": "mean plus/minus sample SD; no CI or p-value"
+    }
+  },
+  "manuscript_width_inches": 6.8,
+  "visual_changes": {
+    "fig1": "Right evidence region widened by 80 source units; fine print enlarged and heading wrapped.",
+    "fig3": "Fine print enlarged; student/qualifier boxes fitted; approved wording unchanged.",
+    "fig4": "Fine print enlarged and heading wrapped; exact caution sentences moved to caption; gains and ranking unchanged.",
+    "figA1": "Unused lower whitespace cropped; same Grassmann modules folded into two rows to meet font thresholds; causal connectivity unchanged.",
+    "fig2": "Matplotlib vector export from archived paired gains; legend moved outside axes after visual QA."
+  }
+}

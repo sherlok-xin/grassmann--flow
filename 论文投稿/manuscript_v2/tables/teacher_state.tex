@@ -1,4 +1,4 @@
-% Generated from frozen sources by build_tables.py; not a prose draft.
+% Numeric rows formatted from frozen archived tables; caption revised 2026-10-08.
 \begin{table}[htbp]
 \centering\small
 \begin{tabular}{lrrrr}
@@ -10,7 +10,6 @@ Alpha-only A & 6.376220 & -0.027654 & 0.006822 & 3/3 -- \\
 $Q$ (student test contrast) & -- & 0.183319 & 0.001375 & 3/3 + \\
 \bottomrule
 \end{tabular}
-\caption{Fixed-composition WT2 teacher-state intervention (planning table).}
+\caption{Fixed-composition teacher-state intervention on WikiText-2. Teacher NLL uses the same 512-chunk validation subset; gains are CE-relative test endpoints over three students. $Q$ compares A with J within a student. Composition is fixed, but trained representations differ.}
 \label{tab:teacher_state}
-\par\smallskip\begin{minipage}{0.96\linewidth}\footnotesize $Q$ is the KD-student test NLL under A minus that under J, not the teacher NLL difference. Teacher NLL uses the archived 512-chunk validation subset. Forced fusion weight is 0.5. Changing training state also changes branch representations; this is not a scalar-NLL causal intervention. The failed short smoke and explicitly amended full-data gate must remain in the protocol appendix.\end{minipage}
 \end{table}

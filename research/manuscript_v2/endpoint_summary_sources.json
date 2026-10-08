@@ -1,0 +1,16 @@
+{
+  "activity": "Read stored NLL summaries and original teacher/source configs only; no endpoint computation or model access.",
+  "sources": {
+    "outputs/distill_experiments/20260916_150712_h0_ptb_confirm_token_l0_seed42_retry50m_v2/summary.json": "09eae3c3ae9d12d40b7f761f09bc46fc35fc8cd0321a37819f815e34992fc050",
+    "outputs/distill_experiments/20260916_150712_h0_ptb_confirm_token_l5_seed42_retry50m/summary.json": "26afe2bd459b3e7d9819875cbddc8ffa51ffd5467930069f5707f87850eaaeca",
+    "outputs/distill_experiments/20260916_152242_h0_ptb_confirm_token_l0_seed123/summary.json": "46c0ed69ed984dabb06a414b29953ebb16ff27a4a191cb0bb41d9f992bf11e5b",
+    "outputs/distill_experiments/20260916_155134_h0_ptb_confirm_token_l5_seed123/summary.json": "0ad91195b92594b13df20e5707bda3b154ec9466eb543777ca7e068fe569addf",
+    "outputs/distill_experiments/20260916_153710_h0_ptb_confirm_token_l0_seed456/summary.json": "1313c7e20f31ce012e0523d1b47abe512a9ae2bf464b848fa0b70c2adf978b93",
+    "outputs/distill_experiments/20260916_155348_h0_ptb_confirm_token_l5_seed456/summary.json": "dd17bafcfe9d3317d4b841a0d8bbc2b63534db60223cf2233aa519e40d3e4ad9",
+    "outputs/hybrid_experiments/20260328_080104_wt2_hybrid_alpha_joint/config.json": "1fdac0cad133d3120c31b18115b88e3d689ffc7c78a19dc65a315ca304c8dbaf",
+    "outputs/hybrid_experiments/20260328_084319_wt2_v1_hybrid_alpha_only/config.json": "9ae5cda6d561961dcfcc2da43f7b969cce9945c9258f482e9329bc3a5253fab4",
+    "outputs/hybrid_experiments/20260930_034520_phase2f_tt_teacher_joint_e10/config.json": "895c65402a0e10b1ad79cf9964245390deb7a26c48fe45684e8c9e1d2fdd2237",
+    "outputs/experiments/20260317_114514_wt2_baseline_both/config.json": "58986fdf285f21a5aa1fab48278dd2893384f672583f84eab83129831b8d18bf",
+    "outputs/experiments/20260930_033237_phase2f_t2_seed123_e20/config.json": "99e9898db77914987f37f9e70b36ffaeabc2cc8f528d8527249b38f8dd849955"
+  }
+}

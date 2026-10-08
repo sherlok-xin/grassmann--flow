@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "date": "2026-10-08",
+  "input_commit": "56ab6cee930da08637c3fa7c6b36d5cb22ccf09f",
+  "activity": "read-only document, archived-table, hash, compiled-LaTeX checks; no model access",
+  "checks": {
+    "authoritative_local_abstract_introduction_prose_byte_preserved": "PASS",
+    "frozen_experiments_data_checkpoints_old_manuscript_unchanged": "PASS",
+    "frozen_evidence_and_cac_hashes": "PASS",
+    "archived_numeric_source_hashes": "PASS",
+    "six_sections_paragraph_style_and_scoped_todos": "PASS",
+    "core_effects_scoped_to_archived_tables": "PASS (62 numeric checks)",
+    "permanent_warning_and_failed_gate_labels": "PASS",
+    "latex_bibtex_no_errors_unresolved_references_or_overfull": "PASS",
+    "sections_1_to_10_unique_labels_and_body_references": "PASS",
+    "training_permanently_frozen": "PASS",
+    "62_original_numeric_checks_retained_across_authorized_relocations": "PASS",
+    "main_body_no_internal_phases_visible_todos_or_placeholders": "PASS",
+    "supplementary_archived_nll_summaries_and_teacher_configs": "PASS",
+    "seven_formatted_appendix_tables_match_stored_records": "PASS",
+    "24_bibliography_keys_reviewed_and_appendix_figure_is_A1": "PASS"
+  },
+  "numeric_checks": 62,
+  "body_source_sha256": {
+    "论文投稿/manuscript_v2/sections/03_problem_setting.tex": "7f088dff34a904adc5993c3b8bb869cf4da9e3a4097f662632f9345e29c927b3",
+    "论文投稿/manuscript_v2/sections/04_experimental_setting.tex": "11b068ed5e301e18050c1bcef890cb44aeb4c044f81f0df9d22e4f7fdfb46eb2",
+    "论文投稿/manuscript_v2/sections/05_cross_domain_transfer.tex": "93c394b538bb45ceb9e6aec49028c03c8858da3be7be455f60301680693bbc83",
+    "论文投稿/manuscript_v2/sections/06_distillability.tex": "bfad127965073555804c4503f3d89d25fed217849d40ffe2bb4f2fd3e017c816",
+    "论文投稿/manuscript_v2/sections/07_controls.tex": "67befdbeec939eafcf39a8474c4c82685036bc83ff6e73e4534888b9e2a923e2",
+    "论文投稿/manuscript_v2/sections/08_external_validity.tex": "716f2d723d9329d78bfa55db3d935d68319ad2df9ad0c863fa015b790255ee55"
+  },
+  "compiled_workspace_main_sha256": "2c6d43c96150a48619e907e934d9c1aa1067f99e64a6ecce3b2cc99d78471c12",
+  "compiled_workspace_introduction_sha256": "d5ff3fc42b19332d267e00a1e8220c63f7fd1ac35e0921d73f59a66a7b2f1625",
+  "build_directory": "outputs/manuscript_v2_build",
+  "pdf_pages": 23,
+  "pdf_sha256": "3d30e006e8a83546706a595dfc29451ca9bb15de8d85b40263dbcf8b4b85422d",
+  "underfull_bibliography_notices": 0,
+  "scope_note": "Full revision explicitly authorized; local user prose preserved for inclusion. Five vector figures integrated; appendix relocations retain every original numeric check.",
+  "limits": "Core table values automatically checked; ancillary protocol, optimization and interpretation claims reviewed against original reports. Not submission-readiness certification."
+}

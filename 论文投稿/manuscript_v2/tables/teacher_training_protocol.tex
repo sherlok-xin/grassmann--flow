@@ -1,0 +1,13 @@
+\begin{table}[htbp]\centering\small
+\begin{tabular}{llrrr}
+\toprule
+Teacher & Mode & Epoch budget & Branch LR & Fusion-weight LR\\
+\midrule
+J/TG & Joint & 10 & $10^{-5}$ & $5\times10^{-3}$\\
+A & Fusion weight only & 5 & Frozen & $10^{-2}$\\
+TT & Joint & 10 & $10^{-5}$ & $10^{-2}$\\
+\bottomrule
+\end{tabular}
+\caption{Archived WikiText-2 teacher-training configurations. All initialize $\alpha=0.5$, use batch 32, weight decay 0.01 and AMP, and select by validation. Joint arms freeze branches in epoch 1; A freezes them throughout. Evaluation and KD force $\alpha=0.5$. These histories do not isolate scalar teacher quality or architecture.}
+\label{tab:teacher_training_protocol}
+\end{table}

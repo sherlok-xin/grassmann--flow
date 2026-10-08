@@ -1,14 +1,12 @@
-\section{Discussion and Limitations}\label{sec:discussion}
-\writingtodo{Synthesize configuration dependence without a causal theorem.}
-% - Evidence is consistent with joint teacher state, student state and
-%   optimization-configuration dependence, not a fully factorial decomposition.
-% - Three student seeds, shared WT2 S0/C0, one teacher/corpus; adaptation versus
-%   pretraining independence; calibration tokens/subsets not extra run units.
-% - Teacher-quality and alpha-LR/parameter-count confounds; persistent/frequent
-%   clipping, AMP event rates, selection eligibility, failed gates/amendments.
-% - Phase4C gate failure unresolved; modern external validity limited.
-% - ATKD/other adaptive baselines not run; literature overlap already substantial.
-% TODO[LIMITATIONS]: preserve every warning in V2 registry and original reports.
-% - Deployment is secondary; batch1 quality-student slower than teacher;
-%   no blanket speedup or geometric efficiency attribution.
-% MUST NOT: universal scalar predictor, general KD failure or causal geometry.
+\section{Discussion and Limitations}
+\label{sec:discussion}
+
+The evidence is consistent with configuration-dependent distillability. Teacher supervision is evaluated relative to a particular student state and CE continuation, under a fixed objective, optimization regime, budget, and checkpoint-selection rule. Positive and negative gains recur across independent student preparations, but neither sign is a teacher-only property established outside these configurations.
+
+Teacher quality matters strongly in the fixed-composition state intervention: joint training accompanies a large reversal from harmful to helpful supervision. Nevertheless, the weaker-source counterexample rules out universal ordering by global teacher likelihood. Both observations can hold because a single held-out average does not describe which errors or probability targets are useful to a given student. These experiments do not identify a complete causal decomposition of that usefulness.
+
+Predictive diversity need not be transferable diversity. TG has greater branch disagreement, yet TT transfers more effectively in the tested comparison. Different teacher quality and training histories prevent isolating architecture, while token-level JSD provides little additional predictive information. The evidence does not support geometry-specific or heterogeneity-superiority claims.
+
+Local diagnostic failures also distinguish short-horizon behavior from selected long-horizon endpoints. Gradients and curvature at $S_0$ summarize a limited neighborhood, whereas full training changes student parameters and passes through clipping and scheduling regimes. This mismatch suggests caution in using the tested scores as endpoint predictors; it does not invalidate gradient-aware or validation-driven adaptive methods.
+
+Primary models are small, and three student seeds provide limited coverage of initialization variability. Teachers and corpora are fixed; controls reuse CE and TG endpoints and are not independent factorial replications. No fully factorial intervention separates teacher quality, architecture, error structure, and optimization. TT/TG quality and training mismatches, clipping warnings, and nonzero AMP skips remain limitations. No adaptive-KD baseline was evaluated, so the results cannot establish superiority over adaptive methods. The modern stress test has a degenerate continuation regime, and its CE-only headroom gate fails. SmolLM2 pretraining may overlap with FineWeb-derived data, but exact document-level overlap is unknown. Generalization to larger students, other teachers, generative task metrics, and alternative continuation regimes remains unresolved.

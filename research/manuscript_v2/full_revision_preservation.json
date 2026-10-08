@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-08",
+  "input_commit": "56ab6cee930da08637c3fa7c6b36d5cb22ccf09f",
+  "abstract_prose_sha256": "00161951e1d0c8ba99b611aa99a31b1a1166bd4699f0db7df70ce9f4cb487e17",
+  "introduction_prose_sha256": "ec078a77de4e1bff1953922cb52a8b2cda4c20cfdab63eae6bfe6f6819ad5cbc",
+  "abstract_characters": 1739,
+  "introduction_characters": 6406,
+  "initial_main_sha256": "5d2dd6c64e804c5dd360e9a9837e1d3b9e38524ca61c53711d699fecc72559e0",
+  "initial_introduction_sha256": "49df0525f643851f275515ad6e76c87eeaaebb9371a971d429f2b33058a58282",
+  "gitignore_sha256": "c9feda1200ec2fca6c4bd7269b650e5d1545677b22823d72f19e9e021edae0c3",
+  "scope": "User prose is authoritative. Remove inherited skeleton TODOs, not user prose. Only documented citation/reference insertions are allowed. Include both local user files in the final commit."
+}

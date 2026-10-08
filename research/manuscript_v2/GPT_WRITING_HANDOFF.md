@@ -1,5 +1,36 @@
 # Entry point for manuscript V2 writing
 
+## Current authorized full-revision handoff — STOP (2026-10-08)
+
+Input: `56ab6cee930da08637c3fa7c6b36d5cb22ccf09f`. The lead explicitly
+authorized the full revision. The authoritative local Abstract/Introduction
+are now included, with their prose byte-preserved; the remote skeleton was
+not substituted. Section 2 and Sections 9–10/appendix are complete, Sections
+3–8 revised into reader-facing prose, and five pure-vector figures integrated.
+Section 8 source prose is approximately 46% shorter; modern telemetry and
+unreplicated observations are appendix-only. No Figure 5 placeholder remains;
+the architecture figure is numbered A1.
+
+Read `FULL_MANUSCRIPT_REVISION_STATUS.md`, `full_revision_qa.json`,
+`FULL_TEXT_REFERENCE_REVIEW.md`, `full_text_reference_verification.json`, and
+the new top section of `FIGURE_VECTOR_QA.md`. Historical QA JSON files retain
+their historical scope and are not current source hashes. Reproduce current
+checks with `audit_body_draft.py --full-revision` and
+`audit_vector_figures.py --readability-revision`. Build actual main with
+`make -C 论文投稿/manuscript_v2` (23-page venue-neutral article).
+
+Twenty-four references have primary metadata and relevant full-text reading
+records. This is not a systematic review or adaptive-baseline evaluation.
+No experimental artifact, frozen claim or endpoint changed. State and scalar
+quality remain distinct; TT/TG teacher quality/count/history are confounded;
+modern continuation is not clean confirmation. All permanent flags remain.
+
+STOP after the compact revision commit. No training, models, diagnostics,
+sweeps or methods. Further manuscript edits require a new instruction;
+venue/template, page budget and authors remain unresolved.
+
+## Historical scoped-body stage
+
 ## Current scoped body-draft handoff — STOP
 
 From input commit `1c153e49efa19132481fb74bbc98032bf610544e`, the research

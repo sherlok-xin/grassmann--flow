@@ -1,4 +1,4 @@
-% Generated from frozen sources by build_tables.py; not a prose draft.
+% Numeric rows formatted from frozen archived tables; caption revised 2026-10-08.
 \begin{table}[htbp]
 \centering\small
 \begin{tabular}{lrrrrr}
@@ -9,7 +9,6 @@ TG & 37,749,633 & 4.303697 & 0.182087 & 0.507034 & 0.155665 \\
 TT & 35,340,801 & 4.293589 & 0.099793 & 0.630170 & 0.168125 \\
 \bottomrule
 \end{tabular}
-\caption{Homogeneous TT control versus heterogeneous TG (planning table).}
+\caption{Homogeneous TT and heterogeneous TG control at $\alpha=0.5$. Teacher metrics use full validation; KD gain is the mean over three paired students. TT has better teacher likelihood, fewer parameters, and a different fusion-weight training rate; the comparison is not strictly matched.}
 \label{tab:tt_vs_tg}
-\par\smallskip\begin{minipage}{0.96\linewidth}\footnotesize Common full validation split for teacher metrics. $H=\mathrm{NLL}_{TT}-\mathrm{NLL}_{TG}=-0.012460\pm0.001348$, TT better for 3/3 students. TT is about 6.38\% smaller, has 0.010108 lower teacher NLL, and uses a different alpha learning rate (0.01 versus historical TG 0.005). This rejects a TG superiority claim here, not all heterogeneous ensembles.\end{minipage}
 \end{table}

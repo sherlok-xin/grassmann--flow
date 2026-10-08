@@ -1,4 +1,4 @@
-% Generated from frozen sources by build_tables.py; not a prose draft.
+% Numeric rows formatted from frozen archived tables; caption revised 2026-10-08.
 \begin{table}[htbp]
 \centering\small
 \begin{tabular}{lrr}
@@ -10,7 +10,6 @@ Seed & Teacher residual vs C0 & KD test gain \\
 456 & -0.251006 & 0.042604 \\
 \bottomrule
 \end{tabular}
-\caption{A globally weaker teacher can still transfer positively (planning table).}
+\caption{Globally weaker source with positive transfer. Teacher and CE residuals use the common WikiText-2 validation subset; gain uses selected test endpoints. Negative residual means the teacher has worse likelihood than CE, not necessarily worse than $S_0$.}
 \label{tab:weaker_teacher}
-\par\smallskip\begin{minipage}{0.96\linewidth}\footnotesize Residual is C0 validation-subset NLL minus teacher NLL. All residuals are negative while gains are positive. This refutes a universal necessity rule; it does not show that weak teachers are usually better or that likelihood is irrelevant.\end{minipage}
 \end{table}

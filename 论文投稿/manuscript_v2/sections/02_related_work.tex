@@ -1,17 +1,13 @@
 \section{Related Work}\label{sec:related-work}
-\writingtodo{Write from the overlap audit after closest-paper full-text checks.}
-% - Teacher quality / student-oriented teachers: cho2019efficacy,
-%   park2021friendly, menon2021statistical, kaplun2022bad.
-% - Selection / compatibility: yuan2021selection, zhou2022metadistil.
-% - Autoregressive adaptive KD: zhong2024atkd is the closest direct prior;
-%   gu2024minillm, agarwal2024gkd, xie2026adakd concern established loss/state
-%   and student-distribution issues; jin2026entropy concerns uncertainty.
-% - Ensemble / gradient-aware / validation-driven: stanton2021really,
-%   du2020agree, zhou2022metadistil.
-% - Harmful supervision: wang2021selective, zhong2024atkd.
-% TODO[FULLTEXT]: verify initialization/CE comparators/checkpoint selection
-% before asserting a protocol distinction; abstracts do not prove absence.
-% TODO[CITE:VERIFY_EXTERNAL]: foundational KD, Transformer/Grassmann,
-% PTB/WT2/TinyStories/FineWeb-Edu/SmolLM2 primary dataset/model citations.
-% MUST NOT: invent bibliography entries or claim superiority over these
-% adaptive methods, since none was run as a comparison in this study.
+
+\subsection{Teacher quality and student-oriented supervision}
+
+KD transfers predictive distributions rather than only hard labels~\citep{hinton2015distilling}, but better stand-alone teachers need not produce better students. \citet{cho2019efficacy} document capacity mismatch and harmful late-training supervision; \citet{park2021friendly} train teachers with student branches to improve transfer. A statistical account emphasizes probability estimation and bias--variance trade-offs~\citep{menon2021statistical}, while \citet{kaplun2022bad} show how poor classifiers can serve as useful teachers in their theoretical setting. These works already establish that teacher performance and teaching utility differ. Our contribution is a controlled warm-start LM evidence chain, not the first observation of weak-teacher usefulness or harmful KD.
+
+\subsection{Autoregressive language-model distillation}
+
+Autoregressive KD depends on the objective and the contexts seen during training. MiniLLM uses reverse KL with policy-gradient optimization~\citep{gu2024minillm}; GKD uses student-generated sequences and flexible divergences to address train--inference mismatch~\citep{agarwal2024gkd}. ATKD analyzes different teaching needs of easy and hard tokens and adapts target-related supervision~\citep{zhong2024atkd}. Selective NMT distillation also identifies supervision that can harm learning~\citep{wang2021selective}. Distillation scaling laws relate student likelihood to teacher performance, model size, and compute allocation~\citep{busbridge2025scaling}. We instead hold a corpus-based forward-KL continuation recipe fixed and measure gain over CE from the identical student state. This evaluates a bounded protocol, not generation quality or superiority over those methods.
+
+\subsection{Adaptive, ensemble, and gradient-driven supervision}
+
+Teacher suitability can be addressed through instance-level multi-teacher selection~\citep{yuan2021selection} or teacher updates driven by student quiz-set performance, as in MetaDistil~\citep{zhou2022metadistil}. Ensemble distillation distinguishes fidelity from generalization~\citep{stanton2021really}, and adaptive ensemble KD uses teacher-loss gradients to manage competing guidance~\citep{du2020agree}. More recent AdaKD adjusts token focus and temperature using difficulty and loss feedback~\citep{xie2026adakd}; entropy-aware on-policy KD supplements reverse KL with forward KL at uncertain tokens~\citep{jin2026entropy}. GRACE ranks teachers through cross-validated spectral statistics of student gradients on teacher-generated responses~\citep{panigrahi2026grace}. Its generation-based score is distinct from our validation-gradient and Hessian probes for fixed-logit supervision. We test neither these adaptive algorithms nor GRACE. Our paired state intervention, homogeneous-ensemble falsification, and failed retrospective diagnostics complement this literature without proposing a new compatibility theory.

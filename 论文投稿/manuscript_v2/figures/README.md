@@ -1,4 +1,23 @@
-# Frozen vector figure masters
+# Publication vector masters — current readability revision
+
+2026-10-08: all five figures below are integrated in the actual manuscript,
+not a temporary copy. The lead authorized enlarged type and minimal A1
+folding/cropping. Ordinary text is at least 7 pt and mathematical scripts at
+least 6 pt at 6.8-inch width. The frozen-layout notes below are historical.
+Current metadata: `research/manuscript_v2/figure_readability_qa.json`.
+
+Figure 2 is new: [SVG](fig2_cross_domain_gain.svg), [PDF](fig2_cross_domain_gain.pdf),
+[600-dpi QA PNG](fig2_cross_domain_gain_600dpi.png). It contains only archived
+paired gains, per-seed dots, mean ± sample SD and zero; no CI or p-value.
+The four other file names remain unchanged. A1 has appendix numbering;
+no F5 placeholder is retained. Figure 4 cautions are in its LaTeX caption.
+
+Current read-only audit:
+`python3 research/manuscript_v2/scripts/audit_vector_figures.py --readability-revision`.
+Renderer inspection without changing exports: `render_vector_figures.py --audit-only`
+(system Python with librsvg bindings). Full QA is in `FIGURE_VECTOR_QA.md`.
+
+## Historical first reconstruction
 
 Four approved references have been semantically reconstructed as editable SVG masters, vector PDFs, and 600-dpi PNG QA/fallback exports. References are local visual inputs under `reference_png/`; they are not embedded in any output.
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Read-only document audit: no model access, training, or file writes."""
 import csv
+import argparse
 import hashlib
 import json
 import re
@@ -37,15 +38,25 @@ def rows(name):
         return list(csv.DictReader(handle))
 
 
-def main():
+def main(full_revision=False):
     checks = {}
-    assert all(sha(MS / path) == expected for path, expected in PROTECTED.items())
-    checks["main_and_undrafted_sections_unchanged"] = "PASS"
     intro = (MS / "sections/01_introduction.tex").read_text()
-    before = intro.replace("Knowledge distillation (KD) transfers",
-                           "\\section{Introduction}\n\\label{sec:introduction}\n\nKnowledge distillation (KD) transfers", 1)
-    assert hashlib.sha256(before.rstrip("\n").encode()).hexdigest() == "396c4813ed62ba899ef77770dc09f3a70a96672b679ccb2d3100a2acd80896e2"
-    checks["introduction_only_duplicate_structure_removed_final_newline_normalized"] = "PASS"
+    if full_revision:
+        locked=json.loads((PACKAGE/'full_revision_preservation.json').read_text())
+        manuscript=(MS/'main.tex').read_text()
+        abstract=manuscript[manuscript.index('Knowledge distillation (KD) is commonly'):manuscript.index('\n% TODO[ABSTRACT')]
+        prose=intro[intro.index('Knowledge distillation (KD) transfers'):]
+        assert hashlib.sha256(abstract.encode()).hexdigest()==locked['abstract_prose_sha256']
+        assert hashlib.sha256(prose.encode()).hexdigest()==locked['introduction_prose_sha256']
+        assert sha(ROOT/'.gitignore')==locked['gitignore_sha256']
+        checks['authoritative_local_abstract_introduction_prose_byte_preserved']='PASS'
+    else:
+        assert all(sha(MS / path) == expected for path, expected in PROTECTED.items())
+        checks["main_and_undrafted_sections_unchanged"] = "PASS"
+        before = intro.replace("Knowledge distillation (KD) transfers",
+                               "\\section{Introduction}\n\\label{sec:introduction}\n\nKnowledge distillation (KD) transfers", 1)
+        assert hashlib.sha256(before.rstrip("\n").encode()).hexdigest() == "396c4813ed62ba899ef77770dc09f3a70a96672b679ccb2d3100a2acd80896e2"
+        checks["introduction_only_duplicate_structure_removed_final_newline_normalized"] = "PASS"
     protected = ["research/final_evidence", "research/experiments", "论文投稿/cac", "datasets", "checkpoints"]
     assert not run(["git", "diff", BASE, "--name-only", "--"] + protected).strip()
     checks["frozen_experiments_data_checkpoints_old_manuscript_unchanged"] = "PASS"
@@ -64,10 +75,13 @@ def main():
     assert all(line.startswith("% TODO:") for line in joined.splitlines() if "TODO" in line)
     checks["six_sections_paragraph_style_and_scoped_todos"] = "PASS"
     numerical_checks = []
+    appendix=(MS/'sections/appendix.tex').read_text() if full_revision else ''
+    table_text='\n'.join(p.read_text() for p in sorted((MS/'tables').glob('*.tex'))) if full_revision else ''
+    relocated_scope=appendix+'\n'+table_text
 
     def contains(file, value):
         token = f"{float(value):.6f}"
-        assert token in texts[file], (file, token)
+        assert token in texts[file]+relocated_scope, (file, token)
         numerical_checks.append([file, token])
 
     mappings = [
@@ -87,17 +101,17 @@ def main():
                 if row[key]:
                     contains(file, row[key])
             if table == "tt_vs_tg" and row["parameters"]:
-                assert f"{int(row['parameters']):,}" in texts[file]
+                assert f"{int(row['parameters']):,}" in texts[file]+relocated_scope
     gains = [float(row["test_gain"]) for row in rows("weaker_teacher")]
     contains(BODY[3], statistics.mean(gains))
     contains(BODY[3], statistics.stdev(gains))
     assert all(row["test_evaluated"] == "False" and row["passes_individual_gate"] == "False" for row in rows("modern_ce_gate"))
     checks["core_effects_scoped_to_archived_tables"] = f"PASS ({len(numerical_checks)} numeric checks)"
     assert "CLIP\\_SATURATION\\_WARNING" in texts[BODY[4]] and "CLIP\\_SATURATION\\_WARNING" in texts[BODY[5]]
-    assert "CE456\\_GRADIENT\\_SPIKE\\_WARNING" in texts[BODY[5]]
-    assert "STOP\\_MODERN\\_CONTINUATION\\_NOT\\_ESTABLISHED" in texts[BODY[5]]
+    assert "CE456\\_GRADIENT\\_SPIKE\\_WARNING" in texts[BODY[5]]+appendix
+    assert "STOP\\_MODERN\\_CONTINUATION\\_NOT\\_ESTABLISHED" in texts[BODY[5]]+appendix
     checks["permanent_warning_and_failed_gate_labels"] = "PASS"
-    log = (BUILD / "main.log").read_text()
+    log = (BUILD / "main.log").read_text(errors="replace")
     assert not re.search(r"undefined|multiply defined|^!|Overfull|Label\(s\) may have changed", log, re.I | re.M)
     assert "warning$ -- 0" in (BUILD / "main.blg").read_text()
     checks["latex_bibtex_no_errors_unresolved_references_or_overfull"] = "PASS"
@@ -110,13 +124,37 @@ def main():
         assert f"\\newlabel{{sec:{name}}}{{{{{number}}}" in aux
     assert all(key in labels for key in re.findall(r"\\ref\{([^}]+)\}", joined))
     assert len([x for x in labels if x.startswith("fig:")]) == 5
-    assert len([x for x in labels if x.startswith("tab:")]) == 8
+    assert len([x for x in labels if x.startswith("tab:")]) >= 8 if full_revision else len([x for x in labels if x.startswith("tab:")]) == 8
     checks["sections_1_to_10_unique_labels_and_body_references"] = "PASS"
     state = (ROOT / "research-state.yaml").read_text()
     assert "training_authorized: false" in state and "experimental_program: permanently_frozen" in state
     checks["training_permanently_frozen"] = "PASS"
+    if full_revision:
+        allbody='\n'.join((MS/'sections'/f'{n:02d}_{suffix}.tex').read_text() for n,suffix in enumerate(['introduction','related_work','problem_setting','experimental_setting','cross_domain_transfer','distillability','controls','external_validity','discussion','conclusion'],1))
+        uncommented='\n'.join(line for line in allbody.splitlines() if not line.lstrip().startswith('%'))
+        assert not re.search(r'\bPhase\s*[234][A-Z]?\b',uncommented,re.I)
+        assert '\\writingtodo' not in uncommented and '\\figureplaceholder' not in uncommented
+        assert 'fig:modern_selection' not in aux
+        assert numerical_checks and len(numerical_checks)==62
+        checks['62_original_numeric_checks_retained_across_authorized_relocations']='PASS'
+        checks['main_body_no_internal_phases_visible_todos_or_placeholders']='PASS'
+        supplementary=json.loads((PACKAGE/'endpoint_summary_sources.json').read_text())['sources']
+        assert all(sha(ROOT/path)==expected for path,expected in supplementary.items())
+        checks['supplementary_archived_nll_summaries_and_teacher_configs']='PASS'
+        generated=json.loads(run(['python3',str(PACKAGE/'scripts/format_appendix_tables.py')]))
+        for name,expected in generated.items():
+            if name.endswith('.tex'): assert (MS/'tables'/name).read_text()==expected, name
+        checks['seven_formatted_appendix_tables_match_stored_records']='PASS'
+        bibliography=(MS/'references.bib').read_text()
+        keys=re.findall(r'@\w+\{([^,]+),',bibliography)
+        verified=json.loads((PACKAGE/'full_text_reference_verification.json').read_text())['records']
+        assert len(keys)==len(set(keys))==24
+        assert set(keys)=={r['key'] for r in verified}
+        assert all(r['metadata_status']=='VERIFIED_PRIMARY_EXPORT' for r in verified)
+        assert '\\newlabel{fig:teacher_architecture}{{A1}' in aux
+        checks['24_bibliography_keys_reviewed_and_appendix_figure_is_A1']='PASS'
     print(json.dumps({
-        "status": "PASS", "date": "2026-10-04", "input_commit": BASE,
+        "status": "PASS", "date": "2026-10-08" if full_revision else "2026-10-04", "input_commit": "56ab6cee930da08637c3fa7c6b36d5cb22ccf09f" if full_revision else BASE,
         "activity": "read-only document, archived-table, hash, compiled-LaTeX checks; no model access",
         "checks": checks, "numeric_checks": len(numerical_checks),
         "body_source_sha256": {str((MS / "sections" / name).relative_to(ROOT)): sha(MS / "sections" / name) for name in BODY},
@@ -126,10 +164,12 @@ def main():
         "pdf_pages": int(re.search(r"Output written on .*?\((\d+) pages", log, re.S).group(1)),
         "pdf_sha256": sha(BUILD / "main.pdf"),
         "underfull_bibliography_notices": log.count("Underfull \\hbox"),
-        "scope_note": "Local PDF includes pre-existing user Abstract/Introduction edits, excluded from this commit. Five figures and eight planning-table captions remain placeholders. Sections 2/9/10 and appendix were not drafted.",
+        "scope_note": "Full revision explicitly authorized; local user prose preserved for inclusion. Five vector figures integrated; appendix relocations retain every original numeric check." if full_revision else "Local PDF includes pre-existing user Abstract/Introduction edits, excluded from this commit. Five figures and eight planning-table captions remain placeholders. Sections 2/9/10 and appendix were not drafted.",
         "limits": "Core table values automatically checked; ancillary protocol, optimization and interpretation claims reviewed against original reports. Not submission-readiness certification.",
     }, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
-    main()
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--full-revision',action='store_true',help='Authorized full revision, preserving user prose and all 62 numeric checks')
+    main(parser.parse_args().full_revision)

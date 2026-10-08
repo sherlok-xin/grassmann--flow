@@ -1,5 +1,7 @@
 # Related-work overlap audit (V2)
 
+2026-10-08 update: the authorized full revision completed the relevant full-text method checks and foundational citation verification in `FULL_TEXT_REFERENCE_REVIEW.md` and `full_text_reference_verification.json`. The metadata-only scope and TODOs below are historical, not the current reading status. No listed adaptive method was experimentally evaluated, and novelty/causality boundaries are unchanged.
+
 Checked on 2026-10-04. This is a focused overlap audit, not a systematic review,
 and not evidence of being the first work on any concept. Searches covered
 official CVF, NeurIPS, ACL Anthology, AAAI, ICLR/OpenReview, PMLR and arXiv.

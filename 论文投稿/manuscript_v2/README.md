@@ -1,9 +1,11 @@
-# Venue-neutral V2 manuscript skeleton
+# Venue-neutral V2 full manuscript draft
 
-Input commit64db3aebd158f56373385db18dcdf056aeea4c52; experiments frozen.
-Ten sections plus eight appendix placeholders. Comments contain evidence and
-claim/citation TODOs; tables contain archived planning numbers; figures are
-labeled boxes. This is not a full manuscript or a submission-ready draft.
+Full revision input: `56ab6cee930da08637c3fa7c6b36d5cb22ccf09f` (2026-10-08).
+Experiments remain permanently frozen. The authoritative local user Abstract
+and Introduction are preserved. Sections 2–10 and all eight appendix sections
+are written, numerical tables use archived evidence, and Figures 1–4/A1 use
+actual pure-vector PDF files. No F5 placeholder remains. This is a full
+venue-neutral draft, not submission-ready conference-template certification.
 
 Start at research/manuscript_v2/GPT_WRITING_HANDOFF.md. No target venue has been
 chosen. Do not overwrite the old CAC paper or frozen Phase-2 evidence.
@@ -12,6 +14,10 @@ Run `make` here. Build output is ../../outputs/manuscript_v2_build/, excluded
 from commits. Requires local latexmk/pdflatex/BibTeX and ordinary article,
 geometry, lmodern, natbib, booktabs and hyperref packages. No GPU/model access.
 
-`references.bib` contains14 metadata-verified publisher exports; full-text
-comparisons and foundational dataset/model citations remain TODOs. The
-compile and evidence-protection QA record is research/manuscript_v2/skeleton_qa.json.
+`references.bib` contains 24 primary-export-verified entries. Relevant full-text
+method/background checks and retrieval corrections are recorded in
+`research/manuscript_v2/FULL_TEXT_REFERENCE_REVIEW.md`. Current compile,
+preservation and 62-value scientific audit: `full_revision_qa.json`.
+Read `FULL_MANUSCRIPT_REVISION_STATUS.md` for scope and remaining author,
+venue and page-budget decisions. Old skeleton/body/figure JSON files are
+historical records, not current source-hash manifests.

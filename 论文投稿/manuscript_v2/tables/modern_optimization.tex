@@ -1,0 +1,24 @@
+\begingroup\small
+\setlength{\tabcolsep}{5pt}
+\begin{table}[htbp]\centering
+\begin{tabular}{lrrrrr}
+\toprule
+Seed & Arm & Step & Clip fraction & Mean norm & Max norm \\
+\midrule
+42 & S0 & 256 & 0.129402 & 0.947446 & 3.142341 \\
+42 & CE & 1221 & 0.058968 & 0.929848 & 1.394476 \\
+42 & KD1 & 1221 & 0.850123 & 1.084600 & 2.502529 \\
+42 & KD5 & 1221 & 1.000000 & 2.557157 & 11.615945 \\
+123 & S0 & 256 & 0.117117 & 0.948927 & 4.028796 \\
+123 & CE & 1221 & 0.056511 & 0.929663 & 1.203820 \\
+123 & KD1 & 1221 & 0.854218 & 1.090724 & 3.144516 \\
+123 & KD5 & 1221 & 1.000000 & 2.601404 & 19.092007 \\
+456 & S0 & 1221 & 0.127764 & 0.944769 & 1.363758 \\
+456 & CE & 256 & 0.045045 & 0.994147 & 86.482155 \\
+456 & KD1 & 1221 & 0.798526 & 1.074831 & 2.708021 \\
+456 & KD5 & 1221 & 1.000000 & 2.545350 & 12.600890 \\
+\bottomrule
+\end{tabular}
+\caption{FineWeb-Edu optimization audit. Step is selected by validation among trained checkpoints. Norms are measured before clipping; all recorded nonfinite and overflow fractions are zero.}\label{tab:modern_optimization}
+\end{table}
+\endgroup

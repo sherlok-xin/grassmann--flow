@@ -49,6 +49,7 @@ def render(handle, path, width, height, pdf=False, dpi=None):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--only", choices=NAMES)
+    parser.add_argument("--audit-only", action="store_true", help="Inspect existing exports without rerendering or writing")
     args = parser.parse_args()
     QA.mkdir(parents=True, exist_ok=True)
     results = {}
@@ -65,11 +66,12 @@ def main():
         ok, intrinsic_w, intrinsic_h = handle.get_intrinsic_size_in_pixels()
         assert ok
         pdfw = 6.8 * 72
-        render(handle, FIG / f"{name}.pdf", pdfw, pdfw*h/w, pdf=True)
         pngw, pngh = 4080, round(4080*h/w)
-        render(handle, FIG / f"{name}_600dpi.png", pngw, pngh, dpi=600)
-        render(handle, QA / f"{name}_reference_size.png", int(w), int(h))
-        render(handle, QA / f"{name}_two_column_180dpi.png", 1224, round(1224*h/w))
+        if not args.audit_only:
+            render(handle, FIG / f"{name}.pdf", pdfw, pdfw*h/w, pdf=True)
+            render(handle, FIG / f"{name}_600dpi.png", pngw, pngh, dpi=600)
+            render(handle, QA / f"{name}_reference_size.png", int(w), int(h))
+            render(handle, QA / f"{name}_two_column_180dpi.png", 1224, round(1224*h/w))
         pdf = PdfReader(FIG / f"{name}.pdf")
         assert len(pdf.pages) == 1
         assert not list(pdf.pages[0].images)

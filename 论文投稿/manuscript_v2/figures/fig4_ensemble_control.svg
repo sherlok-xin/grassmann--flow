@@ -1,97 +1,93 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="6.8in" height="2.719314170in" viewBox="0 0 1983 793" role="img" aria-labelledby="figure-title figure-description">
 <title id="figure-title">Ensemble benefit does not imply heterogeneity superiority</title>
 <desc id="figure-description">Approved source ablation and homogeneous ensemble control. G gain +0.0410, T +0.1349, TG +0.1557, TT +0.1681 NLL. Decorative green-arrow ranks and verbal gain sizes removed as authorized; scientific ordering unchanged.</desc>
 <style>text{font-family:"Liberation Sans",Arial,Helvetica,sans-serif;fill:#0b1c35} .wire{fill:none;stroke:#152a43;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}</style>
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M 0 1 L 9 5 L 0 9 Z" fill="#152a43"/></marker></defs>
-<rect id="white-background" x="0" y="0" width="1983" height="793" fill="#ffffff"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M 0 1 L 9 5 L 0 9 Z" fill="#152a43" /></marker></defs>
+<rect id="white-background" x="0" y="0" width="1983" height="793" fill="#ffffff" />
 <text id="label-1" x="991.5" y="53" font-size="39" font-weight="700" text-anchor="middle">Ensemble benefit does not imply heterogeneity superiority</text>
-<rect id="panel-a" x="14" y="89" width="1096" height="598" rx="17" fill="#ffffff" stroke="#82909f" stroke-width="1.4"/>
-<rect id="panel-b" x="1123" y="91" width="850" height="596" rx="17" fill="#ffffff" stroke="#82909f" stroke-width="1.4"/>
-<path d="M 32 90 H 1092 Q 1109 90 1109 107 V 159 H 15 V 107 Q 15 90 32 90 Z" fill="#eaf3fe"/>
-<path d="M 1141 92 H 1955 Q 1972 92 1972 109 V 159 H 1124 V 109 Q 1124 92 1141 92 Z" fill="#fff7ef"/>
-<rect  x="42" y="102" width="47" height="47" rx="7" fill="#356693" stroke="#356693" stroke-width="0"/>
+<rect id="panel-a" x="14" y="89" width="1096" height="598" rx="17" fill="#ffffff" stroke="#82909f" stroke-width="1.4" />
+<rect id="panel-b" x="1123" y="91" width="850" height="596" rx="17" fill="#ffffff" stroke="#82909f" stroke-width="1.4" />
+<path d="M 32 90 H 1092 Q 1109 90 1109 107 V 159 H 15 V 107 Q 15 90 32 90 Z" fill="#eaf3fe" />
+<path d="M 1141 92 H 1955 Q 1972 92 1972 109 V 159 H 1124 V 109 Q 1124 92 1141 92 Z" fill="#fff7ef" />
+<rect x="42" y="102" width="47" height="47" rx="7" fill="#356693" stroke="#356693" stroke-width="0" />
 <text id="label-2" x="65.5" y="137" font-size="32" font-weight="700" text-anchor="middle" style="fill:#ffffff" data-box="44.5,104.5,42,42">A</text>
 <text id="label-3" x="127" y="139" font-size="35" font-weight="700" text-anchor="start" data-box="16.5,91.5,1091,593">Source ablation within the TG teacher</text>
-<rect  x="1151" y="103" width="46" height="46" rx="7" fill="#6b7075" stroke="#6b7075" stroke-width="0"/>
+<rect x="1151" y="103" width="46" height="46" rx="7" fill="#6b7075" stroke="#6b7075" stroke-width="0" />
 <text id="label-4" x="1174" y="138" font-size="32" font-weight="700" text-anchor="middle" style="fill:#ffffff" data-box="1153.5,105.5,41,41">B</text>
 <text id="label-5" x="1230" y="139" font-size="35" font-weight="700" text-anchor="start" data-box="1125.5,93.5,845,591">Homogeneous control</text>
-<rect  x="51" y="173" width="320" height="182" rx="12" fill="#eef6ff" stroke="#368bea" stroke-width="1.5"/>
-<text id="label-6" x="211" y="205" font-size="25" font-weight="700" text-anchor="middle" data-box="58,180,306,40">Grassmann-only</text>
-<text id="label-7" x="211" y="233" font-size="23" font-weight="400" text-anchor="middle" data-box="58,211,306,34">(G branch only)</text>
-<rect  x="119" y="269" width="77" height="45" rx="9" fill="#cce4fc" stroke="#448bce" stroke-width="1.2"/>
-<text id="label-8" x="157.5" y="299" font-size="25" font-weight="700" text-anchor="middle" data-box="121.5,271.5,72,40">G</text>
-<path d="M 197 291 L 243 291" fill="none" stroke="#152a43" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<text id="label-9" x="257" y="300" font-size="23" font-weight="400" text-anchor="start" data-box="53.5,175.5,315,177">Logits</text>
-<rect  x="397" y="173" width="322" height="182" rx="12" fill="#fff5eb" stroke="#ec903f" stroke-width="1.5"/>
-<text id="label-10" x="558" y="205" font-size="25" font-weight="700" text-anchor="middle" data-box="404,180,308,40">Transformer-only</text>
-<text id="label-11" x="558" y="233" font-size="23" font-weight="400" text-anchor="middle" data-box="404,211,308,34">(T branch only)</text>
-<rect  x="465" y="269" width="77" height="45" rx="9" fill="#ffe0cf" stroke="#c58b77" stroke-width="1.2"/>
-<text id="label-12" x="503.5" y="299" font-size="25" font-weight="700" text-anchor="middle" data-box="467.5,271.5,72,40">T</text>
-<path d="M 543 291 L 589 291" fill="none" stroke="#152a43" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<text id="label-13" x="603" y="300" font-size="23" font-weight="400" text-anchor="start" data-box="399.5,175.5,317,177">Logits</text>
-<rect  x="748" y="173" width="331" height="182" rx="12" fill="#f2edfd" stroke="#a188e8" stroke-width="1.5"/>
-<text id="label-14" x="913.5" y="205" font-size="25" font-weight="700" text-anchor="middle" data-box="755,180,317,40">Fused TG teacher</text>
-<text id="label-15" x="913.5" y="233" font-size="23" font-weight="400" text-anchor="middle" data-box="755,211,317,34">(T + G, <tspan font-style="italic">α</tspan> = 0.5)</text>
-<rect  x="798" y="245" width="77" height="45" rx="9" fill="#ffe0cf" stroke="#c58b77" stroke-width="1.2"/>
-<rect  x="798" y="299" width="77" height="45" rx="9" fill="#cce4fc" stroke="#448bce" stroke-width="1.2"/>
-<text id="label-16" x="836.5" y="275" font-size="25" font-weight="700" text-anchor="middle" data-box="800.5,247.5,72,40">T</text>
-<text id="label-17" x="836.5" y="329" font-size="25" font-weight="700" text-anchor="middle" data-box="800.5,301.5,72,40">G</text>
-<path d="M 876 267 L 920 267 L 920 322 L 876 322" fill="none" stroke="#152a43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 920 297 L 961 297" fill="none" stroke="#152a43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<text id="label-18" x="972" y="305" font-size="23" font-weight="400" text-anchor="start" data-box="750.5,175.5,326,177">Logits</text>
-<rect  x="1162" y="173" width="378" height="190" rx="12" fill="#f2edfd" stroke="#a188e8" stroke-width="1.5"/>
-<text id="label-19" x="1351" y="205" font-size="25" font-weight="700" text-anchor="middle" data-box="1169,180,364,40">Heterogeneous TG ensemble</text>
-<text id="label-20" x="1351" y="233" font-size="23" font-weight="400" text-anchor="middle" data-box="1169,211,364,34">(T + G, <tspan font-style="italic">α</tspan> = 0.5)</text>
-<rect  x="1246" y="245" width="77" height="45" rx="9" fill="#ffe0cf" stroke="#c58b77" stroke-width="1.2"/>
-<rect  x="1246" y="299" width="77" height="45" rx="9" fill="#cce4fc" stroke="#448bce" stroke-width="1.2"/>
-<text id="label-21" x="1284.5" y="275" font-size="25" font-weight="700" text-anchor="middle" data-box="1248.5,247.5,72,40">T</text>
-<text id="label-22" x="1284.5" y="329" font-size="25" font-weight="700" text-anchor="middle" data-box="1248.5,301.5,72,40">G</text>
-<path d="M 1324 267 L 1368 267 L 1368 322 L 1324 322" fill="none" stroke="#152a43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 1368 297 L 1409 297" fill="none" stroke="#152a43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<text id="label-23" x="1420" y="305" font-size="23" font-weight="400" text-anchor="start" data-box="1164.5,175.5,373,185">Logits</text>
-<rect  x="1568" y="173" width="374" height="191" rx="12" fill="#fff0f1" stroke="#f56a77" stroke-width="1.5"/>
-<text id="label-24" x="1755" y="205" font-size="25" font-weight="700" text-anchor="middle" data-box="1575,180,360,40">Homogeneous TT ensemble</text>
-<text id="label-25" x="1755" y="233" font-size="23" font-weight="400" text-anchor="middle" data-box="1575,211,360,34">(T + T, <tspan font-style="italic">α</tspan> = 0.5)</text>
-<rect  x="1652" y="245" width="77" height="45" rx="9" fill="#ffe0cf" stroke="#c58b77" stroke-width="1.2"/>
-<rect  x="1652" y="299" width="77" height="45" rx="9" fill="#ffe0cf" stroke="#c58b77" stroke-width="1.2"/>
-<text id="label-26" x="1690.5" y="275" font-size="25" font-weight="700" text-anchor="middle" data-box="1654.5,247.5,72,40">T</text>
-<text id="label-27" x="1690.5" y="329" font-size="25" font-weight="700" text-anchor="middle" data-box="1654.5,301.5,72,40">T</text>
-<path d="M 1730 267 L 1774 267 L 1774 322 L 1730 322" fill="none" stroke="#152a43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M 1774 297 L 1815 297" fill="none" stroke="#152a43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<text id="label-28" x="1826" y="305" font-size="23" font-weight="400" text-anchor="start" data-box="1570.5,175.5,369,186">Logits</text>
-<rect  x="52" y="398" width="319" height="168" rx="12" fill="#edf8ed" stroke="#84ba86" stroke-width="1.5"/>
-<text id="label-29" x="211.5" y="432" font-size="26" font-weight="700" text-anchor="middle" data-box="54.5,400.5,314,163">Positive transfer</text>
-<rect  x="112.61" y="524" width="197.78" height="36" rx="8" fill="#e5f5e4" stroke="#7fac7a" stroke-width="1.2"/>
-<text id="label-30" x="211.5" y="550" font-size="25" font-weight="700" text-anchor="middle" data-box="116.61,526,189.78,31">+0.0410 NLL</text>
-<rect  x="400" y="398" width="319" height="166" rx="12" fill="#edf8ed" stroke="#84ba86" stroke-width="1.5"/>
-<text id="label-31" x="559.5" y="432" font-size="26" font-weight="700" text-anchor="middle" data-box="402.5,400.5,314,161">Positive transfer</text>
-<rect  x="460.61" y="522" width="197.78" height="36" rx="8" fill="#e5f5e4" stroke="#7fac7a" stroke-width="1.2"/>
-<text id="label-32" x="559.5" y="548" font-size="25" font-weight="700" text-anchor="middle" data-box="464.61,524,189.78,31">+0.1349 NLL</text>
-<rect  x="753" y="398" width="321" height="166" rx="12" fill="#edf8ed" stroke="#84ba86" stroke-width="1.5"/>
-<text id="label-33" x="913.5" y="432" font-size="26" font-weight="700" text-anchor="middle" data-box="755.5,400.5,316,161">Positive transfer</text>
-<rect  x="813.99" y="522" width="199.02" height="36" rx="8" fill="#e5f5e4" stroke="#7fac7a" stroke-width="1.2"/>
-<text id="label-34" x="913.5" y="548" font-size="25" font-weight="700" text-anchor="middle" data-box="817.99,524,191.02,31">+0.1557 NLL</text>
-<rect  x="1165" y="402" width="374" height="171" rx="12" fill="#edf8ed" stroke="#84ba86" stroke-width="1.5"/>
-<text id="label-35" x="1352" y="436" font-size="26" font-weight="700" text-anchor="middle" data-box="1167.5,404.5,369,166">Positive transfer</text>
-<rect  x="1236.06" y="531" width="231.88" height="36" rx="8" fill="#e5f5e4" stroke="#7fac7a" stroke-width="1.2"/>
-<text id="label-36" x="1352" y="557" font-size="25" font-weight="700" text-anchor="middle" data-box="1240.06,533,223.88,31">+0.1557 NLL</text>
-<rect  x="1574" y="402" width="360" height="171" rx="12" fill="#edf8ed" stroke="#84ba86" stroke-width="1.5"/>
-<text id="label-37" x="1754" y="436" font-size="26" font-weight="700" text-anchor="middle" data-box="1576.5,404.5,355,166">Positive transfer</text>
-<rect  x="1642.4" y="531" width="223.2" height="36" rx="8" fill="#e5f5e4" stroke="#7fac7a" stroke-width="1.2"/>
-<text id="label-38" x="1754" y="557" font-size="25" font-weight="700" text-anchor="middle" data-box="1646.4,533,215.2,31">+0.1681 NLL</text>
-<path d="M 211 356 L 211 395" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<path d="M 557 356 L 557 395" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<path d="M 915 356 L 915 395" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<path d="M 1352 364 L 1352 399" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<path d="M 1752 365 L 1752 399" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)"/>
-<text id="label-39" x="558" y="588" font-size="20" font-weight="400" text-anchor="middle" data-box="16.5,91.5,1091,593">T-only: early clipping saturation;</text>
-<text id="label-40" x="558" y="612" font-size="20" font-weight="400" text-anchor="middle" data-box="16.5,91.5,1091,593">interpret F–T gap cautiously.</text>
-<rect  x="42" y="625" width="1040" height="48" rx="11" fill="#f4f5f6" stroke="#b8bec6" stroke-width="1.3"/>
-<text id="label-41" x="562" y="657" font-size="24" font-weight="700" text-anchor="middle" data-box="55,631,1014,36">Fused supervision transfers better than either component branch alone.</text>
-<rect  x="1152" y="596" width="794" height="48" rx="11" fill="#f1f2f4" stroke="#b8bec6" stroke-width="1.3"/>
-<text id="label-42" x="1549" y="628" font-size="23" font-weight="700" text-anchor="middle" data-box="1162,602,774,36">TT yields lower student NLL than TG for all three matched students.</text>
-<text id="label-43" x="1548" y="668" font-size="19.5" font-weight="400" text-anchor="middle" style="fill:#67717f" data-box="1138,647,820,35">TT and TG teachers are not strictly quality- or training-matched.</text>
-<rect id="synthesis" x="14" y="709" width="1959" height="69" rx="17" fill="#edf5ff" stroke="#368bea" stroke-width="1.5"/>
-<text id="label-44" x="993.5" y="753" font-size="27" font-weight="700" text-anchor="middle" data-box="43,719,1901,49">Ensemble supervision helps, but neither architectural heterogeneity nor larger branch disagreement guarantees better transfer.</text>
+<rect x="51" y="173" width="320" height="182" rx="12" fill="#eef6ff" stroke="#368bea" stroke-width="1.5" />
+<text id="label-6" x="211" y="205" font-size="29" font-weight="700" text-anchor="middle" data-box="58,180,306,40">Grassmann-only</text>
+<text id="label-7" x="211" y="233" font-size="29" font-weight="400" text-anchor="middle" data-box="58,211,306,34">(G branch only)</text>
+<rect x="119" y="269" width="77" height="45" rx="9" fill="#cce4fc" stroke="#448bce" stroke-width="1.2" />
+<text id="label-8" x="157.5" y="299" font-size="29" font-weight="700" text-anchor="middle" data-box="121.5,271.5,72,40">G</text>
+<path d="M 197 291 L 243 291" fill="none" stroke="#152a43" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<text id="label-9" x="257" y="300" font-size="29" font-weight="400" text-anchor="start" data-box="53.5,175.5,315,177">Logits</text>
+<rect x="397" y="173" width="322" height="182" rx="12" fill="#fff5eb" stroke="#ec903f" stroke-width="1.5" />
+<text id="label-10" x="558" y="205" font-size="29" font-weight="700" text-anchor="middle" data-box="404,180,308,40">Transformer-only</text>
+<text id="label-11" x="558" y="233" font-size="29" font-weight="400" text-anchor="middle" data-box="404,211,308,34">(T branch only)</text>
+<rect x="465" y="269" width="77" height="45" rx="9" fill="#ffe0cf" stroke="#c58b77" stroke-width="1.2" />
+<text id="label-12" x="503.5" y="299" font-size="29" font-weight="700" text-anchor="middle" data-box="467.5,271.5,72,40">T</text>
+<path d="M 543 291 L 589 291" fill="none" stroke="#152a43" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<text id="label-13" x="603" y="300" font-size="29" font-weight="400" text-anchor="start" data-box="399.5,175.5,317,177">Logits</text>
+<rect x="748" y="173" width="331" height="182" rx="12" fill="#f2edfd" stroke="#a188e8" stroke-width="1.5" />
+<text id="label-14" x="913.5" y="205" font-size="29" font-weight="700" text-anchor="middle" data-box="755,180,317,40">Fused TG teacher</text>
+<text id="label-15" x="913.5" y="233" font-size="29" font-weight="400" text-anchor="middle" data-box="755,211,317,34">(T + G, <tspan font-style="italic">α</tspan> = 0.5)</text>
+<rect x="798" y="245" width="77" height="45" rx="9" fill="#ffe0cf" stroke="#c58b77" stroke-width="1.2" />
+<rect x="798" y="299" width="77" height="45" rx="9" fill="#cce4fc" stroke="#448bce" stroke-width="1.2" />
+<text id="label-16" x="836.5" y="275" font-size="29" font-weight="700" text-anchor="middle" data-box="800.5,247.5,72,40">T</text>
+<text id="label-17" x="836.5" y="329" font-size="29" font-weight="700" text-anchor="middle" data-box="800.5,301.5,72,40">G</text>
+<path d="M 876 267 L 920 267 L 920 322 L 876 322" fill="none" stroke="#152a43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+<path d="M 920 297 L 961 297" fill="none" stroke="#152a43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<text id="label-18" x="972" y="305" font-size="29" font-weight="400" text-anchor="start" data-box="750.5,175.5,326,177">Logits</text>
+<rect x="1162" y="173" width="378" height="212" rx="12" fill="#f2edfd" stroke="#a188e8" stroke-width="1.5" />
+<text id="label-19" x="1351" y="202" font-size="29" font-weight="700" text-anchor="middle" data-box="1164,178,374,64"><tspan x="1351" y="202">Heterogeneous TG</tspan><tspan x="1351" y="235">ensemble</tspan></text>
+<text id="label-20" x="1351" y="267" font-size="29" font-weight="400" text-anchor="middle" data-box="1164,242,374,34">(T + G, <tspan font-style="italic">α</tspan> = 0.5)</text>
+<rect x="1246" y="267.0" width="77" height="45" rx="9" fill="#ffe0cf" stroke="#c58b77" stroke-width="1.2" />
+<rect x="1246" y="321.0" width="77" height="45" rx="9" fill="#cce4fc" stroke="#448bce" stroke-width="1.2" />
+<text id="label-21" x="1284.5" y="297.0" font-size="29" font-weight="700" text-anchor="middle" data-box="1248.5,269.5,72.0,40.0">T</text>
+<text id="label-22" x="1284.5" y="351.0" font-size="29" font-weight="700" text-anchor="middle" data-box="1248.5,323.5,72.0,40.0">G</text>
+<path d="M 1324 267 L 1368 267 L 1368 322 L 1324 322" fill="none" stroke="#152a43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 22)" />
+<path d="M 1368 297 L 1409 297" fill="none" stroke="#152a43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" transform="translate(0 22)" />
+<text id="label-23" x="1420" y="327.0" font-size="29" font-weight="400" text-anchor="start" data-box="1164.5,197.5,373.0,185.0">Logits</text>
+<rect x="1568" y="173" width="374" height="212" rx="12" fill="#fff0f1" stroke="#f56a77" stroke-width="1.5" />
+<text id="label-24" x="1755" y="202" font-size="29" font-weight="700" text-anchor="middle" data-box="1570,178,369,64"><tspan x="1755" y="202">Homogeneous TT</tspan><tspan x="1755" y="235">ensemble</tspan></text>
+<text id="label-25" x="1755" y="267" font-size="29" font-weight="400" text-anchor="middle" data-box="1570,242,369,34">(T + T, <tspan font-style="italic">α</tspan> = 0.5)</text>
+<rect x="1652" y="267.0" width="77" height="45" rx="9" fill="#ffe0cf" stroke="#c58b77" stroke-width="1.2" />
+<rect x="1652" y="321.0" width="77" height="45" rx="9" fill="#ffe0cf" stroke="#c58b77" stroke-width="1.2" />
+<text id="label-26" x="1690.5" y="297.0" font-size="29" font-weight="700" text-anchor="middle" data-box="1654.5,269.5,72.0,40.0">T</text>
+<text id="label-27" x="1690.5" y="351.0" font-size="29" font-weight="700" text-anchor="middle" data-box="1654.5,323.5,72.0,40.0">T</text>
+<path d="M 1730 267 L 1774 267 L 1774 322 L 1730 322" fill="none" stroke="#152a43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 22)" />
+<path d="M 1774 297 L 1815 297" fill="none" stroke="#152a43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" transform="translate(0 22)" />
+<text id="label-28" x="1826" y="327.0" font-size="29" font-weight="400" text-anchor="start" data-box="1570.5,197.5,369.0,186.0">Logits</text>
+<rect x="52" y="398" width="319" height="168" rx="12" fill="#edf8ed" stroke="#84ba86" stroke-width="1.5" />
+<text id="label-29" x="211.5" y="432" font-size="29" font-weight="700" text-anchor="middle" data-box="54.5,400.5,314,163">Positive transfer</text>
+<rect x="112.61" y="524" width="197.78" height="36" rx="8" fill="#e5f5e4" stroke="#7fac7a" stroke-width="1.2" />
+<text id="label-30" x="211.5" y="550" font-size="29" font-weight="700" text-anchor="middle" data-box="116.61,526,189.78,31">+0.0410 NLL</text>
+<rect x="400" y="398" width="319" height="166" rx="12" fill="#edf8ed" stroke="#84ba86" stroke-width="1.5" />
+<text id="label-31" x="559.5" y="432" font-size="29" font-weight="700" text-anchor="middle" data-box="402.5,400.5,314,161">Positive transfer</text>
+<rect x="460.61" y="522" width="197.78" height="36" rx="8" fill="#e5f5e4" stroke="#7fac7a" stroke-width="1.2" />
+<text id="label-32" x="559.5" y="548" font-size="29" font-weight="700" text-anchor="middle" data-box="464.61,524,189.78,31">+0.1349 NLL</text>
+<rect x="753" y="398" width="321" height="166" rx="12" fill="#edf8ed" stroke="#84ba86" stroke-width="1.5" />
+<text id="label-33" x="913.5" y="432" font-size="29" font-weight="700" text-anchor="middle" data-box="755.5,400.5,316,161">Positive transfer</text>
+<rect x="813.99" y="522" width="199.02" height="36" rx="8" fill="#e5f5e4" stroke="#7fac7a" stroke-width="1.2" />
+<text id="label-34" x="913.5" y="548" font-size="29" font-weight="700" text-anchor="middle" data-box="817.99,524,191.02,31">+0.1557 NLL</text>
+<rect x="1165" y="402" width="374" height="171" rx="12" fill="#edf8ed" stroke="#84ba86" stroke-width="1.5" />
+<text id="label-35" x="1352" y="436" font-size="29" font-weight="700" text-anchor="middle" data-box="1167.5,404.5,369,166">Positive transfer</text>
+<rect x="1236.06" y="531" width="231.88" height="36" rx="8" fill="#e5f5e4" stroke="#7fac7a" stroke-width="1.2" />
+<text id="label-36" x="1352" y="557" font-size="29" font-weight="700" text-anchor="middle" data-box="1240.06,533,223.88,31">+0.1557 NLL</text>
+<rect x="1574" y="402" width="360" height="171" rx="12" fill="#edf8ed" stroke="#84ba86" stroke-width="1.5" />
+<text id="label-37" x="1754" y="436" font-size="29" font-weight="700" text-anchor="middle" data-box="1576.5,404.5,355,166">Positive transfer</text>
+<rect x="1642.4" y="531" width="223.2" height="36" rx="8" fill="#e5f5e4" stroke="#7fac7a" stroke-width="1.2" />
+<text id="label-38" x="1754" y="557" font-size="29" font-weight="700" text-anchor="middle" data-box="1646.4,533,215.2,31">+0.1681 NLL</text>
+<path d="M 211 356 L 211 395" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 557 356 L 557 395" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 915 356 L 915 395" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 1352 386 L 1352 399" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 1752 386 L 1752 399" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<rect x="42" y="625" width="1040" height="48" rx="11" fill="#f4f5f6" stroke="#b8bec6" stroke-width="1.3" />
+<text id="label-41" x="562" y="657" font-size="29" font-weight="700" text-anchor="middle" data-box="55,631,1014,36">Fused supervision transfers better than either component branch alone.</text>
+<rect x="1152" y="596" width="794" height="83" rx="11" fill="#f1f2f4" stroke="#b8bec6" stroke-width="1.3" />
+<text id="label-42" x="1549" y="629" font-size="29" font-weight="700" text-anchor="middle" data-box="1162,602,774,72"><tspan x="1549" y="629">TT yields lower student NLL than TG</tspan><tspan x="1549" y="663">for all three matched students.</tspan></text>
+<rect id="synthesis" x="14" y="709" width="1959" height="69" rx="17" fill="#edf5ff" stroke="#368bea" stroke-width="1.5" />
+<text id="label-44" x="993.5" y="753" font-size="29" font-weight="700" text-anchor="middle" data-box="43,719,1901,49">Ensemble supervision helps, but neither architectural heterogeneity nor larger branch disagreement guarantees better transfer.</text>
 </svg>

@@ -1,0 +1,18 @@
+\begingroup\small
+\setlength{\tabcolsep}{5pt}
+\begin{table}[htbp]\centering
+\begin{tabular}{lrrrrr}
+\toprule
+Seed & Split & $S_0$ & CE & KD1 & KD5 \\
+\midrule
+42 & validation & 2.967112 & 2.973155 & 2.988861 & 3.019882 \\
+42 & test & 2.944338 & 2.949900 & 2.965619 & 2.996304 \\
+123 & validation & 2.967390 & 2.973067 & 2.988537 & 3.019533 \\
+123 & test & 2.944865 & 2.950133 & 2.965603 & 2.996212 \\
+456 & validation & 2.967554 & 2.980508 & 2.990422 & 3.020545 \\
+456 & test & 2.944959 & 2.957883 & 2.967346 & 2.997173 \\
+\bottomrule
+\end{tabular}
+\caption{Frozen FineWeb-Edu primary endpoints. Validation selection excludes step 0 for CE/KD. Test is evaluated only after that selection; the separate best-including-S0 diagnostic selects S0 in all nine arms.}\label{tab:modern_endpoints}
+\end{table}
+\endgroup

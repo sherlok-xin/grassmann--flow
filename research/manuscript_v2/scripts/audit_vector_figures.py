@@ -149,4 +149,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--readability-revision',action='store_true',help='Audit explicitly authorized typography revision and new numerical figure')
+    if parser.parse_args().readability_revision:
+        from audit_readability_revision import main as audit_revision
+        audit_revision()
+    else:
+        main()

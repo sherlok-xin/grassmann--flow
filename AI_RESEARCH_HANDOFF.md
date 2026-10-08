@@ -1,5 +1,30 @@
 # Grassmann / Transformer / Distillation Research Handoff
 
+## 2026-10-08 Authorized full manuscript V2 revision complete — STOP
+
+Input `56ab6cee930da08637c3fa7c6b36d5cb22ccf09f`; state
+`manuscript_v2_full_revision_complete`. Read
+`research/manuscript_v2/FULL_MANUSCRIPT_REVISION_STATUS.md` first, then
+`GPT_WRITING_HANDOFF.md`, `full_revision_qa.json`, the focused full-text review,
+and current figure readability QA. The historical scoped-draft entries below
+are superseded for writing status, not for scientific safeguards.
+
+Authoritative local user Abstract/Introduction prose is byte-preserved and
+included in this full-revision commit. Sections 2–10 and the appendix are
+complete, five true-vector PDF figures are integrated, and 24 primary-export
+references have relevant method/background reading records. Figure 2 uses
+archived gains only; A1 is enlarged by authorized local folding/cropping.
+Every original numeric check remains (62); compilation has no unresolved
+references/citations, duplicate labels, or overfull/underfull boxes. Actual
+main build products and reference-PDF scratch are local, not committed.
+
+No experiments, model forwards, new endpoint computation or method work.
+Frozen experiments, final_evidence, CAC, datasets/checkpoints are unchanged.
+TT/TG confounds, permanent clipping/gradient warnings, dependent diagnostic
+units, and the failed modern gate remain explicit. This is a venue-neutral
+full draft, not ACL/EMNLP template or page-limit certification. Venue, page
+budget and authors are still research-lead decisions. STOP; no new training.
+
 ## 2026-10-04 Manuscript V2 Sections 3–8 first draft complete — STOP
 
 Current state `manuscript_v2_body_sections_3_to_8_drafted`. From input

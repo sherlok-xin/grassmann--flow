@@ -1,5 +1,33 @@
 # Frozen figure vector reconstruction QA
 
+## Current authorized readability revision (2026-10-08)
+
+This section supersedes the historical frozen-layout readability/temporary-compile status below. The lead authorized local typography/canvas fitting, minimal A1 cropping/folding, actual manuscript PDF inclusion, and a new numerical Figure 2. The original QA JSON remains a historical record; current hashes and geometry are in `figure_readability_qa.json`, and the current audit result is `figure_readability_audit.json`.
+
+| Figure | SVG canvas | PDF width | Minimum normal / all text (pt) | 600-dpi PNG |
+|---|---|---|---|---|
+| 1 | 1752 × 941 | 6.8 in | 7.266 / 6.148 | 4080 × 2191 |
+| 2 | 489.6 × 190.8 | 6.8 in | 8.000 / 7.700 | 4080 × 1590 |
+| 3 | 1774 × 887 | 6.8 in | 7.038 / 7.038 | 4080 × 2040 |
+| 4 | 1983 × 793 | 6.8 in | 7.160 / 7.160 | 4080 × 1632 |
+| A1 | 1774 × 730 | 6.8 in | 7.728 / 6.072 | 4080 × 1679 |
+
+Every figure has an editable `figures/<name>.svg` master, vector `figures/<name>.pdf`, and `figures/<name>_600dpi.png`, under `论文投稿/manuscript_v2/`. Names are `fig1_paired_protocol`, `fig2_cross_domain_gain`, `fig3_teacher_quality`, `fig4_ensemble_control`, and `figA1_teacher_architecture`. Liberation Sans is used, with Arial/Helvetica/sans-serif fallbacks for the semantic SVGs; Matplotlib Figure 2 uses the same sans-serif preference. PDF fonts are embedded and text is extractable. Every figure PDF has zero embedded raster images.
+
+Figure 1 widens only the evidence region by 80 source units, enlarges fine print and wraps the weaker-teacher heading. Figure 3 preserves all approved wording, enlarging qualifier/student boxes as needed. Figure 4 wraps two headings, retains exact numerical gains and five “Positive transfer” labels, and moves the exact T-only/TT–TG cautions to its LaTeX caption. Figure A1 crops unused whitespace and folds the unchanged Grassmann module sequence into two rows. The return arrow runs from normalization to geometric projection through the inter-row gap, not backwards through causal pairs. Local direction remains past to current, with valid-Δ averaging and free-alpha late fusion.
+
+The limited typography revision does not preserve identical canvas proportions for Figures 1/A1. These are explicitly authorized readability differences, not an unreported redesign. Other unavoidable differences are line wrapping, font metrics and antialiasing; colors, scientific ranking and module identities remain fixed. Normal labels meet 7 pt and mathematical scripts meet 6 pt at the native 6.8-inch width. A 3.3-inch single-column reduction is not approved.
+
+Figure 2 plots only `research/manuscript_v2/tables/table_endpoint_inventory.csv` (SHA256 `28e2ebe006e4c6f1f1a3369d65efdc5f77db16bd20c9fcb8896f80760f8db2d4`): nine archived seed gains, three means and sample SD, plus zero. There are no confidence intervals, p-values, fitted trends, model calls or new endpoints. Visual QA found a legend/annotation collision in the first draft; the legend was moved outside the axes before final export.
+
+All five exports were viewed, and the four original references were compared side-by-side with the final revisions. Bounds/owner-box and pairwise text-ink checks find zero violations in Figures 1/3/4/A1. Figure 2 passes PDF span bounds and manual inter-label review. Equations, subscripts, arrows, panel captions and final-page placement were reviewed. The actual `main.tex` uses a 6.8-inch text block, so figures are not silently reduced below the tested font sizes.
+
+Actual-main build: `make -C 论文投稿/manuscript_v2`, exit 0, 23 pages. Final log has zero undefined citations/references, duplicate labels/destinations, overfull boxes and underfull notices. Figures appear on pages 4, 6, 8, 9 and 16, numbered 1/2/3/4/A1. All pages were rendered and reviewed; selected figure pages received enlarged inspection. A short appendix optimization table was changed from longtable to an ordinary float to remove a detected vertical overflow, without changing any data. The PDF figures are recorded as actual build inputs in `main.fls`. No Figure 5 placeholder remains. The main build PDF/page renders are local build products and not committed.
+
+Current checks: `audit_vector_figures.py --readability-revision` and `audit_body_draft.py --full-revision`. Old default audit mode targets the old frozen-layout snapshot, not the newly authorized sources. The original 62 scientific checks remain intact. No conference-specific two-column template or page-limit certification is implied.
+
+## Historical frozen-layout reconstruction (2026-10-04)
+
 Date: 2026-10-04
 
 Input repository HEAD: `11b3ed94344c7c8e41ced2d3e03311da1ad759c8`

@@ -1,4 +1,4 @@
-% Generated from frozen sources by build_tables.py; not a prose draft.
+% Numeric rows formatted from frozen archived tables; caption revised 2026-10-08.
 \begin{table}[htbp]
 \centering\small
 \begin{tabular}{lrrrr}
@@ -10,7 +10,6 @@ WikiText-2 & 4.276364 & 4.120699 & 0.155665 $\pm$ 0.007692 & 3/3 + \\
 TinyStories & 1.582197 & 1.689416 & -0.107219 $\pm$ 0.000415 & 3/3 -- \\
 \bottomrule
 \end{tabular}
-\caption{Paired warm-start transfer across three text domains (planning table).}
+\caption{Paired test-NLL transfer from three independent student preparations per corpus. Gain is CE minus KD; SD is the sample SD of paired gains. Both arms select by validation NLL. The shared recipe uses $\lambda=5$ and $\tau=2$; cross-domain comparisons do not isolate corpus effects.}
 \label{tab:cross_domain_transfer}
-\par\smallskip\begin{minipage}{0.96\linewidth}\footnotesize Three independently trained student initializations per dataset; one frozen teacher per dataset. Gain is CE minus KD test NLL. Sample SD is over paired gains, not an SE. $\lambda=5$, $T=2$, token-mean KD; validation-selected endpoints. Cross-domain comparisons do not isolate a causal dataset effect.\end{minipage}
 \end{table}
