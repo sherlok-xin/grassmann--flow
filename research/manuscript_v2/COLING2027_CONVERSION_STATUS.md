@@ -1,5 +1,10 @@
 # COLING 2027 / ARR conversion status
 
+Historical conversion record. The later 2026-10-11 final-polish pass is in
+`COLING2027_FINAL_LAYOUT_AUDIT.md` and `coling2027_final_layout_qa.json`.
+Use those for the current PDF hash, appendix float positions, warning inventory,
+and final visual QA; the original conversion findings below are retained.
+
 Date: 2026-10-10. Input commit:
 `63d7eb72c01d26a22e921a73246ecc9944df9a3a`.
 

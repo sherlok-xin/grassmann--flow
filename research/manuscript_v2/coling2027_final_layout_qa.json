@@ -1,0 +1,993 @@
+{
+  "status": "PASS",
+  "date": "2026-10-11",
+  "input_commit": "cd8b5504403a21cb2e98efb446e3ca680340032f",
+  "scope": "Document-only final polish; no experiments, endpoint recomputation, or model access.",
+  "exact_two_micro_edits": "PASS",
+  "appendix_visible_wording_and_input_order": "UNCHANGED",
+  "other_submission_files_byte_preserved": [
+    "论文投稿/coling2027_arr/Makefile",
+    "论文投稿/coling2027_arr/acl.sty",
+    "论文投稿/coling2027_arr/acl_natbib.bst",
+    "论文投稿/coling2027_arr/appendix/architecture.tex",
+    "论文投稿/coling2027_arr/appendix/protocols.tex",
+    "论文投稿/coling2027_arr/figures/fig1_paired_protocol.pdf",
+    "论文投稿/coling2027_arr/figures/fig1_paired_protocol.svg",
+    "论文投稿/coling2027_arr/figures/fig3_teacher_quality.pdf",
+    "论文投稿/coling2027_arr/figures/fig3_teacher_quality.svg",
+    "论文投稿/coling2027_arr/figures/fig4_ensemble_control.pdf",
+    "论文投稿/coling2027_arr/figures/fig4_ensemble_control.svg",
+    "论文投稿/coling2027_arr/figures/figA1_teacher_architecture.pdf",
+    "论文投稿/coling2027_arr/figures/figA1_teacher_architecture.svg",
+    "论文投稿/coling2027_arr/references.bib",
+    "论文投稿/coling2027_arr/sections/01_introduction.tex",
+    "论文投稿/coling2027_arr/sections/02_related_work.tex",
+    "论文投稿/coling2027_arr/sections/03_problem_setting.tex",
+    "论文投稿/coling2027_arr/sections/04_experimental_setting.tex",
+    "论文投稿/coling2027_arr/sections/05_cross_domain_transfer.tex",
+    "论文投稿/coling2027_arr/sections/07_controls.tex",
+    "论文投稿/coling2027_arr/sections/08_external_validity.tex",
+    "论文投稿/coling2027_arr/sections/09_discussion.tex",
+    "论文投稿/coling2027_arr/sections/10_conclusion.tex",
+    "论文投稿/coling2027_arr/sections/limitations.tex",
+    "论文投稿/coling2027_arr/tables/branch_comparison.tex",
+    "论文投稿/coling2027_arr/tables/cross_domain_transfer.tex",
+    "论文投稿/coling2027_arr/tables/full_predictors.tex",
+    "论文投稿/coling2027_arr/tables/modern_ce_gate.tex",
+    "论文投稿/coling2027_arr/tables/modern_endpoints.tex",
+    "论文投稿/coling2027_arr/tables/modern_optimization.tex",
+    "论文投稿/coling2027_arr/tables/per_seed_gains.tex",
+    "论文投稿/coling2027_arr/tables/ptb_endpoints.tex",
+    "论文投稿/coling2027_arr/tables/teacher_training_protocol.tex",
+    "论文投稿/coling2027_arr/tables/tinystories_endpoints.tex",
+    "论文投稿/coling2027_arr/tables/tinystories_optimization.tex",
+    "论文投稿/coling2027_arr/tables/wt2_endpoints.tex"
+  ],
+  "protected_paths": "UNCHANGED",
+  "official_preamble": "BYTE_IDENTICAL",
+  "source_identity_scan": "PASS",
+  "modified_submission_files_sha256": {
+    "论文投稿/coling2027_arr/README.md": "6804bc6b1a7190c829dc055c2ff241cbbbd3d8db31a7d9f122ca5ad952bfa396",
+    "论文投稿/coling2027_arr/appendix/diagnostics_modern.tex": "8cc99da31186062994cd5ae2f5e8af427251bb8aab58ceb9d200fdd7c0ffd9fe",
+    "论文投稿/coling2027_arr/appendix/results.tex": "969cc1212dbc4c45ad39d44ad892479c0aa4d05631609d62644eda3b9c264b4b",
+    "论文投稿/coling2027_arr/figures/fig2_cross_domain_gain.pdf": "a091dd226e2167a78e75f0f353c6616fb72fd67445298e8b7e981a0d02d658d1",
+    "论文投稿/coling2027_arr/figures/fig2_cross_domain_gain.svg": "b30a527a2460fda508459810468020b06057a86be4a3651deed5867745bbe4b6",
+    "论文投稿/coling2027_arr/main.tex": "6b474f08ee7bf79c0450299043609112ffc754c21029c3f09e79e0aeb9820213",
+    "论文投稿/coling2027_arr/sections/06_distillability.tex": "c4d91644c218d29307ec1d2b6ece45f01fc7fa9c4da264a4e8a1f30ca0fbff8f"
+  },
+  "submission_audit": {
+    "status": "PASS",
+    "input_commit": "63d7eb72c01d26a22e921a73246ecc9944df9a3a",
+    "activity": "Read-only document, archived record, PDF, and preservation checks. No model access or endpoint evaluation.",
+    "original_audit": "PASS (62/62)",
+    "submission_numeric_checks": 62,
+    "numeric_check_inventory": [
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_ce_nll_mean",
+        "value": "4.082352"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_kd_nll_mean",
+        "value": "3.937415"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_mean",
+        "value": "0.144937"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_sample_sd",
+        "value": "0.003938"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_ce_nll_mean",
+        "value": "4.276364"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_kd_nll_mean",
+        "value": "4.120699"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_mean",
+        "value": "0.155665"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_sample_sd",
+        "value": "0.007692"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_ce_nll_mean",
+        "value": "1.582197"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_kd_nll_mean",
+        "value": "1.689416"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_mean",
+        "value": "-0.107219"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_sample_sd",
+        "value": "0.000415"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "teacher_validation_nll",
+        "value": "4.300644"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "mean_gain_or_contrast",
+        "value": "0.155665"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "sample_sd",
+        "value": "0.007692"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "teacher_validation_nll",
+        "value": "6.376220"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "mean_gain_or_contrast",
+        "value": "-0.027654"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "sample_sd",
+        "value": "0.006822"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "mean_gain_or_contrast",
+        "value": "0.183319"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "sample_sd",
+        "value": "0.001375"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_validation_subset_nll",
+        "value": "4.652064"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_residual_vs_c0",
+        "value": "-0.266520"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "test_gain",
+        "value": "0.046771"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_validation_subset_nll",
+        "value": "4.652064"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_residual_vs_c0",
+        "value": "-0.253492"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "test_gain",
+        "value": "0.033598"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_validation_subset_nll",
+        "value": "4.652064"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_residual_vs_c0",
+        "value": "-0.251006"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "test_gain",
+        "value": "0.042604"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_mean",
+        "value": "0.155665"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_sample_sd",
+        "value": "0.007692"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_mean",
+        "value": "0.134868"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_sample_sd",
+        "value": "0.008906"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_mean",
+        "value": "0.040991"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_sample_sd",
+        "value": "0.006733"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "paired_contrast_mean",
+        "value": "0.020797"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "paired_contrast_sample_sd",
+        "value": "0.001214"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "paired_contrast_mean",
+        "value": "0.114674"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "paired_contrast_sample_sd",
+        "value": "0.001001"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "validation_nll",
+        "value": "4.303697"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "branch_jsd",
+        "value": "0.182087"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "top1_agreement",
+        "value": "0.507034"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "fusion_gain",
+        "value": "0.147983"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "kd_gain_mean",
+        "value": "0.155665"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "kd_gain_sample_sd",
+        "value": "0.007692"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "validation_nll",
+        "value": "4.293589"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "branch_jsd",
+        "value": "0.099793"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "top1_agreement",
+        "value": "0.630170"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "fusion_gain",
+        "value": "0.112570"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "kd_gain_mean",
+        "value": "0.168125"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "kd_gain_sample_sd",
+        "value": "0.008948"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "H_mean",
+        "value": "-0.012460"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "H_sample_sd",
+        "value": "0.001348"
+      },
+      {
+        "table": "modern_stress",
+        "field": "mean_gain",
+        "value": "-0.013550"
+      },
+      {
+        "table": "modern_stress",
+        "field": "sample_sd",
+        "value": "0.003542"
+      },
+      {
+        "table": "modern_stress",
+        "field": "mean_gain",
+        "value": "-0.043924"
+      },
+      {
+        "table": "modern_stress",
+        "field": "sample_sd",
+        "value": "0.004017"
+      },
+      {
+        "table": "modern_ce_gate",
+        "field": "CE_improvement_validation",
+        "value": "0.004214"
+      },
+      {
+        "table": "modern_ce_gate",
+        "field": "CE_improvement_validation",
+        "value": "0.004849"
+      },
+      {
+        "table": "modern_ce_gate",
+        "field": "CE_improvement_validation",
+        "value": "0.003941"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "frozen_mean",
+        "value": "0.040991"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "frozen_sample_sd",
+        "value": "0.006733"
+      }
+    ],
+    "archival_files_byte_preserved": 54,
+    "official_template_commit": "d5adc823ff0f80f98c80405ca0ab66c68e684409",
+    "style_hashes": {
+      "acl.sty": "19dfeddc2c0e448f3926a0bef048a9db3f3611b46265b760caabd7ada4f361de",
+      "acl_natbib.bst": "6fbb306202290f4b68e74ac1460a8b27398500cb6dfeb4492e74c457eae7cd1e"
+    },
+    "abstract_words": 185,
+    "main_content_last_page": 7,
+    "pdf_pages": 14,
+    "limitations_page": 7,
+    "figure_pages": {
+      "fig:paired_protocol": 2,
+      "fig:cross_domain_gain": 5,
+      "fig:teacher_quality": 5,
+      "fig:ensemble_control": 6,
+      "fig:teacher_architecture": 10
+    },
+    "verified_reference_count": 24,
+    "bib_identical_to_archive": true,
+    "anonymity_identity_checks": "PASS",
+    "embedded_raster_images": 0,
+    "minimum_figure_text_or_script_pt_at_actual_acl_width": {
+      "fig1_paired_protocol": 6.213,
+      "fig2_cross_domain_gain": 7.133,
+      "fig3_teacher_quality": 6.52,
+      "fig4_ensemble_control": 6.633,
+      "figA1_teacher_architecture": 6.136
+    },
+    "underfull_hbox_notices": 14,
+    "underfull_vbox_notices": 3,
+    "pdf_sha256": "0408342b232c6e3ba86deae8129cec552ed9e3e5a5c7b3ac4060a27a28792e20",
+    "limits": "Automated checks are not a scientific acceptance guarantee; visual page inspection and human submission actions remain distinct."
+  },
+  "visual_geometry_audit": {
+    "status": "PASS",
+    "date": "2026-10-11",
+    "official_pubcheck_raw_counts": {
+      "Error.MARGIN": 890
+    },
+    "review_marker_classification": {
+      "left": 451,
+      "right": 425,
+      "bottom_page_number": 14
+    },
+    "non_review_margin_findings": [],
+    "independent_all_body_word_bounds": "PASS (2.4 pt standard microtype punctuation allowance)",
+    "standard_microtype_protrusions": [
+      {
+        "page": 11,
+        "text": "+0.033598,and+0.042604.",
+        "x0": 68.75,
+        "explanation": "Standard microtype leading plus-sign protrusion, not an upstream reported finding."
+      }
+    ],
+    "vector_drawing_bounds": "PASS",
+    "adjusted_figure_geometry": {
+      "fig1_paired_protocol": {
+        "text_nodes": 37,
+        "bounds_violations": [],
+        "text_overlaps": []
+      },
+      "figA1_teacher_architecture": {
+        "text_nodes": 48,
+        "bounds_violations": [],
+        "text_overlaps": []
+      }
+    },
+    "interpretation": "Official raw check is NOT a clean pass: all 890 margin findings correspond to official review rulers or page numbers. No submission PDF or official checker was altered."
+  },
+  "archive_vector_audit": {
+    "status": "PASS",
+    "date": "2026-10-08",
+    "figures": {
+      "fig1_paired_protocol": {
+        "pure_vector": "PASS",
+        "editable_svg_text": "PASS",
+        "embedded_pdf_fonts": "PASS",
+        "readability_thresholds": "PASS",
+        "export_hashes": "PASS"
+      },
+      "fig3_teacher_quality": {
+        "pure_vector": "PASS",
+        "editable_svg_text": "PASS",
+        "embedded_pdf_fonts": "PASS",
+        "readability_thresholds": "PASS",
+        "export_hashes": "PASS"
+      },
+      "fig4_ensemble_control": {
+        "pure_vector": "PASS",
+        "editable_svg_text": "PASS",
+        "embedded_pdf_fonts": "PASS",
+        "readability_thresholds": "PASS",
+        "export_hashes": "PASS"
+      },
+      "figA1_teacher_architecture": {
+        "pure_vector": "PASS",
+        "editable_svg_text": "PASS",
+        "embedded_pdf_fonts": "PASS",
+        "readability_thresholds": "PASS",
+        "export_hashes": "PASS"
+      },
+      "fig2_cross_domain_gain": {
+        "pure_vector": "PASS",
+        "editable_svg_text": "PASS",
+        "embedded_pdf_fonts": "PASS",
+        "readability_thresholds": "PASS",
+        "export_hashes": "PASS"
+      }
+    },
+    "scientific_wording_and_causal_connectivity": "PASS",
+    "pdf_figures_are_actual_manuscript_build_inputs": "PASS",
+    "limits": "Geometry checks supplemented by manual visual comparison; not certification for a future single-column conference layout."
+  },
+  "baseline_warnings": {
+    "hbox": 20,
+    "vbox": 6,
+    "overfull": 0,
+    "inventory": [
+      {
+        "id": "H1",
+        "log_line": 603,
+        "badness": 3138,
+        "context": "in paragraph at lines 3--4"
+      },
+      {
+        "id": "H2",
+        "log_line": 617,
+        "badness": 4647,
+        "context": "in paragraph at lines 16--17"
+      },
+      {
+        "id": "H3",
+        "log_line": 641,
+        "badness": 1014,
+        "context": "in paragraph at lines 11--12"
+      },
+      {
+        "id": "V1",
+        "log_line": 648,
+        "badness": 3118,
+        "context": "has occurred while \\output is active []"
+      },
+      {
+        "id": "H4",
+        "log_line": 662,
+        "badness": 4832,
+        "context": "in paragraph at lines 19--27"
+      },
+      {
+        "id": "H5",
+        "log_line": 667,
+        "badness": 1043,
+        "context": "in paragraph at lines 122--129"
+      },
+      {
+        "id": "H6",
+        "log_line": 676,
+        "badness": 10000,
+        "context": "in paragraph at lines 7--7"
+      },
+      {
+        "id": "H7",
+        "log_line": 690,
+        "badness": 2261,
+        "context": "in paragraph at lines 18--19"
+      },
+      {
+        "id": "V2",
+        "log_line": 695,
+        "badness": 10000,
+        "context": "has occurred while \\output is active []"
+      },
+      {
+        "id": "H8",
+        "log_line": 702,
+        "badness": 1038,
+        "context": "in paragraph at lines 9--10"
+      },
+      {
+        "id": "H9",
+        "log_line": 707,
+        "badness": 1540,
+        "context": "in paragraph at lines 9--10"
+      },
+      {
+        "id": "H10",
+        "log_line": 715,
+        "badness": 2134,
+        "context": "in paragraph at lines 9--10"
+      },
+      {
+        "id": "H11",
+        "log_line": 722,
+        "badness": 3471,
+        "context": "in paragraph at lines 13--1"
+      },
+      {
+        "id": "H12",
+        "log_line": 727,
+        "badness": 10000,
+        "context": "in paragraph at lines 13--1"
+      },
+      {
+        "id": "H13",
+        "log_line": 732,
+        "badness": 10000,
+        "context": "in paragraph at lines 13--1"
+      },
+      {
+        "id": "H14",
+        "log_line": 737,
+        "badness": 10000,
+        "context": "in paragraph at lines 13--1"
+      },
+      {
+        "id": "V3",
+        "log_line": 742,
+        "badness": 10000,
+        "context": "has occurred while \\output is active []"
+      },
+      {
+        "id": "V4",
+        "log_line": 746,
+        "badness": 10000,
+        "context": "has occurred while \\output is active []"
+      },
+      {
+        "id": "V5",
+        "log_line": 749,
+        "badness": 10000,
+        "context": "has occurred while \\output is active []"
+      },
+      {
+        "id": "H15",
+        "log_line": 752,
+        "badness": 3635,
+        "context": "in paragraph at lines 20--21"
+      },
+      {
+        "id": "H16",
+        "log_line": 757,
+        "badness": 10000,
+        "context": "in paragraph at lines 24--27"
+      },
+      {
+        "id": "H17",
+        "log_line": 762,
+        "badness": 10000,
+        "context": "in paragraph at lines 24--27"
+      },
+      {
+        "id": "H18",
+        "log_line": 768,
+        "badness": 1189,
+        "context": "in paragraph at lines 24--27"
+      },
+      {
+        "id": "V6",
+        "log_line": 774,
+        "badness": 10000,
+        "context": "has occurred while \\output is active []"
+      },
+      {
+        "id": "H19",
+        "log_line": 778,
+        "badness": 10000,
+        "context": "in paragraph at lines 35--44"
+      },
+      {
+        "id": "H20",
+        "log_line": 783,
+        "badness": 10000,
+        "context": "in paragraph at lines 35--44"
+      }
+    ]
+  },
+  "final_warnings": {
+    "hbox": 14,
+    "vbox": 3,
+    "overfull": 0,
+    "inventory": [
+      {
+        "id": "H1",
+        "log_line": 603,
+        "badness": 3138,
+        "context": "in paragraph at lines 3--4"
+      },
+      {
+        "id": "H2",
+        "log_line": 617,
+        "badness": 4647,
+        "context": "in paragraph at lines 16--17"
+      },
+      {
+        "id": "H3",
+        "log_line": 641,
+        "badness": 1014,
+        "context": "in paragraph at lines 11--12"
+      },
+      {
+        "id": "V1",
+        "log_line": 648,
+        "badness": 3118,
+        "context": "has occurred while \\output is active []"
+      },
+      {
+        "id": "H4",
+        "log_line": 665,
+        "badness": 4832,
+        "context": "in paragraph at lines 19--27"
+      },
+      {
+        "id": "H5",
+        "log_line": 670,
+        "badness": 1043,
+        "context": "in paragraph at lines 122--129"
+      },
+      {
+        "id": "H6",
+        "log_line": 679,
+        "badness": 10000,
+        "context": "in paragraph at lines 7--7"
+      },
+      {
+        "id": "H7",
+        "log_line": 693,
+        "badness": 2261,
+        "context": "in paragraph at lines 18--19"
+      },
+      {
+        "id": "V2",
+        "log_line": 698,
+        "badness": 10000,
+        "context": "has occurred while \\output is active []"
+      },
+      {
+        "id": "H8",
+        "log_line": 705,
+        "badness": 1038,
+        "context": "in paragraph at lines 10--11"
+      },
+      {
+        "id": "H9",
+        "log_line": 710,
+        "badness": 1540,
+        "context": "in paragraph at lines 10--11"
+      },
+      {
+        "id": "H10",
+        "log_line": 718,
+        "badness": 2134,
+        "context": "in paragraph at lines 10--11"
+      },
+      {
+        "id": "V3",
+        "log_line": 725,
+        "badness": 4531,
+        "context": "has occurred while \\output is active []"
+      },
+      {
+        "id": "H11",
+        "log_line": 729,
+        "badness": 3635,
+        "context": "in paragraph at lines 20--21"
+      },
+      {
+        "id": "H12",
+        "log_line": 734,
+        "badness": 1163,
+        "context": "in paragraph at lines 24--27"
+      },
+      {
+        "id": "H13",
+        "log_line": 739,
+        "badness": 10000,
+        "context": "in paragraph at lines 35--44"
+      },
+      {
+        "id": "H14",
+        "log_line": 745,
+        "badness": 10000,
+        "context": "in paragraph at lines 35--44"
+      }
+    ]
+  },
+  "render_inventory": {
+    "pdf": "outputs/coling2027_arr/main.pdf",
+    "pages": 14,
+    "whole_page_dpi": 150,
+    "print_scale_dpi": 96,
+    "local_inspections": [
+      {
+        "page": 2,
+        "kind": "Figure",
+        "number": "1",
+        "crop_pdf_points": [
+          68.0,
+          65.0,
+          526.0,
+          351.17108154296875
+        ],
+        "dpi": 300,
+        "file": "page-02-figure-1.png"
+      },
+      {
+        "page": 4,
+        "kind": "Table",
+        "number": "1",
+        "crop_pdf_points": [
+          68.0,
+          65.0,
+          295,
+          186.31210327148438
+        ],
+        "dpi": 300,
+        "file": "page-04-table-1.png"
+      },
+      {
+        "page": 5,
+        "kind": "Figure",
+        "number": "2",
+        "crop_pdf_points": [
+          68.0,
+          65.0,
+          526.0,
+          284.3180847167969
+        ],
+        "dpi": 300,
+        "file": "page-05-figure-2.png"
+      },
+      {
+        "page": 5,
+        "kind": "Figure",
+        "number": "3",
+        "crop_pdf_points": [
+          68.0,
+          285.3180847167969,
+          526.0,
+          568.8850708007812
+        ],
+        "dpi": 300,
+        "file": "page-05-figure-3.png"
+      },
+      {
+        "page": 6,
+        "kind": "Figure",
+        "number": "4",
+        "crop_pdf_points": [
+          68.0,
+          65.0,
+          526.0,
+          300.8960876464844
+        ],
+        "dpi": 300,
+        "file": "page-06-figure-4.png"
+      },
+      {
+        "page": 10,
+        "kind": "Figure",
+        "number": "A1",
+        "crop_pdf_points": [
+          68.0,
+          65.0,
+          526.0,
+          306.1581115722656
+        ],
+        "dpi": 300,
+        "file": "page-10-figure-A1.png"
+      },
+      {
+        "page": 10,
+        "kind": "Table",
+        "number": "2",
+        "crop_pdf_points": [
+          68.0,
+          307.1581115722656,
+          526.0,
+          430.73809814453125
+        ],
+        "dpi": 300,
+        "file": "page-10-table-2.png"
+      },
+      {
+        "page": 11,
+        "kind": "Table",
+        "number": "3",
+        "crop_pdf_points": [
+          68.0,
+          65.0,
+          526.0,
+          174.35610961914062
+        ],
+        "dpi": 300,
+        "file": "page-11-table-3.png"
+      },
+      {
+        "page": 11,
+        "kind": "Table",
+        "number": "4",
+        "crop_pdf_points": [
+          68.0,
+          175.35610961914062,
+          526.0,
+          341.1781005859375
+        ],
+        "dpi": 300,
+        "file": "page-11-table-4.png"
+      },
+      {
+        "page": 12,
+        "kind": "Table",
+        "number": "5",
+        "crop_pdf_points": [
+          68.0,
+          65.0,
+          526.0,
+          174.35610961914062
+        ],
+        "dpi": 300,
+        "file": "page-12-table-5.png"
+      },
+      {
+        "page": 12,
+        "kind": "Table",
+        "number": "6",
+        "crop_pdf_points": [
+          68.0,
+          175.35610961914062,
+          526.0,
+          286.9811096191406
+        ],
+        "dpi": 300,
+        "file": "page-12-table-6.png"
+      },
+      {
+        "page": 12,
+        "kind": "Table",
+        "number": "7",
+        "crop_pdf_points": [
+          68.0,
+          287.9811096191406,
+          526.0,
+          399.6060791015625
+        ],
+        "dpi": 300,
+        "file": "page-12-table-7.png"
+      },
+      {
+        "page": 12,
+        "kind": "Table",
+        "number": "8",
+        "crop_pdf_points": [
+          68.0,
+          400.6060791015625,
+          526.0,
+          510.6370849609375
+        ],
+        "dpi": 300,
+        "file": "page-12-table-8.png"
+      },
+      {
+        "page": 13,
+        "kind": "Table",
+        "number": "9",
+        "crop_pdf_points": [
+          68.0,
+          65.0,
+          526.0,
+          255.65109252929688
+        ],
+        "dpi": 300,
+        "file": "page-13-table-9.png"
+      },
+      {
+        "page": 14,
+        "kind": "Table",
+        "number": "10",
+        "crop_pdf_points": [
+          68.0,
+          65.0,
+          526.0,
+          249.91610717773438
+        ],
+        "dpi": 300,
+        "file": "page-14-table-10.png"
+      },
+      {
+        "page": 14,
+        "kind": "Table",
+        "number": "11",
+        "crop_pdf_points": [
+          68.0,
+          250.91610717773438,
+          526.0,
+          550.3230590820312
+        ],
+        "dpi": 300,
+        "file": "page-14-table-11.png"
+      },
+      {
+        "page": 14,
+        "kind": "Table",
+        "number": "12",
+        "crop_pdf_points": [
+          68.0,
+          551.3230590820312,
+          526.0,
+          740.7420654296875
+        ],
+        "dpi": 300,
+        "file": "page-14-table-12.png"
+      }
+    ]
+  },
+  "manual_visual_record": "COLING2027_FINAL_LAYOUT_AUDIT.md",
+  "pdf_sha256": "0408342b232c6e3ba86deae8129cec552ed9e3e5a5c7b3ac4060a27a28792e20",
+  "limits": "Digital A4-size approximation, not a calibrated physical print certification. Official pubcheck is not zero-error."
+}

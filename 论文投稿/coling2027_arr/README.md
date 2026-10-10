@@ -42,7 +42,9 @@ and modern stress-test details. The appendix architecture is Figure A1.
 Scientific wording, uncertainty, and permanent optimization warnings must not
 be changed through formatting. Two copied SVG/PDF figures only increase
 mathematical script sizes for readability; their text, layout, and scientific
-content are otherwise unchanged. Three other figure pairs are unchanged.
+content are otherwise unchanged. Figure 2 additionally moves its TinyStories
+numeric annotation upward to clear the horizontal axis, without changing data
+or wording. Figure 3 and Figure 4 are unchanged.
 
 The PDF is a review document, not a camera-ready paper or proof of acceptance.
 Account registration, the Responsible NLP Research Checklist, conflicts,

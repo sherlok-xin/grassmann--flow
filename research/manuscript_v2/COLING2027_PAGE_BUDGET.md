@@ -1,6 +1,6 @@
 # Verified COLING / ARR page budget
 
-Final build checked on 2026-10-10: main-content last page **7**, total PDF pages
+Final build checked on 2026-10-11: main-content last page **7**, total PDF pages
 **14**. This conservatively counts the page containing the last Conclusion
 lines and includes every main figure and table. Limitations, References, and
 Appendix are not counted against the eight-page main-content allowance.
@@ -38,8 +38,8 @@ official sequential flow, not by a page-limit workaround.
 | References | 7–8 |
 | Appendix A: architecture | 9–10, Figure A1 on 10 |
 | Appendix B: protocols and amendments | 9–10, Tables 2–3 on 10–11 |
-| Appendix C: full per-seed results | 10–11, Tables 4–8 on 12 |
-| Appendix D: diagnostic/modern details | 11–13, Tables 9–12 on 14 |
+| Appendix C: full per-seed results | 10–11, Table 4 on 11; Tables 5–8 on 12 |
+| Appendix D: diagnostic/modern details | 11–13, Table 9 on 13; Tables 10–12 on 14 |
 
 The appendix float locations intentionally differ from their source insertion
 points. All eleven appendix tables are readable at template-default size.
@@ -47,3 +47,6 @@ Figure/table placement uses ordinary LaTeX float placement, not forced
 negative spacing or modified style dimensions. Any later author edit requires
 rebuilding and rechecking this budget; the current counts are not transferable
 to an edited source.
+
+The final typography pass is recorded in `COLING2027_FINAL_LAYOUT_AUDIT.md`;
+it preserves seven main-content pages and does not attempt to fill page 8.

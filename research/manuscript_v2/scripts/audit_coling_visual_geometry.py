@@ -96,14 +96,14 @@ def main():
         assert not violations and not overlaps, (name, violations, overlaps)
         geometry[name] = {'text_nodes': len(boxes), 'bounds_violations': [], 'text_overlaps': []}
     print(json.dumps({
-        'status': 'PASS', 'date': '2026-10-10',
+        'status': 'PASS', 'date': '2026-10-11',
         'official_pubcheck_raw_counts': counts,
         'review_marker_classification': dict(markers),
         'non_review_margin_findings': nonmarker,
         'independent_all_body_word_bounds': 'PASS (2.4 pt standard microtype punctuation allowance)',
         'standard_microtype_protrusions': protrusions,
         'vector_drawing_bounds': 'PASS', 'adjusted_figure_geometry': geometry,
-        'interpretation': 'Official raw check is NOT a clean pass: all 890 margin findings correspond to official review rulers or page numbers. No submission PDF or official checker was altered.'
+        'interpretation': f"Official raw check is NOT a clean pass: all {counts['Error.MARGIN']} margin findings correspond to official review rulers or page numbers. No submission PDF or official checker was altered."
     }, indent=2))
 
 

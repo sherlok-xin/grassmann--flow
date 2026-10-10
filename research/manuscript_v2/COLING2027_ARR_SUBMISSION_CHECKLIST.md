@@ -3,6 +3,11 @@
 Verified on 2026-10-10. This records document preparation, not an account-level
 submission or an acceptance prediction. Experiments remain permanently frozen.
 
+Document QA was refreshed on 2026-10-11 in
+`COLING2027_FINAL_LAYOUT_AUDIT.md`; it remains 7 main-content / 14 total pages.
+The original conversion checklist below is historical; its human-action items
+remain outstanding unless separately completed by the authors.
+
 ## A. COMPLETED BY CODEX
 
 - [x] Started from `63d7eb72c01d26a22e921a73246ecc9944df9a3a`.

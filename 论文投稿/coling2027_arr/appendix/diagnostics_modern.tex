@@ -21,7 +21,7 @@ SmolLM2 base student/teacher models have 134,515,008/361,821,120 parameters and 
 
 FineWeb-Edu uses the first shard of the pinned \texttt{sample-10BT} revision. Deterministic document-ID hashing and exact-text deduplication produce disjoint training, validation, and test splits with 20M, 1M, and 1M encoded tokens; held-out splits evaluate 999,999 targets each. Primary validation candidates are steps 256, 512, 768, 1024, and 1221, excluding $S_0$. Test follows selection. Table~\ref{tab:modern_endpoints} reports those endpoints; Table~\ref{tab:modern_optimization} gives the selected steps and recorded telemetry.
 
-Teacher validation/test NLLs are 2.747486/2.726017, better than every $S_0$. CE test NLL nevertheless increases from $S_0$ by 0.005562, 0.005268, and 0.012924 (mean $+0.007918\pm0.004338$). Allowing step 0 selects $S_0$ in all nine CE/KD arms and yields diagnostic CE-relative gain zero. This does not replace the trained-checkpoint primary comparison. Exact pretraining overlap remains unknown.
+Teacher validation/test NLLs are 2.747486/\allowbreak2.726017, better than every $S_0$. CE test NLL nevertheless increases from $S_0$ by 0.005562, 0.005268, and 0.012924 (mean $+0.007918\pm0.004338$). Allowing step 0 selects $S_0$ in all nine CE/KD arms and yields diagnostic CE-relative gain zero. This does not replace the trained-checkpoint primary comparison. Exact pretraining overlap remains unknown.
 \input{tables/modern_endpoints}
 \input{tables/modern_optimization}
 
@@ -33,6 +33,6 @@ The CE-only control fixes the seed-42 preparation checkpoint at step 256, after 
 Candidates $5\times10^{-6}$, $10^{-5}$, and $2\times10^{-5}$ retain the optimizer family, scheduler, batch, sequence length, clipping, and budget. Validation selection includes steps 0, 256, 512, 768, and 977, with earlier-checkpoint tie breaking. All select step 977. Improvements are 0.004214, 0.004849, and 0.003941, below the 0.01 gate (Table~\ref{tab:modern_ce_gate}); clip fractions are 0.060389, 0.079836, and 0.082907 with zero nonfinite fraction. The highest-rate arm has a finite norm spike 14.602655 at step 656 of unknown cause and impact.
 
 The frozen decision is
-\texttt{STOP\_MODERN\_CONTINUATION\_}\allowbreak\texttt{NOT\_ESTABLISHED}.
+\texttt{STOP\_}\allowbreak\texttt{MODERN\_}\allowbreak\texttt{CONTINUATION\_}\allowbreak\texttt{NOT\_}\allowbreak\texttt{ESTABLISHED}.
 Conditional KD at $\lambda=0.25$ or 1, new test endpoints, and initial KD/CE gradient ratios were not measured. They are missing by design, not zero. The stress test does not establish that FineWeb-Edu causes negative transfer, better teachers generally harm KD, or all modern-model KD fails.
 \input{tables/modern_ce_gate}

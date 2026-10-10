@@ -13,7 +13,7 @@ Teacher training state and resulting predictive quality strongly modulate transf
 
 \subsection{A weaker source still transfers positively}
 \label{sec:weaker-teacher}
-The Grassmann-only source has validation-subset NLL 4.652064, worse than every matched validation-selected CE comparator on that subset. Nevertheless, all three students improve, with mean test gain $+0.040991\pm0.006733$. The comparator is the selected CE continuation, not an arbitrary initialization, and residual likelihood and transfer gain use different held-out scopes (Appendix~\ref{app:per-seed}).
+The Grassmann-only source has validation-subset NLL 4.652064, worse than every matched validation-selected CE comparator on that subset. Nevertheless, all three students improve, with mean test gain $+0.040991\pm0.006733$. The comparator is the selected CE continuation, not an arbitrary initialization. Teacher likelihood is compared against the matched CE endpoint on the same validation subset, whereas transfer gain is evaluated on the selected test endpoints (Appendix~\ref{app:per-seed}).
 
 Together, these controls show that teacher quality matters strongly but global held-out likelihood alone is insufficient to determine useful supervision. They neither make teacher quality irrelevant nor attribute positive transfer to geometry (Figure~\ref{fig:teacher_quality}).
 

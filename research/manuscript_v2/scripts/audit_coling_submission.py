@@ -164,6 +164,12 @@ def main():
             allowed = dict(b.attrib)
             if path.stem in ['fig1_paired_protocol', 'figA1_teacher_architecture'] and allowed.get('font-size') == '22':
                 allowed['font-size'] = '24'
+            if (path.stem == 'fig2_cross_domain_gain' and b.text == '-0.107219'
+                    and allowed.get('y') == '171.967564'):
+                # Only the approved annotation/axis collision repair: no data,
+                # wording, font, axes, uncertainty bars, or other coordinates move.
+                allowed['y'] = '165.967564'
+                allowed['transform'] = 'rotate(-0 389.798752 165.967564)'
             assert a.attrib == allowed
 
     state = (ROOT / 'research-state.yaml').read_text()
