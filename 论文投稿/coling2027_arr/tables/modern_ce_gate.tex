@@ -1,0 +1,14 @@
+\begin{table*}[!t]
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+CE peak LR & Selected val NLL & Val improvement & Selected step & Gate \\
+\midrule
+5e-06 & 2.962897 & 0.004214 & 977 & FAIL \\
+1e-05 & 2.962263 & 0.004849 & 977 & FAIL \\
+2e-05 & 2.963171 & 0.003941 & 977 & FAIL \\
+\bottomrule
+\end{tabular}
+\caption{CE-only disjoint-continuation gate from fixed early $S_0$, seed 42. Validation selection includes step 0. No learning-rate candidate reaches the required 0.01 improvement, so conditional KD and new test evaluation are not performed.}
+\label{tab:modern_ce_gate}
+\end{table*}

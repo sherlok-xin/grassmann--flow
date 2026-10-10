@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="6.8in" height="3.652283105in" viewBox="0 0 1752 941" role="img" aria-labelledby="figure-title figure-description">
+<title id="figure-title">Paired warm-start distillability evaluation</title>
+<desc id="figure-description">Semantically reconstructed approved reference. Exact S0 branches to CE and KD; endpoints are independently validation-selected. Gain equals CE test NLL minus KD test NLL. Evidence map retains the tested local diagnostics wording.</desc>
+<style>text{font-family:"Liberation Sans",Arial,Helvetica,sans-serif;fill:#0b1c35} .wire{fill:none;stroke:#152a43;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M 0 1 L 9 5 L 0 9 Z" fill="#152a43" /></marker></defs>
+<rect id="white-background" x="0" y="0" width="1752" height="941" fill="#ffffff" />
+<text id="label-1" x="835" y="147" font-size="35" font-weight="700" text-anchor="middle">Paired warm-start distillability evaluation</text>
+<rect id="warm-start" x="26" y="299" width="240" height="322" rx="14" fill="#f5fbff" stroke="#194b7c" stroke-width="1.9" />
+<text id="label-2" x="146" y="351" font-size="32" font-weight="700" text-anchor="middle" data-box="28.5,301.5,235,317">Warm-start</text>
+<text id="label-3" x="146" y="388" font-size="32" font-weight="700" text-anchor="middle" data-box="28.5,301.5,235,317">student <tspan font-style="italic">S</tspan><tspan baseline-shift="sub" font-size="24">0</tspan></text>
+<text id="label-4" x="146" y="426" font-size="26" font-weight="400" text-anchor="middle" data-box="28.5,301.5,235,317">validation-selected</text>
+<text id="label-5" x="146" y="452" font-size="26" font-weight="400" text-anchor="middle" data-box="28.5,301.5,235,317">student checkpoint</text>
+<rect x="97" y="500" width="97" height="23" rx="4" fill="#b9d9ee" stroke="#225f8b" stroke-width="1.7" />
+<rect x="97" y="546" width="97" height="23" rx="4" fill="#b9d9ee" stroke="#225f8b" stroke-width="1.7" />
+<path d="M 145.5 497 L 145.5 476" fill="none" stroke="#152a43" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 145.5 592 L 145.5 572" fill="none" stroke="#152a43" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<circle cx="145.5" cy="529" r="1.5" fill="#152a43" />
+<circle cx="145.5" cy="534" r="1.5" fill="#152a43" />
+<circle cx="145.5" cy="539" r="1.5" fill="#152a43" />
+<rect id="ce-continuation" x="343" y="226" width="290" height="190" rx="13" fill="#f5fbff" stroke="#194b7c" stroke-width="1.9" />
+<text id="label-6" x="488" y="270" font-size="31" font-weight="700" text-anchor="middle" data-box="345.5,228.5,285,185">CE continuation</text>
+<rect x="445" y="311" width="87" height="22" rx="4" fill="#b9d9ee" stroke="#225f8b" stroke-width="1.7" />
+<rect x="445" y="356" width="87" height="22" rx="4" fill="#b9d9ee" stroke="#225f8b" stroke-width="1.7" />
+<path d="M 488.5 308 L 488.5 287" fill="none" stroke="#152a43" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 488.5 401 L 488.5 381" fill="none" stroke="#152a43" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<circle cx="488.5" cy="339" r="1.5" fill="#152a43" />
+<circle cx="488.5" cy="344" r="1.5" fill="#152a43" />
+<circle cx="488.5" cy="349" r="1.5" fill="#152a43" />
+<rect id="kd-continuation" x="343" y="515" width="290" height="230" rx="13" fill="#fff7ed" stroke="#d27321" stroke-width="1.9" />
+<text id="label-7" x="488" y="557" font-size="31" font-weight="700" text-anchor="middle" data-box="345.5,517.5,285,225">KD continuation</text>
+<rect x="445" y="597" width="87" height="22" rx="4" fill="#ffddb4" stroke="#955611" stroke-width="1.7" />
+<rect x="445" y="642" width="87" height="22" rx="4" fill="#ffddb4" stroke="#955611" stroke-width="1.7" />
+<path d="M 488.5 594 L 488.5 573" fill="none" stroke="#152a43" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 488.5 687 L 488.5 667" fill="none" stroke="#152a43" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<circle cx="488.5" cy="625" r="1.5" fill="#152a43" />
+<circle cx="488.5" cy="630" r="1.5" fill="#152a43" />
+<circle cx="488.5" cy="635" r="1.5" fill="#152a43" />
+<text id="label-8" x="488" y="719" font-size="30" font-weight="400" text-anchor="middle" data-box="355,684,265,47">ℒ = ℒ<tspan baseline-shift="sub" font-size="24">CE</tspan> + λℒ<tspan baseline-shift="sub" font-size="24">KD</tspan></text>
+<path d="M 276 459 C 294 456 303 443 303 425 L 303 342 Q 303 322 326 322 L 342 322" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 276 459 C 294 462 303 475 303 493 L 303 602 Q 303 621 326 621 L 342 621" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<text id="label-9" x="559" y="459" font-size="26" font-weight="400" text-anchor="middle">same <tspan font-style="italic">S</tspan><tspan baseline-shift="sub" font-size="24">0</tspan>, matched data</text>
+<text id="label-10" x="559" y="486" font-size="26" font-weight="400" text-anchor="middle">and optimization</text>
+<rect id="best-ce" x="693" y="226" width="185" height="190" rx="13" fill="#f5fbff" stroke="#194b7c" stroke-width="1.9" />
+<text id="label-11" x="785.5" y="259" font-size="28" font-weight="700" text-anchor="middle" data-box="695.5,228.5,180,185">best CE</text>
+<text id="label-12" x="785.5" y="288" font-size="28" font-weight="700" text-anchor="middle" data-box="695.5,228.5,180,185">checkpoint</text>
+<rect x="747" y="322" width="74" height="21" rx="4" fill="#b9d9ee" stroke="#225f8b" stroke-width="1.7" />
+<rect x="747" y="366" width="74" height="21" rx="4" fill="#b9d9ee" stroke="#225f8b" stroke-width="1.7" />
+<path d="M 784 319 L 784 298" fill="none" stroke="#152a43" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 784 410 L 784 390" fill="none" stroke="#152a43" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<circle cx="784" cy="349" r="1.5" fill="#152a43" />
+<circle cx="784" cy="354" r="1.5" fill="#152a43" />
+<circle cx="784" cy="359" r="1.5" fill="#152a43" />
+<rect id="best-kd" x="693" y="515" width="185" height="204" rx="13" fill="#fff7ed" stroke="#d27321" stroke-width="1.9" />
+<text id="label-13" x="785.5" y="551" font-size="28" font-weight="700" text-anchor="middle" data-box="695.5,517.5,180,199">best KD</text>
+<text id="label-14" x="785.5" y="580" font-size="28" font-weight="700" text-anchor="middle" data-box="695.5,517.5,180,199">checkpoint</text>
+<rect x="747" y="618" width="77" height="21" rx="4" fill="#ffddb4" stroke="#955611" stroke-width="1.7" />
+<rect x="747" y="662" width="77" height="21" rx="4" fill="#ffddb4" stroke="#955611" stroke-width="1.7" />
+<path d="M 785.5 615 L 785.5 594" fill="none" stroke="#152a43" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 785.5 706 L 785.5 686" fill="none" stroke="#152a43" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<circle cx="785.5" cy="645" r="1.5" fill="#152a43" />
+<circle cx="785.5" cy="650" r="1.5" fill="#152a43" />
+<circle cx="785.5" cy="655" r="1.5" fill="#152a43" />
+<path d="M 634 322 L 692 322" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 634 621 L 692 621" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<rect id="gain" x="920" y="374" width="317" height="224" rx="12" fill="#f8f8f9" stroke="#183f67" stroke-width="1.9" />
+<text id="label-15" x="1078.5" y="438" font-size="29" font-weight="700" text-anchor="middle" data-box="922,397,313,58">Gain = NLL<tspan baseline-shift="sub" font-size="24">CE</tspan> − NLL<tspan baseline-shift="sub" font-size="24">KD</tspan></text>
+<rect x="932" y="470" width="295" height="51" rx="10" fill="#eaf6ec" stroke="#75b888" stroke-width="1.5" />
+<text id="label-16" x="1079.5" y="504" font-size="26" font-weight="700" text-anchor="middle" style="fill:#086b32" data-box="934,475,291,42">Gain &gt; 0: beneficial KD</text>
+<rect x="945" y="530" width="269" height="51" rx="10" fill="#fff0f2" stroke="#ed8598" stroke-width="1.5" />
+<text id="label-17" x="1079.5" y="564" font-size="26" font-weight="700" text-anchor="middle" style="fill:#b52735" data-box="952,535,255,42">Gain &lt; 0: harmful KD</text>
+<path d="M 879 322 L 1060 322 Q 1078 322 1078 340 L 1078 373" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 879 650 L 1060 650 Q 1078 650 1078 632 L 1078 599" fill="none" stroke="#152a43" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow)" />
+<path d="M 1257 138 L 1257 828" fill="none" stroke="#9aa2ae" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="12 7" />
+<text id="label-18" x="1285" y="184" font-size="30" font-weight="700" text-anchor="start">Evidence map</text>
+<rect id="evidence-1" x="1280" y="212" width="450" height="137" rx="10" fill="#eaf4fe" stroke="#6fa8ed" stroke-width="1.6" />
+<circle cx="1317" cy="243" r="23" fill="#357eb9" />
+<text id="label-19" x="1317" y="254" font-size="31" font-weight="700" text-anchor="middle" style="fill:#ffffff" data-box="1282.5,214.5,365,132">1</text>
+<text id="label-20" x="1354" y="245" font-size="26" font-weight="700" text-anchor="start" data-box="1349.0,222.0,376,121.0">Replicated transfer outcomes</text>
+<text id="label-21" x="1354" y="272" font-size="26" font-weight="700" text-anchor="start" data-box="1349.0,222.0,376,121.0">across corpora</text>
+<text id="label-22" x="1354" y="305" font-size="26" font-weight="400" text-anchor="start" data-box="1349.0,222.0,376,121.0">PTB/WT2 positive, TinyStories</text>
+<text id="label-23" x="1354" y="331" font-size="26" font-weight="400" text-anchor="start" data-box="1349.0,222.0,376,121.0">negative</text>
+<rect id="evidence-2" x="1280" y="368" width="450" height="125" rx="10" fill="#f0f8f1" stroke="#74b78a" stroke-width="1.6" />
+<circle cx="1317" cy="399" r="23" fill="#39845e" />
+<text id="label-24" x="1317" y="410" font-size="31" font-weight="700" text-anchor="middle" style="fill:#ffffff" data-box="1282.5,370.5,365,120">2</text>
+<text id="label-25" x="1354" y="401" font-size="26" font-weight="700" text-anchor="start" data-box="1349.0,378.0,376,109.0">Teacher-state intervention</text>
+<text id="label-26" x="1354" y="440" font-size="26" font-weight="400" text-anchor="start" data-box="1349.0,378.0,376,109.0">same composition, opposite</text>
+<text id="label-27" x="1354" y="466" font-size="26" font-weight="400" text-anchor="start" data-box="1349.0,378.0,376,109.0">transfer sign</text>
+<rect id="evidence-3" x="1280" y="513" width="450" height="157" rx="10" fill="#fff7eb" stroke="#e7aa48" stroke-width="1.6" />
+<circle cx="1317" cy="544" r="23" fill="#c28a25" />
+<text id="label-28" x="1317" y="555" font-size="31" font-weight="700" text-anchor="middle" style="fill:#ffffff" data-box="1282.5,515.5,365,133">3</text>
+<text id="label-29" x="1354" y="541" font-size="26" font-weight="700" text-anchor="start" data-box="1349,519,376,129"><tspan x="1354" y="541">Weaker-teacher</tspan><tspan x="1354" y="571">counterexample</tspan></text>
+<text id="label-30" x="1354" y="601" font-size="26" font-weight="400" text-anchor="start" data-box="1349,519,376,147">lower held-out teacher likelihood</text>
+<text id="label-31" x="1354" y="628" font-size="26" font-weight="400" text-anchor="start" data-box="1349,519,376,147">does not preclude positive</text>
+<text id="label-32" x="1354" y="655" font-size="26" font-weight="400" text-anchor="start" data-box="1349,519,376,147">transfer</text>
+<rect id="evidence-4" x="1280" y="673" width="450" height="145" rx="10" fill="#f3eefc" stroke="#a78be3" stroke-width="1.6" />
+<circle cx="1317" cy="704" r="23" fill="#7051ab" />
+<text id="label-33" x="1317" y="715" font-size="31" font-weight="700" text-anchor="middle" style="fill:#ffffff" data-box="1282.5,675.5,365,140">4</text>
+<text id="label-34" x="1354" y="706" font-size="26" font-weight="700" text-anchor="start" data-box="1349.0,683.0,376,129.0">Control falsifications</text>
+<text id="label-35" x="1354" y="745" font-size="26" font-weight="400" text-anchor="start" data-box="1349.0,683.0,376,129.0">TT &gt; TG in the tested control;</text>
+<text id="label-36" x="1354" y="771" font-size="26" font-weight="400" text-anchor="start" data-box="1349.0,683.0,376,129.0">the tested local diagnostics</text>
+<text id="label-37" x="1354" y="797" font-size="26" font-weight="400" text-anchor="start" data-box="1349.0,683.0,376,129.0">are not reliable predictors</text>
+</svg>

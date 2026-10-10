@@ -1,0 +1,14 @@
+\begin{table*}[!t]
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+Seed & $S_0$ test & CE test & KD test & KD--CE validation\\
+\midrule
+42 & 1.622437 & 1.581269 & 1.688747 & 0.108394\\
+123 & 1.623954 & 1.581807 & 1.689246 & 0.108082\\
+456 & 1.624901 & 1.583515 & 1.690255 & 0.108040\\
+\bottomrule
+\end{tabular}
+\caption{TinyStories selected NLLs. All arms select epoch 10. Positive validation KD--CE differences agree with negative CE-relative test gains.}
+\label{tab:ts_endpoints}
+\end{table*}

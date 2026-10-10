@@ -1,0 +1,24 @@
+\section{Training Protocols and Important Amendments}\label{app:protocols}
+
+\subsection{Corpora and matched students}
+PTB and WikiText-2 use archived native splits; TinyStories uses a seed-42 98/2 train-derived split and the original validation split as test. PTB includes 42,068 nonempty training lines and 4,439 training chunks. TinyStories uses 300,000 training lines (67,081,279 pre-trim tokens; 262,036 chunks), 42,391 validation lines (9,440,302 tokens; 36,876 chunks), and 21,990 test lines (4,765,822 tokens; 18,616 chunks). Fixed 256-token chunks contribute positions 1--255 to evaluation; held-out targets do not enter training.
+
+Each primary seed prepares its own $S_0$ using 20 epochs, batch 32, learning rate $2\times10^{-4}$, weight decay 0.01, AMP, and validation-NLL selection. Preparation uses AdamW with the source implementation defaults and a fixed learning rate. Continuations reset AdamW and use 10 epochs, batch 32, learning rate $10^{-4}$, weight decay 0.01, 5\% linear warmup followed by cosine decay, AMP, clipping at 1, and $\tau=2$. Only $\lambda$ differs between CE (0) and KD (5). Forward KL averages over valid target tokens, including temperature-squared scaling. Settings were frozen before these manuscript changes.
+
+The common WikiText-2 subset comprises 512 validation chunks sampled without replacement using seed 20260920, then sorted (130,560 targets). Full-validation TT/TG metrics remain separate. Repeated J subset evaluations of 4.300644 and 4.300646 retain their original precision rather than being averaged together.
+
+\subsection{Teacher preparation and eligibility}
+Table~\ref{tab:teacher_training_protocol} records the teacher-training modes. J and TT have ten joint epochs; A has five fusion-weight-only epochs. The state intervention fixes deployed architecture and composition, not teacher training history. TT source Transformers have six layers, width 256, dropout 0.1, batch 32, learning rate $3\times10^{-4}$, and 20 preparation epochs, with seeds 42 and 123; both select epoch 12. TT joint training selects epoch 10. Its fusion learning rate differs from historical TG.
+\input{tables/teacher_training_protocol}
+
+Joint training changes 179 of 191 J/A state tensors. A reduced-data eligibility smoke had clip fraction 1 and AMP/nonfinite fraction 0.16. An authorized full-data one-epoch gate replaced it without changing the objective or clip threshold. J/A gate clip fractions were 0.234694 and 0.275510, both with AMP/nonfinite fraction 0.013605. A/J parameter-gradient ratios of 1.102792, 1.148522, and 1.093056 satisfy the registered interval $[0.5,2]$. Formal A first-epoch clip fractions were 0.666667, 0.503401, and 0.513605; maximum AMP/nonfinite fraction was 0.013605.
+
+T-only required a separate authorized eligibility amendment: the full-data gate clipped every update but retained finite parameter gradients, T/F ratios 1.3164, 1.2788, and 1.2324, and AMP/nonfinite fraction 0.013605. Formal training retained all settings. First epochs remained fully saturated; mean epoch clip fractions were 0.4990, 0.4605, and 0.4398, falling to approximately 0.0034 late in training. All select epoch 10. The permanent \texttt{CLIP\_SATURATION\_WARNING} limits interpretation of the F--T gap.
+
+TT student first-epoch clip fractions were 0.928571, 0.843537, and 0.874150; corresponding means over epochs were 0.170068, 0.137755, and 0.127551. Maximum AMP/nonfinite fraction was 0.013605. These trajectories are not strict optimization matches to TG.
+
+\subsection{TinyStories stability and accepted retry}
+All primary TinyStories CE and KD arms select epoch 10. CE mean clipping is 0.000391 in each seed; KD means are 0.236891, 0.283344, and 0.240090 (Table~\ref{tab:tinystories_optimization}). Maximum AMP/nonfinite fractions are 0.000488 for CE and 0.000611 for KD. Accepted endpoints are finite, and KD is not persistently fully clip-saturated.
+
+One seed-456 attempt was interrupted in epoch 2 because of an infrastructure power cap and excluded before any final endpoint existed. The authorized completed retry restarted from identical $S_0$ with a fresh optimizer and unchanged teacher, seed, data, objective, budget, and selection. Only the completed retry contributes to results. Experiments used RTX 3090 GPUs; detailed aggregate compute accounting is unavailable and is not inferred here.
+\input{tables/tinystories_optimization}

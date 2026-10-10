@@ -1,0 +1,14 @@
+\section{Full Per-Seed Results}\label{app:per-seed}
+
+Table~\ref{tab:per_seed_gains} gives paired test gains for the confirmatory families. Gains derive from archived NLL, not logarithms of rounded PPL. All WikiText-2 arms within a seed share its CE comparator, and J/TG is one reused endpoint. Mean CE/KD test NLLs are 4.082352/3.937415 for PTB, 4.276364/4.120699 for WikiText-2, and 1.582197/1.689416 for TinyStories. Tables~\ref{tab:ptb_endpoints}, \ref{tab:wt2_endpoints}, and~\ref{tab:ts_endpoints} report selected endpoints.
+\input{tables/per_seed_gains}
+\input{tables/ptb_endpoints}
+\input{tables/wt2_endpoints}
+\input{tables/tinystories_endpoints}
+
+The G teacher residual advantages over the validation-selected CE endpoints on the common subset are $-0.266520$, $-0.253492$, and $-0.251006$, while test gains are $+0.046771$, $+0.033598$, and $+0.042604$. The reference is CE, not $S_0$. Teacher likelihood and gains have different held-out scopes; these seeds do not independently replicate teacher training.
+
+Teacher-state contrast $Q$ is 0.184895, 0.182699, and 0.182364 for seeds 42, 123, and 456, averaging $0.183319\pm0.001375$. Source means and sample SDs are F $0.155665\pm0.007692$, T $0.134868\pm0.008906$, and G $0.040991\pm0.006733$. F--T and F--G differences are $0.020797\pm0.001214$ and $0.114674\pm0.001001$, respectively. Teacher-source subset NLLs are 4.300646, 4.445647, and 4.652064. Composition changes also change quality.
+
+On full validation, TG/TT teacher NLLs are 4.303697/4.293589; branch NLLs are 4.451680/4.655020 for TG and 4.406160/4.422151 for TT. TG has 37,749,633 parameters, TT 35,340,801. Their KD gains are $0.155665\pm0.007692$ and $0.168125\pm0.008948$. The paired $H$ mean is $-0.012460\pm0.001348$, all three negative. Table~\ref{tab:branch_comparison} keeps full-validation branch metrics separate from the subset intervention. Higher TG disagreement does not yield better transfer, but quality, count, and history confounds prevent a causal architecture or diversity comparison.
+\input{tables/branch_comparison}

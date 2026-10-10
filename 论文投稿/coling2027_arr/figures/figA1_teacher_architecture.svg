@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="6.8in" height="2.798647in" viewBox="0 0 1774 730" role="img" aria-labelledby="figure-title figure-description">
+<title id="figure-title">Teacher architecture</title>
+<desc id="figure-description">Corrected causal Grassmann processing. Local direction z_(t−Δ) to z_t; normalized Plücker coordinates, geometric projection, valid-window mean, feature-dependent gated mixing and LM head. Generic late-logit fusion retains free alpha.</desc>
+<style>text{font-family:"Liberation Sans",Arial,Helvetica,sans-serif;fill:#0b1c35}</style>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L9 5L0 9Z" fill="#152a43"/></marker></defs>
+<rect id="white-background" width="1774" height="730" fill="white"/>
+<rect id="input" x="23" y="60" width="175" height="630" rx="10" fill="#f5f6f7" stroke="#919aa5" stroke-width="1.8"/>
+<text id="label-1" x="110" y="103" font-size="28" font-weight="700" text-anchor="middle">Input tokens</text>
+<text id="label-2" x="110" y="143" font-size="32" font-weight="400" text-anchor="middle">x<tspan baseline-shift="sub" font-size="24">1…L</tspan></text>
+<rect id="token-1" x="65" y="200" width="90" height="58" rx="10" fill="#f3f4f6" stroke="#aeb5c0" stroke-width="1.8"/>
+<text id="label-3" x="110" y="239" font-size="32" font-weight="400" text-anchor="middle">x<tspan baseline-shift="sub" font-size="24">1</tspan></text>
+<rect id="token-2" x="65" y="300" width="90" height="58" rx="10" fill="#f3f4f6" stroke="#aeb5c0" stroke-width="1.8"/>
+<text id="label-4" x="110" y="339" font-size="32" font-weight="400" text-anchor="middle">x<tspan baseline-shift="sub" font-size="24">2</tspan></text>
+<rect id="token-3" x="65" y="400" width="90" height="58" rx="10" fill="#f3f4f6" stroke="#aeb5c0" stroke-width="1.8"/>
+<text id="label-5" x="110" y="439" font-size="32" font-weight="400" text-anchor="middle">x<tspan baseline-shift="sub" font-size="24">3</tspan></text>
+<rect id="token-L" x="65" y="600" width="90" height="58" rx="10" fill="#f3f4f6" stroke="#aeb5c0" stroke-width="1.8"/>
+<text id="label-6" x="110" y="639" font-size="32" font-weight="400" text-anchor="middle">x<tspan baseline-shift="sub" font-size="24">L</tspan></text>
+<text id="label-7" x="110" y="537" font-size="32" font-weight="400" text-anchor="middle">⋮</text>
+<rect id="transformer-branch" x="270" y="55" width="950" height="182" rx="10" fill="#f0f7ff" stroke="#368bea" stroke-width="1.8"/>
+<text id="label-8" x="560" y="96" font-size="32" font-weight="700" text-anchor="middle">Transformer branch (T)</text>
+<rect id="token-embedding-t" x="295" y="125" width="150" height="88" rx="10" fill="#ffe8e9" stroke="#368bea" stroke-width="1.8"/>
+<text id="label-9" x="370.0" y="160" font-size="28" font-weight="400" text-anchor="middle" data-box="298,128,144,82">Token</text>
+<text id="label-10" x="370.0" y="193" font-size="28" font-weight="400" text-anchor="middle" data-box="298,128,144,82">Embedding</text>
+<rect id="transformer-blocks" x="480" y="125" width="260" height="88" rx="10" fill="#e1effe" stroke="#368bea" stroke-width="1.8"/>
+<text id="label-11" x="610.0" y="160" font-size="28" font-weight="400" text-anchor="middle" data-box="483,128,254,82">Transformer Blocks</text>
+<text id="label-12" x="610.0" y="193" font-size="32" font-weight="400" text-anchor="middle" data-box="483,128,254,82">(× N<tspan baseline-shift="sub" font-size="24">T</tspan>)</text>
+<rect id="layer-norm" x="775" y="125" width="185" height="88" rx="10" fill="#deefff" stroke="#368bea" stroke-width="1.8"/>
+<text id="label-13" x="867.5" y="177" font-size="28" font-weight="400" text-anchor="middle" data-box="778,128,179,82">Layer Norm</text>
+<rect id="lm-head-t" x="995" y="125" width="200" height="88" rx="10" fill="#eae3fa" stroke="#a188e8" stroke-width="1.8"/>
+<text id="label-14" x="1095.0" y="177" font-size="28" font-weight="400" text-anchor="middle" data-box="998,128,194,82">LM Head</text>
+<path d="M446 169H478" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M741 169H773" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M961 169H993" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M1196 169H1238" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect id="t-logits" x="1240" y="123" width="130" height="92" rx="10" fill="#f0f7ff" stroke="#368bea" stroke-width="1.8"/>
+<text id="label-15" x="1305" y="158" font-size="28" font-weight="700" text-anchor="middle">T logits</text>
+<text id="label-16" x="1305" y="197" font-size="32" font-weight="400" text-anchor="middle">z<tspan baseline-shift="super" font-size="24">(T)</tspan></text>
+<rect id="grassmann-branch" x="270" y="260" width="1120" height="450" rx="10" fill="#f5faf6" stroke="#5aab7c" stroke-width="1.8"/>
+<text id="label-17" x="562" y="302" font-size="32" font-weight="700" text-anchor="middle">Grassmann branch (G)</text>
+<rect id="plucker-processing-group" x="645" y="315" width="725" height="203" rx="11" fill="none" stroke="#84bb92" stroke-width="1.4" stroke-dasharray="8 7"/>
+<text id="label-18" x="1007" y="342" font-size="28" font-weight="400" text-anchor="middle">2D subspace &amp; Plücker processing</text>
+<rect id="token-embedding-g" x="295" y="356" width="150" height="150" rx="10" fill="#ffe8e9" stroke="#f17779" stroke-width="1.8"/>
+<text id="label-19" x="370.0" y="411" font-size="28" font-weight="400" text-anchor="middle" data-box="298,359,144,144">Token</text>
+<text id="label-20" x="370.0" y="447" font-size="28" font-weight="400" text-anchor="middle" data-box="298,359,144,144">Embedding</text>
+<rect id="linear-projection" x="475" y="356" width="150" height="150" rx="10" fill="#eff5f5" stroke="#368bea" stroke-width="1.8"/>
+<text id="label-21" x="550.0" y="397" font-size="28" font-weight="400" text-anchor="middle" data-box="478,359,144,144">Linear</text>
+<text id="label-22" x="550.0" y="431" font-size="28" font-weight="400" text-anchor="middle" data-box="478,359,144,144">projection</text>
+<text id="label-23" x="550.0" y="474" font-size="32" font-weight="400" text-anchor="middle" data-box="478,359,144,144">W<tspan baseline-shift="sub" font-size="24">red</tspan></text>
+<rect id="local-pairs" x="655" y="356" width="200" height="150" rx="10" fill="#f3faff" stroke="#368bea" stroke-width="1.8"/>
+<text id="label-24" x="755.0" y="390" font-size="28" font-weight="400" text-anchor="middle" data-box="658,359,194,144">Local pairs</text>
+<text id="label-25" x="755.0" y="425" font-size="32" font-weight="400" text-anchor="middle" data-box="658,359,194,144">(z<tspan baseline-shift="sub" font-size="24">t</tspan>, z<tspan baseline-shift="sub" font-size="24">t−Δ</tspan>)</text>
+<text id="label-26" x="755.0" y="461" font-size="32" font-weight="400" text-anchor="middle" data-box="658,359,194,144">z<tspan baseline-shift="sub" font-size="24">t−Δ</tspan> → z<tspan baseline-shift="sub" font-size="24">t</tspan></text>
+<text id="label-27" x="755.0" y="494" font-size="28" font-weight="400" text-anchor="middle" data-box="658,359,194,144">Δ ∈ {1, 2, 4}</text>
+<rect id="plucker-coordinates" x="885" y="356" width="170" height="150" rx="10" fill="#f3faff" stroke="#368bea" stroke-width="1.8"/>
+<text id="label-28" x="970.0" y="397" font-size="28" font-weight="400" text-anchor="middle" data-box="888,359,164,144">Plücker</text>
+<text id="label-29" x="970.0" y="431" font-size="28" font-weight="400" text-anchor="middle" data-box="888,359,164,144">coordinates</text>
+<text id="label-30" x="970.0" y="474" font-size="32" font-weight="400" text-anchor="middle" data-box="888,359,164,144">p<tspan baseline-shift="sub" font-size="24">ij</tspan></text>
+<rect id="normalization" x="1085" y="356" width="270" height="150" rx="10" fill="#f3faff" stroke="#368bea" stroke-width="1.8"/>
+<text id="label-31" x="1220" y="391" font-size="28" font-weight="400" text-anchor="middle">Normalization</text>
+<text id="label-32" x="1127" y="449" font-size="32" font-weight="400" text-anchor="middle">p̂ =</text>
+<text id="label-33" x="1240" y="430" font-size="32" font-weight="400" text-anchor="middle">p</text>
+<path d="M1174 439H1333" stroke="#0b1c35" stroke-width="1.5"/>
+<text id="label-34" x="1254" y="477" font-size="32" font-weight="400" text-anchor="middle">max(‖p‖<tspan baseline-shift="sub" font-size="24">2</tspan>, ε)</text>
+<path d="M446 431H473" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M626 431H653" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M856 431H883" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M1056 431H1083" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M1220 507V545H385V578" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect id="geometric-projection" x="295" y="580" width="180" height="105" rx="10" fill="#f3faff" stroke="#85b897" stroke-width="1.8"/>
+<text id="label-35" x="385.0" y="620" font-size="28" font-weight="400" text-anchor="middle" data-box="298,583,174,99">Geometric</text>
+<text id="label-36" x="385.0" y="658" font-size="28" font-weight="400" text-anchor="middle" data-box="298,583,174,99">projection</text>
+<rect id="window-mean" x="510" y="580" width="170" height="105" rx="10" fill="#ebf6ec" stroke="#85b897" stroke-width="1.8"/>
+<text id="label-37" x="595.0" y="610" font-size="28" font-weight="400" text-anchor="middle" data-box="513,583,164,99">Window</text>
+<text id="label-38" x="595.0" y="642" font-size="28" font-weight="400" text-anchor="middle" data-box="513,583,164,99">mean</text>
+<text id="label-39" x="595.0" y="674" font-size="28" font-weight="400" text-anchor="middle" data-box="513,583,164,99">valid Δ</text>
+<rect id="gated-mixing" x="715" y="580" width="170" height="105" rx="10" fill="#ebf6ec" stroke="#85b897" stroke-width="1.8"/>
+<text id="label-40" x="800.0" y="620" font-size="28" font-weight="400" text-anchor="middle" data-box="718,583,164,99">Gated</text>
+<text id="label-41" x="800.0" y="658" font-size="28" font-weight="400" text-anchor="middle" data-box="718,583,164,99">mixing</text>
+<rect id="lm-head-g" x="920" y="580" width="170" height="105" rx="10" fill="#eee7fc" stroke="#a188e8" stroke-width="1.8"/>
+<text id="label-42" x="1005.0" y="643" font-size="28" font-weight="400" text-anchor="middle" data-box="923,583,164,99">LM Head</text>
+<rect id="g-logits" x="1125" y="580" width="220" height="105" rx="10" fill="#f3faf4" stroke="#85b897" stroke-width="1.8"/>
+<text id="label-43" x="1235.0" y="620" font-size="28" font-weight="400" text-anchor="middle" data-box="1128,583,214,99">G logits</text>
+<text id="label-44" x="1235.0" y="658" font-size="32" font-weight="400" text-anchor="middle" data-box="1128,583,214,99">z<tspan baseline-shift="super" font-size="24">(G)</tspan></text>
+<path d="M476 631H508" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M681 631H713" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M886 631H918" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M1091 631H1123" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M199 375H230V169H293" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M230 375V431H293" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect id="late-fusion" x="1430" y="298" width="320" height="150" rx="10" fill="#fff7df" stroke="#c9a843" stroke-width="1.8"/>
+<text id="label-45" x="1590" y="339" font-size="30" font-weight="700" text-anchor="middle">Late logit fusion</text>
+<text id="label-46" x="1590" y="402" font-size="32" font-weight="400" text-anchor="middle" data-box="1434,355,312,85">z = αz<tspan baseline-shift="super" font-size="24">(T)</tspan> + (1 − α)z<tspan baseline-shift="super" font-size="24">(G)</tspan></text>
+<path d="M1371 169H1410V375H1428" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<path d="M1346 631H1410V375" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect id="teacher-logits" x="1465" y="500" width="250" height="112" rx="10" fill="#f5f6f7" stroke="#919aa5" stroke-width="1.8"/>
+<text id="label-47" x="1590" y="543" font-size="28" font-weight="700" text-anchor="middle">Teacher logits</text>
+<text id="label-48" x="1590" y="585" font-size="32" font-weight="400" text-anchor="middle">z</text>
+<path d="M1590 449V498" fill="none" stroke="#152a43" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+</svg>

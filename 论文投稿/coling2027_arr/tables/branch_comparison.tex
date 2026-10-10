@@ -1,0 +1,13 @@
+\begin{table*}[!t]
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+Teacher & Full-validation NLL & Branch JSD & Agreement & Fusion gain\\
+\midrule
+TG & 4.303697 & 0.182087 & 0.507034 & 0.147983\\
+TT & 4.293589 & 0.099793 & 0.630170 & 0.112570\\
+\bottomrule
+\end{tabular}
+\caption{Full-validation teacher comparison at $\alpha=0.5$. Fusion gain is NLL improvement over the better branch. Quality, parameter counts, and training histories differ. These metrics are not pooled with the 512-chunk state/source subset.}
+\label{tab:branch_comparison}
+\end{table*}

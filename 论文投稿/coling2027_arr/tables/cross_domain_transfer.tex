@@ -1,0 +1,14 @@
+\begin{table}[t]
+\centering
+\begin{tabular}{lrr}
+\toprule
+Dataset & Gain (mean $\pm$ SD) & Signs\\
+\midrule
+PTB & $+0.144937\pm0.003938$ & 3/3 $+$\\
+WikiText-2 & $+0.155665\pm0.007692$ & 3/3 $+$\\
+TinyStories & $-0.107219\pm0.000415$ & 3/3 $-$\\
+\bottomrule
+\end{tabular}
+\caption{Paired test-NLL gains from three independent students per corpus; sample SD, $\lambda=5$, $\tau=2$. Both arms select by validation NLL.}
+\label{tab:cross_domain_transfer}
+\end{table}

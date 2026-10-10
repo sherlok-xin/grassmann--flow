@@ -1,0 +1,7 @@
+\section{External-Validity Stress Test}\label{sec:external-validity}
+
+On a fixed FineWeb-Edu subset~\citep{penedo2024fineweb}, a frozen adapted SmolLM2-360M teacher supervises three independently adapted SmolLM2-135M students~\citep{benallal2025smollm2}. Gains are $-0.013550\pm0.003542$ at $\lambda=1$ and $-0.043924\pm0.004017$ at $\lambda=5$, both 3/3 negative with agreeing validation/test directions despite better teacher likelihood.
+
+However, allowing $S_0$ as a step-0 validation candidate selects $S_0$ for all nine CE/KD continuations. This diagnostic does not replace primary trained-checkpoint endpoints; it shows that further CE itself is unnecessary in this regime. KD5 retains \texttt{CLIP\_SATURATION\_WARNING}; KD1 also clips frequently. Neither observation establishes clipping as the cause of degradation.
+
+A CE-only headroom control uses a fixed early student and disjoint additional targets. Its best validation improvement, $+0.004849$, fails the preregistered 0.01 gate. Conditional KD and new test evaluation were therefore not performed. These results remain a bounded stress test, not clean modern-scale confirmation of harmful KD (Appendix~\ref{app:diagnostics-modern}).

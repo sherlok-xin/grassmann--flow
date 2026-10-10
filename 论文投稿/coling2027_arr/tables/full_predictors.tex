@@ -1,0 +1,18 @@
+\begin{table*}[!t]\centering
+\begin{tabular}{lrrr}
+\toprule
+Predictor & AUROC & Sign accuracy & $\rho$ \\
+\midrule
+Teacher residual & 0.711111 & 0.523810 & 0.437662 \\
+Teacher val NLL & 0.500000 & -- & 0.235921 \\
+KL magnitude & 0.722222 & -- & 0.450649 \\
+KD grad norm & 0.500000 & -- & -0.118182 \\
+Train CE-KD cosine & 0.477778 & 0.714286 & -0.024675 \\
+Validation dot a & 0.644444 & 0.571429 & 0.249351 \\
+Validation cosine & 0.644444 & 0.571429 & 0.285714 \\
+Quadratic gain & 0.644444 & 0.571429 & 0.249351 \\
+Virtual nominal gain & 0.700000 & 0.571429 & 0.427273 \\
+\bottomrule
+\end{tabular}
+\caption{Full seed-level retrospective predictor comparison over 21 dependent conditions. A dash denotes a metric not defined for that predictor; it does not indicate zero.}\label{tab:full_predictors}
+\end{table*}

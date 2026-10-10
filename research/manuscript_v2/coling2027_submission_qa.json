@@ -1,0 +1,437 @@
+{
+  "date": "2026-10-10",
+  "input_commit": "63d7eb72c01d26a22e921a73246ecc9944df9a3a",
+  "scientific_and_source_audit": {
+    "status": "PASS",
+    "input_commit": "63d7eb72c01d26a22e921a73246ecc9944df9a3a",
+    "activity": "Read-only document, archived record, PDF, and preservation checks. No model access or endpoint evaluation.",
+    "original_audit": "PASS (62/62)",
+    "submission_numeric_checks": 62,
+    "numeric_check_inventory": [
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_ce_nll_mean",
+        "value": "4.082352"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_kd_nll_mean",
+        "value": "3.937415"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_mean",
+        "value": "0.144937"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_sample_sd",
+        "value": "0.003938"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_ce_nll_mean",
+        "value": "4.276364"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_kd_nll_mean",
+        "value": "4.120699"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_mean",
+        "value": "0.155665"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_sample_sd",
+        "value": "0.007692"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_ce_nll_mean",
+        "value": "1.582197"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_kd_nll_mean",
+        "value": "1.689416"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_mean",
+        "value": "-0.107219"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_sample_sd",
+        "value": "0.000415"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "teacher_validation_nll",
+        "value": "4.300644"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "mean_gain_or_contrast",
+        "value": "0.155665"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "sample_sd",
+        "value": "0.007692"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "teacher_validation_nll",
+        "value": "6.376220"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "mean_gain_or_contrast",
+        "value": "-0.027654"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "sample_sd",
+        "value": "0.006822"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "mean_gain_or_contrast",
+        "value": "0.183319"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "sample_sd",
+        "value": "0.001375"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_validation_subset_nll",
+        "value": "4.652064"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_residual_vs_c0",
+        "value": "-0.266520"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "test_gain",
+        "value": "0.046771"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_validation_subset_nll",
+        "value": "4.652064"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_residual_vs_c0",
+        "value": "-0.253492"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "test_gain",
+        "value": "0.033598"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_validation_subset_nll",
+        "value": "4.652064"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_residual_vs_c0",
+        "value": "-0.251006"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "test_gain",
+        "value": "0.042604"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_mean",
+        "value": "0.155665"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_sample_sd",
+        "value": "0.007692"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_mean",
+        "value": "0.134868"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_sample_sd",
+        "value": "0.008906"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_mean",
+        "value": "0.040991"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_sample_sd",
+        "value": "0.006733"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "paired_contrast_mean",
+        "value": "0.020797"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "paired_contrast_sample_sd",
+        "value": "0.001214"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "paired_contrast_mean",
+        "value": "0.114674"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "paired_contrast_sample_sd",
+        "value": "0.001001"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "validation_nll",
+        "value": "4.303697"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "branch_jsd",
+        "value": "0.182087"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "top1_agreement",
+        "value": "0.507034"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "fusion_gain",
+        "value": "0.147983"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "kd_gain_mean",
+        "value": "0.155665"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "kd_gain_sample_sd",
+        "value": "0.007692"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "validation_nll",
+        "value": "4.293589"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "branch_jsd",
+        "value": "0.099793"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "top1_agreement",
+        "value": "0.630170"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "fusion_gain",
+        "value": "0.112570"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "kd_gain_mean",
+        "value": "0.168125"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "kd_gain_sample_sd",
+        "value": "0.008948"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "H_mean",
+        "value": "-0.012460"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "H_sample_sd",
+        "value": "0.001348"
+      },
+      {
+        "table": "modern_stress",
+        "field": "mean_gain",
+        "value": "-0.013550"
+      },
+      {
+        "table": "modern_stress",
+        "field": "sample_sd",
+        "value": "0.003542"
+      },
+      {
+        "table": "modern_stress",
+        "field": "mean_gain",
+        "value": "-0.043924"
+      },
+      {
+        "table": "modern_stress",
+        "field": "sample_sd",
+        "value": "0.004017"
+      },
+      {
+        "table": "modern_ce_gate",
+        "field": "CE_improvement_validation",
+        "value": "0.004214"
+      },
+      {
+        "table": "modern_ce_gate",
+        "field": "CE_improvement_validation",
+        "value": "0.004849"
+      },
+      {
+        "table": "modern_ce_gate",
+        "field": "CE_improvement_validation",
+        "value": "0.003941"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "frozen_mean",
+        "value": "0.040991"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "frozen_sample_sd",
+        "value": "0.006733"
+      }
+    ],
+    "archival_files_byte_preserved": 54,
+    "official_template_commit": "d5adc823ff0f80f98c80405ca0ab66c68e684409",
+    "style_hashes": {
+      "acl.sty": "19dfeddc2c0e448f3926a0bef048a9db3f3611b46265b760caabd7ada4f361de",
+      "acl_natbib.bst": "6fbb306202290f4b68e74ac1460a8b27398500cb6dfeb4492e74c457eae7cd1e"
+    },
+    "abstract_words": 185,
+    "main_content_last_page": 7,
+    "pdf_pages": 14,
+    "limitations_page": 7,
+    "figure_pages": {
+      "fig:paired_protocol": 2,
+      "fig:cross_domain_gain": 5,
+      "fig:teacher_quality": 5,
+      "fig:ensemble_control": 6,
+      "fig:teacher_architecture": 10
+    },
+    "verified_reference_count": 24,
+    "bib_identical_to_archive": true,
+    "anonymity_identity_checks": "PASS",
+    "embedded_raster_images": 0,
+    "minimum_figure_text_or_script_pt_at_actual_acl_width": {
+      "fig1_paired_protocol": 6.213,
+      "fig2_cross_domain_gain": 7.133,
+      "fig3_teacher_quality": 6.52,
+      "fig4_ensemble_control": 6.633,
+      "figA1_teacher_architecture": 6.136
+    },
+    "underfull_hbox_notices": 20,
+    "underfull_vbox_notices": 6,
+    "pdf_sha256": "d64266cd2b65a2d25bdb3b9b4d114ded111fec7581d538345b9a05df23555090",
+    "limits": "Automated checks are not a scientific acceptance guarantee; visual page inspection and human submission actions remain distinct."
+  },
+  "visual_and_pubcheck_review_context": {
+    "status": "PASS",
+    "date": "2026-10-10",
+    "official_pubcheck_raw_counts": {
+      "Error.MARGIN": 890
+    },
+    "review_marker_classification": {
+      "left": 455,
+      "right": 421,
+      "bottom_page_number": 14
+    },
+    "non_review_margin_findings": [],
+    "independent_all_body_word_bounds": "PASS (2.4 pt standard microtype punctuation allowance)",
+    "standard_microtype_protrusions": [
+      {
+        "page": 11,
+        "text": "+0.033598,and+0.042604.",
+        "x0": 68.75,
+        "explanation": "Standard microtype leading plus-sign protrusion, not an upstream reported finding."
+      },
+      {
+        "page": 13,
+        "text": "+0.007918±0.004338).",
+        "x0": 68.75,
+        "explanation": "Standard microtype leading plus-sign protrusion, not an upstream reported finding."
+      }
+    ],
+    "vector_drawing_bounds": "PASS",
+    "adjusted_figure_geometry": {
+      "fig1_paired_protocol": {
+        "text_nodes": 37,
+        "bounds_violations": [],
+        "text_overlaps": []
+      },
+      "figA1_teacher_architecture": {
+        "text_nodes": 48,
+        "bounds_violations": [],
+        "text_overlaps": []
+      }
+    },
+    "interpretation": "Official raw check is NOT a clean pass: all 890 margin findings correspond to official review rulers or page numbers. No submission PDF or official checker was altered."
+  },
+  "official_pubcheck_commit": "f626497051df8689e990fac36ba9f42cd630e31c",
+  "pubcheck_warnings": 0,
+  "pubcheck_name_check_disabled": true,
+  "pubcheck_name_check_disabled_reason": "Avoid external PDF upload; not claimed as an upstream reference/name pass.",
+  "manual_final_visual_review": {
+    "pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "render_dpi": 110,
+    "status": "PASS: no clipped title/labels, equation or table overflow, collisions, identifying project text, or orphan headings. Uneven appendix whitespace recorded."
+  },
+  "portable_source_copy_build": {
+    "status": "PASS",
+    "pdf_pages": 14,
+    "command": "make (default build/ directory in stand-alone source copy)"
+  },
+  "no_new_experiments": true,
+  "output_pdf": "outputs/coling2027_arr/main.pdf",
+  "preview_directory": "outputs/coling2027_arr/pages",
+  "human_submission_actions_completed": false,
+  "remaining_risks": [
+    "Empirical novelty/evidence scope requires lead approval.",
+    "Some normal figure labels are approximately 6.5-6.7pt; print-scale approval advised.",
+    "Public project history can be searchable despite anonymous PDF.",
+    "OpenReview profiles, service registration, Responsible NLP checklist, licensing/release declarations, and upload remain human responsibilities."
+  ],
+  "stop": true
+}

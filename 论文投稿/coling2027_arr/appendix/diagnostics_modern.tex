@@ -1,0 +1,38 @@
+\section{Diagnostic and Modern Stress-Test Details}\label{app:diagnostics-modern}
+
+\subsection{Branch disagreement and retrospective probes}
+On the common validation subset, J branch NLLs are 4.445648 and 4.652064, JSD 0.181288, agreement 0.508395, and fusion gain 0.145003 over the better branch. A has branch NLLs 6.540640 and 6.696787, JSD 0.176641, agreement 0.543719, and fusion gain 0.164420. Quality changes substantially, without a uniformly favorable shift in disagreement or fusion gain.
+
+Token-level disagreement analysis uses one selected CE/KD pair per corpus, not three model replications. Adding JSD beyond CE token difficulty gives incremental gradient-conflict AUROC $-0.000323$ on PTB and $+0.010910$ on TinyStories; incremental endpoint $R^2$ is $+0.000533$ and $+0.003061$. Token/chunk bootstrap uncertainty does not create independent model seeds. These small increments do not establish disagreement as a strong transfer mechanism.
+
+Local diagnostics span seven families and 21 dependent seed-level conditions. Training probes use the first 32 chunks, with FP32 microbatches of two over all student parameters. Calibration seeds 314159, 271828, and 161803 each select two disjoint validation chunks, giving 63 rows. Scores were frozen before endpoint merging; no test data entered probes and no updates were retained.
+
+At $S_0$, let $g=\nabla\mathcal L_{\mathrm{CE}}$, $k=\nabla\mathcal L_{\mathrm{distill}}$, $v=\nabla\mathcal L_{\mathrm{val}}$, and $H_{\mathrm{val}}=\nabla^2\mathcal L_{\mathrm{val}}$. Define $a=v^\top k$, $b=g^\top H_{\mathrm{val}}k$, and $c=k^\top H_{\mathrm{val}}k$. The nominal Taylor diagnostic is
+\begin{equation}
+\widehat G_{\mathrm{local}}(\lambda)=\eta\lambda a-\eta^2\lambda b-\tfrac12\eta^2\lambda^2c,
+\end{equation}
+with $\eta=10^{-4}$. It is not a bound on the selected test endpoint. All gradients and HVPs are finite; first-/second-order signs agree in 63/63 rows, with seed-level AUROC 0.644444, sign accuracy 0.571429, and family-mean AUROC 0.600000. Both miss positive WikiText-2 J, G, and TT families. Only 11/21 conditions have stable signs across calibration subsets. Median absolute curvature correction is $2.73\times10^{-7}$ (0.52\% of the first-order magnitude) and never changes a sign.
+
+The literal first scheduled step has zero learning rate and is a no-op, not a safety result. A nominal-rate clipped AdamW virtual diagnostic has AUROC 0.700000 and accuracy 0.571429; it misses 9/15 beneficial outcomes and has stable signs in 10/21 conditions. Table~\ref{tab:full_predictors} reports pooled retrospective scores. Dependence and small coverage preclude a universal selection rule or an adaptive-method comparison.
+\input{tables/full_predictors}
+
+\subsection{Modern continuation and checkpoint eligibility}
+SmolLM2 base student/teacher models have 134,515,008/361,821,120 parameters and shared vocabulary 49,152. The 360M teacher is adapted once, then frozen. Student seeds independently adapt one pretrained 135M base, not independently pretrained models. FP32 weights use BF16 autocast and FP32 losses without GradScaler. AdamW uses learning rate $5\times10^{-5}$, weight decay 0.01, betas $(0.9,0.95)$, epsilon $10^{-8}$, 5\% warmup, and cosine decay. Sequence length is 256, batch 32, microbatch 4, clip threshold 1, and $\tau=2$. Each teacher adaptation, student preparation, and continuation receives 10M targets (1,221 updates).
+
+FineWeb-Edu uses the first shard of the pinned \texttt{sample-10BT} revision. Deterministic document-ID hashing and exact-text deduplication produce disjoint training, validation, and test splits with 20M, 1M, and 1M encoded tokens; held-out splits evaluate 999,999 targets each. Primary validation candidates are steps 256, 512, 768, 1024, and 1221, excluding $S_0$. Test follows selection. Table~\ref{tab:modern_endpoints} reports those endpoints; Table~\ref{tab:modern_optimization} gives the selected steps and recorded telemetry.
+
+Teacher validation/test NLLs are 2.747486/2.726017, better than every $S_0$. CE test NLL nevertheless increases from $S_0$ by 0.005562, 0.005268, and 0.012924 (mean $+0.007918\pm0.004338$). Allowing step 0 selects $S_0$ in all nine CE/KD arms and yields diagnostic CE-relative gain zero. This does not replace the trained-checkpoint primary comparison. Exact pretraining overlap remains unknown.
+\input{tables/modern_endpoints}
+\input{tables/modern_optimization}
+
+Initial unweighted KD/CE gradient ratios are 2.150561, 2.485828, and 2.462981. KD1 clip fractions are 0.850123, 0.854218, and 0.798526; KD5 clips every update. All recorded overflow/nonfinite fractions are zero. KD5 retains \texttt{CLIP\_SATURATION\_WARNING}. The seed-456 CE preclip norm reaches 86.482155 at step 711, after its selected step 256. Its cause and trajectory impact are unknown; the run remains included with \texttt{CE456\_GRADIENT\_SPIKE\_WARNING}.
+
+\subsection{Failed disjoint-continuation headroom gate}
+The CE-only control fixes the seed-42 preparation checkpoint at step 256, after 2,097,152 targets, rather than selecting $S_0$ by validation. Its frozen manifest excludes 8,192 consumed target chunks and supplies 31,250 new chunks (8M targets). Boundary context may be shared, but prediction targets are excluded. The manifest and order were fixed before continuation endpoints were observed.
+
+Candidates $5\times10^{-6}$, $10^{-5}$, and $2\times10^{-5}$ retain the optimizer family, scheduler, batch, sequence length, clipping, and budget. Validation selection includes steps 0, 256, 512, 768, and 977, with earlier-checkpoint tie breaking. All select step 977. Improvements are 0.004214, 0.004849, and 0.003941, below the 0.01 gate (Table~\ref{tab:modern_ce_gate}); clip fractions are 0.060389, 0.079836, and 0.082907 with zero nonfinite fraction. The highest-rate arm has a finite norm spike 14.602655 at step 656 of unknown cause and impact.
+
+The frozen decision is
+\texttt{STOP\_MODERN\_CONTINUATION\_}\allowbreak\texttt{NOT\_ESTABLISHED}.
+Conditional KD at $\lambda=0.25$ or 1, new test endpoints, and initial KD/CE gradient ratios were not measured. They are missing by design, not zero. The stress test does not establish that FineWeb-Edu causes negative transfer, better teachers generally harm KD, or all modern-model KD fails.
+\input{tables/modern_ce_gate}

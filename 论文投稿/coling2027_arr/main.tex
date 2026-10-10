@@ -1,0 +1,44 @@
+\documentclass[11pt]{article}
+\usepackage[review]{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,booktabs}
+\hypersetup{pdfauthor={},pdftitle={When Does Knowledge Distillation Transfer? Controlled Evidence from Warm-Start Language Modeling}}
+
+\title{When Does Knowledge Distillation Transfer? Controlled Evidence from Warm-Start Language Modeling}
+\author{Anonymous authors}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Knowledge distillation (KD) is commonly evaluated by distilled-student performance, yet a basic question remains: given an already trained student, does teacher supervision improve over maximum-likelihood continuation from the same state? We study autoregressive language modeling through matched warm-start continuations, controlled teacher interventions, and independent student replications. Under the same token-normalized formulation, KD produces positive transfer on Penn Treebank and WikiText-2 and negative transfer on TinyStories, consistently across three student initializations per setting. We test several explanations. At fixed teacher architecture and fusion composition, changing the trained teacher state reverses transfer, showing that teacher state and predictive quality strongly modulate distillation. However, global teacher likelihood is insufficient: a teacher with worse held-out likelihood than the matched CE comparator still improves all three students. Greater branch disagreement and architectural heterogeneity do not imply better transfer; a homogeneous Transformer ensemble outperforms the heterogeneous Transformer--Grassmann teacher in all three comparisons. Tested local gradient and curvature diagnostics also fail to reliably predict long-horizon transfer. Together, these results support configuration-dependent distillability: whether KD helps depends on the teacher, warm-start student, and training configuration, rather than a single teacher-quality or compatibility statistic.
+\end{abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_problem_setting}
+\input{sections/04_experimental_setting}
+\input{sections/05_cross_domain_transfer}
+\input{sections/06_distillability}
+\input{sections/07_controls}
+\input{sections/08_external_validity}
+\input{sections/09_discussion}
+\input{sections/10_conclusion}
+\input{sections/limitations}
+% The official acl.sty already selects acl_natbib; do not select it twice.
+\bibliography{references}
+\clearpage
+\appendix
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{A\arabic{figure}}
+\renewcommand{\theHfigure}{appendix.\arabic{figure}}
+\input{appendix/architecture}
+\input{appendix/protocols}
+\input{appendix/results}
+\input{appendix/diagnostics_modern}
+\end{document}

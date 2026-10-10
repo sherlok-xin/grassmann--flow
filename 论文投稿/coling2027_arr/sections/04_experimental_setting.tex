@@ -1,0 +1,14 @@
+\section{Setting and Controlled Interventions}\label{sec:experimental-setting}
+
+The primary corpora are PTB~\citep{marcus1993ptb}, WikiText-2~\citep{merity2016wikitext}, and TinyStories~\citep{eldan2023tinystories}. The 31.43M-parameter student uses a local GPT-2 tokenizer, sequence length 256, and 20-epoch preparation. Matched 10-epoch continuations use AdamW, learning rate $10^{-4}$, batch 32, weight decay 0.01, 5\% warmup with cosine decay, AMP, and clipping at 1. Teachers and preparation histories differ across corpora; absolute cross-domain NLL is not directly comparable. Appendices~\ref{app:architecture} and~\ref{app:protocols} give reproducibility details.
+
+The heterogeneous test-bed teacher combines Transformer~\citep{vaswani2017attention} and causal Grassmann branches through late-logit fusion:
+\begin{equation}
+z_{\mathrm{TG}}=\alpha z^{(\mathrm T)}+(1-\alpha)z^{(\mathrm G)}.
+\label{eq:teacher-fusion}
+\end{equation}
+The architecture is a supervision source, not a new method contribution. The WikiText-2 state intervention compares jointly trained J with fusion-weight-only A using identical source identities and deployed $\alpha=0.5$. The source ablation holds J fixed and uses $\alpha=0.5,1,0$ for fused (F/TG), Transformer-only (T), and Grassmann-only (G) supervision.
+
+The homogeneous TT control adds an independently prepared Transformer with the same source architecture, data, tokenizer, and 20-epoch budget. TT then follows a 10-epoch joint teacher schedule with branches frozen in epoch 1; TT and TG both deploy $\alpha=0.5$. Their full training histories, fusion learning rates, parameter counts, and predictive quality are not identical.
+
+Teacher-state and source likelihoods use the same 512-chunk validation subset (130,560 targets); TT/TG uses full validation. These scopes remain separate. WikiText-2 controls share CE and TG endpoints and are not additional independent replications. Retrospective local diagnostics and a pretrained SmolLM2/FineWeb-Edu stress test are reported separately from the primary matrix.

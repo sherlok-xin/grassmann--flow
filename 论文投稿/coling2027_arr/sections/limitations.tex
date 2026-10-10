@@ -1,0 +1,7 @@
+\section*{Limitations}\label{sec:limitations}
+
+Primary students are small, and three student seeds give limited coverage of initialization variability. Corpora and teachers are fixed within each domain; student replications are not teacher replications. Controls share CE and TG endpoints and are not independent factorial experiments. No fully factorial intervention separates teacher quality, architecture, error structure, and optimization. The state intervention changes teacher training histories as well as predictive quality. TT/TG likelihood, parameter-count, and training mismatches prevent an isolated architecture comparison.
+
+Clipping warnings and nonzero AMP skips limit optimization-based interpretation. T-only supervision clips every update early in training, and modern KD5 remains fully clip-saturated. No adaptive-KD baseline was evaluated; the study cannot establish superiority over adaptive methods. The local diagnostic collection is small, dependent, and retrospective rather than a prospective teacher-selection benchmark.
+
+The modern stress test occurs in a degenerate continuation regime, and the CE-only headroom gate fails. SmolLM2 pretraining includes FineWeb-derived data, but exact document-level overlap with the selected subset remains unknown. Modern seeds independently adapt one pretrained student base rather than replicate pretraining. Generalization to larger students, other teachers, generative task metrics, and different continuation regimes remains unresolved.
