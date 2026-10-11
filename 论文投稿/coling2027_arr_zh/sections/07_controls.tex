@@ -24,9 +24,9 @@ TT 教师模型在完整验证集上的 NLL 还低 0.010108，参数量约少 6.
 
 一些标量预测指标对合并结果的区分能力更强，但这一规模较小且存在依赖关系的结果集合不能确立一般性的选择规则。在 CE 难度之外，词元级分支 JSD 增加的信息很少。附录~\ref{app:diagnostics-modern} 报告了完整指标、校准不稳定性及观察性分析的局限。这些失败涉及所测试的离线评分，不能推广到一般的自适应 KD 方法。
 
-\begin{figure}[!t]
+\begin{figure*}[!t]
 \centering
 \includegraphics[width=\textwidth]{figures/fig4_ensemble_control.pdf}
 \caption{WikiText-2 教师监督来源与集成的增益，保留四位小数。TT 在全部三个学生上均优于 TG。仅使用 T 的监督条件：早期裁剪饱和，应谨慎解释 F--T 差距。TT 与 TG 教师模型并非严格的质量匹配或训练匹配对照。}
 \label{fig:ensemble_control}
-\end{figure}
+\end{figure*}

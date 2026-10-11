@@ -1,28 +1,29 @@
-\documentclass[UTF8,a4paper,11pt,fontset=none]{ctexart}
-\usepackage[margin=25mm]{geometry}
+\documentclass[11pt]{article}
+\usepackage{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{fontspec}
+\usepackage{xeCJK}
 \setmainfont{TeX Gyre Termes}
 \setsansfont{TeX Gyre Heros}
-\setmonofont{TeX Gyre Cursor}
+\setmonofont{Inconsolatazi4-Regular.otf}[BoldFont=Inconsolatazi4-Bold.otf]
 \setCJKmainfont[ItalicFont={Noto Serif CJK SC},SlantedFont={Noto Serif CJK SC}]{Noto Serif CJK SC}
 \setCJKsansfont{Noto Sans CJK SC}
 \setCJKmonofont{Noto Sans Mono CJK SC}
 \usepackage{graphicx}
 \usepackage{amsmath,amssymb,booktabs}
-\usepackage{natbib}
-\usepackage{caption}
-\usepackage{placeins}
-\usepackage[hidelinks]{hyperref}
-\captionsetup{font=small,labelfont=normalfont,labelsep=quad}
-\hypersetup{pdfauthor={},pdftitle={知识蒸馏何时能够迁移？——来自热启动语言建模的受控实证证据}}
-\setlength{\parindent}{2em}
-\setlength{\parskip}{0pt}
-\setlength{\emergencystretch}{2em}
-% Keep inline equations, especially mean +/- SD quantities, on one line.
+% Retain the translated version's math break control for mean +/- SD pairs.
 \binoppenalty=10000
 \relpenalty=10000
-\ctexset{section={format=\Large\bfseries,number=\arabic{section}},subsection={format=\large\bfseries}}
-\title{知识蒸馏何时能够迁移？\\——来自热启动语言建模的受控实证证据\\[0.5em]
-  {\large When Does Knowledge Distillation Transfer?\\Controlled Evidence from Warm-Start Language Modeling}}
+\usepackage{etoolbox}
+\renewcommand{\abstractname}{摘要}
+\renewcommand{\figurename}{图}
+\renewcommand{\tablename}{表}
+\patchcmd{\thebibliography}{References}{参考文献}{}{\PackageError{chinese-layout}{Cannot localize bibliography heading}{Keep the authoritative ACL bibliography structure.}}
+\hypersetup{pdfauthor={},pdftitle={知识蒸馏何时能够迁移？——来自热启动语言建模的受控实证证据}}
+\title{知识蒸馏何时能够迁移？——来自热启动语言建模的受控实证证据}
 % 请填写两位作者真实姓名、学校名称、城市、邮编和邮箱
 % 作者一：智能科学学院
 % 作者二：智能科学学院 + 未来技术学院
@@ -33,7 +34,6 @@
   \texttt{author1@email.edu.cn} \qquad
   \texttt{author2@email.edu.cn}
 }
-\date{}
 
 \begin{document}
 \maketitle
@@ -52,17 +52,15 @@
 \input{sections/09_discussion}
 \input{sections/10_conclusion}
 \input{sections/limitations}
-\FloatBarrier
-\bibliographystyle{acl_natbib}
+% The official acl.sty already selects acl_natbib; do not select it twice.
 \bibliography{references}
 \clearpage
 \appendix
-\ctexset{section={number=\Alph{section}}}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{A\arabic{figure}}
+\renewcommand{\theHfigure}{appendix.\arabic{figure}}
 \input{appendix/architecture}
 \input{appendix/protocols}
 \input{appendix/results}
 \input{appendix/diagnostics_modern}
-\FloatBarrier
-\section*{归档说明}
-说明：本中文版仅用于课题组内部留档与报备。正式投稿版本为英文版 COLING 2027 / ACL Rolling Review 稿件。如中英文表述存在差异，以最终英文投稿稿为准。
 \end{document}

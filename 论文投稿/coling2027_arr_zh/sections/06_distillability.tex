@@ -17,9 +17,9 @@ Q=\mathrm{NLL}_{\mathrm{KD,A}}-\mathrm{NLL}_{\mathrm{KD,J}},
 
 这些对照共同表明，教师质量有较大影响，但全局留出集似然本身不足以判断监督是否有用。它们既不意味着教师质量无关紧要，也不将正迁移归因于几何结构（图~\ref{fig:teacher_quality}）。
 
-\begin{figure}[!t]
+\begin{figure*}[!t]
 \centering
 \includegraphics[width=\textwidth]{figures/fig3_teacher_quality.pdf}
 \caption{WikiText-2 的状态与似然对照。在固定组成下，改变已训练的教师模型状态会反转迁移符号；似然差于 CE 的监督源仍能产生正迁移。这两项结果均不证明标量似然的因果作用或几何结构带来的 KD 优势。}
 \label{fig:teacher_quality}
-\end{figure}
+\end{figure*}

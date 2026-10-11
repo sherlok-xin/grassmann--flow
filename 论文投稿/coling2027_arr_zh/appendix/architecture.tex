@@ -23,9 +23,9 @@ h_t^{\mathrm{mix}}&=a_t\odot h_t+(1-a_t)\odot g_t.
 
 主要实验使用的小型混合学生模型具有六层网络、宽度 224、八个 Transformer 注意力头、降维宽度 56 和 dropout 0.1，并在最后一个模块进行融合。其参数量为 31,434,257。本地 GPT-2 分词器的词表大小为 50,257，不添加特殊词元。主要实验的教师模型配置见附录~\ref{app:protocols}。该架构是既有实验平台，并非几何特定的方法贡献。
 
-\begin{figure}[!t]
+\begin{figure*}[!t]
 \centering
 \includegraphics[width=\textwidth]{figures/figA1_teacher_architecture.pdf}
 \caption{通用异构教师模型。Grassmann 路径使用因果局部词元对、归一化 Pl\"ucker 坐标、几何投影、有效窗口平均、门控混合及 LM head。后融合在 logits 上进行，$\alpha$ 为自由参数。该架构不能证明几何 KD 的优越性。}
 \label{fig:teacher_architecture}
-\end{figure}
+\end{figure*}
