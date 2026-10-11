@@ -12,9 +12,9 @@
 中文源码目录：`论文投稿/coling2027_arr_zh/`。
 中文 PDF：`outputs/coling2027_arr_zh/main.pdf`。
 页数：19 页；A4 单栏；中文正文 11pt；名义页边距 25mm。
-中文 PDF SHA256：`0afabe3d13d5e284207bae92e3252c6437265394d56ab5eae3ac380c4ef2b871`。
+中文 PDF SHA256：`1f01023cf2c9a697d5d4768d5b67728e2ebb76dad39de27bafecc81e1af8a39c`。
 
-标题为“知识蒸馏何时能够迁移？——来自热启动语言建模的受控实证证据”，并保留较小字号的英文副标题。作者仅标注“作者：课题组内部留档”，未增添真实作者或机构。文末保留用户指定的内部用途说明。本版本不是投稿文件，不承担 COLING 页数合规或匿名评审模板功能。
+标题为“知识蒸馏何时能够迁移？——来自热启动语言建模的受控实证证据”，并保留较小字号的英文副标题。作者模板为作者一上标 1、作者二上标 1,2；智能科学学院与未来技术学院各列一次。姓名、学校、城市、邮编和邮箱留待填写，未指定通讯作者。文末保留用户指定的内部用途说明。本版本不是投稿文件，不承担 COLING 页数合规或匿名评审模板功能。
 
 ## 构建与字体
 
@@ -86,7 +86,7 @@ make -C 论文投稿/coling2027_arr_zh qa
 
 strongly modulate 使用“明显影响”或“有较大影响”，不译成可能暗示统计显著性的“显著”。homogeneous ensemble falsification 译为“同构集成证伪对照”，忠实保留冻结英文的证伪定位，而不新增机制解释。原有 LayerNorm、dropout、LM head、logits、KL、FP32/BF16 等通用模块或技术名称保留。
 
-## 全页视觉 QA
+## 原始中文归档全页视觉 QA（6d95e1c）
 
 最终 19 页均渲染为 110 dpi PNG，位于 `outputs/coling2027_arr_zh/qa_pages/page-01.png` 至 `page-19.png`。先对初稿逐页分工检查，再在术语统一和行内数学不拆分设置后重新渲染全部页面，由主审查逐页复查最终输出。
 
@@ -123,3 +123,9 @@ strongly modulate 使用“明显影响”或“有较大影响”，不译成�
 `research/final_evidence/`、冻结实验文件、`experiments/`、`research/experiments/`、`checkpoints/`、`datasets/` 均未修改；未运行训练、推理、模型加载或新的研究诊断。
 
 本次提交只包含新建的 `论文投稿/coling2027_arr_zh/` 源码/独立图与文献副本/只读 QA 工具，以及本状态报告。中文生成 PDF、LaTeX 辅助文件、渲染 PNG 和编译日志保存在 `outputs/coling2027_arr_zh/`，不作为源码提交。任务开始时已有的 `.gitignore`、`docs/project_memory.md` 与 `docs/experiment_journal.md` 修改被保留，未纳入本次提交。
+
+## 作者单位模板小修（2026-10-11）
+
+基于 `6d95e1c120765f1ca1301e4268f9b7fec9bfeac1`，仅替换 `main.tex` 作者占位块及其三行填写说明。保留实际现有的 A4 单栏 ctexart、页边距和字号，未改为双栏。`make -C 论文投稿/coling2027_arr_zh` 成功，PDF 仍为 19 页；重渲染并检查首页，标题、作者上标、两行单位、邮箱和摘要均无重叠、越界、裁切或乱码，无 review 行号及匿名投稿字样，编译日志无 overfull/underfull 警告。
+
+本次首页图为 `outputs/coling2027_arr_zh/author_template_page-01.png`；上述全页视觉记录属于原始归档版本。作者块以外的 `main.tex` 和其余 38 个已跟踪中文文件与基线逐字节一致；完整性脚本再次 PASS：仍为 5 图、12 表、24 条参考文献，820 个科学数字词元与 147 处数学片段不变。英文 43 个已跟踪文件和 51 项保护快照（含英文 PDF）均未变，未重建英文稿或运行实验。本次小修提交仅包含中文 `main.tex` 与本状态报告。
