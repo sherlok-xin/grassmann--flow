@@ -21,7 +21,7 @@ h_t^{\mathrm{mix}}&=a_t\odot h_t+(1-a_t)\odot g_t.
 \end{align}
 LayerNorm, dropout, and residual feed-forward processing surround this core. The LM head produces G logits independently of the Transformer logits; scalar $\alpha$ applies only at late fusion (Equation~\ref{eq:teacher-fusion}). Figure~\ref{fig:teacher_architecture} is generic and does not fix $\alpha=0.5$.
 
-The compact primary student uses six layers, width 224, eight Transformer heads, reduced width 56, dropout 0.1, and final-block fusion. It has 31,434,257 parameters. The local GPT-2 tokenizer has vocabulary size 50,257 without added special tokens. Teacher dimensions and states follow their source configurations, not the student dimensions. The architecture is an existing test bed, not a geometry-specific method contribution.
+The compact primary hybrid student uses six layers, width 224, eight Transformer heads, reduced width 56, dropout 0.1, and final-block fusion. It has 31,434,257 parameters. The local GPT-2 tokenizer has vocabulary size 50,257 without added special tokens. Primary teacher configurations are specified in Appendix~\ref{app:protocols}. The architecture is an existing test bed, not a geometry-specific method contribution.
 
 \begin{figure*}[!t]
 \centering

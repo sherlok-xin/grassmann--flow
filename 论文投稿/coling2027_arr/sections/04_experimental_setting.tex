@@ -1,6 +1,6 @@
 \section{Setting and Controlled Interventions}\label{sec:experimental-setting}
 
-The primary corpora are PTB~\citep{marcus1993ptb}, WikiText-2~\citep{merity2016wikitext}, and TinyStories~\citep{eldan2023tinystories}. The 31.43M-parameter student uses a local GPT-2 tokenizer, sequence length 256, and 20-epoch preparation. Matched 10-epoch continuations use AdamW, learning rate $10^{-4}$, batch 32, weight decay 0.01, 5\% warmup with cosine decay, AMP, and clipping at 1. Teachers and preparation histories differ across corpora; absolute cross-domain NLL is not directly comparable. Appendices~\ref{app:architecture} and~\ref{app:protocols} give reproducibility details.
+The primary corpora are PTB~\citep{marcus1993ptb}, WikiText-2~\citep{merity2016wikitext}, and TinyStories~\citep{eldan2023tinystories}. The 31.43M-parameter hybrid Transformer--Grassmann student uses a local GPT-2 tokenizer, sequence length 256, and 20-epoch preparation. Matched 10-epoch continuations use AdamW, learning rate $10^{-4}$, batch 32, weight decay 0.01, 5\% warmup with cosine decay, AMP, and clipping at 1. Teachers and preparation histories differ across corpora; absolute cross-domain NLL is not directly comparable. Appendices~\ref{app:architecture} and~\ref{app:protocols} give reproducibility details.
 
 The heterogeneous test-bed teacher combines Transformer~\citep{vaswani2017attention} and causal Grassmann branches through late-logit fusion:
 \begin{equation}

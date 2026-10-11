@@ -1,0 +1,578 @@
+{
+  "status": "PASS",
+  "date": "2026-10-11",
+  "input_commit": "ab149eb20da37bdbe0d5862e67c9d6e1a8777bd6",
+  "input_pdf_sha256": "0408342b232c6e3ba86deae8129cec552ed9e3e5a5c7b3ac4060a27a28792e20",
+  "pdf_sha256": "700490be24483fef4bfd69a367ade958981bbe7e05e4804c3c14efa40cde7255",
+  "activity": "Read-only editorial/provenance/PDF QA; no training, models, checkpoints, inference, endpoints, or experimental diagnostics.",
+  "reviewer_scores_refer_to": "Input manuscript; not upgraded after editorial corrections",
+  "exact_editorial_whitelist": [
+    {
+      "path": "\u8bba\u6587\u6295\u7a3f/coling2027_arr/main.tex",
+      "classification": "SHOULD FIX",
+      "reviewer_concern": "A/C: avoid implying failure of every possible scalar predictor",
+      "before": "Together, these results support configuration-dependent distillability: whether KD helps varies with the teacher, warm-start student, and training configuration, rather than a single teacher-quality or compatibility statistic.",
+      "after": "Together, these results support configuration-dependent evaluation of warm-start KD against matched CE continuation, rather than inferring transfer from teacher likelihood ordering or the tested local diagnostics."
+    },
+    {
+      "path": "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/01_introduction.tex",
+      "classification": "SHOULD FIX",
+      "reviewer_concern": "A: state the exact weaker-source counterexample",
+      "before": "Global teacher likelihood alone therefore cannot determine distillability.",
+      "after": "A teacher likelihood advantage over the matched CE comparator is therefore not necessary for positive transfer."
+    },
+    {
+      "path": "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/04_experimental_setting.tex",
+      "classification": "SHOULD FIX",
+      "reviewer_concern": "A/C: expose primary hybrid architecture scope",
+      "before": "The 31.43M-parameter student uses a local GPT-2 tokenizer",
+      "after": "The 31.43M-parameter hybrid Transformer--Grassmann student uses a local GPT-2 tokenizer"
+    },
+    {
+      "path": "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/02_related_work.tex",
+      "classification": "SHOULD FIX",
+      "reviewer_concern": "C: acknowledge closest existing negative-diagnostic overlap",
+      "before": "unlike our fixed-logit validation-gradient probes. We do not evaluate these adaptive algorithms.",
+      "after": "unlike our fixed-logit validation-gradient probes. It also reports weak validation-influence baselines for generative teacher selection; our probes target paired CE-relative corpus-likelihood endpoints. We do not evaluate these adaptive algorithms."
+    },
+    {
+      "path": "\u8bba\u6587\u6295\u7a3f/coling2027_arr/appendix/architecture.tex",
+      "classification": "SHOULD FIX",
+      "reviewer_concern": "A/C: consistent primary hybrid identity",
+      "before": "The compact primary student uses six layers",
+      "after": "The compact primary hybrid student uses six layers"
+    },
+    {
+      "path": "\u8bba\u6587\u6295\u7a3f/coling2027_arr/appendix/architecture.tex",
+      "classification": "SHOULD FIX",
+      "reviewer_concern": "A: direct readers to authenticated teacher metadata",
+      "before": "Teacher dimensions and states follow their source configurations, not the student dimensions.",
+      "after": "Primary teacher configurations are specified in Appendix~\\ref{app:protocols}."
+    },
+    {
+      "path": "\u8bba\u6587\u6295\u7a3f/coling2027_arr/appendix/protocols.tex",
+      "classification": "SHOULD FIX",
+      "reviewer_concern": "A: make PTB/TinyStories frozen teachers paper-level reproducible",
+      "before": "\\subsection{Teacher preparation and eligibility}\n",
+      "after": "\\subsection{Teacher preparation and eligibility}\nPTB and TinyStories teachers each combine a six-layer Transformer of width 256 with a six-layer Grassmann branch of width 240, reduced width 64, and lags $\\{1,2,4\\}$; both use dropout 0.1. Source preparation uses seed 42, 20 epochs, batch 32, sequence length 256, and learning rate $3\\times10^{-4}$; all four sources select epoch 20 by validation. Fused teachers use ten joint epochs, freezing branches in epoch 1, branch learning rate $10^{-5}$, weight decay 0.01, AMP, initial $\\alpha=0.5$, and late-$k=1$. Fusion-weight learning rates are $5\\times10^{-3}$ and $10^{-2}$, respectively. Validation selects fused epochs 8 and 10, retaining learned $\\alpha=0.470293$ and $0.599406$ for primary continuations; forced $\\alpha=0.5$ applies to the WikiText-2 controls.\n\n"
+    },
+    {
+      "path": "\u8bba\u6587\u6295\u7a3f/coling2027_arr/appendix/diagnostics_modern.tex",
+      "classification": "SHOULD FIX",
+      "reviewer_concern": "B: identify the pinned FineWeb revision and shard",
+      "before": "FineWeb-Edu uses the first shard of the pinned \\texttt{sample-10BT} revision.",
+      "after": "FineWeb-Edu uses shard \\texttt{sample/10BT/000\\_00000.parquet} of \\texttt{sample-10BT} at revision \\texttt{87f09149ef4734204d70e}\\allowbreak\\texttt{d1d046ddc9ca3f2b8f9}."
+    }
+  ],
+  "unchanged_submission_files": [
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/Makefile",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/README.md",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/acl.sty",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/acl_natbib.bst",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/appendix/results.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/figures/fig1_paired_protocol.pdf",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/figures/fig1_paired_protocol.svg",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/figures/fig2_cross_domain_gain.pdf",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/figures/fig2_cross_domain_gain.svg",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/figures/fig3_teacher_quality.pdf",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/figures/fig3_teacher_quality.svg",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/figures/fig4_ensemble_control.pdf",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/figures/fig4_ensemble_control.svg",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/figures/figA1_teacher_architecture.pdf",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/figures/figA1_teacher_architecture.svg",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/references.bib",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/03_problem_setting.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/05_cross_domain_transfer.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/06_distillability.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/07_controls.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/08_external_validity.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/09_discussion.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/10_conclusion.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/limitations.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/tables/branch_comparison.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/tables/cross_domain_transfer.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/tables/full_predictors.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/tables/modern_ce_gate.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/tables/modern_endpoints.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/tables/modern_optimization.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/tables/per_seed_gains.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/tables/ptb_endpoints.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/tables/teacher_training_protocol.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/tables/tinystories_endpoints.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/tables/tinystories_optimization.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/tables/wt2_endpoints.tex"
+  ],
+  "changed_submission_files": [
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/appendix/architecture.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/appendix/diagnostics_modern.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/appendix/protocols.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/main.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/01_introduction.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/02_related_work.tex",
+    "\u8bba\u6587\u6295\u7a3f/coling2027_arr/sections/04_experimental_setting.tex"
+  ],
+  "figures_tables_bibliography_template_unchanged": true,
+  "frozen_paths_unchanged": true,
+  "provenance_artifacts": [
+    {
+      "path": "outputs/experiments/20260318_094720_ptb_baseline_both/config.json",
+      "sha256": "9f66cab5b78c334d5dccf47825bbd1db9b8118a36c175bbc2f0f14320573b989"
+    },
+    {
+      "path": "outputs/experiments/20260318_094720_ptb_baseline_both/summary.json",
+      "sha256": "c1197f795830d388b9268406fba904d31bf9bf25918f480f267d4d7302f57aaf"
+    },
+    {
+      "path": "outputs/experiments/20260318_102137_ptb_ws124_rd64_md240/config.json",
+      "sha256": "b9023cdc79d38118e13ac755feb5e252635aae98ac61016542725d43dab8a969"
+    },
+    {
+      "path": "outputs/experiments/20260318_102137_ptb_ws124_rd64_md240/summary.json",
+      "sha256": "d08429c4db41b6d895fe066bdd43d36a099c90975da654c67a6c6e3ce58ee35d"
+    },
+    {
+      "path": "outputs/experiments/20260322_095111_tinystories_transformer_300k_e20_split3/config.json",
+      "sha256": "0607beb701724b555fa956d7f9dcb26498eaf9a892208a79d5b284484712410f"
+    },
+    {
+      "path": "outputs/experiments/20260322_095111_tinystories_transformer_300k_e20_split3/summary.json",
+      "sha256": "9775ee7c7403af8676fb71473a4ddc6e6ffa4d923ae0452b8e4ced17fbe9e7bb"
+    },
+    {
+      "path": "outputs/experiments/20260322_094948_tinystories_ws124_rd64_md240_300k_e20_split3/config.json",
+      "sha256": "9afae73e863640125c64776ed212c38ad0578537691ee3e65a41da811b6bd13c"
+    },
+    {
+      "path": "outputs/experiments/20260322_094948_tinystories_ws124_rd64_md240_300k_e20_split3/summary.json",
+      "sha256": "6aef0b0db465691ee283809454ccdb4a9f953c8f1830f407d6fcb04aa1a48793"
+    },
+    {
+      "path": "outputs/hybrid_experiments/20260328_095917_ptb_latefusion_last1_joint/config.json",
+      "sha256": "fe9c3b3b560474498a224e812d1b5471a475ec4a1f43d4b9238834c1379b24ed"
+    },
+    {
+      "path": "outputs/hybrid_experiments/20260328_095917_ptb_latefusion_last1_joint/summary.json",
+      "sha256": "ce9ea3adf40fab5683fea98b445ed23e9ff1208a311c672a52ce0f4c8161b40b"
+    },
+    {
+      "path": "outputs/hybrid_experiments/20260515_022710_ts_latefusion_last1_joint_e10/config.json",
+      "sha256": "61a11f677d4ac283bb10fd200fa275f7e980a23056f6f5460c8f05555da619e1"
+    },
+    {
+      "path": "outputs/hybrid_experiments/20260515_022710_ts_latefusion_last1_joint_e10/summary.json",
+      "sha256": "ab4df0b7ab1059c9381a4a0df0ea682486ba8b8852020d43b38e8f91665ac257"
+    },
+    {
+      "path": "research/experiments/phase4a_modern_generalization_pilot/data_manifest_fineweb.json",
+      "sha256": "17de4fc1d821973f4a71b52a0ce1493e9b3af2b8d637b561011fe712f333778a"
+    },
+    {
+      "path": "research/experiments/phase2_teacher_transfer_audit/raw/ptb/results.json",
+      "sha256": "aa26580db16f7b7df57e547c027104cca292b816a56da95d3cbe6bcd1d795f64"
+    },
+    {
+      "path": "research/experiments/phase2g_tinystories_negative_transfer/raw/formal/seed123/KD/config.json",
+      "sha256": "2f8da056f51c6a6fa357626d649a5d60d603e1a3234cb71e234e85b785e3cb60"
+    }
+  ],
+  "abstract_word_count": 185,
+  "latex_notices": {
+    "underfull_hbox": 18,
+    "underfull_vbox": 2,
+    "overfull": 0
+  },
+  "submission_audit": {
+    "status": "PASS",
+    "input_commit": "63d7eb72c01d26a22e921a73246ecc9944df9a3a",
+    "activity": "Read-only document, archived record, PDF, and preservation checks. No model access or endpoint evaluation.",
+    "original_audit": "PASS (62/62)",
+    "submission_numeric_checks": 62,
+    "numeric_check_inventory": [
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_ce_nll_mean",
+        "value": "4.082352"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_kd_nll_mean",
+        "value": "3.937415"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_mean",
+        "value": "0.144937"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_sample_sd",
+        "value": "0.003938"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_ce_nll_mean",
+        "value": "4.276364"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_kd_nll_mean",
+        "value": "4.120699"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_mean",
+        "value": "0.155665"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_sample_sd",
+        "value": "0.007692"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_ce_nll_mean",
+        "value": "1.582197"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "ws_kd_nll_mean",
+        "value": "1.689416"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_mean",
+        "value": "-0.107219"
+      },
+      {
+        "table": "cross_domain_transfer",
+        "field": "kd_gain_nll_sample_sd",
+        "value": "0.000415"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "teacher_validation_nll",
+        "value": "4.300644"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "mean_gain_or_contrast",
+        "value": "0.155665"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "sample_sd",
+        "value": "0.007692"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "teacher_validation_nll",
+        "value": "6.376220"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "mean_gain_or_contrast",
+        "value": "-0.027654"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "sample_sd",
+        "value": "0.006822"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "mean_gain_or_contrast",
+        "value": "0.183319"
+      },
+      {
+        "table": "teacher_quality_intervention",
+        "field": "sample_sd",
+        "value": "0.001375"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_validation_subset_nll",
+        "value": "4.652064"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_residual_vs_c0",
+        "value": "-0.266520"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "test_gain",
+        "value": "0.046771"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_validation_subset_nll",
+        "value": "4.652064"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_residual_vs_c0",
+        "value": "-0.253492"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "test_gain",
+        "value": "0.033598"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_validation_subset_nll",
+        "value": "4.652064"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "teacher_residual_vs_c0",
+        "value": "-0.251006"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "test_gain",
+        "value": "0.042604"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_mean",
+        "value": "0.155665"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_sample_sd",
+        "value": "0.007692"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_mean",
+        "value": "0.134868"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_sample_sd",
+        "value": "0.008906"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_mean",
+        "value": "0.040991"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "kd_gain_sample_sd",
+        "value": "0.006733"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "paired_contrast_mean",
+        "value": "0.020797"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "paired_contrast_sample_sd",
+        "value": "0.001214"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "paired_contrast_mean",
+        "value": "0.114674"
+      },
+      {
+        "table": "teacher_source_ablation",
+        "field": "paired_contrast_sample_sd",
+        "value": "0.001001"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "validation_nll",
+        "value": "4.303697"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "branch_jsd",
+        "value": "0.182087"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "top1_agreement",
+        "value": "0.507034"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "fusion_gain",
+        "value": "0.147983"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "kd_gain_mean",
+        "value": "0.155665"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "kd_gain_sample_sd",
+        "value": "0.007692"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "validation_nll",
+        "value": "4.293589"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "branch_jsd",
+        "value": "0.099793"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "top1_agreement",
+        "value": "0.630170"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "fusion_gain",
+        "value": "0.112570"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "kd_gain_mean",
+        "value": "0.168125"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "kd_gain_sample_sd",
+        "value": "0.008948"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "H_mean",
+        "value": "-0.012460"
+      },
+      {
+        "table": "tt_vs_tg",
+        "field": "H_sample_sd",
+        "value": "0.001348"
+      },
+      {
+        "table": "modern_stress",
+        "field": "mean_gain",
+        "value": "-0.013550"
+      },
+      {
+        "table": "modern_stress",
+        "field": "sample_sd",
+        "value": "0.003542"
+      },
+      {
+        "table": "modern_stress",
+        "field": "mean_gain",
+        "value": "-0.043924"
+      },
+      {
+        "table": "modern_stress",
+        "field": "sample_sd",
+        "value": "0.004017"
+      },
+      {
+        "table": "modern_ce_gate",
+        "field": "CE_improvement_validation",
+        "value": "0.004214"
+      },
+      {
+        "table": "modern_ce_gate",
+        "field": "CE_improvement_validation",
+        "value": "0.004849"
+      },
+      {
+        "table": "modern_ce_gate",
+        "field": "CE_improvement_validation",
+        "value": "0.003941"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "frozen_mean",
+        "value": "0.040991"
+      },
+      {
+        "table": "weaker_teacher",
+        "field": "frozen_sample_sd",
+        "value": "0.006733"
+      }
+    ],
+    "archival_files_byte_preserved": 54,
+    "official_template_commit": "d5adc823ff0f80f98c80405ca0ab66c68e684409",
+    "style_hashes": {
+      "acl.sty": "19dfeddc2c0e448f3926a0bef048a9db3f3611b46265b760caabd7ada4f361de",
+      "acl_natbib.bst": "6fbb306202290f4b68e74ac1460a8b27398500cb6dfeb4492e74c457eae7cd1e"
+    },
+    "abstract_words": 185,
+    "main_content_last_page": 7,
+    "pdf_pages": 14,
+    "limitations_page": 7,
+    "figure_pages": {
+      "fig:paired_protocol": 2,
+      "fig:cross_domain_gain": 5,
+      "fig:teacher_quality": 5,
+      "fig:ensemble_control": 6,
+      "fig:teacher_architecture": 10
+    },
+    "verified_reference_count": 24,
+    "bib_identical_to_archive": true,
+    "anonymity_identity_checks": "PASS",
+    "embedded_raster_images": 0,
+    "minimum_figure_text_or_script_pt_at_actual_acl_width": {
+      "fig1_paired_protocol": 6.213,
+      "fig2_cross_domain_gain": 7.133,
+      "fig3_teacher_quality": 6.52,
+      "fig4_ensemble_control": 6.633,
+      "figA1_teacher_architecture": 6.136
+    },
+    "underfull_hbox_notices": 18,
+    "underfull_vbox_notices": 2,
+    "pdf_sha256": "700490be24483fef4bfd69a367ade958981bbe7e05e4804c3c14efa40cde7255",
+    "limits": "Automated checks are not a scientific acceptance guarantee; visual page inspection and human submission actions remain distinct."
+  },
+  "geometry_audit": {
+    "status": "PASS",
+    "date": "2026-10-11",
+    "official_pubcheck_raw_counts": {
+      "Error.MARGIN": 912
+    },
+    "review_marker_classification": {
+      "left": 465,
+      "right": 433,
+      "bottom_page_number": 14
+    },
+    "non_review_margin_findings": [],
+    "independent_all_body_word_bounds": "PASS (2.4 pt standard microtype punctuation allowance)",
+    "standard_microtype_protrusions": [
+      {
+        "page": 11,
+        "text": "+0.033598,and+0.042604.",
+        "x0": 68.75,
+        "explanation": "Standard microtype leading plus-sign protrusion, not an upstream reported finding."
+      },
+      {
+        "page": 12,
+        "text": "+0.003061.",
+        "x0": 68.75,
+        "explanation": "Standard microtype leading plus-sign protrusion, not an upstream reported finding."
+      }
+    ],
+    "vector_drawing_bounds": "PASS",
+    "adjusted_figure_geometry": {
+      "fig1_paired_protocol": {
+        "text_nodes": 37,
+        "bounds_violations": [],
+        "text_overlaps": []
+      },
+      "figA1_teacher_architecture": {
+        "text_nodes": 48,
+        "bounds_violations": [],
+        "text_overlaps": []
+      }
+    },
+    "interpretation": "Official raw check is NOT a clean pass: all 912 margin findings correspond to official review rulers or page numbers. No submission PDF or official checker was altered."
+  },
+  "historical_audits": "Earlier final-polish exact-diff records are historical. No frozen assertions were relaxed."
+}

@@ -8,6 +8,8 @@ Each primary seed prepares its own $S_0$ using 20 epochs, batch 32, learning rat
 The common WikiText-2 subset comprises 512 validation chunks sampled without replacement using seed 20260920, then sorted (130,560 targets). Full-validation TT/TG metrics remain separate. Repeated J subset evaluations of 4.300644 and 4.300646 retain their original precision rather than being averaged together.
 
 \subsection{Teacher preparation and eligibility}
+PTB and TinyStories teachers each combine a six-layer Transformer of width 256 with a six-layer Grassmann branch of width 240, reduced width 64, and lags $\{1,2,4\}$; both use dropout 0.1. Source preparation uses seed 42, 20 epochs, batch 32, sequence length 256, and learning rate $3\times10^{-4}$; all four sources select epoch 20 by validation. Fused teachers use ten joint epochs, freezing branches in epoch 1, branch learning rate $10^{-5}$, weight decay 0.01, AMP, initial $\alpha=0.5$, and late-$k=1$. Fusion-weight learning rates are $5\times10^{-3}$ and $10^{-2}$, respectively. Validation selects fused epochs 8 and 10, retaining learned $\alpha=0.470293$ and $0.599406$ for primary continuations; forced $\alpha=0.5$ applies to the WikiText-2 controls.
+
 Table~\ref{tab:teacher_training_protocol} records the teacher-training modes. J and TT have ten joint epochs; A has five fusion-weight-only epochs. The state intervention fixes deployed architecture and composition, not teacher training history. TT source Transformers have six layers, width 256, dropout 0.1, batch 32, learning rate $3\times10^{-4}$, and 20 preparation epochs, with seeds 42 and 123; both select epoch 12. TT joint training selects epoch 10. Its fusion learning rate differs from historical TG.
 \input{tables/teacher_training_protocol}
 
