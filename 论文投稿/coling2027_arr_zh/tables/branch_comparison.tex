@@ -1,0 +1,13 @@
+\begin{table}[!t]
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+教师模型 & 完整验证集 NLL & 分支 JSD & 一致率 & 融合增益\\
+\midrule
+TG & 4.303697 & 0.182087 & 0.507034 & 0.147983\\
+TT & 4.293589 & 0.099793 & 0.630170 & 0.112570\\
+\bottomrule
+\end{tabular}
+\caption{$\alpha=0.5$ 时完整验证集上的教师模型对比。融合增益为相对于较优分支的 NLL 改善。预测质量、参数量和训练历史均不同。这些指标不与 512 个数据块的状态/监督源子集指标合并。}
+\label{tab:branch_comparison}
+\end{table}

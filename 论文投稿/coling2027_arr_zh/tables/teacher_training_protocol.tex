@@ -1,0 +1,13 @@
+\begin{table}[!t]\centering
+\begin{tabular}{llrrr}
+\toprule
+教师模型 & 模式 & 训练轮次预算 & 分支学习率 & 融合权重学习率\\
+\midrule
+J/TG & 联合训练 & 10 & $10^{-5}$ & $5\times10^{-3}$\\
+A & 仅训练融合权重 & 5 & 冻结 & $10^{-2}$\\
+TT & 联合训练 & 10 & $10^{-5}$ & $10^{-2}$\\
+\bottomrule
+\end{tabular}
+\caption{归档的 WikiText-2 教师模型训练配置。所有模型均以 $\alpha=0.5$ 初始化，使用批大小 32、权重衰减 0.01 和 AMP，并按验证集选择检查点。联合训练分支在第 1 轮冻结；A 全程冻结分支。评估和 KD 均强制 $\alpha=0.5$。这些训练历史不能单独识别教师模型的标量质量或架构效应。}
+\label{tab:teacher_training_protocol}
+\end{table}

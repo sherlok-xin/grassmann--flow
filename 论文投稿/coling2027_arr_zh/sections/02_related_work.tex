@@ -1,0 +1,10 @@
+\section{相关工作}\label{sec:related-work}
+
+\subsection{教师质量与面向学生的监督}
+KD 传递的是预测分布，而不仅是硬标签~\citep{hinton2015distilling}。模型容量不匹配以及训练后期有害的监督，已经表明教师质量与教学效用并不相同~\citep{cho2019efficacy}；学生友好型教师通过引入学生分支来应对这种不匹配~\citep{park2021friendly}。统计分析强调概率估计与偏差--方差权衡~\citep{menon2021statistical}，而表现较差的分类器在特定假设下也可以成为有效的教师~\citep{kaplun2022bad}。我们的贡献不是再次指出教师准确率可能不足以判断教学效用这一一般现象，而是构建受控的热启动 LM 实验证据链。
+
+\subsection{自回归 LM 蒸馏}
+MiniLLM 使用反向 KL 和策略梯度优化~\citep{gu2024minillm}；GKD 使用由学生生成的上下文，并允许采用不同的散度~\citep{agarwal2024gkd}。ATKD 针对容易和困难的词元调整监督~\citep{zhong2024atkd}，选择性 NMT 蒸馏则识别可能有害的指导信号~\citep{wang2021selective}。蒸馏缩放定律将学生似然与教师性能、模型规模及计算量联系起来~\citep{busbridge2025scaling}。相比之下，我们固定基于语料的正向 KL 续训方式，并从同一学生出发，评估相对于 CE 续训的增益。本研究不比较生成质量，也不证明优于这些方法。
+
+\subsection{自适应监督、集成监督与梯度驱动的监督}
+多教师选择~\citep{yuan2021selection}以及 MetaDistil 中基于学生测验集的反馈~\citep{zhou2022metadistil}，用于应对教师适配性问题。集成保真度与泛化能力并不等同~\citep{stanton2021really}；自适应集成 KD 则利用梯度协调相互竞争的指导信号~\citep{du2020agree}。AdaKD 自适应调整词元的关注程度与温度~\citep{xie2026adakd}；熵感知的同策略 KD 在不确定的词元上加入正向 KL~\citep{jin2026entropy}。GRACE 利用学生在教师生成回复上的梯度谱统计量对教师排序~\citep{panigrahi2026grace}，这与我们基于固定 logits 的验证集梯度探测不同。该工作还报告，在生成式教师选择中，验证集影响度基线的表现较弱；我们的探测则针对基于语料似然、相对于 CE 续训的配对终点。我们不评估这些自适应算法。本研究的对照实验与未成功的局部诊断分析补充了这一研究方向，但不提出新的兼容性理论。

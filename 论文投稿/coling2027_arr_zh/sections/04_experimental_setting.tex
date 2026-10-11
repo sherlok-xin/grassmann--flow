@@ -1,0 +1,14 @@
+\section{实验设置与受控干预}\label{sec:experimental-setting}
+
+主要语料为 PTB~\citep{marcus1993ptb}、WikiText-2~\citep{merity2016wikitext}和 TinyStories~\citep{eldan2023tinystories}。具有 31.43M 参数的 Transformer--Grassmann 混合学生使用本地 GPT-2 分词器，序列长度为 256，准备阶段的训练轮次为 20。匹配的续训为 10 个训练轮次，使用 AdamW，学习率为 $10^{-4}$，批大小为 32，权重衰减为 0.01，采用 5\% 预热与余弦衰减、AMP，以及阈值为 1 的梯度裁剪。不同语料采用的教师与准备历史不同；跨领域的绝对 NLL 不能直接比较。附录~\ref{app:architecture}和~\ref{app:protocols}给出复现细节。
+
+异构实验平台中的教师通过 logits 层面的后融合，将 Transformer~\citep{vaswani2017attention}分支与因果 Grassmann 分支结合：
+\begin{equation}
+z_{\mathrm{TG}}=\alpha z^{(\mathrm T)}+(1-\alpha)z^{(\mathrm G)}.
+\label{eq:teacher-fusion}
+\end{equation}
+该架构用于提供监督信号，而不是新的方法贡献。WikiText-2 状态干预比较联合训练的 J 与仅训练融合权重的 A，二者采用同一组源模型，并在使用时固定 $\alpha=0.5$。监督源消融固定 J，分别使用 $\alpha=0.5,1,0$，对应融合（F/TG）、仅 Transformer（T）和仅 Grassmann（G）监督。
+
+同构 TT 对照增加一个独立准备的 Transformer，其源模型架构、数据、分词器及 20 个训练轮次的预算均相同。随后，TT 按 10 个训练轮次的联合教师训练计划进行训练，并在第 1 个训练轮次冻结分支；TT 与 TG 在使用时都设为 $\alpha=0.5$。它们完整的训练历史、融合学习率、参数量与预测质量并不相同。
+
+教师模型状态与监督源的似然使用同一个包含 512 个数据块的验证子集（130,560 个目标）；TT/TG 使用完整验证集。这些评估范围保持区分。WikiText-2 对照复用 CE 和 TG 终点，不构成额外的独立重复实验。回顾性的局部诊断分析以及基于预训练 SmolLM2/FineWeb-Edu 的压力测试，与主要实验矩阵分开报告。

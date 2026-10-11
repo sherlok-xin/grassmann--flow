@@ -1,0 +1,14 @@
+\begin{table}[!t]
+\centering
+\begin{tabular}{lrrrr}
+\toprule
+种子 & $S_0$ 测试 & CE 测试 & KD 测试 & 验证集 KD--CE\\
+\midrule
+42 & 1.622437 & 1.581269 & 1.688747 & 0.108394\\
+123 & 1.623954 & 1.581807 & 1.689246 & 0.108082\\
+456 & 1.624901 & 1.583515 & 1.690255 & 0.108040\\
+\bottomrule
+\end{tabular}
+\caption{TinyStories 所选 NLL。所有分支均选择第 10 轮。正的验证集 KD--CE 差值与负的 CE 相对测试集增益方向一致。}
+\label{tab:ts_endpoints}
+\end{table}

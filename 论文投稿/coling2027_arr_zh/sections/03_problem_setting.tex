@@ -1,0 +1,18 @@
+\section{配对热启动评估}\label{sec:problem-setting}
+
+对于每个独立准备的学生，使用按验证集选择的 $S_0$ 初始化 CE 和 CE+KD 两个分支，使二者具有相同的权重，并重新初始化优化器状态。续训数据、顺序、优化器、调度器与训练预算均保持匹配。每个分支独立依据验证集 NLL 选择检查点，并在选择完成后报告测试结果（图~\ref{fig:paired_protocol}）。
+
+令 $p_{\mathrm{teach},i}^{(\tau)}$ 和 $p_{\mathrm{stud},i}^{(\tau)}$ 分别表示温度 $\tau$ 下的下一词元分布。在因果移位后的有效目标位置 $\mathcal I$ 上，目标函数为
+\begin{align}
+\mathcal L&=\mathcal L_{\mathrm{CE}}+\lambda\mathcal L_{\mathrm{distill}},\label{eq:kd-objective}\\
+\mathcal L_{\mathrm{distill}}&=\frac{\tau^2}{|\mathcal I|}\sum_{i\in\mathcal I}
+\mathrm{KL}\!\left(p_{\mathrm{teach},i}^{(\tau)}\|p_{\mathrm{stud},i}^{(\tau)}\right).\nonumber
+\end{align}
+两个损失都对目标词元求平均。主要 KD 实验固定 $\tau=2$ 和 $\lambda=5$；CE 使用 $\lambda=0$。用于实际比较的配对终点指标定义为
+\begin{equation}
+\mathrm{Gain}_{\mathrm{KD}}=\mathrm{NLL}_{\mathrm{CE}}^{\mathrm{test}}-\mathrm{NLL}_{\mathrm{KD}}^{\mathrm{test}}.
+\label{eq:paired-gain}
+\end{equation}
+增益为正表示 KD 优于 CE，但不一定优于 $S_0$。这是特定实验协议下的终点指标，而非可蒸馏性的理论度量。
+
+我们报告种子 42、123 和 456 的结果，以及配对增益均值、样本 SD 和符号一致性。这些种子改变的是学生准备过程，而不是教师训练或语料采样；SD 既不是标准误，也不能作为显著性检验。主要结果从已训练的续训检查点中进行选择。另一项单独标明的诊断分析允许将未修改的 $S_0$ 作为第 0 步候选，但不替代主要终点。

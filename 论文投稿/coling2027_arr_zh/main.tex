@@ -1,0 +1,59 @@
+\documentclass[UTF8,a4paper,11pt,fontset=none]{ctexart}
+\usepackage[margin=25mm]{geometry}
+\setmainfont{TeX Gyre Termes}
+\setsansfont{TeX Gyre Heros}
+\setmonofont{TeX Gyre Cursor}
+\setCJKmainfont[ItalicFont={Noto Serif CJK SC},SlantedFont={Noto Serif CJK SC}]{Noto Serif CJK SC}
+\setCJKsansfont{Noto Sans CJK SC}
+\setCJKmonofont{Noto Sans Mono CJK SC}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb,booktabs}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{placeins}
+\usepackage[hidelinks]{hyperref}
+\captionsetup{font=small,labelfont=normalfont,labelsep=quad}
+\hypersetup{pdfauthor={},pdftitle={知识蒸馏何时能够迁移？——来自热启动语言建模的受控实证证据}}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{2em}
+% Keep inline equations, especially mean +/- SD quantities, on one line.
+\binoppenalty=10000
+\relpenalty=10000
+\ctexset{section={format=\Large\bfseries,number=\arabic{section}},subsection={format=\large\bfseries}}
+\title{知识蒸馏何时能够迁移？\\——来自热启动语言建模的受控实证证据\\[0.5em]
+  {\large When Does Knowledge Distillation Transfer?\\Controlled Evidence from Warm-Start Language Modeling}}
+\author{作者：课题组内部留档}
+\date{}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+知识蒸馏（KD）通常以蒸馏后学生模型的性能来评估，但一个基本问题仍未得到回答：对于一个已经训练过的学生模型，教师监督能否优于从相同状态出发的最大似然续训？我们通过匹配热启动续训、受控教师干预和独立学生模型重复实验，研究自回归语言建模中的这一问题。在相同的按词元归一化的形式下，KD 在 Penn Treebank 和 WikiText-2 上产生正迁移，在 TinyStories 上产生负迁移，且每种配置下的三个独立学生初始化均呈现一致方向。我们检验了几种可能的解释。在固定教师架构和融合组成的条件下，改变训练后的教师模型状态会逆转迁移方向，表明教师模型状态和预测质量会明显影响蒸馏。然而，教师模型的全局似然不足以解释迁移：一个留出集似然比匹配 CE 对照更差的教师模型，仍能改善全部三个学生模型。更大的分支分歧度和架构异质性并不意味着更好的迁移；在全部三组比较中，同构 Transformer 集成都优于异构 Transformer--Grassmann 教师。所检验的局部梯度和曲率诊断指标也未能可靠地预测长程迁移。综合来看，这些结果支持以匹配 CE 续训为对照，对热启动 KD 进行配置依赖的评估，而不是根据教师似然排序或所检验的局部诊断指标推断迁移。
+\end{abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_problem_setting}
+\input{sections/04_experimental_setting}
+\input{sections/05_cross_domain_transfer}
+\input{sections/06_distillability}
+\input{sections/07_controls}
+\input{sections/08_external_validity}
+\input{sections/09_discussion}
+\input{sections/10_conclusion}
+\input{sections/limitations}
+\FloatBarrier
+\bibliographystyle{acl_natbib}
+\bibliography{references}
+\clearpage
+\appendix
+\ctexset{section={number=\Alph{section}}}
+\input{appendix/architecture}
+\input{appendix/protocols}
+\input{appendix/results}
+\input{appendix/diagnostics_modern}
+\FloatBarrier
+\section*{归档说明}
+说明：本中文版仅用于课题组内部留档与报备。正式投稿版本为英文版 COLING 2027 / ACL Rolling Review 稿件。如中英文表述存在差异，以最终英文投稿稿为准。
+\end{document}

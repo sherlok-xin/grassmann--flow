@@ -1,0 +1,12 @@
+\begin{table}[!t]\centering
+\begin{tabular}{lrrrrr}
+\toprule
+种子 & 残余优势 & KD KL & CE 范数 & KD 范数 & KD 裁剪比例 \\
+\midrule
+42 & -0.021960 & 0.380224 & 0.486891 & 0.973546 & 0.236891 \\
+123 & -0.021422 & 0.381402 & 0.488263 & 0.981438 & 0.283344 \\
+456 & -0.019714 & 0.383282 & 0.483211 & 0.973942 & 0.240090 \\
+\bottomrule
+\end{tabular}
+\caption{主要 TinyStories 实验的训练监测指标。残余优势为教师模型相对于 CE 测试集终点的优势。KL 包含温度平方缩放；范数和裁剪比例为已完成运行各训练轮次的均值。}\label{tab:tinystories_optimization}
+\end{table}
