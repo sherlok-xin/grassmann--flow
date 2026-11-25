@@ -51,7 +51,7 @@ def main():
         print(json.dumps(progress[-1]),flush=True)
         return result
     wait_file(PHASE/'modern_data.json')
-    while not json.loads((PHASE/'modern_assets.json').read_text()).get('download_complete'):time.sleep(30)
+    wait_file(PHASE/'modern_assets_verified.json')
     # Actual full-model memory failures require inspection, never an automatic
     # fallback triggered by another job entering the device.
     lora=False
