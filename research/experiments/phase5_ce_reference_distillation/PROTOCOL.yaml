@@ -8,7 +8,11 @@ gpu_hour_ceiling: 230
 paid_cloud: false
 remote_host: 10.42.0.197
 initial_free_gpus: [0, 3]
-reserved_for_other_jobs: [1, 2]
+initially_occupied_by_other_jobs: [1, 2]
+resource_update_20261125: >-
+  The original other jobs later ended; GPUs 1 and 2 may be used only after a fresh idle check.
+  GPU 3 measured 210 MHz under load. Its first completed WT2 screen is retained and charged;
+  the remaining queue moved to GPU 0 without modifying device clocks or other processes.
 resource_rule: recheck_memory_and_processes_before_every_launch_do_not_kill_other_jobs
 bootstrap_scope:
   tests: normalization_tail_ratios_gradient_equivalence_lambda_zero_cache_alignment
@@ -93,3 +97,22 @@ modern_pending_data_gate:
   test_access: prohibited_until_config_lock
   teacher_student_models: [Qwen3_1.7B_Base, Qwen3_0.6B_Base]
   protocol_lock_required_after_resource_and_data_audit: true
+tinystories_seed42:
+  data_manifest: data_ts.json
+  train_chunks: 262036
+  dev_chunks: 7569
+  control_chunks: 1849
+  full_epochs: 10
+  screen_steps: 819
+  screen_epochs_fraction: approximately_0.1
+  matching: same_phase5_WT2_batch_micro_precision_optimizer_schedule_and_seed42_historical_S0
+  CE_search_lrs: [1.0e-6, 5.0e-6, 1.0e-5, 2.0e-5, 5.0e-5, 1.0e-4]
+  KD_search: same_six_lr_lambda_temperature_tuples_as_WT2
+  selection: lowest_trained_screen_dev_NLL_ties_smaller_lambda_temperature_lr
+  A_lambda: chosen_from_WT2_full_promotion_configuration_without_a_new_TinyStories_sweep
+  A_lr_temperature: [1.0e-4, 1]
+  full_runs: best_CE_best_KD_A_plus_CE_reference_at_1e-4_if_distinct
+  checkpoint_selection: epoch_dev_NLL_including_S0
+  historical_validation_limitation: same_as_WT2_no_new_unseen_holdout_claim
+  resource_gate: disposable_real_data_smoke_first_then_full_runs_each_capped_at_18_GPUh
+  budget_note: family_reservations_are_estimates_global_230_GPUh_is_a_hard_limit

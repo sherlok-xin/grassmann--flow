@@ -19,6 +19,7 @@ def main():
     p.add_argument('--temperature',type=float,default=1.);p.add_argument('--epochs',type=int,default=10)
     p.add_argument('--micro',type=int,default=16);p.add_argument('--reference-run');p.add_argument('--cache-gold',action='store_true')
     p.add_argument('--max-hours',type=float,default=2.);p.add_argument('--smoothing',type=float,default=.1)
+    p.add_argument('--step-limit',type=int,help='preregistered short-budget prefix only; never changes full defaults')
     a=p.parse_args()
     mem=int(subprocess.check_output(['nvidia-smi',f'--id={a.gpu}','--query-gpu=memory.used','--format=csv,noheader,nounits'],text=True).strip())
     if mem>256:raise RuntimeError(f'GPU {a.gpu} occupied ({mem} MiB), deferring')
@@ -58,7 +59,11 @@ def main():
         seed_all(a.seed)
         initial={k:v.detach().cpu().clone() for k,v in student.state_dict().items()}
         fixed=copy.deepcopy(student).eval().requires_grad_(False) if a.mode=='fixed' else None
-        n=len(arrays['train']);spe=math.ceil(n/32);steps=spe*a.epochs;warmup=max(1,int(.05*steps))
+        n=len(arrays['train']);spe=math.ceil(n/32);steps=spe*a.epochs
+        if a.step_limit is not None:
+            if a.step_limit<=0:raise ValueError('positive short-budget step limit required')
+            steps=min(steps,a.step_limit)
+        warmup=max(1,int(.05*steps))
         optimizer=torch.optim.AdamW(student.parameters(),lr=a.lr,weight_decay=.01,betas=(.9,.999),eps=1e-8)
         cache_identity=dict(seed=a.seed,student_hash=identity['expected_student_sha256'],
             data_hash=manifest['files']['train']['sha256'],steps=steps,lr=a.lr,weight_decay=.01,
@@ -103,9 +108,11 @@ def main():
         torch.cuda.reset_peak_memory_stats()
         with (out/'metrics.jsonl').open('w') as trace:
             for epoch in range(a.epochs):
+                if epoch*spe>=steps:break
                 perm=np.random.default_rng(20261125+a.seed+epoch).permutation(n)
                 for bi in range(spe):
                     step=epoch*spe+bi
+                    if step>=steps:break
                     if (time.monotonic()-start)/3600>a.max_hours:raise TimeoutError('run GPU-hour limit reached')
                     ids=perm[bi*32:(bi+1)*32].tolist();x=xbatch('train',ids);yall=x[:,1:];nt=yall.numel()
                     lr=a.lr*((step+1)/warmup if step<warmup else .5*(1+math.cos(math.pi*(step-warmup)/(steps-warmup))))
@@ -167,9 +174,10 @@ def main():
                     trace.write(json.dumps(telemetry)+'\n')
                     if (step+1)%50==0:trace.flush();print(json.dumps({'run':a.name,**telemetry}),flush=True)
                     if step+1 in milestones:save_state(out/f'state_{step+1}.pt',step+1)
-                val,_=evaluate(student,'dev');selected.append(dict(step=(epoch+1)*spe,dev_nll=val))
+                completed=min((epoch+1)*spe,steps)
+                val,_=evaluate(student,'dev');selected.append(dict(step=completed,dev_nll=val))
                 print(json.dumps({'run':a.name,'epoch':epoch+1,'dev_nll':val,'best_including_s0':min(best,val)}),flush=True)
-                if val<best:best=val;best_step=(epoch+1)*spe;torch.save(student.state_dict(),out/'best.pt')
+                if val<best:best=val;best_step=completed;torch.save(student.state_dict(),out/'best.pt')
                 (out/'selection.json').write_text(json.dumps(selected,indent=2)+'\n')
         torch.save(student.state_dict(),out/'final.pt');save_state(out/'final_state.pt',steps)
         wall=time.monotonic()-start;status='COMPLETE'
