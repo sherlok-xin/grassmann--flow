@@ -98,6 +98,53 @@ modern_pending_data_gate:
   test_access: prohibited_until_config_lock
   teacher_student_models: [Qwen3_1.7B_Base, Qwen3_0.6B_Base]
   protocol_lock_required_after_resource_and_data_audit: true
+modern_resource_and_selection_rules:
+  frozen_data_manifest: modern_data.json
+  task: single_turn_short_summarization_no_think_complete_responses_fit_512
+  preparation_unique_response_targets: 575227
+  continuation_unique_response_targets: 1839404
+  repetition: explicitly_report_target_equivalents_never_call_repeated_targets_new_data
+  smoke: 8_updates_each_CE_KD_A_and_teacher_LoRA_no_endpoint_selection
+  model_revisions: modern_assets.json
+  candidate_continuation_target_budgets: [8000000, 4000000, 2000000]
+  resource_budget_rule: >-
+    Choose the largest budget whose slowest measured CE-with-cache/KD/A update rate
+    projects at most 8 GPUh with 25 percent overhead. This is fixed before adaptation
+    or continuation endpoints. If even 2M exceeds this bound, reduce the secondary
+    matrix or uniformly use LoRA after recording the resource limitation; do not
+    silently substitute the old FineWeb setting.
+  batch_micro_sequence: [8, 1, 512]
+  student: full_FP32_trainable_parameters_BF16_autocast_gradient_checkpointing
+  student_memory_fallback: all_methods_same_rank16_LoRA_only_if_isolated_full_parameter_smoke_cannot_fit
+  teacher: rank16_LoRA_alpha32_dropout0_q_k_v_o_gate_up_down
+  teacher_preparation: {targets: 1150454, lr: 0.0002, split: preparation, selection: dev_NLL}
+  student_preparation: {targets: 500000, lr: 0.00002, split: preparation, selection: fixed_final_step}
+  seed42_fallback_if_no_headroom: one_fixed_100000_target_preparation_with_same_selected_CE_LR_no_extra_LR_search
+  optimization: AdamW_betas_0.9_0.999_eps_1e-8_wd_0.01_clip1_warmup0.05_cosine
+  screen_targets: 250000
+  CE_screen_lrs: [0.000001, 0.000005, 0.00001, 0.00002, 0.00003, 0.00005]
+  KD_screen: {lambda: [0.25, 1, 5], temperature: [1, 2], lr: selected_CE_lr}
+  A_screen: {lambda: [0.25, 1, 5], temperature: 1, lr: selected_CE_lr}
+  literature_baseline: lowest_WT2_screen_dev_of_ATKD_ToDi_WClip_then_modern_lambda_1_5_screen
+  screen_selection: lowest_trained_final_dev_NLL_ties_smaller_lambda_temperature_lr
+  final_selection: dev_NLL_including_S0_earliest_tie
+  eval_targets: 500000
+  headroom_gate: >-
+    Full CE must select a trained checkpoint, improve dev token NLL by at least
+    0.2 percent relative to S0, and have a positive paired document-bootstrap
+    95 percent lower bound (2000 resamples, seed20261125). This selected-dev CI is
+    a descriptive pilot gate, not selection-adjusted confirmatory inference.
+  confirmation_rule: >-
+    Three preparation seeds for CE, selected KD and selected literature baseline;
+    add A seeds if its seed42 full dev NLL beats all three by at least 0.2 percent
+    relative and remaining budget permits. Seed42 is exploratory. Repeat only
+    selected key comparisons for the second teacher adaptation seed123, explicitly
+    sharing the same pretrained teacher and student base weights.
+  task_metric: ROUGE_L_fixed_greedy_decode_128_new_tokens_im_end_or_endoftext_stop_against_synthetic_reference_responses
+  generation_subset: first_512_test_documents_in_frozen_document_hash_order
+  generation_implementation: rouge_score_0.1.2_rougeL_Fmeasure_use_stemmer_true_macro_mean
+  test_nll: all_3322_frozen_test_documents
+  test_policy: only_after_all_method_configurations_are_locked
 tinystories_seed42:
   data_manifest: data_ts.json
   train_chunks: 262036

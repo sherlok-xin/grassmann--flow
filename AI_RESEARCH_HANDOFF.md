@@ -15,8 +15,11 @@ Never stop or modify those jobs. Recheck before each launch.
 
 Candidate A is explicitly adaptive CE/KD weighting with detached independent
 pre-update CE reference probabilities. The closed-form projection alone is not
-a novelty or student safety guarantee. No successful Phase 5 endpoint exists
-yet. Old ARR real reviews are 2/2/1, not the simulated 3/3/2. Withdrawal,
+a novelty or student safety guarantee. Six CE screens and the first KD screen
+have completed; no full Phase 5 method pilot is complete yet. Read the live
+Phase 5 REPORT/GPT_HANDOFF and actual queue processes. Qwen3 revisions and a
+new response-masked SFT dataset are pinned; real-Qwen GPU smoke remains pending.
+Old ARR real reviews are 2/2/1, not the simulated 3/3/2. Withdrawal,
 OpenReview submission and mentor communications remain author-only.
 
 ## 2026-10-08 Authorized full manuscript V2 revision complete — STOP

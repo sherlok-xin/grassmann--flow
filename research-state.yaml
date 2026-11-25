@@ -1,6 +1,6 @@
 schema_version: 1
 updated: "2026-11-25"
-status: phase5_implementation_and_resource_smoke
+status: phase5_screening_and_pilots_shared_gpu_queue
 phase: phase5_ce_reference_distillation
 decision: NEW_USER_AUTHORIZATION_PHASE5_20261125
 training_authorized: true

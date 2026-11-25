@@ -1,0 +1,11 @@
+run,status,gpu,reservation,gpu_hours,current_elapsed_gpu_hours,started_unix,finished_unix,includes
+wt2_s42_screen_ce0,COMPLETE,3,2.0,0.12552073181438675,0.12552073181438675,1795607828.978127,1795608280.8557737,exclusive allocated GPU wall time including loading evaluation cache and snapshots
+wt2_s42_screen_ce1,COMPLETE,0,2.0,0.04241183191162741,0.04241183191162741,1795608321.4203167,1795608474.1065521,exclusive allocated GPU wall time including loading evaluation cache and snapshots
+wt2_s42_screen_ce2,COMPLETE,0,2.0,0.043347139090247865,0.043347139090247865,1795608476.4880648,1795608632.5420058,exclusive allocated GPU wall time including loading evaluation cache and snapshots
+wt2_s42_screen_ce3,COMPLETE,0,2.0,0.042546790196663804,0.042546790196663804,1795608635.0104306,1795608788.1824164,exclusive allocated GPU wall time including loading evaluation cache and snapshots
+wt2_s42_screen_ce4,COMPLETE,0,2.0,0.0415205015864275,0.0415205015864275,1795608790.6234798,1795608940.1003258,exclusive allocated GPU wall time including loading evaluation cache and snapshots
+ts_s42_smoke_ce8,COMPLETE,1,0.25,0.016115913136681127,0.016115913136681127,1795608871.6452284,1795608929.666318,exclusive allocated GPU wall time including loading evaluation cache and snapshots
+wt2_s42_screen_ce5,COMPLETE,0,2.0,0.04806394164217636,0.04806394164217636,1795608942.9214835,1795609115.9562547,exclusive allocated GPU wall time including loading evaluation cache and snapshots
+wt2_s42_screen_kd0,COMPLETE,0,2.0,0.05797682147085046,0.05797682147085046,1795609118.6517112,1795609327.3725445,exclusive allocated GPU wall time including loading evaluation cache and snapshots
+wt2_state_replay_smoke,FAILED,2,0.5,0.006998854728363868,0.006998854728363868,1795609153.7511373,1795609178.9458778,exclusive allocated GPU wall time including loading evaluation cache and snapshots
+ts_s42_smoke_kd8,COMPLETE,1,0.25,0.024681921563007764,0.024681921563007764,1795609548.6240406,1795609638.2064955,exclusive allocated GPU wall time including loading evaluation cache and snapshots

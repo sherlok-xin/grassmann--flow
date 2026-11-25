@@ -14,12 +14,13 @@ def main():
     p=argparse.ArgumentParser()
     p.add_argument('--gpu',type=int,required=True);p.add_argument('--domain',choices=['wt2','ts'],default='wt2')
     p.add_argument('--seed',type=int,default=42);p.add_argument('--name',required=True)
-    p.add_argument('--mode',choices=['ce','kd','reference','current','fixed','mean','permuted','ls','atkd','todi','wclip'],required=True)
+    p.add_argument('--mode',choices=['ce','kd','reference','reference_only','current','fixed','mean','permuted','ls','atkd','todi','wclip'],required=True)
     p.add_argument('--lr',type=float,default=1e-4);p.add_argument('--lam',type=float,default=1.)
     p.add_argument('--temperature',type=float,default=1.);p.add_argument('--epochs',type=int,default=10)
     p.add_argument('--micro',type=int,default=16);p.add_argument('--reference-run');p.add_argument('--cache-gold',action='store_true')
     p.add_argument('--max-hours',type=float,default=2.);p.add_argument('--smoothing',type=float,default=.1)
     p.add_argument('--step-limit',type=int,help='preregistered short-budget prefix only; never changes full defaults')
+    p.add_argument('--loss-scale',type=float,default=1.,help='explicit constant coefficient-matching control')
     a=p.parse_args()
     mem=int(subprocess.check_output(['nvidia-smi',f'--id={a.gpu}','--query-gpu=memory.used','--format=csv,noheader,nounits'],text=True).strip())
     if mem>256:raise RuntimeError(f'GPU {a.gpu} occupied ({mem} MiB), deferring')
@@ -33,6 +34,7 @@ def main():
     torch.set_num_threads(4)
     if a.micro>32 or 32%a.micro:raise ValueError('microbatch must divide 32')
     if a.cache_gold and a.mode!='ce':raise ValueError('only independent CE may generate cache')
+    if a.loss_scale<=0 or (a.cache_gold and a.loss_scale!=1):raise ValueError('invalid loss scaling or non-pure CE cache')
     if '/' in a.name or '..' in a.name:raise ValueError('invalid run name')
     root=ROOT/'outputs/phase5';out=root/'runs'/a.name
     out.mkdir(parents=True,exist_ok=False)
@@ -55,7 +57,7 @@ def main():
         arrays={k:np.load(ROOT/v['path'],mmap_mode='r') for k,v in manifest['files'].items()}
         for v in manifest['files'].values():
             if sha(ROOT/v['path'])!=v['sha256']:raise ValueError('token data hash mismatch')
-        student,teacher,old,common,identity=context(a.domain,a.seed,teacher_needed=a.mode not in {'ce','ls'})
+        student,teacher,old,common,identity=context(a.domain,a.seed,teacher_needed=a.mode not in {'ce','ls','reference_only'})
         seed_all(a.seed)
         initial={k:v.detach().cpu().clone() for k,v in student.state_dict().items()}
         fixed=copy.deepcopy(student).eval().requires_grad_(False) if a.mode=='fixed' else None
@@ -65,13 +67,18 @@ def main():
             steps=min(steps,a.step_limit)
         warmup=max(1,int(.05*steps))
         optimizer=torch.optim.AdamW(student.parameters(),lr=a.lr,weight_decay=.01,betas=(.9,.999),eps=1e-8)
+        reference_optimizer=None
+        if a.mode=='reference_only':
+            if a.temperature!=1 or a.loss_scale!=1:raise ValueError('reference-only replay uses the matched unscaled temperature-one protocol')
+            teacher=copy.deepcopy(student).eval()
+            reference_optimizer=torch.optim.AdamW(teacher.parameters(),lr=a.lr,weight_decay=.01,betas=(.9,.999),eps=1e-8)
         cache_identity=dict(seed=a.seed,student_hash=identity['expected_student_sha256'],
             data_hash=manifest['files']['train']['sha256'],steps=steps,lr=a.lr,weight_decay=.01,
             betas=[.9,.999],eps=1e-8,warmup_steps=warmup,batch=32,micro=a.micro,precision='BF16',
             order_seed=20261125+a.seed,dropout='train_for_update_eval_for_reference',reference_timing='preupdate')
         cache=None
         if a.cache_gold:cache=GoldCache(out/'gold_cache',cache_identity,write=True)
-        elif a.mode in {'reference','mean','permuted'}:
+        elif a.mode in {'reference','mean','permuted','reference_only'}:
             if not a.reference_run:raise ValueError('independent CE reference run required')
             cache=GoldCache(root/'runs'/a.reference_run/'gold_cache',cache_identity)
             summary=json.loads((root/'runs'/a.reference_run/'summary.json').read_text())
@@ -99,7 +106,11 @@ def main():
             torch.save(dict(model=student.state_dict(),optimizer=optimizer.state_dict(),rng=get_rng(),
                 scheduler={'completed_steps':completed,'total_steps':steps,'warmup':warmup,'peak_lr':a.lr},
                 scaler=None,precision='BF16',cursor={'epoch':completed//spe,'batch':completed%spe},
-                accumulation_position=0,config=config),path)
+                accumulation_position=0,config=config,
+                independent_reference_model=teacher.state_dict() if reference_optimizer is not None else None,
+                independent_reference_optimizer=reference_optimizer.state_dict() if reference_optimizer is not None else None),path)
+        def set_rng(r):
+            random.setstate(r['python']);np.random.set_state(r['numpy']);torch.set_rng_state(r['cpu']);torch.cuda.set_rng_state(r['cuda'])
         initial_dev,_=evaluate(student,'dev');best=initial_dev;best_step=0;selected=[{'step':0,'dev_nll':best}]
         torch.save(initial,out/'best.pt')
         teacher_dev=evaluate(teacher,'dev')[0] if teacher is not None else None
@@ -145,6 +156,7 @@ def main():
                             # Separate group means, author alpha=.2. Empty easy group contributes zero.
                             scale=torch.where(hard,torch.tensor(.8*nt,device='cuda')/nh.clamp_min(1),torch.tensor(.2*nt,device='cuda')/ne.clamp_min(1))
                     student.train();optimizer.zero_grad(set_to_none=True)
+                    before_student_rng=get_rng() if reference_optimizer is not None else None
                     before=[v.detach().clone() for v in student.parameters()]
                     sums={k:0. for k in ['loss','ce','kd','beta']}
                     for j in range(0,len(x),a.micro):
@@ -153,11 +165,16 @@ def main():
                             with torch.no_grad():zt=logits(teacher,xx) if teacher is not None else None
                             zs=logits(student,xx)
                         sf,y=flat(zs,xx);tf=flat(zt,xx)[0] if zt is not None else None
+                        if reference_optimizer is not None:
+                            observed=tf.float().log_softmax(-1).gather(1,y[:,None]).squeeze(1)
+                            if not torch.allclose(observed,rp[j:j+a.micro].reshape(-1),atol=2e-5,rtol=2e-5):
+                                raise AssertionError('online independent CE does not match the preupdate CE cache')
                         sl=slice(j*255,(j+len(xx))*255)
-                        loss,stats=token_loss(sf,tf,y,mode=a.mode,lam=a.lam,temperature=a.temperature,
+                        loss,stats=token_loss(sf,tf,y,mode='kd' if a.mode=='reference_only' else a.mode,lam=a.lam,temperature=a.temperature,
                             reference_logp=rp[j:j+a.micro].reshape(-1) if rp is not None else None,
                             beta_mean=batch_beta,smoothing=a.smoothing,
                             atkd_weights=(hard[sl],scale[sl]) if hard is not None else None)
+                        loss=loss*a.loss_scale
                         (loss.sum()/nt).backward();sums['loss']+=float(loss.detach().sum())
                         for k in stats:sums[k]+=float(stats[k].detach().sum())
                         del zs,zt,sf,tf,loss,stats
@@ -167,10 +184,25 @@ def main():
                     update=float(sum((v.detach()-b).float().square().sum() for v,b in zip(student.parameters(),before)).sqrt())
                     del before
                     if not math.isfinite(update):raise FloatingPointError('nonfinite parameter update')
+                    reference_norm=None
+                    if reference_optimizer is not None:
+                        after_student_rng=get_rng();set_rng(before_student_rng)
+                        teacher.train();reference_optimizer.zero_grad(set_to_none=True)
+                        for group in reference_optimizer.param_groups:group['lr']=lr
+                        for j in range(0,len(x),a.micro):
+                            xx=x[j:j+a.micro]
+                            with torch.autocast('cuda',dtype=torch.bfloat16):zz=logits(teacher,xx)
+                            zf,y=flat(zz,xx)
+                            ref_loss,_=token_loss(zf,None,y,mode='ce',lam=0.)
+                            (ref_loss.sum()/nt).backward()
+                        reference_norm=float(torch.nn.utils.clip_grad_norm_(teacher.parameters(),1.))
+                        if not math.isfinite(reference_norm):raise FloatingPointError('nonfinite independent CE replay')
+                        reference_optimizer.step();teacher.eval();set_rng(after_student_rng)
                     clipped+=norm>1;norm_sum+=norm;update_sum+=update;total_targets+=nt;beta_sum+=sums['beta'];beta_count+=nt
                     telemetry=dict(step=step+1,lr=lr,lam=a.lam,temperature=a.temperature,targets=nt,
                         preclip_norm=norm,clipped=norm>1,update_norm=update,nonfinite=0,
                         elapsed_seconds=time.monotonic()-start,**{k:v/nt for k,v in sums.items()})
+                    if reference_norm is not None:telemetry['reference_preclip_norm']=reference_norm
                     trace.write(json.dumps(telemetry)+'\n')
                     if (step+1)%50==0:trace.flush();print(json.dumps({'run':a.name,**telemetry}),flush=True)
                     if step+1 in milestones:save_state(out/f'state_{step+1}.pt',step+1)

@@ -1,0 +1,95 @@
+{
+  "dataset": "HuggingFaceTB/smoltalk2",
+  "revision": "fc6cc2103c066455aade5d7fbb346039ae36ca5e",
+  "subset": "smoltalk_smollm3_smol_summarize_no_think",
+  "input_files": {
+    "outputs/phase5/modern_assets/smoltalk2/SFT/smoltalk_smollm3_smol_summarize_no_think-00000-of-00001.parquet": "0c93495be662ae510d9291e12d4fd53399720bbd1f0bcbfd5b399db3f64dc8f2"
+  },
+  "raw_rows": 96061,
+  "retained_rows": 66946,
+  "counts": {
+    "excluded_length": 25809,
+    "exact_duplicate_dropped": 3306
+  },
+  "files": {
+    "preparation": {
+      "path": "outputs/phase5/modern_data/preparation.npz",
+      "sha256": "cc6340ff6193018e4fd056e93eefc1ef262db7e4dd210d42c1f2d077aa178ccb",
+      "records_path": "outputs/phase5/modern_data/preparation.jsonl",
+      "records_sha256": "b03967f6bb67ad1f3523d6df426275bf6f2c59d6bc7b0427f9e50cf50c4098cd",
+      "examples": 13508,
+      "unique_response_targets": 575227,
+      "groups": 13508
+    },
+    "continuation": {
+      "path": "outputs/phase5/modern_data/continuation.npz",
+      "sha256": "46d29718ae2743134e9db0e7bb0ff1f72da7309f064adfe0f766eb5aa0751689",
+      "records_path": "outputs/phase5/modern_data/continuation.jsonl",
+      "records_sha256": "eee049afb5017f21d1409af530d6160e14f337a7e62953385e7f3da534470420",
+      "examples": 43286,
+      "unique_response_targets": 1839404,
+      "groups": 43286
+    },
+    "control": {
+      "path": "outputs/phase5/modern_data/control.npz",
+      "sha256": "ef14eab87e307f9d35240ff8dc9d294ea3695e3fee2f20ed99255f4b04508e5f",
+      "records_path": "outputs/phase5/modern_data/control.jsonl",
+      "records_sha256": "17f5622e1804514ec256605f1a2c35c868452b4d06189b8dbf7791ac44037093",
+      "examples": 3449,
+      "unique_response_targets": 144814,
+      "groups": 3449
+    },
+    "dev": {
+      "path": "outputs/phase5/modern_data/dev.npz",
+      "sha256": "0959351e407d753bf3f3f2c9212e9217acc43b32ce2ce479a24a6878f6fe8ae2",
+      "records_path": "outputs/phase5/modern_data/dev.jsonl",
+      "records_sha256": "3cbdf32483e487eb8cb3a7f72d3b442f922867db9d0d5b3c490b9864c970e2d8",
+      "examples": 3381,
+      "unique_response_targets": 142077,
+      "groups": 3381
+    },
+    "test": {
+      "path": "outputs/phase5/modern_data/test.npz",
+      "sha256": "814fdeb8cee1fad8768c74772df7a16b79aa229bd817191c6734cda7248c0137",
+      "records_path": "outputs/phase5/modern_data/test.jsonl",
+      "records_sha256": "b39728631cfa347d355f0ac0e457eb32f040cd7dda4798aab348afe02605f66b",
+      "examples": 3322,
+      "unique_response_targets": 143395,
+      "groups": 3322
+    }
+  },
+  "groups_sha256": "49213b3af59e019be7fea9eace940f5584f5872fd9ad8d17cda5b3cb4cbe4bab",
+  "sequence_length": 512,
+  "tokenizer_id_semantics_equal": true,
+  "actual_encodings_all_equal": true,
+  "vocab_sha256": "3ec3c124e02b7ace235364350c04b8fc38d34b182aad914fc45430fa925c0f3f",
+  "special_tokens": {
+    "eos_token": "<|endoftext|>",
+    "pad_token": "<|endoftext|>",
+    "additional_special_tokens": [
+      "<|im_start|>",
+      "<|im_end|>",
+      "<|object_ref_start|>",
+      "<|object_ref_end|>",
+      "<|box_start|>",
+      "<|box_end|>",
+      "<|quad_start|>",
+      "<|quad_end|>",
+      "<|vision_start|>",
+      "<|vision_end|>",
+      "<|vision_pad|>",
+      "<|image_pad|>",
+      "<|video_pad|>"
+    ]
+  },
+  "pad_token_id": 151643,
+  "response_end_token_id": 151645,
+  "masking": "only full assistant reference response plus im_end; system/user/header/padding ignored",
+  "truncation": "none; exclude examples exceeding 512 including full response",
+  "grouping": "normalized source document plus 5-word shingle Jaccard>=0.8 for fixed MinHash-LSH candidates",
+  "grouping_limit": "lexical screen is not an exhaustive semantic paraphrase detector",
+  "license": "Apache-2.0 upstream Smol-summarize; synthetic reference responses, not guaranteed truths",
+  "license_source": "https://huggingface.co/datasets/HuggingFaceTB/smoltalk/blob/main/README.md",
+  "test_access": "preprocessing only; no model scores or selection",
+  "no_think_only": true
+}
