@@ -81,6 +81,7 @@ wt2_seed42:
   wclip: {eta: 0.5, margin: 0.7, scope: token_level_adaptation_of_W_Clip_component_without_DUS}
   full_promotions: best_CE_KD_A_LS_ATKD_ToDi_WClip_plus_matched_CE_reference_if_needed
   priority_ablations: [current_student_reference, global_batch_mean_beta, non_target_identity_permutation]
+  current_reference_mode: preupdate_eval_mode_extra_forward_same_as_independent_reference_cache
   secondary_ablations: [fixed_S0_reference, full_reference_distribution_online_replay, fixed_effective_lambda]
   selection_gate_for_confirmation: >-
     A must improve full dev NLL over tuned CE and tuned KD and the strongest literature baseline;

@@ -68,12 +68,12 @@ def main():
                 scheduler=dict(completed_steps=completed,total_steps=total,warmup=config['warmup_steps'],peak_lr=config['lr']),
                 cursor=dict(epoch=completed//spe,batch=completed%spe),config=config)
         @torch.no_grad()
-        def evaluate(split='control', count=None):
+        def evaluate(split='control', count=None, fp32=False):
             model.eval();s=0.;nt=0
             arr=data[split]; n=len(arr) if count is None else min(count,len(arr))
             for i in range(0,n,micro):
                 x=torch.from_numpy(np.array(arr[i:min(n,i+micro)],dtype=np.int64)).cuda()
-                with torch.autocast('cuda',dtype=torch.bfloat16): z=logits(model,x)
+                with torch.autocast('cuda',dtype=torch.bfloat16,enabled=not fp32): z=logits(model,x)
                 zz,y=flat(z,x);s+=float(torch.nn.functional.cross_entropy(zz.float(),y,reduction='sum'));nt+=y.numel()
             return s/nt
         def update(step, mode, lam):
@@ -103,7 +103,7 @@ def main():
             # it is explicitly a proxy, not an exact Hessian or a gate for training.
             restore(s);model.eval();params=list(model.parameters());step=s['scheduler']['completed_steps']
             _,x=batch(step);xx=x[:2]
-            with torch.autocast('cuda',dtype=torch.bfloat16):
+            with torch.autocast('cuda',dtype=torch.bfloat16,enabled=False):
                 with torch.no_grad():zt=logits(teacher,xx)
                 zs=logits(model,xx)
             sf,y=flat(zs,xx);tf=flat(zt,xx)[0]
@@ -115,23 +115,23 @@ def main():
                 restore(s);model.eval();opt.zero_grad(set_to_none=True)
                 for i in range(0,n,micro):
                     xx=torch.from_numpy(np.array(data['control'][i:min(n,i+micro)],dtype=np.int64)).cuda()
-                    with torch.autocast('cuda',dtype=torch.bfloat16):zz=logits(model,xx)
+                    with torch.autocast('cuda',dtype=torch.bfloat16,enabled=False):zz=logits(model,xx)
                     zf,y=flat(zz,xx)
                     (torch.nn.functional.cross_entropy(zf.float(),y,reduction='sum')/(n*255)).backward()
                 gv=[v.grad.detach().clone() if v.grad is not None else torch.zeros_like(v) for v in params]
                 dot=float(sum(u.mul(v).sum() for u,v in zip(gv,gd)));vn=float(sum(g.square().sum() for g in gv).sqrt())
-                f0=evaluate(count=n);eps=.01
+                f0=evaluate(count=n,fp32=True);eps=.01
                 vals=[]
                 for sign in [-1,1]:
                     model.load_state_dict(s['model'])
                     with torch.no_grad():
                         for v,g in zip(params,gd):v.add_(g,alpha=sign*eps/max(gn,1e-30))
-                    vals.append(evaluate(count=n))
+                    vals.append(evaluate(count=n,fp32=True))
                 diagnostics.append(dict(source=a.source_run,step=step,control_chunks=n,
                     train_probe_chunks=2,gradient_dot=dot,gradient_cosine=dot/max(gn*vn,1e-30),
                     kd_gradient_norm=gn,control_gradient_norm=vn,curvature_epsilon=eps,
                     normalized_direction_curvature=(sum(vals)-2*f0)/eps**2,
-                    curvature_estimator='symmetric finite difference BF16 forward; descriptive only'))
+                    curvature_estimator='symmetric finite difference FP32 eval forward; descriptive only'))
             restore(s)
         if a.controller:
             # Begin at the first saved warmup state, not at an invented zero-moment state.
@@ -168,6 +168,17 @@ def main():
             if a.smoke:paths=paths[:1]
             for path in paths:
                 s=torch.load(path,map_location='cpu',weights_only=False);start=s['scheduler']['completed_steps']
+                if a.smoke:
+                    restore(s);update(start,'ce',0.);first=capture(start+1)
+                    restore(s);update(start,'ce',0.);second=capture(start+1)
+                    def same(x,y):
+                        if torch.is_tensor(x):return torch.equal(x,y)
+                        if isinstance(x,dict):return x.keys()==y.keys() and all(same(x[k],y[k]) for k in x)
+                        if isinstance(x,(tuple,list)):return len(x)==len(y) and all(same(u,v) for u,v in zip(x,y))
+                        return x==y
+                    if not same(first['model'],second['model']) or not same(first['optimizer'],second['optimizer']):
+                        raise AssertionError('full-state replay differs; no formal forks permitted')
+                    (output/'replay_check.json').write_text(json.dumps({'model_optimizer_exact_replay':True,'lr_nonzero':True})+'\n')
                 probe(s)
                 for mode,lam in [('ce',0.),('kd',1.),('reference',config['lam'] or 1.)]:
                     restore(s);norms=[];updates=[];clips=[]

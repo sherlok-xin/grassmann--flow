@@ -119,8 +119,8 @@ def main():
                     for g in optimizer.param_groups:g['lr']=lr
                     rp=None;batch_beta=None;hard=None;scale=None
                     # Cache uses eval-mode probabilities with no dropout RNG consumption.
-                    if a.cache_gold or fixed is not None:
-                        model=student if a.cache_gold else fixed;was=model.training;model.eval();vals=[]
+                    if a.cache_gold or fixed is not None or a.mode=='current':
+                        model=fixed if fixed is not None else student;was=model.training;model.eval();vals=[]
                         with torch.no_grad():
                             for j in range(0,len(x),a.micro):
                                 xx=x[j:j+a.micro]

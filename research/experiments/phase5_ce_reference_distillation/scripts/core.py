@@ -109,7 +109,7 @@ def token_loss(student_logits, teacher_logits, gold, *, mode='kd', lam=1., tempe
     elif mode in {'reference', 'current', 'fixed', 'mean', 'permuted'}:
         if temperature != 1:
             raise ValueError('projection equivalence is restricted to temperature one')
-        if mode == 'current':
+        if mode == 'current' and reference_logp is None:
             reference_logp = logs.detach().gather(-1, gold[:, None]).squeeze(-1)
         if reference_logp is None:
             raise ValueError('missing pre-update reference probabilities')

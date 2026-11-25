@@ -57,11 +57,12 @@ def main():
         manifest.append(dict(document_id=i,text_sha256=key,split=split,chunks=len(chunks)))
     for split,chunks in groups.items(): np.save(out/f'{split}.npy',np.asarray(chunks,dtype=np.int32))
     from legacy import sha
+    (out/'documents.json').write_text(json.dumps(manifest,separators=(',',':'))+'\n')
     payload=dict(domain=a.domain,train_stats=train.stats,validation_grouping='WT2 article headings / TinyStories complete stories',
                  control_dev_disjoint_documents=True,historical_S0_used_original_validation=True,
                  new_test_access=False,seq_len=256,files={s:dict(path=str((out/f'{s}.npy').relative_to(ROOT)),
                     sha256=sha(out/f'{s}.npy'),chunks=len(arr) if s=='train' else len(groups[s])) for s in ['train','control','dev']},
-                 documents=manifest)
+                 document_manifest=dict(path=str((out/'documents.json').relative_to(ROOT)),sha256=sha(out/'documents.json'),documents=len(manifest)))
     (PHASE/f'data_{a.domain}.json').write_text(json.dumps(payload,indent=2)+'\n')
     print(json.dumps({k:v for k,v in payload.items() if k!='documents'},indent=2),flush=True)
 
