@@ -31,7 +31,7 @@ def main():
     import numpy as np
     import random
     import torch
-    from legacy import ROOT, context, logits, flat, sha
+    from legacy import ROOT, context, logits, flat, sha, seed_all
     from core import GoldCache, token_loss
     from budget import Budget
     torch.set_num_threads(4)
@@ -44,6 +44,7 @@ def main():
     rows, diagnostics = [], []
     with Budget(a.name, a.gpu, .5 if a.smoke else (3 if a.controller else 2)) as budget:
         model, teacher, _, _, _ = context(config['domain'], config['seed'])
+        seed_all(config['seed'])
         opt = torch.optim.AdamW(model.parameters(), lr=config['lr'], betas=(.9,.999), eps=1e-8, weight_decay=.01)
         manifest = json.loads((phase/f"data_{config['domain']}.json").read_text())
         data = {s: np.load(ROOT / v['path'], mmap_mode='r') for s,v in manifest['files'].items()}
@@ -134,12 +135,11 @@ def main():
                     curvature_estimator='symmetric finite difference FP32 eval forward; descriptive only'))
             restore(s)
         if a.controller:
-            # Begin at the first saved warmup state, not at an invented zero-moment state.
-            # This is a warmup-prefix CE continuation and is labeled as such.
-            state_path=source/f"state_{config['warmup_steps']}.pt"
-            state=torch.load(state_path,map_location='cpu',weights_only=False)
-            completed=state['scheduler']['completed_steps'];restore(state)
-            H,K=8,256;decisions=[];selected={'step':completed,'dev_nll':evaluate('dev')}
+            # Genuine S0 and newly initialized AdamW, then full-state commits.
+            # No moments are erased from a pretrained continuation state.
+            completed=0
+            H,K=8,256;decisions=[];selected={'step':0,'dev_nll':evaluate('dev')}
+            torch.save(model.state_dict(),output/'best.pt')
             while completed<total:
                 start_state=capture(completed); trials=[]
                 h=min(H,total-completed)
@@ -159,7 +159,7 @@ def main():
                 (output/'decisions.json').write_text(json.dumps(decisions,indent=2)+'\n')
                 if a.smoke:break
             result=dict(name=a.name,kind='B_identical_to_budget_matched_online_HPO',prefix_run=a.source_run,
-                prefix_steps=config['warmup_steps'],selected=selected,completed_steps=completed,
+                prefix_steps=0,selected=selected,completed_steps=completed,
                 dev_schedule='each controller block; differs from main epoch schedule and not checkpoint-budget matched',
                 independent_method_success_claim=False,test_access=False)
             (output/'summary.json').write_text(json.dumps(result,indent=2)+'\n')

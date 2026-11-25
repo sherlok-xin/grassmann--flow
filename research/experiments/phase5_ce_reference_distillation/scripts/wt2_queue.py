@@ -11,6 +11,7 @@ PHASE=HERE.parent
 
 def main():
     p=argparse.ArgumentParser();p.add_argument('--gpu',type=int,default=0);p.add_argument('--screen-only',action='store_true');a=p.parse_args()
+    from resources import wait_idle
     rows=[]
     def run(name,mode,lr=1e-4,lam=1.,temperature=1.,epochs=1,cache=False,ref=None,smoothing=.1):
         spec=dict(name=name,mode=mode,lr=lr,lam=lam,temperature=temperature,epochs=epochs,smoothing=smoothing)
@@ -20,6 +21,7 @@ def main():
             if result['status']!='COMPLETE' or any(result['config'][k]!=v for k,v in spec.items()):
                 raise ValueError('existing run mismatch')
         else:
+            wait_idle(a.gpu)
             cmd=[sys.executable,str(HERE/'train_legacy.py'),'--gpu',str(a.gpu),'--name',name,'--mode',mode,
                  '--lr',str(lr),'--lam',str(lam),'--temperature',str(temperature),'--epochs',str(epochs),
                  '--smoothing',str(smoothing),'--max-hours','2']
@@ -46,6 +48,16 @@ def main():
     winners={k:min(v,key=lambda x:(x['final_dev_nll'],x['lam'],x['temperature'],x['lr'])) for k,v in groups.items()}
     (PHASE/'wt2_dev_selections.json').write_text(json.dumps({'criterion':'trained screen dev only; no test', 'winners':winners},indent=2)+'\n')
     if a.screen_only:return
+    def analysis(name,source,reference,smoke=False,controller=False):
+        if (ROOT/'outputs/phase5/analyses'/name/'summary.json').exists():return
+        wait_idle(a.gpu)
+        cmd=[sys.executable,'-u',str(HERE/'fork_legacy.py'),'--gpu',str(a.gpu),
+             '--source-run',source,'--reference-run',reference,'--name',name]
+        if smoke:cmd.append('--smoke')
+        if controller:cmd.append('--controller')
+        with (ROOT/'outputs/phase5/launcher_logs'/(name+'.log')).open('a') as f:
+            subprocess.run(cmd,cwd=ROOT,stdout=f,stderr=subprocess.STDOUT,check=True)
+    analysis('wt2_state_replay_smoke_idle_retry','wt2_s42_screen_ce5','wt2_s42_screen_ce5',smoke=True)
     # Selection artifact is serialized before full runs. Initial protocol preauthorizes this deterministic promotion.
     ce_w=winners['ce']
     full_ce=run('wt2_s42_full_ce','ce',ce_w['lr'],lam=0,epochs=10,cache=ce_w['lr']==1e-4)
@@ -60,6 +72,8 @@ def main():
     w=winners['reference']
     for mode in ['current','mean','permuted']:
         run('wt2_s42_ablation_'+mode,mode,w['lr'],w['lam'],1,epochs=10,ref=refname if mode!='current' else None)
+    analysis('wt2_s42_real_adamw_forks','wt2_s42_full_reference',refname)
+    analysis('wt2_s42_online_search_B',refname,refname,controller=True)
     print('WT2_FULL_PILOT_AND_PRIORITY_ABLATIONS_COMPLETE; no test accessed',flush=True)
 
 if __name__=='__main__':main()
