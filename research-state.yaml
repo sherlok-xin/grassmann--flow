@@ -47,6 +47,9 @@ phase5:
   scientific_tests_passed: 9
   actual_recorded_gpu_hours_snapshot: 0.479300
   resource_status: all_four_cards_busy_user_confirmed_wait_for_idle_no_reservation
+  resource_monitor_interval_seconds: 3600
+  resource_monitor_log: outputs/phase5/monitoring/monitor_197_latest.json
+  resource_monitor_server: 10.42.0.197
   draft: 论文投稿/manuscript_v3/main.tex
   draft_status: incomplete_five_pages_compiled_visually_checked_not_submission_ready
   next_action: idle_queues_continue_WT2_TS_Qwen_smoke_then_full_pilots_and_bounded_confirmations

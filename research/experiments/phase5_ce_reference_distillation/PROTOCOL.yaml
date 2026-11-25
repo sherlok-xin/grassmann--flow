@@ -14,6 +14,8 @@ resource_update_20261125: >-
   GPU 3 measured 210 MHz under load. Its first completed WT2 screen is retained and charged;
   the remaining queue moved to GPU 0 without modifying device clocks or other processes.
 resource_rule: recheck_memory_and_processes_before_every_launch_do_not_kill_other_jobs
+resource_poll_seconds: 3600
+resource_monitor: user_requested_hourly_read_only_197_GPU_queue_and_budget_status
 bootstrap_scope:
   tests: normalization_tail_ratios_gradient_equivalence_lambda_zero_cache_alignment
   disposable_smoke: legacy_wt2_ce_kd_reference_projection_32_updates_max_each

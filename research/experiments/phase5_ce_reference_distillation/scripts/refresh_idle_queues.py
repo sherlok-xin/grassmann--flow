@@ -17,6 +17,7 @@ HERE = Path(__file__).resolve().parent
 
 
 def main():
+    from resources import POLL_SECONDS
     specifications = {'wt2_queue.py': 0, 'ts_queue.py': 1, 'modern_queue.py': 2,
                       'wt2_followups.py': 0, 'legacy_confirmations.py': 0}
     ledger = json.loads((ROOT / 'outputs/phase5/accounting.json').read_text())
@@ -63,11 +64,14 @@ def main():
                                      stdout=output, stderr=subprocess.STDOUT, start_new_session=True)
         launched.append(dict(script=name, gpu=gpu, pid=child.pid, command=command))
     record = dict(time_unix=time.time(), host='197 grassmann_lab',
-                  reason='user confirmed waiting without a reserved GPU; remove idle timeout',
+                  reason='user requested hourly monitoring of 197; refresh only verified CPU waiters',
+                  resource_poll_seconds=POLL_SECONDS,
                   old_waiter_pids={name: values[0][0] for name, values in found.items()},
                   new_waiters=launched, training_hyperparameters_changed=False,
                   no_other_processes_modified=True)
     (ROOT / 'outputs/phase5/queue_processes.json').write_text(json.dumps(record, indent=2) + '\n')
+    with (ROOT / 'outputs/phase5/queue_refresh_history.jsonl').open('a') as history:
+        history.write(json.dumps(record) + '\n')
     print(json.dumps(record), flush=True)
 
 
