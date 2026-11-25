@@ -9,7 +9,9 @@ import time
 
 def main():
     p=argparse.ArgumentParser(); p.add_argument('--gpu',type=int,required=True); p.add_argument('--steps',type=int,default=8)
+    p.add_argument('--micro',type=int,default=2)
     a=p.parse_args()
+    if 32 % a.micro: raise ValueError('microbatch must divide 32')
     if a.steps>32: raise ValueError('disposable smoke capped at 32 steps per arm')
     mem=int(subprocess.check_output(['nvidia-smi',f'--id={a.gpu}','--query-gpu=memory.used','--format=csv,noheader,nounits'],text=True).strip())
     if mem>256: raise RuntimeError(f'GPU {a.gpu} has {mem} MiB in use; no launch')
@@ -37,8 +39,8 @@ def main():
             rng=torch.cuda.get_rng_state()
             before=[v.detach().clone() for v in student.parameters()]
             optimizer.zero_grad(set_to_none=True)
-            for j in range(0,32,2):
-                xx=x[j:j+2]
+            for j in range(0,32,a.micro):
+                xx=x[j:j+a.micro]
                 with torch.autocast('cuda',dtype=torch.bfloat16):
                     with torch.no_grad():
                         zt=logits(teacher,xx) if mode!='ce' else None
@@ -47,7 +49,7 @@ def main():
                 sf,y=flat(zs,xx); tf=flat(zt,xx)[0] if zt is not None else None
                 rp=flat(zr,xx)[0].float().log_softmax(-1).gather(1,y[:,None]).squeeze() if zr is not None else None
                 loss,stats=token_loss(sf,tf,y,mode=mode,lam=1,reference_logp=rp)
-                (loss.mean()/16).backward(); betas.append(float(stats['beta'].mean()))
+                (loss.mean()/(32/a.micro)).backward(); betas.append(float(stats['beta'].mean()))
                 del zs,zt,zr,sf,tf,loss,stats,rp
             norm=float(torch.nn.utils.clip_grad_norm_(student.parameters(),1.))
             if not torch.isfinite(torch.tensor(norm)): raise FloatingPointError('nonfinite gradient')
@@ -58,11 +60,11 @@ def main():
                 # Independent CE update; identical student dropout stream before this step.
                 kd_rng=torch.cuda.get_rng_state(); torch.cuda.set_rng_state(rng)
                 reference.train(); ropt.zero_grad(set_to_none=True)
-                for j in range(0,32,2):
-                    xx=x[j:j+2]
+                for j in range(0,32,a.micro):
+                    xx=x[j:j+a.micro]
                     with torch.autocast('cuda',dtype=torch.bfloat16): zr=logits(reference,xx)
                     rf,y=flat(zr,xx)
-                    (torch.nn.functional.cross_entropy(rf.float(),y)/16).backward()
+                    (torch.nn.functional.cross_entropy(rf.float(),y)/(32/a.micro)).backward()
                 torch.nn.utils.clip_grad_norm_(reference.parameters(),1.); ropt.step(); reference.eval()
                 torch.cuda.set_rng_state(kd_rng)
         torch.cuda.synchronize(); wall=time.monotonic()-tic
@@ -73,7 +75,7 @@ def main():
                  includes_online_CE_reference_cost=reference is not None)
         print(json.dumps(row),flush=True); rows.append(row)
         del optimizer,reference,ropt
-    out=ROOT/'research/experiments/phase5_ce_reference_distillation/smoke_audit.json'
+    out=ROOT/f'research/experiments/phase5_ce_reference_distillation/smoke_micro{a.micro}.json'
     out.write_text(json.dumps(dict(status='PASS',gpu=a.gpu,rows=rows,identity=identity,
                                   total_wall_seconds=time.monotonic()-start,uses_test=False,
                                   precision='FP32 weights, BF16 autocast, FP32 losses',checkpoints_written=False),indent=2)+'\n')

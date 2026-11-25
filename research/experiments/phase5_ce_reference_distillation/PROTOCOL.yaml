@@ -2,7 +2,7 @@ schema_version: 1
 authorized_date: '2026-11-25'
 base_commit: 99fd6632ee6042f85e709ac3a30b500e8ee1bbbb
 branch: research/phase5-ce-reference
-status: implementation_and_disposable_smoke
+status: wt2_seed42_screen_locked_before_results
 historical_evidence: immutable
 gpu_hour_ceiling: 230
 paid_cloud: false
@@ -36,3 +36,60 @@ adaptation_rule: measured_throughput_can_reduce_secondary_matrix_never_exceed_to
 test_policy: no_new_test_access_until_configuration_lock
 legacy_test_policy: previously_seen_test_is_not_an_unseen_selection_set
 continuity: durable_local_manifests_and_remote_runner_no_hosted_agent_scheduler_available
+wt2_seed42:
+  data_manifest: data_wt2.json
+  train_chunks: 9379
+  dev_chunks: 697
+  control_chunks: 263
+  control_dev_groups: separate_original_validation_articles
+  historical_limitation: original_S0_selection_saw_original_validation_no_fresh_heldout_claim
+  global_batch: 32
+  microbatch: 16
+  sequence_length: 256
+  precision: FP32_parameters_BF16_autocast_FP32_losses
+  deviation_from_history: BF16_and_microbatch_accumulation_all_phase5_arms_rerun_no_old_endpoint_reuse
+  optimizer: AdamW
+  betas: [0.9, 0.999]
+  epsilon: 1.0e-8
+  weight_decay: 0.01
+  warmup: 0.05
+  schedule: linear_warmup_then_cosine_first_update_positive_peak_lr_div_warmup
+  clipping: 1.0
+  screen_epochs: 1
+  full_epochs: 10
+  screen_selection: lowest_trained_dev_NLL_ties_smaller_lambda_then_temperature_then_lr
+  final_checkpoint_selection: dev_NLL_including_S0_ties_earliest
+  ce_search_lrs: [1.0e-6, 5.0e-6, 1.0e-5, 2.0e-5, 5.0e-5, 1.0e-4]
+  kd_search_lr_lambda_temperature:
+    - [5.0e-5, 0.25, 1]
+    - [1.0e-4, 0.25, 1]
+    - [5.0e-5, 1, 1]
+    - [1.0e-4, 1, 1]
+    - [5.0e-5, 5, 2]
+    - [1.0e-4, 5, 2]
+  A_search_lambda: [0.25, 1, 5]
+  A_lr: 1.0e-4
+  A_temperature: 1
+  literature_search: {methods: [atkd, todi, wclip], lambda: [1, 5], lr: 1.0e-4, temperature: 1}
+  label_smoothing_search: {epsilon: [0.05, 0.1], lr: 1.0e-4}
+  atkd: {easy_group_weight: 0.2, uncertainty: teacher_non_target_mass, partition: global_batch_median}
+  todi: {detached_sigmoid_logratio: true, beta: 1}
+  wclip: {eta: 0.5, margin: 0.7, scope: token_level_adaptation_of_W_Clip_component_without_DUS}
+  full_promotions: best_CE_KD_A_LS_ATKD_ToDi_WClip_plus_matched_CE_reference_if_needed
+  priority_ablations: [current_student_reference, global_batch_mean_beta, non_target_identity_permutation]
+  secondary_ablations: [fixed_S0_reference, full_reference_distribution_online_replay, fixed_effective_lambda]
+  selection_gate_for_confirmation: >-
+    A must improve full dev NLL over tuned CE and tuned KD and the strongest literature baseline;
+    require at least 0.005 NLL gain to prioritize independent seeds. Smaller/mixed effects retain
+    the key ablations and failure analysis, not a method-success claim. No test-directed selection.
+  fork_control: {horizons: [1, 8, 32, 128], states: [warmup_end, midpoint, final_minus_128], split: control}
+  B_pilot: {H: 8, K: 256, actions: [CE, KD_0.25, KD_1], temperature: 1, commit: full_selected_state,
+    comparator: same_actions_same_control_access_same_fork_compute_online_search_is_identical_baseline,
+    interpretation: no_novel_controller_claim_without_increment_over_online_HPO}
+  test_not_available_to_screen_or_controller: true
+modern_pending_data_gate:
+  candidate_task: smoltalk2_SFT_smol_summarize_no_think
+  generation_metric: ROUGE_L_against_reference_responses_not_a_factual_correctness_metric
+  test_access: prohibited_until_config_lock
+  teacher_student_models: [Qwen3_1.7B_Base, Qwen3_0.6B_Base]
+  protocol_lock_required_after_resource_and_data_audit: true

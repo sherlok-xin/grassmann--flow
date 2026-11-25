@@ -1,5 +1,24 @@
 # Grassmann / Transformer / Distillation Research Handoff
 
+## 2026-11-25 Phase 5 explicitly authorized and active
+
+The user has authorized new experiments, finite tuning, baseline replication,
+mechanisms and manuscript_v3. Historical STOP/frozen instructions below describe
+their original rounds and do not block Phase 5. Their scientific conclusions
+and files remain immutable. Read CODEX_PHASE5_RESEARCH_PROMPT_20261125.txt and
+research/experiments/phase5_ce_reference_distillation/PROTOCOL.yaml first.
+Branch research/phase5-ce-reference starts at 99fd6632. Bootstrap protocol
+00135a2 precedes disposable real-model smoke. The 230 GPU-hour ceiling includes
+reference, teacher, search, forks, evaluation and retries, not only student work.
+Initial 197 check found GPU0/3 free and GPU1/2 occupied by unrelated jobs.
+Never stop or modify those jobs. Recheck before each launch.
+
+Candidate A is explicitly adaptive CE/KD weighting with detached independent
+pre-update CE reference probabilities. The closed-form projection alone is not
+a novelty or student safety guarantee. No successful Phase 5 endpoint exists
+yet. Old ARR real reviews are 2/2/1, not the simulated 3/3/2. Withdrawal,
+OpenReview submission and mentor communications remain author-only.
+
 ## 2026-10-08 Authorized full manuscript V2 revision complete — STOP
 
 Input `56ab6cee930da08637c3fa7c6b36d5cb22ccf09f`; state

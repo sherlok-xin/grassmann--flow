@@ -1,16 +1,16 @@
 schema_version: 1
-updated: "2026-10-08"
-status: manuscript_v2_full_revision_complete
-phase: manuscript_v2_authorized_full_revision_complete
-decision: FULL_MANUSCRIPT_REVISION_COMPLETE_STOP_EXPERIMENTS_PERMANENTLY_FROZEN
-training_authorized: false
-experimental_program: permanently_frozen
+updated: "2026-11-25"
+status: phase5_implementation_and_resource_smoke
+phase: phase5_ce_reference_distillation
+decision: NEW_USER_AUTHORIZATION_PHASE5_20261125
+training_authorized: true
+experimental_program: phase5_bounded_230_gpu_hours
 objective: >-
-  Complete the explicitly authorized full V2 revision from input 56ab6cee.
-  Preserve and commit authoritative local user Abstract/Introduction prose.
-  Complete Sections 2-10, appendix, verified references, five vector figures,
-  and QA without changing scientific conclusions or frozen experiments.
-  STOP after compact manuscript/figure/reference artifacts are committed.
+  Implement and test independent CE trajectory target correction, actual
+  multi-step AdamW utility and bounded controls; run strong baselines,
+  legacy pilots and effective modern Qwen SFT pilots, then evidence-selected
+  confirmation within 230 total GPU hours. Reconstruct manuscript_v3 from
+  actual evidence. Preserve all prior manuscripts and frozen conclusions.
 primary_metric: paired_test_nll_gain
 selection_metric: validation_nll
 secondary_metrics:
@@ -19,20 +19,30 @@ secondary_metrics:
   - tokens_per_second
   - peak_memory_gb
 constraints:
-  - experimental_program_permanently_frozen_no_training_sweeps_scaling_methods
-  - further_manuscript_revision_requires_new_explicit_instruction
-  - new_manuscript_sources_only_under_manuscript_v2
-  - phase4c_gate_failed_stop_entire_modern_extension_no_new_training
-  - do_not_launch_phase2h
+  - new_authorization_supersedes_old_STOP_for_phase5_only
+  - new_manuscript_sources_only_under_manuscript_v3
+  - preserve_all_historical_manuscripts_and_phase2_through_phase4_evidence
+  - no_paid_cloud_or_interference_with_other_jobs
+  - charge_reference_teacher_search_forks_evaluation_retries_all_gpu_time
+  - protocol_commit_before_formal_results
   - phase2_final_evidence_immutable_v2_integrates_post_freeze_evidence
   - heavy_training_remote_only_10_42_0_197
   - smoke_before_full_run
   - do_not_modify_datasets_or_checkpoints
   - preserve_legacy_checkpoints_and_loss_mode
-  - phase3a_terminal_no_further_diagnostic_or_method_work
-  - phase3b_not_authorized
-  - phase4b_authorized_seed_replication_complete_no_other_new_seed_or_dataset
-  - phase4_legacy_manuscript_and_phase2_snapshot_immutable_new_v2_only
+  - phase3a_historical_failed_diagnostic_conclusion_unchanged
+  - no_Grassmann_specific_claim_revival
+  - withdrawal_OpenReview_and_mentor_contact_author_only
+phase5:
+  authorization_file: CODEX_PHASE5_RESEARCH_PROMPT_20261125.txt
+  root: research/experiments/phase5_ce_reference_distillation
+  branch: research/phase5-ce-reference
+  base_commit: 99fd6632ee6042f85e709ac3a30b500e8ee1bbbb
+  bootstrap_protocol_commit: 00135a2
+  free_gpus_initial: [0, 3]
+  other_project_gpus: [1, 2]
+  formal_endpoints_completed: 0
+  next_action: finish_smoke_freeze_measured_budget_then_WT2_screen_and_modern_preparation
 current_baselines:
   teacher_ptb_ppl: 50.1125
   student_quality_ptb_ppl: 51.8431

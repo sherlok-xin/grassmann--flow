@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "gpu": 0,
+  "rows": [
+    {
+      "mode": "ce",
+      "steps": 8,
+      "prediction_targets": 65280,
+      "wall_seconds": 10.797670621890575,
+      "target_tokens_per_second": 6045.748410555801,
+      "peak_allocated_GiB": 1.5572090148925781,
+      "clip_fraction": 0.0,
+      "mean_preclip_norm": 0.7222171649336815,
+      "mean_update_norm": 0.32237447798252106,
+      "mean_beta": 0.0,
+      "nonfinite_fraction": 0,
+      "includes_online_CE_reference_cost": false
+    },
+    {
+      "mode": "kd",
+      "steps": 8,
+      "prediction_targets": 65280,
+      "wall_seconds": 14.25140757812187,
+      "target_tokens_per_second": 4580.600171748295,
+      "peak_allocated_GiB": 2.1310601234436035,
+      "clip_fraction": 0.5,
+      "mean_preclip_norm": 0.9734004065394402,
+      "mean_update_norm": 0.3796684518456459,
+      "mean_beta": 0.0,
+      "nonfinite_fraction": 0,
+      "includes_online_CE_reference_cost": false
+    },
+    {
+      "mode": "reference",
+      "steps": 8,
+      "prediction_targets": 65280,
+      "wall_seconds": 23.56023093080148,
+      "target_tokens_per_second": 2770.770804061014,
+      "peak_allocated_GiB": 2.7940845489501953,
+      "clip_fraction": 0.25,
+      "mean_preclip_norm": 0.9549635201692581,
+      "mean_update_norm": 0.37587806954979897,
+      "mean_beta": 0.1446419706917368,
+      "nonfinite_fraction": 0,
+      "includes_online_CE_reference_cost": true
+    }
+  ],
+  "identity": {
+    "condition_id": "WT2_J_S42",
+    "dataset": "wikitext2",
+    "family": "WT2_J_fused_TG",
+    "student_seed": "42",
+    "teacher_type": "tg",
+    "teacher_run_dir": "outputs/hybrid_experiments/20260328_080104_wt2_hybrid_alpha_joint",
+    "teacher_alpha_override": "0.5",
+    "student_run_dir": "outputs/hybrid_experiments/20260515_004119_wt2_hybrid_lite_baseline_224x56_l6_e20",
+    "expected_student_sha256": "9e1b4f18f2873c9203b7cf8e7bc5750c272a399ca43d64e3f77adfb8868debef",
+    "dataset_path": "/workspace/grassmannflows/datasets/wikitext2_v1_saved",
+    "text_field": "text",
+    "max_lines": "0",
+    "split_seed": "42",
+    "endpoint_source": "research/experiments/phase2e_teacher_branch_ablation/results_multiseed.csv",
+    "primary": "yes",
+    "teacher_sha256": "a5ad284f6895c0b4ed516c855c1b149e6636b945173aa2e842b8132299582694",
+    "student_checkpoint": "/workspace/grassmannflows/grassmann-flows/outputs/hybrid_experiments/20260515_004119_wt2_hybrid_lite_baseline_224x56_l6_e20/checkpoints/hybrid_best.pt"
+  },
+  "total_wall_seconds": 74.74883043579757,
+  "uses_test": false,
+  "precision": "FP32 weights, BF16 autocast, FP32 losses",
+  "checkpoints_written": false
+}

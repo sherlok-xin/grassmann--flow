@@ -63,4 +63,21 @@ class ScientificTests(unittest.TestCase):
             with self.assertRaises(ValueError): read.get(0,[4],y.flip(1))
             with self.assertRaises(ValueError): GoldCache(c.path,{**ident,'seed':123})
 
+    def test_literature_losses_and_global_atkd_reduction(self):
+        s=torch.randn_like(self.t,requires_grad=True)
+        for mode in ['todi','wclip','ls']:
+            loss,_=token_loss(s,self.t,self.y,mode=mode)
+            grad=torch.autograd.grad(loss.mean(),s)[0]
+            self.assertTrue(torch.isfinite(loss).all() and torch.isfinite(grad).all())
+        uncertainty=1-self.t.softmax(-1).gather(1,self.y[:,None]).squeeze()
+        hard=uncertainty>=uncertainty.median()
+        scale=torch.where(hard,.8*7/hard.sum(),.2*7/(~hard).sum())
+        full,_=token_loss(s,self.t,self.y,mode='atkd',atkd_weights=(hard,scale))
+        pieces=[]
+        for i in range(0,7,2):
+            v,_=token_loss(s[i:i+2],self.t[i:i+2],self.y[i:i+2],mode='atkd',atkd_weights=(hard[i:i+2],scale[i:i+2]))
+            pieces.append(v)
+        self.assertTrue(torch.allclose(full,torch.cat(pieces),atol=1e-6))
+        self.assertTrue(torch.isfinite(torch.autograd.grad(full.mean(),s)[0]).all())
+
 if __name__=='__main__': unittest.main()

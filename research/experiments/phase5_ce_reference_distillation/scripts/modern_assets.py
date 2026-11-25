@@ -1,0 +1,41 @@
+"""Pin official metadata and download only the chosen models/SFT subset to outputs."""
+import hashlib
+import json
+import os
+from pathlib import Path
+import urllib.request
+
+ROOT=Path(__file__).resolve().parents[4]
+PHASE=ROOT/'research/experiments/phase5_ce_reference_distillation'
+OUT=ROOT/'outputs/phase5/modern_assets'
+
+def get(url):
+    with urllib.request.urlopen(url,timeout=45) as r:return r.read()
+
+def main():
+    from huggingface_hub import snapshot_download
+    OUT.mkdir(parents=True,exist_ok=True)
+    manifest={'models':{},'download_complete':False}
+    for name in ['Qwen/Qwen3-0.6B-Base','Qwen/Qwen3-1.7B-Base']:
+        meta=json.loads(get('https://huggingface.co/api/models/'+name))
+        entry={'repo':name,'revision':meta['sha'],'license':meta.get('cardData',{}).get('license'),
+               'parameters':meta.get('safetensors'),'local_dir':str((OUT/name.split('/')[-1]).relative_to(ROOT))}
+        manifest['models'][name]=entry
+        print(json.dumps(entry),flush=True)
+    ds=json.loads(get('https://huggingface.co/api/datasets/HuggingFaceTB/smoltalk2'))
+    paths=[r['rfilename'] for r in ds['siblings'] if 'smol_summarize' in r['rfilename'] and 'no_think' in r['rfilename']]
+    if not paths: raise RuntimeError('expected summarization subset not found; do not download entire mixture')
+    manifest['data']={'repo':'HuggingFaceTB/smoltalk2','revision':ds['sha'],'config':'SFT',
+        'split':'smoltalk_smollm3_smol_summarize_no_think','files':paths,'card':ds.get('cardData',{}),
+        'local_dir':str((OUT/'smoltalk2').relative_to(ROOT))}
+    (PHASE/'modern_assets.json').write_text(json.dumps(manifest,indent=2)+'\n')
+    for entry in manifest['models'].values():
+        snapshot_download(repo_id=entry['repo'],revision=entry['revision'],local_dir=ROOT/entry['local_dir'],
+            allow_patterns=['*.json','*.safetensors','*.txt','*.md','LICENSE'],max_workers=2)
+    snapshot_download(repo_id=manifest['data']['repo'],repo_type='dataset',revision=ds['sha'],
+        local_dir=OUT/'smoltalk2',allow_patterns=paths+['README.md','LICENSE'],max_workers=2)
+    manifest['download_complete']=True
+    (PHASE/'modern_assets.json').write_text(json.dumps(manifest,indent=2)+'\n')
+    print('OFFICIAL_ASSETS_DOWNLOADED',flush=True)
+
+if __name__=='__main__':main()

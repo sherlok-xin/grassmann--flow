@@ -62,7 +62,7 @@ def kl_from_logtarget(logs, logq):
 
 
 def token_loss(student_logits, teacher_logits, gold, *, mode='kd', lam=1., temperature=1.,
-               reference_logp=None, beta_mean=None, smoothing=.1):
+               reference_logp=None, beta_mean=None, smoothing=.1, atkd_weights=None):
     """Already aligned valid tokens. Exact token sums, caller owns denominator."""
     if lam < 0 or temperature <= 0:
         raise ValueError('invalid KD coefficient/temperature')
@@ -80,6 +80,32 @@ def token_loss(student_logits, teacher_logits, gold, *, mode='kd', lam=1., tempe
     beta = zero
     if mode == 'kd':
         kd = kl_from_logtarget(logs_t, logt) * temperature**2
+    elif mode == 'todi':
+        # Author implementation, various_divergence.py, compute_ToDi, beta=1.
+        weight = torch.sigmoid(logt-logs_t).detach()
+        kd = (weight*logt.exp()*(logt-logs_t)+(1-weight)*logs_t.exp()*(logs_t-logt)).sum(-1)*temperature**2
+    elif mode == 'wclip':
+        # CUD Eq.5-9 component ONLY; no DUS retraining, not full CUD reproduction.
+        p = teacher_logits.detach().float().softmax(-1)
+        top, ix = p.max(-1); py = p.gather(1,gold[:,None]).squeeze(-1)
+        delta = torch.minimum(.5*top,.7*(top-py)).clamp_min(0)
+        p.scatter_add_(1,ix[:,None],-delta[:,None]); p.scatter_add_(1,gold[:,None],delta[:,None])
+        lq=(p.log()/temperature).log_softmax(-1)
+        kd=kl_from_logtarget(logs_t,lq)*temperature**2
+    elif mode == 'atkd':
+        if atkd_weights is None: raise ValueError('ATKD needs global-batch partition weights')
+        nt_s=(z/temperature).scatter(1,gold[:,None],-torch.inf).log_softmax(-1)
+        nt_t=(teacher_logits.detach().float()/temperature).scatter(1,gold[:,None],-torch.inf).log_softmax(-1)
+        # Explicitly remove the masked gold coordinate before KL (avoid 0*inf).
+        mask=torch.ones_like(nt_s,dtype=torch.bool).scatter_(1,gold[:,None],False)
+        nckd=kl_from_logtarget(nt_s[mask].reshape(len(gold),-1),nt_t[mask].reshape(len(gold),-1))
+        sy=logs_t.gather(1,gold[:,None]).squeeze(-1)
+        ty=logt.gather(1,gold[:,None]).squeeze(-1)
+        stail=(z/temperature).scatter(1,gold[:,None],-torch.inf).logsumexp(-1)-(z/temperature).logsumexp(-1)
+        ttail=(teacher_logits.detach().float()/temperature).scatter(1,gold[:,None],-torch.inf).logsumexp(-1)-(teacher_logits.detach().float()/temperature).logsumexp(-1)
+        tckd=kl_from_logtarget(torch.stack([sy,stail],-1),torch.stack([ty,ttail],-1))
+        hard,scale=atkd_weights
+        kd=scale*(nckd+hard*tckd)*temperature**2
     elif mode in {'reference', 'current', 'fixed', 'mean', 'permuted'}:
         if temperature != 1:
             raise ValueError('projection equivalence is restricted to temperature one')
