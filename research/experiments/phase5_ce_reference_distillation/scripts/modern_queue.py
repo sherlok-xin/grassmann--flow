@@ -22,9 +22,7 @@ def main():
         d=json.loads((ROOT/'outputs/phase5/accounting.json').read_text())
         return d['ceiling']-d['smoke_reserve_gpu_hours']-sum(r.get('gpu_hours',r['reservation']) for r in d['runs'].values())
     def wait_file(path):
-        start=time.monotonic()
         while not path.exists():
-            if time.monotonic()-start>24*3600:raise TimeoutError('prerequisite not completed in 24h; no GPU reserved')
             time.sleep(30)
     def run(name,role,mode,lr,targets,seed=42,lam=1.,temperature=1.,s0=None,teacher=None,ref=None,cache=False,smoke=False,lora=False):
         expected=dict(name=name,role=role,mode=mode,lr=lr,targets=targets,seed=seed,lam=lam,temperature=temperature,student_lora=lora)
