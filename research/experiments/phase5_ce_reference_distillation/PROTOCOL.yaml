@@ -1,0 +1,38 @@
+schema_version: 1
+authorized_date: '2026-11-25'
+base_commit: 99fd6632ee6042f85e709ac3a30b500e8ee1bbbb
+branch: research/phase5-ce-reference
+status: implementation_and_disposable_smoke
+historical_evidence: immutable
+gpu_hour_ceiling: 230
+paid_cloud: false
+remote_host: 10.42.0.197
+initial_free_gpus: [0, 3]
+reserved_for_other_jobs: [1, 2]
+resource_rule: recheck_memory_and_processes_before_every_launch_do_not_kill_other_jobs
+bootstrap_scope:
+  tests: normalization_tail_ratios_gradient_equivalence_lambda_zero_cache_alignment
+  disposable_smoke: legacy_wt2_ce_kd_reference_projection_32_updates_max_each
+  no_endpoint_selection_from_smoke: true
+  measure: [wall_time, predicted_targets, peak_memory, nonfinite, clip_fraction, update_norm]
+  formal_runs_require_followup_protocol_commit: true
+candidate_A:
+  temperature: 1
+  objective: CE_plus_lambda_KL_projected_teacher_to_student
+  reference: independent_CE_same_S0_preupdate_eval_mode
+  reference_cache: gold_logprob_only_with_step_ids_seed_init_data_hashes
+  reference_cost: extra_forward_and_complete_CE_trajectory_charged
+  clipping: 1.0
+  scientific_claim: adaptive_CE_KD_weighting_no_student_safety_guarantee
+budget_reservations_gpu_hours:
+  smoke_environment_and_data: 5
+  wt2_search_full_pilots_ablations_forks: 20
+  tinystories_reference_and_full_pilots: 50
+  modern_teacher_S0_search_pilot: 55
+  modern_three_seed_key_confirmations_second_teacher: 75
+  remaining_legacy_confirmations_and_evaluation: 15
+  failures_and_overhead: 10
+adaptation_rule: measured_throughput_can_reduce_secondary_matrix_never_exceed_total_cap
+test_policy: no_new_test_access_until_configuration_lock
+legacy_test_policy: previously_seen_test_is_not_an_unseen_selection_set
+continuity: durable_local_manifests_and_remote_runner_no_hosted_agent_scheduler_available
