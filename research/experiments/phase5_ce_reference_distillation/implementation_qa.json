@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-25",
+  "scientific_tests_passed": 9,
+  "test_scope": [
+    "projection normalization and tails",
+    "gradient equivalence",
+    "lambda zero",
+    "cache future/alignment rejection",
+    "literature reductions",
+    "checkpointed exact KL",
+    "response masks and group disjointness",
+    "tiny CPU Qwen LoRA and nested checkpoint AdamW update"
+  ],
+  "actual_full_state_replay_passed": true,
+  "fork_endpoint_smoke": "incomplete after shared-GPU OOM",
+  "modern_real_model_smoke": "pending assets verification and idle GPU",
+  "protected_files_checked": 150,
+  "protected_file_mismatches": [],
+  "generation_metric_install_check": "rouge-score 0.1.2 Porter-stemmed ROUGE-L synthetic pair F1=0.8"
+}

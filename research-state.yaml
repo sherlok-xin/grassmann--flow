@@ -42,7 +42,14 @@ phase5:
   free_gpus_initial: [0, 3]
   other_project_gpus: [1, 2]
   formal_endpoints_completed: 0
-  next_action: finish_smoke_freeze_measured_budget_then_WT2_screen_and_modern_preparation
+  completed_short_screens: 7
+  completed_TinyStories_smokes: [CE_8_updates, KD_8_updates]
+  scientific_tests_passed: 9
+  actual_recorded_gpu_hours_snapshot: 0.479300
+  resource_status: all_four_cards_busy_user_confirmed_wait_for_idle_no_reservation
+  draft: 论文投稿/manuscript_v3/main.tex
+  draft_status: incomplete_five_pages_compiled_visually_checked_not_submission_ready
+  next_action: idle_queues_continue_WT2_TS_Qwen_smoke_then_full_pilots_and_bounded_confirmations
 current_baselines:
   teacher_ptb_ppl: 50.1125
   student_quality_ptb_ppl: 51.8431

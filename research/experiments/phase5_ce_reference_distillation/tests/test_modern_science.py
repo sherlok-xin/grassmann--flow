@@ -14,6 +14,29 @@ from core import token_loss
 
 
 class ModernScience(unittest.TestCase):
+    def test_qwen_lora_and_nested_checkpoint_update_on_toy_cpu_model(self):
+        from transformers import Qwen3Config,Qwen3ForCausalLM
+        from peft import LoraConfig,get_peft_model
+        torch.manual_seed(4)
+        cfg=Qwen3Config(vocab_size=41,hidden_size=32,intermediate_size=64,num_hidden_layers=1,
+            num_attention_heads=4,num_key_value_heads=2,head_dim=8,max_position_embeddings=32)
+        model=Qwen3ForCausalLM(cfg).cpu()
+        model=get_peft_model(model,LoraConfig(r=2,lora_alpha=4,lora_dropout=0.,target_modules=['q_proj','v_proj'],task_type='CAUSAL_LM'))
+        model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={'use_reentrant':False})
+        model.enable_input_require_grads();model.config.use_cache=False;model.train()
+        params=[p for p in model.parameters() if p.requires_grad]
+        before=[p.detach().clone() for p in params]
+        opt=torch.optim.AdamW(params,lr=1e-3)
+        ids=torch.randint(0,41,(2,12));z=model(input_ids=ids,attention_mask=torch.ones_like(ids),use_cache=False).logits
+        sf=z[:,5:-1].reshape(-1,41);y=ids[:,6:].reshape(-1);teacher=torch.randn_like(sf)
+        def fn(s,t,g):return token_loss(s,t,g,mode='kd',lam=1.)[0]
+        pieces=[checkpoint(fn,sf[j:j+3],teacher[j:j+3],y[j:j+3],use_reentrant=False).sum()/len(y) for j in range(0,len(y),3)]
+        torch.stack(pieces).sum().backward()
+        self.assertTrue(all(torch.isfinite(p.grad).all() for p in params if p.grad is not None))
+        opt.step()
+        self.assertTrue(any(not torch.equal(p,b) for p,b in zip(params,before)))
+        self.assertTrue(all('lora_' in n for n,p in model.named_parameters() if p.requires_grad))
+
     def test_checkpointed_response_chunks_match_dense_gradients(self):
         torch.manual_seed(7)
         z=torch.randn(2,13,31,requires_grad=True);t=torch.randn_like(z);labels=torch.randint(0,31,(2,13))

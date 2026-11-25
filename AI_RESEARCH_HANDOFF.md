@@ -22,6 +22,15 @@ new response-masked SFT dataset are pinned; real-Qwen GPU smoke remains pending.
 Old ARR real reviews are 2/2/1, not the simulated 3/3/2. Withdrawal,
 OpenReview submission and mentor communications remain author-only.
 
+The user confirmed no reserved GPU and requested waiting for idle resources.
+The WT2/TinyStories/modern and follow-up supervisors are active CPU waiters;
+check them before any relaunch. Nine scientific tests and two TinyStories
+smokes pass. Recorded GPU allocation is approximately 0.479300 hours so far,
+including a failed fork and the bootstrap probes. An explicitly incomplete
+five-page manuscript_v3 draft compiles and has been visually/numerically
+checked; it does not substitute for the pending full pilots. All 150 protected
+historical source/evidence/PDF hashes still match.
+
 ## 2026-10-08 Authorized full manuscript V2 revision complete — STOP
 
 Input `56ab6cee930da08637c3fa7c6b36d5cb22ccf09f`; state

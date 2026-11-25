@@ -1,0 +1,92 @@
+{
+  "status": "PASS_FOR_INCOMPLETE_DRAFT_ONLY",
+  "manuscript_sha256": "174b14aaecd7334f2c5f90f29211268259bc1fc13249dd80d4eff879e035c228",
+  "pdf_sha256": "d436962d1f7528de6fa4ca430daf2511af9423cae5efa90a7bfc476a52afe649",
+  "pages": 5,
+  "numeric_checks": [
+    {
+      "value": 4.348014611377191,
+      "rendered": "4.348015",
+      "source": "outputs/phase5/runs/wt2_s42_screen_ce0/summary.json",
+      "field": "s0_dev_nll"
+    },
+    {
+      "value": 4.337590235946423,
+      "rendered": "4.337590",
+      "source": "outputs/phase5/runs/wt2_s42_screen_kd0/summary.json",
+      "field": "final_dev_nll"
+    },
+    {
+      "value": 294,
+      "rendered": "294",
+      "source": "outputs/phase5/runs/wt2_s42_screen_kd0/summary.json",
+      "field": "steps"
+    },
+    {
+      "value": 66946,
+      "rendered": "66,946",
+      "source": "research/experiments/phase5_ce_reference_distillation/modern_data.json",
+      "field": "retained_rows"
+    },
+    {
+      "value": 575227,
+      "rendered": "575,227",
+      "source": "research/experiments/phase5_ce_reference_distillation/modern_data.json",
+      "field": "preparation.unique_response_targets"
+    },
+    {
+      "value": 1839404,
+      "rendered": "1,839,404",
+      "source": "research/experiments/phase5_ce_reference_distillation/modern_data.json",
+      "field": "continuation.unique_response_targets"
+    },
+    {
+      "value": 15,
+      "rendered": "TP=15",
+      "source": "research/arr_response_20261125/verification.json",
+      "field": "TP"
+    },
+    {
+      "value": 6,
+      "rendered": "FP=6",
+      "source": "research/arr_response_20261125/verification.json",
+      "field": "FP"
+    },
+    {
+      "value": 0,
+      "rendered": "TN=0",
+      "source": "research/arr_response_20261125/verification.json",
+      "field": "TN"
+    },
+    {
+      "value": 0,
+      "rendered": "FN=0",
+      "source": "research/arr_response_20261125/verification.json",
+      "field": "FN"
+    },
+    {
+      "value": 0.7142857142857143,
+      "rendered": "0.714286",
+      "source": "research/arr_response_20261125/verification.json",
+      "field": "accuracy"
+    },
+    {
+      "value": 0.4777777777777778,
+      "rendered": "0.477778",
+      "source": "research/arr_response_20261125/verification.json",
+      "field": "auroc"
+    },
+    {
+      "source": "research/arr_response_20261125/verification.json",
+      "balanced_accuracy": 0.5,
+      "MCC": 0,
+      "convention": "zero MCC when constant predictions make its denominator zero"
+    }
+  ],
+  "figure_completed_source_runs": 7,
+  "protected_files_verified": 150,
+  "protected_mismatches": [],
+  "underfull_warnings": 1,
+  "overfull_warnings": 0,
+  "pending": "full experiments, endpoint tables, seed variability and final scientific manuscript"
+}

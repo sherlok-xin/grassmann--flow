@@ -1,0 +1,47 @@
+[
+  {
+    "id": "2024.acl-long.587",
+    "url": "https://aclanthology.org/2024.acl-long.587.bib",
+    "key": "zhong-etal-2024-revisiting"
+  },
+  {
+    "id": "2025.emnlp-main.409",
+    "url": "https://aclanthology.org/2025.emnlp-main.409.bib",
+    "key": "jung-etal-2025-todi"
+  },
+  {
+    "id": "2026.aacl-short.4",
+    "url": "https://aclanthology.org/2026.aacl-short.4.bib",
+    "key": "sumit-etal-2026-knowledge"
+  },
+  {
+    "id": "2022.acl-long.485",
+    "url": "https://aclanthology.org/2022.acl-long.485.bib",
+    "key": "zhou-etal-2022-bert"
+  },
+  {
+    "id": "2026.findings-emnlp.2435",
+    "url": "https://aclanthology.org/2026.findings-emnlp.2435.bib",
+    "key": "kim-etal-2026-trust"
+  },
+  {
+    "id": "2501.16937",
+    "url": "https://arxiv.org/bibtex/2501.16937",
+    "key": "shing2025taidtemporallyadaptiveinterpolated"
+  },
+  {
+    "id": "2511.02833",
+    "url": "https://arxiv.org/bibtex/2511.02833",
+    "key": "panigrahi2025goodgracesprincipledteacher"
+  },
+  {
+    "id": "2608.01953",
+    "url": "https://arxiv.org/bibtex/2608.01953",
+    "key": "chen2026lookaheaddistillfuture"
+  },
+  {
+    "id": "1805.04770",
+    "url": "https://arxiv.org/bibtex/1805.04770",
+    "key": "furlanello2018bornneuralnetworks"
+  }
+]

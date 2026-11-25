@@ -41,7 +41,7 @@ def main():
     config = json.loads((source/'config.json').read_text())
     output = ROOT/'outputs/phase5/analyses'/a.name
     output.mkdir(parents=True, exist_ok=False)
-    rows, diagnostics = [], []
+    rows, diagnostics, optimizer_diagnostics = [], [], []
     with Budget(a.name, a.gpu, .5 if a.smoke else (3 if a.controller else 2)) as budget:
         model, teacher, _, _, _ = context(config['domain'], config['seed'])
         seed_all(config['seed'])
@@ -134,6 +134,36 @@ def main():
                     normalized_direction_curvature=(sum(vals)-2*f0)/eps**2,
                     curvature_estimator='symmetric finite difference FP32 eval forward; descriptive only'))
             restore(s)
+        def actual_update_diagnostics(s, endpoints):
+            # Parameter-space deltas come from real AdamW steps including clipping.
+            # Symmetric finite differences estimate curvature; this is not an exact Hessian.
+            names,params=zip(*model.named_parameters())
+            deltas={mode:[state[k]-s['model'][k] for k in names] for mode,state in endpoints.items()}
+            start=s['scheduler']['completed_steps']
+            for n in ([2] if a.smoke else [2,16,64]):
+                restore(s);model.eval();opt.zero_grad(set_to_none=True)
+                for i in range(0,n,micro):
+                    x=torch.from_numpy(np.array(data['control'][i:min(n,i+micro)],dtype=np.int64)).cuda()
+                    z=logits(model,x);zf,y=flat(z,x)
+                    (torch.nn.functional.cross_entropy(zf.float(),y,reduction='sum')/(n*255)).backward()
+                gradient=[p.grad.detach().clone() if p.grad is not None else torch.zeros_like(p) for p in params]
+                f0=evaluate(count=n,fp32=True);terms={}
+                for mode,delta in deltas.items():
+                    linear=float(sum(g.mul(d.to(g.device)).sum() for g,d in zip(gradient,delta)))
+                    values=[]
+                    for sign in [-1,1]:
+                        model.load_state_dict(s['model'])
+                        with torch.no_grad():
+                            for p,d in zip(params,delta):p.add_(d.to(p.device),alpha=sign)
+                        values.append(evaluate(count=n,fp32=True))
+                    terms[mode]=(linear,.5*(sum(values)-2*f0),values[1])
+                for mode,(linear,quadratic,observed) in terms.items():
+                    first=terms['ce'][0]-linear
+                    optimizer_diagnostics.append(dict(source=a.source_run,step=start,mode=mode,control_chunks=n,
+                        first_order_actual_AdamW=first,second_order_actual_AdamW_FD=first+terms['ce'][1]-quadratic,
+                        actual_H1_FP32=terms['ce'][2]-observed,
+                        estimator='FP32 eval, symmetric difference at actual clipped AdamW delta; no training gate'))
+            restore(s)
         if a.controller:
             # Genuine S0 and newly initialized AdamW, then full-state commits.
             # No moments are erased from a pretrained continuation state.
@@ -180,21 +210,24 @@ def main():
                         raise AssertionError('full-state replay differs; no formal forks permitted')
                     (output/'replay_check.json').write_text(json.dumps({'model_optimizer_exact_replay':True,'lr_nonzero':True})+'\n')
                 probe(s)
-                for mode,lam in [('ce',0.),('kd',1.),('reference',config['lam'] or 1.)]:
+                endpoints={}
+                for mode,lam in [('ce',0.),('kd',config['lam'] or 1.),('reference',config['lam'] or 1.)]:
                     restore(s);norms=[];updates=[];clips=[]
                     hs=[1,8] if a.smoke else [1,8,32,128]
                     for h in range(1,min(max(hs),total-start)+1):
                         m=update(start+h-1,mode,lam);norms.append(m['preclip_norm']);updates.append(m['update_norm']);clips.append(m['clipped'])
+                        if h==1:endpoints[mode]={k:v.detach().cpu().clone() for k,v in model.state_dict().items()}
                         if h in hs:
                             rows.append(dict(source=a.source_run,state_sha256=sha(path),step=start,mode=mode,lam=lam,H=h,
                                 control_nll=evaluate(count=2 if a.smoke else None),lr=m['lr'],
                                 preclip_norm=float(np.mean(norms)),update_norm=float(np.mean(updates)),clip_fraction=float(np.mean(clips))))
+                actual_update_diagnostics(s,endpoints)
             for row in rows:
                 ce=next(x for x in rows if x['step']==row['step'] and x['H']==row['H'] and x['mode']=='ce')
                 row['A_H']=ce['control_nll']-row['control_nll']
-            for filename,values in [('fork_results.csv',rows),('local_diagnostics.csv',diagnostics)]:
+            for filename,values in [('fork_results.csv',rows),('local_diagnostics.csv',diagnostics),('optimizer_diagnostics.csv',optimizer_diagnostics)]:
                 with (output/filename).open('w') as f:
-                    w=csv.DictWriter(f,fieldnames=list(values[0]));w.writeheader();w.writerows(values)
+                    w=csv.DictWriter(f,fieldnames=list(values[0]),lineterminator='\n');w.writeheader();w.writerows(values)
             (output/'summary.json').write_text(json.dumps(dict(name=a.name,smoke=a.smoke,rows=len(rows),test_access=False,
                 source_run=a.source_run,reference_run=a.reference_run,independence_unit='training family/seed, not probe rows'),indent=2)+'\n')
         print((output/'summary.json').read_text(),flush=True)

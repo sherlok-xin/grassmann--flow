@@ -11,7 +11,7 @@ PHASE=ROOT/'research/experiments/phase5_ce_reference_distillation'
 
 def write(name,rows,fields):
     with (PHASE/name).open('w') as f:
-        w=csv.DictWriter(f,fieldnames=fields,extrasaction='ignore');w.writeheader();w.writerows(rows)
+        w=csv.DictWriter(f,fieldnames=fields,extrasaction='ignore',lineterminator='\n');w.writeheader();w.writerows(rows)
 
 
 def main():
@@ -38,7 +38,12 @@ def main():
     account=json.loads((ROOT/'outputs/phase5/accounting.json').read_text());cost=[]
     for name,r in account['runs'].items():
         cost.append(dict(run=name,**r,current_elapsed_gpu_hours=(time.time()-r['started_unix'])/3600 if r['status']=='RUNNING' else r.get('gpu_hours'),
-            includes='exclusive allocated GPU wall time including loading evaluation cache and snapshots'))
+            includes='allocated GPU wall time including loading evaluation cache snapshots and contention'))
+    for p in sorted(PHASE.glob('smoke*.json')):
+        s=json.loads(p.read_text())
+        if 'total_wall_seconds' in s:
+            cost.append(dict(run=p.stem,status=s['status'],gpu=s['gpu'],gpu_hours=s['total_wall_seconds']/3600,
+                current_elapsed_gpu_hours=s['total_wall_seconds']/3600,includes='bootstrap smoke including model/data setup; reconciled reserve'))
     write('COSTS.csv',cost,['run','status','gpu','reservation','gpu_hours','current_elapsed_gpu_hours','started_unix','finished_unix','includes'])
     complete=sum(r.get('gpu_hours',0) for r in account['runs'].values())
     print(json.dumps(dict(completed_endpoints=len(rows),complete_or_failed_gpu_hours=complete,

@@ -88,10 +88,30 @@ wt2_seed42:
     require at least 0.005 NLL gain to prioritize independent seeds. Smaller/mixed effects retain
     the key ablations and failure analysis, not a method-success claim. No test-directed selection.
   fork_control: {horizons: [1, 8, 32, 128], states: [warmup_end, midpoint, final_minus_128], split: control}
+  fork_action_strength: KD_and_A_both_use_A_selected_lambda_at_temperature_one
+  effective_weight_controls: >-
+    After full A, use only its training-trace mean beta to set fixed
+    lambda_eff=lambda*(1-beta_mean)/(1+lambda*beta_mean). Run both unit CE
+    coefficient and the constant scale 1+lambda*beta_mean. These are post-training
+    mechanism controls, not extra candidate tuning using held-out endpoints.
+  reference_only_control: exact_online_CE_replay_checked_against_gold_cache_extra_training_charged
+  total_compute_controls: >-
+    Rerun tuned CE and KD with longer budgets chosen solely from measured
+    full A plus one-use CE-reference GPUh. Cap at 40 epochs and 2 GPUh each.
+    Report achieved cost ratios; these are approximate GPUh matches.
   B_pilot: {H: 8, K: 256, actions: [CE, KD_0.25, KD_1], temperature: 1, commit: full_selected_state,
     comparator: same_actions_same_control_access_same_fork_compute_online_search_is_identical_baseline,
     interpretation: no_novel_controller_claim_without_increment_over_online_HPO}
   test_not_available_to_screen_or_controller: true
+  bounded_seed_confirmation:
+    seeds: [123, 456]
+    source: existing_independently_prepared_historical_WT2_S0s
+    priority: after_WT2_controls_TinyStories_full_pilot_and_modern_priority_queue
+    methods: tuned_CE_tuned_KD_best_full_dev_literature_plus_A_if_0.005_gate_passes
+    seed42_role: exploratory_configuration_selection_not_independent_confirmation
+    reference: separate_matching_CE_trajectory_per_seed_if_A_is_promoted
+    budget: reserve_two_GPUh_per_new_run_plus_eight_GPUh_for_evaluation_before_launch
+    no_new_search: true
 modern_pending_data_gate:
   candidate_task: smoltalk2_SFT_smol_summarize_no_think
   generation_metric: ROUGE_L_against_reference_responses_not_a_factual_correctness_metric

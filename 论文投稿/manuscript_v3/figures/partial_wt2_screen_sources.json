@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-25",
+  "scope": "six CE and first KD short screens only, not full method results",
+  "runs": [
+    "wt2_s42_screen_ce0",
+    "wt2_s42_screen_ce1",
+    "wt2_s42_screen_ce2",
+    "wt2_s42_screen_ce3",
+    "wt2_s42_screen_ce4",
+    "wt2_s42_screen_ce5",
+    "wt2_s42_screen_kd0"
+  ],
+  "independent_student_seeds": 1,
+  "remaining_methods_pending": true
+}

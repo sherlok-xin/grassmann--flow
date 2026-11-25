@@ -425,3 +425,9 @@
 - 摘要文件哈希不变；用户引言正文保留，仅本地去重复标题/label，未将用户已有三个dirty文件纳入提交。Section 2/9/10和appendix、冻结实验/final_evidence、旧CAC不动。
 - 主要效果数值与已归档表逐项核对；所有警告/协议修订、NLL scope、TT参数/质量/优化混杂和现代step0/gate失败写入正文。新版只读document QA单独存档，不覆盖旧skeleton_qa。
 - 本机latexmk/BibTeX编译，检查编号1–10、8表/5图引用和版面警告；正文仍为first draft，图/基础引用/其他章节待用户另行授权。项目与GPT交接已更新，STOP，实验永久冻结。
+
+## [2026-11-25] Phase 5 explicitly authorized and started
+
+The user authorized bounded new CE-reference distillation experiments and manuscript_v3; historical STOP flags do not prohibit this phase. Branch research/phase5-ce-reference preserves old manuscripts and frozen evidence. New code/manifests: research/experiments/phase5_ce_reference_distillation; large outputs: outputs/phase5. Actual WT2 CE/KD short runs have completed; full-pilot conclusions remain pending. Independent-CE target projection is exactly adaptive CE/KD weighting at temperature one, not a safety guarantee. Read the live REPORT/GPT_HANDOFF and inspect processes before restarting queues. Shared-GPU occupancy interrupted a fork smoke after exact AdamW replay passed; never stop other jobs. Modern Qwen3 tokenizers/data masks verified; real-model resource smoke still pending. Global cap is 230 GPUh including reference/teacher/search/fork/evaluation/failures. User handles withdrawal and submission.
+
+Phase 5 update: user confirmed no GPU reservation and instructed continued idle waiting. Nine scientific tests pass; six WT2 CE plus one KD short screen and two TinyStories smokes completed. Recorded allocation including failed fork and bootstrap is 0.479300 GPUh. Full pilots remain pending. New five-page manuscript_v3 is explicitly incomplete, compiled and visually checked; 150 protected historical files still match. Do not duplicate the running CPU queue supervisors or call this phase complete.
