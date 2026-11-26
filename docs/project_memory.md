@@ -355,3 +355,7 @@ User requested continuing to wait on 197 and monitoring once per hour. GPU avail
 ## [2026-11-26] Phase 5 automatic training resumed
 
 Verified that the running GPU0/GPU1 jobs are ours: WT2 complete KD and TinyStories complete CE. All 23 WT2 and 12 TinyStories short screens completed. The two complete WT2 CE trajectories both select S0; selected short A does not beat tuned KD, and its CLIP_SATURATION_WARNING remains. TinyStories short CE improves but its full endpoint is pending. The isolated exact-AdamW fork smoke now completes. Ten CPU scientific tests pass, including strict saved-adapter restoration. Resumed the pinned Qwen teacher download after truncated network responses; no change to teacher revision, training settings or test selection. Hourly monitoring remains active. See Phase5 REPORT and SCREENING_AND_PILOT_STATUS; no old manuscript/evidence changes.
+
+## [2026-11-26] Phase 5 modern resource protocol release
+
+Full WT2 tuned KD: dev NLL 4.203910217, gain +0.144104394 over full selected CE; full A continues. Both Qwen weights pass official SHA-256 and all four actual resource smokes pass; all smoke clip fractions are 1.0 with finite gradients. Slowest throughput 66.293474 response targets/s makes 2M exceed the initial 8 GPUh planning gate. Add uniform 1M before adaptation endpoints, preserving full Qwen and three-seed priorities; projected 5.237653 GPUh. Commit protocol before releasing formal teacher training. No legacy process was restarted and no historical evidence changed.

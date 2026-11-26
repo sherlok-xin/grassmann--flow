@@ -1,0 +1,34 @@
+{
+  "continuation_targets": 1000000,
+  "rate": 66.29347427928481,
+  "estimated_slowest_run_gpu_hours": 5.237653117400745,
+  "student_lora": false,
+  "selection": "precommitted throughput-only rule; no adaptation endpoints observed",
+  "resource_rule_revision": "2026-11-26 add 1M candidate after real Qwen throughput, before adaptation endpoints",
+  "measured_smokes": [
+    {
+      "name": "qwen_resource_ce8",
+      "rate": 70.43078239317599,
+      "peak_memory_GiB": 11.273440837860107,
+      "clip_fraction": 1.0
+    },
+    {
+      "name": "qwen_resource_kd8",
+      "rate": 70.04000569099544,
+      "peak_memory_GiB": 14.405460357666016,
+      "clip_fraction": 1.0
+    },
+    {
+      "name": "qwen_resource_A8",
+      "rate": 66.29347427928481,
+      "peak_memory_GiB": 14.405476570129395,
+      "clip_fraction": 1.0
+    }
+  ],
+  "smoke_names": [
+    "qwen_resource_ce8",
+    "qwen_resource_kd8",
+    "qwen_resource_A8"
+  ],
+  "test_access": false
+}

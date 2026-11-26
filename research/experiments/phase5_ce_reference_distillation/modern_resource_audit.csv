@@ -1,0 +1,5 @@
+run,steps,targets,steady_response_targets_per_second,peak_memory_GiB,clip_fraction,preclip_norm_mean,nonfinite_fraction,gpu_hours,warning,evaluation_scope
+qwen_resource_ce8,8,2642,70.43078239317599,11.273440837860107,1.0,30.63327169418335,0.0,0.015203311573843368,CLIP_SATURATION_WARNING,four training probes only; no task endpoint inference
+qwen_resource_kd8,8,2642,70.04000569099544,14.405460357666016,1.0,35.42344856262207,0.0,0.02147389564805457,CLIP_SATURATION_WARNING,four training probes only; no task endpoint inference
+qwen_resource_A8,8,2642,66.29347427928481,14.405476570129395,1.0,34.30249905586243,0.0,0.011963684646956001,CLIP_SATURATION_WARNING,four training probes only; no task endpoint inference
+qwen_resource_teacher8,8,2782,131.06059542127383,4.208330154418945,1.0,1.7248117178678513,0.0,0.007612839535189171,CLIP_SATURATION_WARNING,four training probes only; no task endpoint inference

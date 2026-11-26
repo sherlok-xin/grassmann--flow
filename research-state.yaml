@@ -41,14 +41,17 @@ phase5:
   bootstrap_protocol_commit: 00135a2
   free_gpus_initial: [0, 3]
   other_project_gpus: [1, 2]
-  formal_endpoints_completed: 2
-  full_endpoint_snapshot_scope: two_WT2_CE_trajectories_only_no_full_method_claim
+  formal_endpoints_completed: 3
+  full_endpoint_snapshot_scope: two_WT2_CE_trajectories_and_full_KD_no_candidate_superiority_claim
   completed_short_screens: 35
   completed_TinyStories_smokes: [CE_8_updates, KD_8_updates, A_8_updates]
   scientific_tests_passed: 10
-  actual_completed_failed_gpu_hours_snapshot: 3.834699
+  actual_completed_failed_gpu_hours_snapshot: 4.377745
   cost_snapshot_excludes_current_active_allocations: true
-  resource_status: WT2_on_GPU0_TinyStories_on_GPU1_modern_GPU2_waits_weight_verification
+  resource_status: WT2_A_on_GPU0_TinyStories_CE_on_GPU1_modern_GPU2_passed_smoke_waits_protocol_commit
+  completed_Qwen_resource_smokes: [CE_8_updates, KD_8_updates, A_8_updates, teacher_LoRA_8_updates]
+  modern_continuation_targets: 1000000
+  modern_resource_amendment: measured_throughput_before_adaptation_endpoints
   resource_monitor_interval_seconds: 3600
   resource_monitor_log: outputs/phase5/monitoring/monitor_197_latest.json
   resource_monitor_server: 10.42.0.197

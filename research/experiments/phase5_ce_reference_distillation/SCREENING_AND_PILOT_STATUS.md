@@ -1,6 +1,6 @@
 # Development screening and pilot status
 
-Snapshot: 2026-11-26T11:52:04+08:00.
+Snapshot: 2026-11-26T12:09:57+08:00.
 
 These are seed-42 development results. They are not test endpoints or independent-seed confirmations.
 The frozen promotion rule chooses the lowest trained screen dev NLL; subsequent checkpoint selection includes S0.
@@ -23,9 +23,10 @@ In the completed WT2 short screen, candidate A is weaker than the selected ordin
 
 | Full run | Status | Observed / total updates | Selected dev endpoint |
 |---|---|---:|---:|
-| ts_s42_full_ce | IN_PROGRESS_OR_INCOMPLETE | 3850 / 81890 | pending |
+| ts_s42_full_ce | IN_PROGRESS_OR_INCOMPLETE | 6100 / 81890 | pending |
 | wt2_s42_full_ce | COMPLETE | 2940 / 2940 | 4.348015 |
-| wt2_s42_full_kd | IN_PROGRESS_OR_INCOMPLETE | 1450 / 2940 | pending |
+| wt2_s42_full_kd | COMPLETE | 2940 / 2940 | 4.203910 |
+| wt2_s42_full_reference | IN_PROGRESS_OR_INCOMPLETE | 250 / 2940 | pending |
 | wt2_s42_full_reference_ce | COMPLETE | 2940 / 2940 | 4.348015 |
 
 The isolated retry of the full-state replay smoke completed; it checks optimizer/RNG replay and finite H=1/8 branches only. It is not a formal mechanism result. Priority ablations, full forks, online search and seed confirmations must be reported from their own completed artifacts.

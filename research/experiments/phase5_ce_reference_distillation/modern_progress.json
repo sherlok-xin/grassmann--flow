@@ -1,0 +1,38 @@
+[
+  {
+    "name": "qwen_resource_ce8",
+    "role": "continuation",
+    "mode": "ce",
+    "selected_dev_nll": 1.1911690736428284,
+    "final_dev_nll": 1.1911690736428284,
+    "selected_step": 8,
+    "gpu_hours": 0.015203311573843368
+  },
+  {
+    "name": "qwen_resource_kd8",
+    "role": "continuation",
+    "mode": "kd",
+    "selected_dev_nll": 1.2578721951215694,
+    "final_dev_nll": 1.2578721951215694,
+    "selected_step": 8,
+    "gpu_hours": 0.02147389564805457
+  },
+  {
+    "name": "qwen_resource_A8",
+    "role": "continuation",
+    "mode": "reference",
+    "selected_dev_nll": 1.2328363076234474,
+    "final_dev_nll": 1.2328363076234474,
+    "selected_step": 8,
+    "gpu_hours": 0.011963684646956001
+  },
+  {
+    "name": "qwen_resource_teacher8",
+    "role": "teacher",
+    "mode": "ce",
+    "selected_dev_nll": 0.9639206692517042,
+    "final_dev_nll": 0.9639206692517042,
+    "selected_step": 8,
+    "gpu_hours": 0.007612839535189171
+  }
+]

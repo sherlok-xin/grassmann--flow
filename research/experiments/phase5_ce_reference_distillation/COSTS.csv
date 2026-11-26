@@ -41,7 +41,12 @@ ts_s42_screen_kd3,COMPLETE,1,1.0,0.1448786910422819,0.1448786910422819,179566170
 ts_s42_screen_kd4,COMPLETE,1,1.0,0.14325865304433844,0.14325865304433844,1795662232.1375668,1795662747.873749,allocated GPU wall time including loading evaluation cache snapshots and contention
 wt2_s42_full_reference_ce,COMPLETE,0,2.0,0.42860300978218824,0.42860300978218824,1795662691.9964497,1795664234.9720187,allocated GPU wall time including loading evaluation cache snapshots and contention
 ts_s42_screen_kd5,COMPLETE,1,1.0,0.14299767171304362,0.14299767171304362,1795662750.1880007,1795663264.9834683,allocated GPU wall time including loading evaluation cache snapshots and contention
-ts_s42_full_ce,RUNNING,1,18.0,,0.4359624335500929,1795663267.2801979,,allocated GPU wall time including loading evaluation cache snapshots and contention
-wt2_s42_full_kd,RUNNING,0,2.0,,0.16644440823131137,1795664237.5450978,,allocated GPU wall time including loading evaluation cache snapshots and contention
+ts_s42_full_ce,RUNNING,1,18.0,,0.8138377237319946,1795663267.2801979,,allocated GPU wall time including loading evaluation cache snapshots and contention
+wt2_s42_full_kd,COMPLETE,0,2.0,0.48669676039160953,0.48669676039160953,1795664237.5450978,1795665989.667805,allocated GPU wall time including loading evaluation cache snapshots and contention
+qwen_resource_ce8,COMPLETE,2,0.5,0.015290820789135372,0.015290820789135372,1795665897.2905989,1795665952.3363347,allocated GPU wall time including loading evaluation cache snapshots and contention
+qwen_resource_kd8,COMPLETE,2,0.5,0.02147658819009343,0.02147658819009343,1795665958.701653,1795666036.015311,allocated GPU wall time including loading evaluation cache snapshots and contention
+wt2_s42_full_reference,RUNNING,0,2.0,,0.056812313397725425,1795665992.571706,,allocated GPU wall time including loading evaluation cache snapshots and contention
+qwen_resource_A8,COMPLETE,2,0.5,0.01196587300613626,0.01196587300613626,1795666041.9918396,1795666085.06755,allocated GPU wall time including loading evaluation cache snapshots and contention
+qwen_resource_teacher8,COMPLETE,2,0.5,0.007615366877160139,0.007615366877160139,1795666090.9214623,1795666118.335054,allocated GPU wall time including loading evaluation cache snapshots and contention
 smoke_audit,PASS,0,,0.02076356400994377,0.02076356400994377,,,bootstrap smoke including model/data setup; reconciled reserve
 smoke_micro16,PASS,0,,0.009351712853078627,0.009351712853078627,,,bootstrap smoke including model/data setup; reconciled reserve

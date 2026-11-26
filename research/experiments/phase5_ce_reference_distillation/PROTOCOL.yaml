@@ -128,13 +128,18 @@ modern_resource_and_selection_rules:
   repetition: explicitly_report_target_equivalents_never_call_repeated_targets_new_data
   smoke: 8_updates_each_CE_KD_A_and_teacher_LoRA_no_endpoint_selection
   model_revisions: modern_assets.json
-  candidate_continuation_target_budgets: [8000000, 4000000, 2000000]
+  candidate_continuation_target_budgets: [8000000, 4000000, 2000000, 1000000]
   resource_budget_rule: >-
     Choose the largest budget whose slowest measured CE-with-cache/KD/A update rate
     projects at most 8 GPUh with 25 percent overhead. This is fixed before adaptation
-    or continuation endpoints. If even 2M exceeds this bound, reduce the secondary
-    matrix or uniformly use LoRA after recording the resource limitation; do not
-    silently substitute the old FineWeb setting.
+    or continuation endpoints. On 2026-11-26 the real full-parameter CE/KD smokes
+    measured about 70 response targets/second, so even 2M exceeds 8 GPUh after
+    overhead. Add a uniform 1M budget candidate to preserve full-parameter Qwen
+    and three-seed strong-baseline comparisons within 230 total GPUh. This
+    resource-only amendment precedes all adapted-teacher/S0/dev endpoints.
+    If even 1M exceeds the bound, stop for resource inspection. No coefficient,
+    clipping, data split, teacher, model or search result is changed by this rule.
+  formal_release: local_Git_commit_of_selected_resource_protocol_required_before_teacher_adaptation
   batch_micro_sequence: [8, 1, 512]
   student: full_FP32_trainable_parameters_BF16_autocast_gradient_checkpointing
   student_memory_fallback: all_methods_same_rank16_LoRA_only_if_isolated_full_parameter_smoke_cannot_fit

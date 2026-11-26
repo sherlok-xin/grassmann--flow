@@ -27,7 +27,8 @@ def main():
                 teacher_sha256=c.get('teacher_sha256',identity.get('teacher_sha256')),
                 data_sha256=c['data_manifest_sha256'],code_sha256=c.get('runner_sha256',c.get('source_sha256')),
                 git_commit=c['git_commit'],reference_run=c.get('reference_run'),
-                scope='smoke' if 'smoke' in p.parent.name else 'screen' if 'screen' in p.parent.name else 'full')
+                scope='smoke' if c.get('smoke_steps') or s.get('smoke') or 'smoke' in p.parent.name
+                else 'screen' if 'screen' in p.parent.name else 'full')
             manifest.append(base)
             if s:
                 rows.append({**base,**{k:s.get(k) for k in ['s0_dev_nll','selected_dev_nll','final_dev_nll','selected_step',

@@ -17,6 +17,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument('--gpu',type=int,required=True);p.add_argument('--pilot-only',action='store_true');a=p.parse_args()
     from resources import wait_idle
     from core import digest
+    from prepare_modern import sha
     progress=[]
     def remaining():
         d=json.loads((ROOT/'outputs/phase5/accounting.json').read_text())
@@ -58,13 +59,29 @@ def main():
     a_smoke=run('qwen_resource_A8','continuation','reference',1e-5,500000,ref='qwen_resource_ce8',smoke=True)
     run('qwen_resource_teacher8','teacher','ce',2e-4,500000,lam=0,smoke=True)
     rate=min(r['steady_response_targets_per_second'] for r in [ce_smoke,kd_smoke,a_smoke])
-    choices=[n for n in [8000000,4000000,2000000] if 1.25*n/rate/3600<=8]
-    if not choices:raise RuntimeError('2M resource projection exceeds gate; inspect budget before further runs')
+    choices=[n for n in [8000000,4000000,2000000,1000000] if 1.25*n/rate/3600<=8]
+    if not choices:raise RuntimeError('1M resource projection exceeds gate; inspect budget before further runs')
     targets=choices[0]
     lock=dict(continuation_targets=targets,rate=rate,estimated_slowest_run_gpu_hours=1.25*targets/rate/3600,
         student_lora=lora,selection='precommitted throughput-only rule; no adaptation endpoints observed',
+        resource_rule_revision='2026-11-26 add 1M candidate after real Qwen throughput, before adaptation endpoints',
+        measured_smokes=[dict(name=r['config']['name'],rate=r['steady_response_targets_per_second'],
+                             peak_memory_GiB=r['peak_memory_GiB'],clip_fraction=r['clip_fraction'])
+                         for r in [ce_smoke,kd_smoke,a_smoke]],
         smoke_names=['qwen_resource_ce8','qwen_resource_kd8','qwen_resource_A8'],test_access=False)
-    (PHASE/'modern_protocol_selected.json').write_text(json.dumps(lock,indent=2)+'\n')
+    lock_path=PHASE/'modern_protocol_selected.json'
+    lock_path.write_text(json.dumps(lock,indent=2)+'\n')
+    print('RESOURCE_PROTOCOL_READY: waiting for local Git protocol commit receipt',flush=True)
+    release_path=PHASE/'modern_protocol_release.json'
+    wait_file(release_path)
+    release=json.loads(release_path.read_text())
+    for key,path in [('selected_protocol_sha256',lock_path),('protocol_file_sha256',PHASE/'PROTOCOL.yaml'),
+                     ('queue_sha256',Path(__file__))]:
+        if release.get(key)!=sha(path):raise ValueError('modern protocol commit receipt mismatch: '+key)
+    commit=release['protocol_commit']
+    for path in [lock_path,PHASE/'PROTOCOL.yaml',Path(__file__)]:
+        committed=subprocess.check_output(['git','show',commit+':'+str(path.relative_to(ROOT))],cwd=ROOT)
+        if committed!=path.read_bytes():raise ValueError('modern protocol differs from committed bytes')
     teacher='qwen_teacher_s42';run(teacher,'teacher','ce',2e-4,1150454,lam=0)
     prep_targets=500000;s0='qwen_s42_S0';run(s0,'preparation','ce',2e-5,prep_targets,lam=0,lora=lora)
     ce_rows=[]

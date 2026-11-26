@@ -10,8 +10,12 @@ Candidate A has no demonstrated superiority: its selected short WT2 result is
 worse than tuned KD and is clip-saturated. Keep the frozen comparisons and
 warnings. Ten scientific CPU tests pass; the isolated actual-AdamW replay
 smoke now also completes. Full mechanism/ablation/confirmation results remain
-pending. The Qwen teacher download has been resumed from its existing partial
-file; independent weight verification releases the existing GPU-2 queue.
+pending. Full tuned WT2 KD completes at dev NLL 4.203910217, with gain
++0.144104394 over full selected CE and no nonfinite. Both Qwen weights now
+pass official hashes; CE/KD/A/teacher resource smokes pass with finite gradients.
+The slowest 66.293474 targets/s requires the recorded 1M resource-only budget
+amendment (5.237653 estimated GPUh), before any modern adaptation endpoint.
+The new GPU-2 supervisor waits for the local Git protocol receipt, then proceeds.
 The hourly 197 monitor is active. Inspect processes and summaries before any
 restart. Historical manuscripts/final_evidence remain untouched.
 

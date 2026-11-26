@@ -1,0 +1,21 @@
+{
+  "status": "VERIFIED",
+  "assets_manifest_sha256": "97ae775c07eee6e39d268fa453912534a2feab57e602f641c4bf25a5ad28e9bb",
+  "weights": [
+    {
+      "repo": "Qwen/Qwen3-0.6B-Base",
+      "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+      "path": "outputs/phase5/modern_assets/Qwen3-0.6B-Base/model.safetensors",
+      "sha256": "cd2a512003e2f9f3cd3c32a9c3573f820bb28c940f73c57b1ddaa983d9223eba",
+      "bytes": 1192135096
+    },
+    {
+      "repo": "Qwen/Qwen3-1.7B-Base",
+      "revision": "ea980cb0a6c2ae4b936e82123acc929f1cec04c1",
+      "path": "outputs/phase5/modern_assets/Qwen3-1.7B-Base/model.safetensors",
+      "sha256": "6df85b39330e5a425ee36253d0f894e4387e4f0a15b9c53cb467d668e6b3a841",
+      "bytes": 3441185608
+    }
+  ],
+  "no_training_or_evaluation": true
+}

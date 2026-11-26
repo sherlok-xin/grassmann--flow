@@ -18,5 +18,18 @@
   "protected_files_checked": 150,
   "protected_file_mismatches": [],
   "generation_metric_install_check": "rouge-score 0.1.2 Porter-stemmed ROUGE-L synthetic pair F1=0.8",
-  "scientific_test_log": "outputs/phase5/scientific_tests_20261126.log"
+  "scientific_test_log": "outputs/phase5/scientific_tests_20261126.log",
+  "real_qwen_gpu_smoke": {
+    "status": "COMPLETE",
+    "runs": [
+      "qwen_resource_ce8",
+      "qwen_resource_kd8",
+      "qwen_resource_A8",
+      "qwen_resource_teacher8"
+    ],
+    "audit": "modern_resource_audit.csv",
+    "finite_gradients_all": true,
+    "all_smokes_clip_saturated": true,
+    "does_not_establish_task_headroom": true
+  }
 }

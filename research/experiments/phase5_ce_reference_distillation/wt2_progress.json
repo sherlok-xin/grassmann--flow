@@ -348,5 +348,19 @@
     "selected_step": 0,
     "gpu_hours": 0.4284325016527954,
     "clip_fraction": 0.003401360544217687
+  },
+  {
+    "name": "wt2_s42_full_kd",
+    "mode": "kd",
+    "lr": 0.0001,
+    "lam": 5,
+    "temperature": 2,
+    "epochs": 10,
+    "smoothing": 0.1,
+    "selected_dev_nll": 4.2039102170190175,
+    "final_dev_nll": 4.2039102170190175,
+    "selected_step": 2940,
+    "gpu_hours": 0.48619008133472463,
+    "clip_fraction": 0.06428571428571428
   }
 ]
