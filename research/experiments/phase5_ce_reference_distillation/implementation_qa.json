@@ -1,6 +1,6 @@
 {
-  "date": "2026-11-25",
-  "scientific_tests_passed": 9,
+  "date": "2026-11-26",
+  "scientific_tests_passed": 10,
   "test_scope": [
     "projection normalization and tails",
     "gradient equivalence",
@@ -9,12 +9,14 @@
     "literature reductions",
     "checkpointed exact KL",
     "response masks and group disjointness",
-    "tiny CPU Qwen LoRA and nested checkpoint AdamW update"
+    "tiny CPU Qwen LoRA and nested checkpoint AdamW update",
+    "saved adapter restores teacher predictions and rejects missing tensors"
   ],
   "actual_full_state_replay_passed": true,
-  "fork_endpoint_smoke": "incomplete after shared-GPU OOM",
-  "modern_real_model_smoke": "pending assets verification and idle GPU",
+  "fork_endpoint_smoke": "PASS isolated idle retry: six H=1/8 CE/KD/A rows; not formal mechanism evidence",
+  "modern_real_model_smoke": "pending final teacher weight download and official checksum verification",
   "protected_files_checked": 150,
   "protected_file_mismatches": [],
-  "generation_metric_install_check": "rouge-score 0.1.2 Porter-stemmed ROUGE-L synthetic pair F1=0.8"
+  "generation_metric_install_check": "rouge-score 0.1.2 Porter-stemmed ROUGE-L synthetic pair F1=0.8",
+  "scientific_test_log": "outputs/phase5/scientific_tests_20261126.log"
 }

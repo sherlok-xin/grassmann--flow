@@ -14,6 +14,38 @@ from core import token_loss
 
 
 class ModernScience(unittest.TestCase):
+    def test_saved_teacher_adapter_changes_predictions_and_restores_exactly(self):
+        import copy
+        from transformers import Qwen3Config, Qwen3ForCausalLM
+        from peft import LoraConfig, get_peft_model, get_peft_model_state_dict
+        from modern_checks import load_adapter_exact
+        torch.manual_seed(91)
+        cfg = Qwen3Config(vocab_size=41, hidden_size=32, intermediate_size=64,
+                          num_hidden_layers=1, num_attention_heads=4,
+                          num_key_value_heads=2, head_dim=8, max_position_embeddings=32)
+        base = Qwen3ForCausalLM(cfg).cpu()
+        adapter = LoraConfig(r=2, lora_alpha=4, lora_dropout=0.,
+                             target_modules=['q_proj', 'v_proj'], task_type='CAUSAL_LM')
+        source = get_peft_model(copy.deepcopy(base), adapter).eval()
+        target = get_peft_model(copy.deepcopy(base), adapter).eval()
+        with torch.no_grad():
+            for name, parameter in source.named_parameters():
+                if 'lora_' in name:
+                    parameter.normal_(0., .2)
+            tokens = torch.tensor([[1, 2, 3, 4, 5]])
+            before = target(tokens).logits.clone()
+            wanted = source(tokens).logits.clone()
+        weights = {k: v.detach().clone() for k, v in get_peft_model_state_dict(source).items()}
+        load_adapter_exact(target, weights)
+        with torch.no_grad():
+            actual = target(tokens).logits
+        self.assertTrue(torch.equal(actual, wanted))
+        self.assertFalse(torch.allclose(actual, before))
+        incomplete = dict(weights)
+        incomplete.pop(next(iter(incomplete)))
+        with self.assertRaises(ValueError):
+            load_adapter_exact(target, incomplete)
+
     def test_qwen_lora_and_nested_checkpoint_update_on_toy_cpu_model(self):
         from transformers import Qwen3Config,Qwen3ForCausalLM
         from peft import LoraConfig,get_peft_model

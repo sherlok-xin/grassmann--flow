@@ -435,3 +435,7 @@ Phase 5 update: user confirmed no GPU reservation and instructed continued idle 
 ## [2026-11-25] Hourly monitoring of 197
 
 User requested continuing to wait on 197 and monitoring once per hour. GPU availability checks now use 3600 seconds; five verified CPU waiting supervisors were safely refreshed without stopping a training process. A singleton read-only monitor runs inside grassmann_lab (initial PID 3282), recording all four GPUs, queue health and budget under outputs/phase5/monitoring/. Initial check at 21:48 Asia/Shanghai: all four GPUs busy, all five queue processes alive, no active Phase 5 GPU allocation; next check approximately 22:48. Training protocol and 230 GPUh ceiling unchanged. No 208 migration or changes to other tasks.
+
+## [2026-11-26] Phase 5 automatic training resumed
+
+Verified that the running GPU0/GPU1 jobs are ours: WT2 complete KD and TinyStories complete CE. All 23 WT2 and 12 TinyStories short screens completed. The two complete WT2 CE trajectories both select S0; selected short A does not beat tuned KD, and its CLIP_SATURATION_WARNING remains. TinyStories short CE improves but its full endpoint is pending. The isolated exact-AdamW fork smoke now completes. Ten CPU scientific tests pass, including strict saved-adapter restoration. Resumed the pinned Qwen teacher download after truncated network responses; no change to teacher revision, training settings or test selection. Hourly monitoring remains active. See Phase5 REPORT and SCREENING_AND_PILOT_STATUS; no old manuscript/evidence changes.

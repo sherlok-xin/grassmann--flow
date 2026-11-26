@@ -1,5 +1,15 @@
 # Phase 5 continuation handoff
 
+## Current checkpoint — 2026-11-26
+
+The idle queues resumed automatically on 197. WT2 (GPU 0) and TinyStories (GPU 1) have completed all 23 and 12 short screens, respectively. TinyStories also passed its three disposable CE/KD/A smokes, and the isolated WT2 exact-state fork retry passed. Two ten-epoch WT2 CE trajectories are complete; both selected S0. Complete KD/A/baseline pilots and TinyStories full training remain in progress. Read `SCREENING_AND_PILOT_STATUS.md`, `screen_summary.csv` and `full_pilot_status.csv` for timestamped distinctions between screens, final endpoints and incomplete runs. Never restart an active run.
+
+The selected WT2 A screen (4.283045 dev NLL) did not beat the tuned KD screen (4.266468); selected A/ATKD/W-Clip have clip fraction 1.0 and retain their warnings. TinyStories short CE is better than selected short KD by 0.000994 NLL. These observations do not replace full pilots or justify changing hyperparameters. Ten CPU scientific checks now pass, including exact LoRA adapter restoration and a missing-adapter rejection check. The actual loader now asserts those properties without changing the training objective.
+
+The Qwen 1.7B download had stopped after bounded network truncation retries. It was resumed on November 26 using the same revision and partial file. `modern_assets_verified.json`, not a download log, releases the already-running modern queue on GPU 2. Check its current existence and the modern supervisor log; do not infer a completed smoke from successful weight download. The hourly monitor remains active. The November 25 details below are historical checkpoints, not current completion counts.
+
+## Authorization and execution details
+
 The user explicitly authorized new experiments, bounded tuning and manuscript_v3 on 2026-11-25. Old STOP/frozen flags apply to historical evidence, not this phase. Read root `CODEX_PHASE5_RESEARCH_PROMPT_20261125.txt` fully. Do not ask again whether to train. Do not overwrite old English/Chinese submissions, `research/final_evidence`, datasets or historical checkpoints. No paid cloud, withdrawal, external submission or messages to other people.
 
 Branch: `research/phase5-ce-reference`, base `99fd6632ee6042f85e709ac3a30b500e8ee1bbbb`. Git mutations run on the local workstation. All training runs through `/home/xin/fuwuqi/agent-tools/exec_grassmann.sh` on 197. Large new artifacts live exclusively under `outputs/phase5`. Source, manifests and compact reports live here. Existing `.gitignore`, project-memory/journal modifications and `research/arr_response_20261125/` predate this phase; preserve them.

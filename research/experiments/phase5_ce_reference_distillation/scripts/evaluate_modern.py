@@ -28,7 +28,8 @@ def main():
     import numpy as np
     import torch
     from transformers import AutoModelForCausalLM,AutoTokenizer
-    from peft import LoraConfig,get_peft_model,set_peft_model_state_dict
+    from peft import LoraConfig,get_peft_model
+    from modern_checks import load_adapter_exact
     from rouge_score import rouge_scorer
     from budget import Budget
     torch.set_num_threads(4)
@@ -48,7 +49,7 @@ def main():
             torch_dtype=torch.bfloat16 if use_lora else torch.float32,attn_implementation='sdpa').cuda()
         weights=torch.load(path,map_location='cpu',weights_only=True)
         if use_lora:
-            model=get_peft_model(model,LoraConfig(**c['lora']));set_peft_model_state_dict(model,weights)
+            model=get_peft_model(model,LoraConfig(**c['lora']));load_adapter_exact(model,weights)
         else:model.load_state_dict(weights,strict=True)
         del weights;model.eval().requires_grad_(False);model.config.use_cache=True
         tok=AutoTokenizer.from_pretrained(ROOT/assets['models'][repo]['local_dir'],local_files_only=True)

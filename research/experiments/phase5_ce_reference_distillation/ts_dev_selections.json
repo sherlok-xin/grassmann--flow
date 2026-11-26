@@ -1,0 +1,45 @@
+{
+  "criterion": "trained dev; A imported from WT2 dev-only screen",
+  "winners": {
+    "ce": {
+      "name": "ts_s42_screen_ce5",
+      "mode": "ce",
+      "lr": 0.0001,
+      "lam": 0,
+      "temperature": 1.0,
+      "epochs": 1,
+      "selected_dev_nll": 1.3702871166963284,
+      "final_dev_nll": 1.3702871166963284,
+      "selected_step": 819,
+      "gpu_hours": 0.10993506584808023,
+      "clip_fraction": 0.0
+    },
+    "kd": {
+      "name": "ts_s42_screen_kd1",
+      "mode": "kd",
+      "lr": 0.0001,
+      "lam": 0.25,
+      "temperature": 1,
+      "epochs": 1,
+      "selected_dev_nll": 1.371281501090701,
+      "final_dev_nll": 1.371281501090701,
+      "selected_step": 819,
+      "gpu_hours": 0.14619438294140208,
+      "clip_fraction": 0.0
+    },
+    "reference": {
+      "name": "wt2_s42_screen_A2",
+      "mode": "reference",
+      "lr": 0.0001,
+      "lam": 5,
+      "temperature": 1.0,
+      "epochs": 1,
+      "smoothing": 0.1,
+      "selected_dev_nll": 4.283044581601471,
+      "final_dev_nll": 4.283044581601471,
+      "selected_step": 294,
+      "gpu_hours": 0.058634790168790564,
+      "clip_fraction": 1.0
+    }
+  }
+}

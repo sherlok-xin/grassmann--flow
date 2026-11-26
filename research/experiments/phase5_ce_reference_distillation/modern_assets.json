@@ -25,7 +25,7 @@
       "local_dir": "outputs/phase5/modern_assets/Qwen3-1.7B-Base"
     }
   },
-  "download_complete": false,
+  "download_complete": true,
   "data": {
     "repo": "HuggingFaceTB/smoltalk2",
     "revision": "fc6cc2103c066455aade5d7fbb346039ae36ca5e",

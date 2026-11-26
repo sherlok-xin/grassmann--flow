@@ -1,0 +1,103 @@
+{
+  "criterion": "trained screen dev only; no test",
+  "winners": {
+    "ce": {
+      "name": "wt2_s42_screen_ce0",
+      "mode": "ce",
+      "lr": 1e-06,
+      "lam": 0,
+      "temperature": 1.0,
+      "epochs": 1,
+      "smoothing": 0.1,
+      "selected_dev_nll": 4.348014611377191,
+      "final_dev_nll": 4.3488072679304866,
+      "selected_step": 0,
+      "gpu_hours": 0.12535573053716992,
+      "clip_fraction": 0.003401360544217687
+    },
+    "kd": {
+      "name": "wt2_s42_screen_kd5",
+      "mode": "kd",
+      "lr": 0.0001,
+      "lam": 5,
+      "temperature": 2,
+      "epochs": 1,
+      "smoothing": 0.1,
+      "selected_dev_nll": 4.266468194837117,
+      "final_dev_nll": 4.266468194837117,
+      "selected_step": 294,
+      "gpu_hours": 0.05521831708559249,
+      "clip_fraction": 0.24829931972789115
+    },
+    "reference": {
+      "name": "wt2_s42_screen_A2",
+      "mode": "reference",
+      "lr": 0.0001,
+      "lam": 5,
+      "temperature": 1.0,
+      "epochs": 1,
+      "smoothing": 0.1,
+      "selected_dev_nll": 4.283044581601471,
+      "final_dev_nll": 4.283044581601471,
+      "selected_step": 294,
+      "gpu_hours": 0.058634790168790564,
+      "clip_fraction": 1.0
+    },
+    "atkd": {
+      "name": "wt2_s42_screen_atkd1",
+      "mode": "atkd",
+      "lr": 0.0001,
+      "lam": 5,
+      "temperature": 1.0,
+      "epochs": 1,
+      "smoothing": 0.1,
+      "selected_dev_nll": 4.282010370952542,
+      "final_dev_nll": 4.282010370952542,
+      "selected_step": 294,
+      "gpu_hours": 0.11343981626805746,
+      "clip_fraction": 1.0
+    },
+    "todi": {
+      "name": "wt2_s42_screen_todi0",
+      "mode": "todi",
+      "lr": 0.0001,
+      "lam": 1,
+      "temperature": 1.0,
+      "epochs": 1,
+      "smoothing": 0.1,
+      "selected_dev_nll": 4.297730777210454,
+      "final_dev_nll": 4.297730777210454,
+      "selected_step": 294,
+      "gpu_hours": 0.06103499021135374,
+      "clip_fraction": 0.03741496598639456
+    },
+    "wclip": {
+      "name": "wt2_s42_screen_wclip1",
+      "mode": "wclip",
+      "lr": 0.0001,
+      "lam": 5,
+      "temperature": 1.0,
+      "epochs": 1,
+      "smoothing": 0.1,
+      "selected_dev_nll": 4.270367109698076,
+      "final_dev_nll": 4.270367109698076,
+      "selected_step": 294,
+      "gpu_hours": 0.05737104290139137,
+      "clip_fraction": 1.0
+    },
+    "ls": {
+      "name": "wt2_s42_screen_ls0",
+      "mode": "ls",
+      "lr": 0.0001,
+      "lam": 1.0,
+      "temperature": 1.0,
+      "epochs": 1,
+      "smoothing": 0.05,
+      "selected_dev_nll": 4.348014611377191,
+      "final_dev_nll": 4.3844526480786,
+      "selected_step": 0,
+      "gpu_hours": 0.044091441308329295,
+      "clip_fraction": 0.003401360544217687
+    }
+  }
+}

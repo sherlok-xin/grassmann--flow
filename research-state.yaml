@@ -1,6 +1,6 @@
 schema_version: 1
-updated: "2026-11-25"
-status: phase5_screening_and_pilots_shared_gpu_queue
+updated: "2026-11-26"
+status: phase5_legacy_full_pilots_running_modern_resource_gate_pending
 phase: phase5_ce_reference_distillation
 decision: NEW_USER_AUTHORIZATION_PHASE5_20261125
 training_authorized: true
@@ -41,18 +41,20 @@ phase5:
   bootstrap_protocol_commit: 00135a2
   free_gpus_initial: [0, 3]
   other_project_gpus: [1, 2]
-  formal_endpoints_completed: 0
-  completed_short_screens: 7
-  completed_TinyStories_smokes: [CE_8_updates, KD_8_updates]
-  scientific_tests_passed: 9
-  actual_recorded_gpu_hours_snapshot: 0.479300
-  resource_status: all_four_cards_busy_user_confirmed_wait_for_idle_no_reservation
+  formal_endpoints_completed: 2
+  full_endpoint_snapshot_scope: two_WT2_CE_trajectories_only_no_full_method_claim
+  completed_short_screens: 35
+  completed_TinyStories_smokes: [CE_8_updates, KD_8_updates, A_8_updates]
+  scientific_tests_passed: 10
+  actual_completed_failed_gpu_hours_snapshot: 3.834699
+  cost_snapshot_excludes_current_active_allocations: true
+  resource_status: WT2_on_GPU0_TinyStories_on_GPU1_modern_GPU2_waits_weight_verification
   resource_monitor_interval_seconds: 3600
   resource_monitor_log: outputs/phase5/monitoring/monitor_197_latest.json
   resource_monitor_server: 10.42.0.197
   draft: 论文投稿/manuscript_v3/main.tex
   draft_status: incomplete_five_pages_compiled_visually_checked_not_submission_ready
-  next_action: idle_queues_continue_WT2_TS_Qwen_smoke_then_full_pilots_and_bounded_confirmations
+  next_action: continue_full_pilots_Qwen_resource_smoke_then_frozen_dev_selection_and_bounded_confirmations
 current_baselines:
   teacher_ptb_ppl: 50.1125
   student_quality_ptb_ppl: 51.8431

@@ -1,5 +1,20 @@
 # Grassmann / Transformer / Distillation Research Handoff
 
+## 2026-11-26 Phase 5 queues are training
+
+The user confirmed continuation after seeing GPU activity. Read the current
+Phase 5 `REPORT.md` and `SCREENING_AND_PILOT_STATUS.md`. All 23 WT2 and 12
+TinyStories short screens are complete. WT2 GPU 0 and TinyStories GPU 1 are
+running full pilots; the two completed WT2 CE trajectories both selected S0.
+Candidate A has no demonstrated superiority: its selected short WT2 result is
+worse than tuned KD and is clip-saturated. Keep the frozen comparisons and
+warnings. Ten scientific CPU tests pass; the isolated actual-AdamW replay
+smoke now also completes. Full mechanism/ablation/confirmation results remain
+pending. The Qwen teacher download has been resumed from its existing partial
+file; independent weight verification releases the existing GPU-2 queue.
+The hourly 197 monitor is active. Inspect processes and summaries before any
+restart. Historical manuscripts/final_evidence remain untouched.
+
 ## 2026-11-25 Phase 5 explicitly authorized and active
 
 The user has authorized new experiments, finite tuning, baseline replication,

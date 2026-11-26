@@ -38,7 +38,8 @@ def main():
     import torch
     from torch.utils.checkpoint import checkpoint
     from transformers import AutoModelForCausalLM
-    from peft import LoraConfig,get_peft_model,get_peft_model_state_dict,set_peft_model_state_dict
+    from peft import LoraConfig,get_peft_model,get_peft_model_state_dict
+    from modern_checks import load_adapter_exact
     from core import GoldCache,token_loss,project,digest
     from budget import Budget
     from prepare_modern import sha
@@ -85,7 +86,7 @@ def main():
         s0_hash=assets['models'][repo]['revision']
         def read_weights(path):return torch.load(path,map_location='cpu',weights_only=True)
         def set_weights(weights):
-            if is_lora:set_peft_model_state_dict(model,weights)
+            if is_lora:load_adapter_exact(model,weights)
             else:model.load_state_dict(weights,strict=True)
         def save_weights(path):
             weights=get_peft_model_state_dict(model) if is_lora else model.state_dict()
@@ -104,7 +105,7 @@ def main():
                 local_files_only=True,torch_dtype=torch.bfloat16,attn_implementation='sdpa').cuda()
             teacher=get_peft_model(teacher,LoraConfig(**lcfg))
             if a.teacher_run:
-                path=runs/a.teacher_run/'best.pt';set_peft_model_state_dict(teacher,read_weights(path));teacher_hash=sha(path)
+                path=runs/a.teacher_run/'best.pt';load_adapter_exact(teacher,read_weights(path));teacher_hash=sha(path)
             else:teacher_hash='unadapted_resource_smoke:'+assets['models']['Qwen/Qwen3-1.7B-Base']['revision']
             teacher.eval().requires_grad_(False);teacher.config.use_cache=False
         seed(a.seed)
@@ -119,6 +120,7 @@ def main():
             data_manifest_sha256=sha(PHASE/'modern_data.json'),lora=lcfg if is_lora else None,
             trainable_parameters=sum(v.numel() for v in params),git_commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
             source_sha256=sha(__file__),core_sha256=sha(Path(__file__).parent/'core.py'),
+            adapter_loader_sha256=sha(Path(__file__).parent/'modern_checks.py'),
             steps=total,warmup_steps=warmup,test_access=False,selected_including_S0=True,
             response_mask='assistant response plus im_end only; final batch shortened to exact target budget',
             evaluation_split='four training probes only' if a.smoke_steps else 'selection dev')
