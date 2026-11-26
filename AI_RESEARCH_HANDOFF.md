@@ -15,7 +15,8 @@ pending. Full tuned WT2 KD completes at dev NLL 4.203910217, with gain
 pass official hashes; CE/KD/A/teacher resource smokes pass with finite gradients.
 The slowest 66.293474 targets/s requires the recorded 1M resource-only budget
 amendment (5.237653 estimated GPUh), before any modern adaptation endpoint.
-The new GPU-2 supervisor waits for the local Git protocol receipt, then proceeds.
+Protocol commit 0c449ab and its hash-checked receipt precede the GPU-2 formal
+teacher adaptation start at 12:12 Asia/Shanghai. Its endpoint remains pending.
 The hourly 197 monitor is active. Inspect processes and summaries before any
 restart. Historical manuscripts/final_evidence remain untouched.
 

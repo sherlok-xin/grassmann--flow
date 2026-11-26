@@ -1,6 +1,6 @@
 schema_version: 1
 updated: "2026-11-26"
-status: phase5_legacy_full_pilots_running_modern_resource_gate_pending
+status: phase5_legacy_full_pilots_and_modern_teacher_training
 phase: phase5_ce_reference_distillation
 decision: NEW_USER_AUTHORIZATION_PHASE5_20261125
 training_authorized: true
@@ -48,9 +48,11 @@ phase5:
   scientific_tests_passed: 10
   actual_completed_failed_gpu_hours_snapshot: 4.377745
   cost_snapshot_excludes_current_active_allocations: true
-  resource_status: WT2_A_on_GPU0_TinyStories_CE_on_GPU1_modern_GPU2_passed_smoke_waits_protocol_commit
+  resource_status: WT2_A_on_GPU0_TinyStories_CE_on_GPU1_modern_teacher_adaptation_on_GPU2
   completed_Qwen_resource_smokes: [CE_8_updates, KD_8_updates, A_8_updates, teacher_LoRA_8_updates]
   modern_continuation_targets: 1000000
+  modern_protocol_commit: 0c449abfa0497db98e1fe1a8223d80c19a1933dc
+  modern_protocol_release_receipt: research/experiments/phase5_ce_reference_distillation/modern_protocol_release.json
   modern_resource_amendment: measured_throughput_before_adaptation_endpoints
   resource_monitor_interval_seconds: 3600
   resource_monitor_log: outputs/phase5/monitoring/monitor_197_latest.json
